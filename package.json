@@ -1,0 +1,26 @@
+{
+  "name": "sesac_fridge",
+  "version": "1.0.0",
+  "description": "냉장고 집사 프로젝트 입니다.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jihyang1106/SeSAC_Fridge.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jihyang1106/SeSAC_Fridge/issues"
+  },
+  "homepage": "https://github.com/jihyang1106/SeSAC_Fridge#readme",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.26.0",
+    "sequelize-cli": "^6.5.2"
+  }
+}
