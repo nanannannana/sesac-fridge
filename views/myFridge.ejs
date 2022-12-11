@@ -1,5 +1,8 @@
 <%-include('head.ejs') %>
-</head>
+
+    <link href="static/css/myFridge.css" rel="stylesheet">
+    
+<%-include('header.ejs') %>
 <main>
     <div class="container" style="background-color: skyblue;">
         여기가 main 페이지 입니다.
@@ -10,6 +13,45 @@
 
         <!-- 식재료 체크박스 -->
 
+
+        <form id="ingd_form">
+            <input type="checkbox" name="ingd" value="onion" id="onion" onclick="addToList(this);"><label for="onion">onion</label>
+            <input type="checkbox" name="ingd" value="garlic" id="garlic" onclick="addToList(this);"><label for="garlic">garlic</label>
+        </form>
+        <button type="button" class="addIngd_btn" onclick="">addIngd</button>        
+        <button type="button" class="resultRecipe_btn" onclick="resultRecipe();">Recipe</button>        
     </div>
+        
+   
+    <script>
+        // 선택한 식재료 list 생성
+        var checkedIngdList = new Array();
+        function addToList( box1 ){
+            if( box1.checked == true ){
+                checkedIngdList.push( box1.value );
+                console.log( checkedIngdList );
+            }else{
+                var index = checkedIngdList.indexOf( box1.value );
+                console.log( index );
+
+                while( index > -1 ){
+                    checkedIngdList.splice( index, 1);
+                    index = checkedIngdList.indexOf( box1.value );
+                    console.log( checkedIngdList );
+                }
+            }
+        }
+
+        // 선택한 식재료 포함된 레시피 SELECT
+        function resultRecipe(){
+            axios({
+                method : "get",
+                url : "/resultRecipe",
+                params : { checkedIngdList : checkedIngdList }
+            }).then((response)=>{
+                console.log('response.data : ', response.data );
+            })
+        }
+    </script>
 </main>
 <%-include('footer.ejs') %>

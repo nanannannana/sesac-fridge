@@ -3,3 +3,13 @@
 exports.getMyFridge = (req,res) => {
     res.render("myFridge");
 }
+
+exports.getResultRecipe = (req,res) => {
+    // exports.getResultRecipe = async (req,res) => {
+    // let result = await Recipe.findAll({
+    //     attributes : [""],
+    //     where : {}
+    // });
+    console.log( "req.query.checkedIngdList : ", req.query.checkedIngdList );
+    res.send(true);
+}
