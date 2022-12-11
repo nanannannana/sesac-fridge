@@ -1,1 +1,8 @@
 /*공통으로 쓰이는 style*/
+* {
+    /* 얇기 순서, 기본: Acr */
+    /* font-family: 'NanumSquareAcl'; */
+    font-family: 'NanumSquareAcr';
+    /* font-family: 'NanumSquareAcb'; */
+    /* font-family: 'NanumSquareAceb'; */
+}
