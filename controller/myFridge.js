@@ -4,12 +4,12 @@ exports.getMyFridge = (req,res) => {
     res.render("myFridge");
 }
 
-exports.getResultRecipe = (req,res) => {
-    // exports.getResultRecipe = async (req,res) => {
+exports.postResultRecipe = (req,res) => {
+    // exports.postResultRecipe = async (req,res) => {
     // let result = await Recipe.findAll({
     //     attributes : [""],
     //     where : {}
     // });
-    console.log( "req.query.checkedIngdList : ", req.query.checkedIngdList );
+    console.log( "req.body.checkedIngdList : ", req.body.checkedIngdList );
     res.send(true);
 }
