@@ -4,7 +4,7 @@ exports.getMyFridge = (req,res) => {
     res.render("myFridge");
 }
 
-exports.getResultRecipe = (req,res) => {
+exports.postResultRecipe = (req,res) => {
     // exports.getResultRecipe = async (req,res) => {
     // let result = await Recipe.findAll({
     //     attributes : [""],

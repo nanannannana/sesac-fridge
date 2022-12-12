@@ -45,9 +45,9 @@
         // 선택한 식재료 포함된 레시피 SELECT
         function resultRecipe(){
             axios({
-                method : "get",
+                method : "post",
                 url : "/resultRecipe",
-                params : { checkedIngdList : checkedIngdList }
+                data : { checkedIngdList : checkedIngdList }
             }).then((response)=>{
                 console.log('response.data : ', response.data );
             })
