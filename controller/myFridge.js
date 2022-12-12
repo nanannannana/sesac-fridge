@@ -5,11 +5,7 @@ exports.getMyFridge = (req,res) => {
 }
 
 exports.postResultRecipe = (req,res) => {
-    // exports.getResultRecipe = async (req,res) => {
-    // let result = await Recipe.findAll({
-    //     attributes : [""],
-    //     where : {}
-    // });
-    console.log( "req.query.checkedIngdList : ", req.query.checkedIngdList );
+    // exports.postResultRecipe = async (req,res) => {
+    console.log( "req.body.checkedIngdList : ", req.body.checkedIngdList );
     res.send(true);
 }
