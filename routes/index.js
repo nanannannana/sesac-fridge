@@ -1,6 +1,7 @@
 const express = require("express");
 const main = require("../controller/main");
 const myFridge = require("../controller/myFridge");
+const myPage = require("../controller/myPage");
 const router = express.Router();
 
 // 메인 페이지 렌더 - 주안
@@ -10,6 +11,9 @@ router.get("/", main.getMain);
 router.get("/myFridge", myFridge.getMyFridge);
 // 선택한 식재료 포함된 레시피 산출 - 영은
 router.get("/resultRecipe", myFridge.getResultRecipe);
+
+// 마이페이지 - 예지
+router.get("/myPage", myPage.getMyPage);
 
 
 
