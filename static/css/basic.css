@@ -5,4 +5,9 @@
     font-family: 'NanumSquareAcr';
     /* font-family: 'NanumSquareAcb'; */
     /* font-family: 'NanumSquareAceb'; */
+    --main-yellow : #fffbee;
+    --sub-green : #a9bfb7;
+    --point-coral : #FFEEE4;
+    --btn-warn : #ED6C67; 
+    --btn-success : #7E998F;
 }
