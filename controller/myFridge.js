@@ -6,10 +6,6 @@ exports.getMyFridge = (req,res) => {
 
 exports.postResultRecipe = (req,res) => {
     // exports.postResultRecipe = async (req,res) => {
-    // let result = await Recipe.findAll({
-    //     attributes : [""],
-    //     where : {}
-    // });
     console.log( "req.body.checkedIngdList : ", req.body.checkedIngdList );
     res.send(true);
 }
