@@ -7,20 +7,73 @@
     <div class="container" style="background-color: skyblue;">
         여기가 main 페이지 입니다.
 
+        <div class="fluid_continer">
+            <div class="row">
+
+                <!-- page 좌측 -->
+                <div class="left_side col-8" style="background-color : lightcoral">
+                    <div class="container_fluid">
+                        <div class="row">
+                            <div class="fridge_outline">
+                                <table border=0 cellpadding="10px" cellspacing="0">
+                                    <tr>
+                                        <td>양상추</td>
+                                        <td>새송이 버섯</td>
+                                        <td>아스파라거스</td>
+                                        <td>시금치</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="ingd_form">
+                        <input type="checkbox" name="ingd" value="onion" id="onion" onclick="addToList(this);"><label for="onion">onion</label>
+                        <input type="checkbox" name="ingd" value="garlic" id="garlic" onclick="addToList(this);"><label for="garlic">garlic</label>
+                    </form>
+                    <!-- 냉장고 하단 btn -->
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="btn_row bottom_btn_row">
+                                <button type="button" id="addIngd_btn" onclick="">추가</button>        
+                                <button type="button" id="updateIngd_btn" onclick="">변경</button>         
+                                <button type="button" id="deleteIngd_btn" onclick="">제거</button>         
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                
+
+                <!-- page 우측 -->
+                <div class="right_side col-4" style="background-color : lightgreen;">
+                    <div class="btn_row recipe_btn_row">
+                        <button type="button" class="resultRecipe_btn" onclick="resultRecipe();">Recipe</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
         <!-- 냉장고 이미지 position -->
 
+        
+
+        
 
 
-        <!-- 식재료 체크박스 -->
+
+        
 
 
-        <form id="ingd_form">
-            <input type="checkbox" name="ingd" value="onion" id="onion" onclick="addToList(this);"><label for="onion">onion</label>
-            <input type="checkbox" name="ingd" value="garlic" id="garlic" onclick="addToList(this);"><label for="garlic">garlic</label>
-        </form>
-        <button type="button" class="addIngd_btn" onclick="">addIngd</button>        
-        <button type="button" class="resultRecipe_btn" onclick="resultRecipe();">Recipe</button>        
+        
+            
     </div>
+
+
+
+    
         
    
     <script>
