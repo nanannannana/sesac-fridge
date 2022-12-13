@@ -1,36 +1,30 @@
-body {
+#main_background {
     background-color: var(--main-yellow);
 }
 /* outbox1 */
 #out_box1 {
     background-color: #ffffff;
     border-radius: 5%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding-top:50px;
 }
 #out_box1_text {
     margin-left: 30px;
     text-align: left;
     font-family: "NanumSquareAceb";
 }
-.out_box1_text1 {
-    margin-top: 50px;
-}
 
 /* outbox2 */
 #out_box2 {
+    margin-top:30px;
+    margin-bottom: 30px;
+}
+/* in_box1 */
+#title_box {
     text-align: left;
 }
-#out_box2_text {
+#title_box_text {
     display: inline-block;
     font-size: 30px;
-}
-.out_box2_text1 {
-    margin-top: 20px;
-}
-#in_box {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-#card {
-    display: inline-block;
 }

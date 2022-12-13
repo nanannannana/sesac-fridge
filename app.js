@@ -21,7 +21,6 @@ app.use("/myFridge", fridgeRouter);
 app.use("/recipe", recipeRouter);
 app.use("/myPage", userRouter);
 
-
 app.get("*", (req,res)=>{
     res.render("404");
 })

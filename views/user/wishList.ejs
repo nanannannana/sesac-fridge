@@ -1,26 +1,25 @@
 <%-include('../main/head.ejs') %>
-<link rel="stylesheet" type="text/css" href="../../static/css/myPage/myPage_basic.css">
+<link rel="stylesheet" type="text/css" href="../../static/css/myPage/myPageBasic.css">
 <link rel="stylesheet" type="text/css" href="../../static/css/myPage/wishList.css">
 <link rel="stylesheet" type="text/javascript" href="../../static/script/myPage/wishList.js">
 <%-include('../main/header.ejs') %>
 <main>
-    <div class="container text-center">
-        <div class="row">
+    <div id="main_background" class="container text-center">
+        <div class="row mx-4">
           <div id="out_box1" class="col-3">
-            <p id="out_box1_text" class="out_box1_text1">나의 프로필</p>
+            <p id="out_box1_text">나의 프로필</p>
             <p id="out_box1_text">찜리스트</p>
             <p id="out_box1_text">회원정보</p>
           </div>
           <div class="col-1"></div>
-          <div class="col-8">
-            <div id="out_box2">
-                <p id="out_box2_text" class="out_box2_text1" style="font-weight:bold;">김새싹님</p>
-                <p id="out_box2_text" class="out_box2_text2">의 찜리스트</p><br>
+          <div id="out_box2" class="col-8">
+            <div id="title_box" class="mb-3">
+                <p id="title_box_text" style="font-weight:bold;">김새싹님</p>
+                <p id="title_box_text">의 찜리스트</p><br>
             </div>
-            <br>
-            <div id="out_box3">
+            <div id="in_box2">
                 <% for(var k=1; k<4 ; k++ ) { %>
-                    <div id="in_box">
+                    <div id="wishlist_box" class="mb-3">
                         <%for (var i=1;i<5; i++ ) { %>
                             <div id="card" class="card text-bg-dark" style="width:150px; height:200px;">
                                 <!-- <img src="..." class="card-img" alt="..."> -->

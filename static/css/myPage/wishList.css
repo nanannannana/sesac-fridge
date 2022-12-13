@@ -1,0 +1,7 @@
+#wishlist_box {
+    display: flex;
+    justify-content: space-between;
+}
+#card {
+    display: inline-block;
+}
