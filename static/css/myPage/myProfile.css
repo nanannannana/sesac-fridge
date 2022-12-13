@@ -1,0 +1,25 @@
+#chart {
+    display: inline-block;
+    background-color:#ffffff;
+    width: 500px;
+    height: 200px;
+}
+
+/* outbox3 */
+#out_box3 {
+    background-color: #ffffff;
+    border-radius: 5%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+#out_box3_title {
+    text-align:left;
+    font-weight: bold;
+}
+#in_box {
+    display: inline-block;
+}
+#card { 
+    display: inline-block;
+}
