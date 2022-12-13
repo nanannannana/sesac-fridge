@@ -1,10 +1,9 @@
 const express = require("express");
 const app = express();
 const port = 8080;
-// const dotenv = require("dotenv");
-// dotenv.config();
 
 app.use("/static", express.static("static"));
+
 
 // ejs 등록
 app.set("view engine", "ejs");
@@ -21,7 +20,6 @@ app.use("/", mainRouter);
 app.use("/myFridge", fridgeRouter);
 app.use("/recipe", recipeRouter);
 app.use("/myPage", userRouter);
-
 
 app.get("*", (req,res)=>{
     res.render("404");

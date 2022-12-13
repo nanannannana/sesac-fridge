@@ -2,4 +2,3 @@
 exports.getMain = (req,res) => {
     res.render("main/main");
 }
-
