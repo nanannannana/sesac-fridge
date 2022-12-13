@@ -26,5 +26,9 @@
 }
 #title_box_text {
     display: inline-block;
+<<<<<<< HEAD:static/css/user/myPageBasic.css
     font-size: 3
+=======
+    font-size: 30px;
+>>>>>>> f55a1d5fdf99463e5d9d1e9b110e26f8f62d70d4:static/css/myPage/myPageBasic.css
 }

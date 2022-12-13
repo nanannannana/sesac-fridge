@@ -6,5 +6,4 @@ const router = express.Router();
 // localhost:8080/signin 
 router.get("/signin", user.getSignin);
 
-
 module.exports = router;
