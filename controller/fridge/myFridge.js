@@ -8,12 +8,13 @@ exports.getMyFridge = (req,res) => {
     res.render("fridge/myFridge");
 }
 
-exports.postResultRecipe = async (req,res) => {
+exports.postResultRecipe = (req,res) => {
     console.log( "req.body.checkedIngdList : ", req.body.checkedIngdList );
-    let result = await Recipe.findAll({
-        attributes : [ "recipe_title" ],
-        where : { recipe_ingd : req.body.checkedIngdList[0] }
-    }); 
-    console.log("postResultRecipe result : ", result );
-    res.send( result );
+    // let result = await Recipe.findAll();
+    // {
+    //     attributes : [ "recipe_title" ],
+    //     where : { recipe_ingd : req.body.checkedIngdList[0] }
+    // } 
+    // console.log("postResultRecipe result : ", result );
+    res.send( true );
 }

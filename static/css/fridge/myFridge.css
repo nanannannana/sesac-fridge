@@ -1,4 +1,4 @@
-main { background-color: var(--main-yellow);}
+.main { background-color: var(--main-yellow);}
 
 .myFridge_title { text-align: center; font-size: xx-large; font-weight: bold;}
 
@@ -12,14 +12,12 @@ main { background-color: var(--main-yellow);}
     background-color: white;
 }
 
-.basket_outline >img { width: 275px; height: 275px;}
-
-ul {
+.fridge_outline ul {
     display: table-row;
     text-align: center;
     border-bottom: 2px solid black;
 }
-li {
+.fridge_outline li {
     display: table-cell;    
     vertical-align: middle;
     list-style-type: none;
@@ -27,22 +25,22 @@ li {
     font-weight: bold;
 }
 
-li > p {
+.fridge_outline p {
     font-size : 10px;
 }
 
-input[type=range] {
+.fridge_outline input[type=range] {
     cursor: pointer;
     width: 70%;
     margin-top: 10px;
 }
 
-input[type=range]::-webkit-slider-thumb {
+.fridge_outline input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     background-color: var(--btn-success);
 }
 
-button {
+.btn_row button {
     box-shadow: 0 2px 4px darkslategrey;
     border : none;
     cursor: pointer;
@@ -50,24 +48,22 @@ button {
     z-index: 1;
 }
 
-button:active {
-    background-color: var(--btn-warn);
+.btn_row button:active {
     box-shadow: 0 0 2px darkslategray;
     transform: translateY(2px);
-  }
-
-.btn_row { display: flex; align-items: center; height: 200px;}
-
-.bottom_btn_row { justify-content:space-around;}
-
-.bottom_btn_row button {
-    width: 100px; height: 100px;
-    border-radius: 70%;
-    margin:auto ;
-    background-color: var(--btn-success);
 }
 
-.recipe_btn_row { justify-content: center; }
+.btn_row>div{ display:flex; align-items: center;}
+.ingd_btn_row { justify-content: space-around;}
+.recipe_btn_row {justify-content: center;}
+
+
+.ingd_btn_row button {
+    width: 100px; height: 100px;
+    border-radius: 70%;
+    margin: auto;
+    background-color: var(--btn-success);
+}
 
 .resultRecipe_btn {
     width : 250px; height : 100px;

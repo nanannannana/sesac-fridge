@@ -4,95 +4,82 @@
     
 <%-include('../main/header.ejs') %>
 <main>
-    <div class="container-fluid">
+    <div class="container main">
         여기가 main 페이지 입니다.
-
-        <div class="container">
-            <div class="row">
-
-                
-                
-                    <div class="container-fluid">
-                        <div >
-                            <div class="myFridge_title mt-5 mb-5">
-                                나의 냉장고
-                            </div>
-                        </div>
-                        <div class="row vh-100">
-                            <!-- 냉장고 내부 식재료 리스트 -->
-                            <form class="ingd_form outline fridge_outline col-8">
-                                <ul class="h-80 w-80">
-                                    <li>
-                                        <input type="checkbox" name="ingd" value="양파" id="양파" onclick="addToList(this);"><br><label for="양파">양파</label><br>
-                                        <input type="range" class="form-range" min="0" max="100" step="50" id="range_양파"><br><p>2022년 12월 29일</p>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" name="ingd" value="아스파라거스" id="아스파라거스" onclick="addToList(this);"><br><label for="아스파라거스">아스파라거스</label>
-                                        <input type="range" class="form-range" min="0" max="100" step="50" id="range_아스파라거스"><br><p>2022년 12월 29일</p>
-
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" name="ingd" value="우유" id="우유" onclick="addToList(this);"><br><label for="우유">우유</label><br>
-                                        <input type="range" class="form-range" min="0" max="100" step="50" id="range_우유"><br><p>2022년 12월 29일</p>
-
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" name="ingd" value="새송이버섯" id="새송이버섯" onclick="addToList(this);"><br><label for="새송이버섯">새송이 버섯</label>
-                                        <input type="range" class="form-range" min="0" max="100" step="50" id="range_새송이버섯"><br><p>2022년 12월 29일</p>
-
-                                    </li>
-                                </ul>
-                                <ul class="h-80 w-80">
-                                    <li>
-                                        <input type="checkbox" name="ingd" value="양파" id="양파" onclick="addToList(this);"><br><label for="양파">양파</label><br>
-                                        <input type="range" class="form-range" min="0" max="100" step="50" id="range_양파"><br><p>2022년 12월 29일</p>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" name="ingd" value="아스파라거스" id="아스파라거스" onclick="addToList(this);"><br><label for="아스파라거스">아스파라거스</label>
-                                        <input type="range" class="form-range" min="0" max="100" step="50" id="range_아스파라거스"><br><p>2022년 12월 29일</p>
-
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" name="ingd" value="우유" id="우유" onclick="addToList(this);"><br><label for="우유">우유</label><br>
-                                        <input type="range" class="form-range" min="0" max="100" step="50" id="range_우유"><br><p>2022년 12월 29일</p>
-
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" name="ingd" value="새송이버섯" id="새송이버섯" onclick="addToList(this);"><br><label for="새송이버섯">새송이 버섯</label>
-                                        <input type="range" class="form-range" min="0" max="100" step="50" id="range_새송이버섯"><br><p>2022년 12월 29일</p>
-
-                                    </li>
-                                </ul>            
-                            </form>
-
-
-                            <!-- 장바구니 식재료 리스트 -->
-                            <div class="col-4">
-                                <div class="outline basket_outline">
-                                    <img src="/static/img/basket.png" alt="This is cart image">
-                                </div>
-                            </div>
-
-                            <!-- 하단 btn -->
-                            <div class="container">
-                                <div class="row">
-                                    <div class="btn_row bottom_btn_row col-8">
-                                        <button type="button" class="addIngd_btn me-3" onclick="">추가</button>        
-                                        <button type="button" class="updateIngd_btn" onclick="">변경</button>         
-                                        <button type="button" class="deleteIngd_btn ms-3" onclick="">제거</button>
-                                    </div>
-                                    <div class="btn_row recipe_btn_row col-4">
-                                        <button type="button" class="resultRecipe_btn" onclick="resultRecipe();">Recipe</button>
-                                    </div>                                                
-                                </div>
-                            </div>
-
-                            
-                        </div>
-                    </div>
-
-        <!-- 냉장고 이미지 position -->
+      
+        <div class="container-fluid">
+            <div class="myFridge_title mt-5 mb-5">
+                나의 냉장고
+            </div>
             
+            <div class="row">
+                <!-- 냉장고 내부 식재료 리스트 -->
+                <form class="ingd_form outline fridge_outline col-7">
+                    <ul>
+                        <li>
+                            <input type="checkbox" name="ingd" value="양파" id="양파" onclick="addToList(this);"><br>
+                            <label for="양파">양파</label><br>
+                            <input type="range"><br><p>2022년 12월 29일</p>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="ingd" value="아스파라거스" id="아스파라거스" onclick="addToList(this);"><br>
+                            <label for="아스파라거스">아스파라거스</label>
+                            <input type="range"><br><p>2022년 12월 29일</p>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="ingd" value="우유" id="우유" onclick="addToList(this);"><br>
+                            <label for="우유">우유</label><br>
+                            <input type="range"><br><p>2022년 12월 29일</p>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="ingd" value="새송이버섯" id="새송이버섯" onclick="addToList(this);"><br>
+                            <label for="새송이버섯">새송이 버섯</label>
+                            <input type="range"><br><p>2022년 12월 29일</p>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <input type="checkbox" name="ingd" value="양파" id="양파2" onclick="addToList(this);"><br>
+                            <label for="양파2">양파2</label><br>
+                            <input type="range"><br><p>2022년 12월 29일</p>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="ingd" value="아스파라거스" id="아스파라거스2" onclick="addToList(this);"><br>
+                            <label for="아스파라거스2">아스파라거스2</label>
+                            <input type="range"><br><p>2022년 12월 29일</p>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="ingd" value="우유" id="우유2" onclick="addToList(this);"><br>
+                            <label for="우유2">우유2</label><br>
+                            <input type="range"><br><p>2022년 12월 29일</p>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="ingd" value="새송이버섯" id="새송이버섯2" onclick="addToList(this);"><br>
+                            <label for="새송이버섯2">새송이 버섯2</label>
+                            <input type="range"><br><p>2022년 12월 29일</p>
+                        </li>
+                    </ul>                                                    
+                </form>
+
+                <!-- 선택한 장바구니 식재료 리스트 -->
+                <div class="col-5">
+                    <div class="outline basket_outline d-flex justify-content-center">
+                        <img src="/static/img/basket.png" class="w-50" alt="This is a cart image">
+                    </div>
+                </div>
+            </div>
+        <!-- 하단 btn -->
+            <div class="row btn_row pt-5 pb-5">
+                <div class="ingd_btn_row col-7">
+                    <button type="button" class="addIngd_btn me-3" onclick="">추가</button>        
+                    <button type="button" class="updateIngd_btn" onclick="">변경</button>         
+                    <button type="button" class="deleteIngd_btn ms-3" onclick="">제거</button>
+                </div>
+                <div class="recipe_btn_row col-5">
+                    <button type="button" class="resultRecipe_btn" onclick="resultRecipe();">Recipe</button>
+                </div> 
+            </div>                          
+        </div>
     </div>
 
   
@@ -104,6 +91,9 @@
             fresh_expire : "2022-12-29",
             fresh_range : 100
         }
+
+        $(".ingd_form input[type=range]").attr({ step:50 });
+        $(".ingd_form input[type=range]").addClass("form-range");
 
 
         // 선택한 식재료 list 생성
@@ -128,7 +118,7 @@
         function resultRecipe(){
             axios({
                 method : "post",
-                url : "/resultRecipe",
+                url : "/myFridge/resultRecipe",
                 data : { checkedIngdList : checkedIngdList }
             }).then((response)=>{
                 console.log('response.data : ', response.data );
