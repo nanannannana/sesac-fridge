@@ -1,0 +1,43 @@
+.fridge_outline {
+    background-color: white;
+    width : 800px;
+    height : 900px;
+}
+
+
+
+
+
+button {
+    box-shadow: 0 2px 4px darkslategrey;
+    border : none;
+    cursor: pointer;
+    color: white; font-size: 24px; font-weight: bolder;
+}
+
+button:active {
+    background-color: black;
+    box-shadow: 0 0 2px darkslategray;
+    transform: translateY(2px);
+  }
+
+.btn_row { display: flex; align-items: center; height: 200px; }
+
+.bottom_btn_row { justify-content:space-around;}
+
+.bottom_btn_row button {
+    width : 100px; height : 100px;
+    border-radius: 70%;
+    margin-left: 50px; margin-right: 50px;
+    background-color: var(--btn-success);
+}
+
+.recipe_btn_row { justify-content: center; }
+
+.resultRecipe_btn {
+    width : 250px; height : 100px;
+    border-radius: 20px;
+    background-color: var(--btn-warn);
+}
+
+tr {width:800px;}
