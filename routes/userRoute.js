@@ -1,9 +1,10 @@
 const express = require("express");
-const myPage = require("../controller/user/myPage");
+const user = require("../controller/user/user");
 const router = express.Router();
 
-// 마이페이지 렌더 - 예지
-router.get("/", myPage.getMyProfile);
-router.get("/WishList", myPage.getWishList);
+// 로그인 렌더 - 예지
+// localhost:8080/signin 
+router.get("/signin", user.getSignin);
+
 
 module.exports = router;

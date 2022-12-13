@@ -14,16 +14,17 @@ app.use(express.json());
 const mainRouter = require("./routes/mainRoute");     // 메인
 const fridgeRouter = require("./routes/fridgeRoute"); // 냉장고
 const recipeRouter = require("./routes/recipeRoute"); // 레시피
-const userRouter = require("./routes/userRoute");     // 유저
+const myPageRouter = require("./routes/myPageRoute");  // 마이페이지
+const userRouter = require("./routes/userRoute");     // 유저(로그인, 회웍가입 등)
 
 app.use("/", mainRouter);
 app.use("/myFridge", fridgeRouter);
 app.use("/recipe", recipeRouter);
-app.use("/myPage", userRouter);
-
+app.use("/myPage", myPageRouter);
+app.use("/", userRouter);
 
 app.get("*", (req,res)=>{
-    res.render("404");
+    res.render("./main/404");
 })
 
 app.listen(port, ()=>{

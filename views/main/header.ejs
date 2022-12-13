@@ -1,9 +1,41 @@
 </head>
 <body>
 <header>
-    <div class="container" style="background-color: pink;">
-        header입니다.
-        <img src="/static/img/nocolor_logo.png" style="width:30px; margin:10px; float: right;">
-        <img src="/static/img/color_logo.png" style="width:30px; margin:10px; float: right;">
+    <div class="container" style="height:130px;">
+        <nav class="navbar">
+            <div class="container">
+              <a class="navbar-brand" href="#">로고</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                <img src="/static/img/color_logo.png" style="width:30px; margin:10px; float: right;">
+                <!-- <img src="/static/img/nocolor_logo.png" style="width:30px; margin:10px; float: right;"> -->
+              </button>
+              <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                  <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                  <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">신선제품 관리</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="http://localhost:8080/recipe/">레시피 추천</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="http://localhost:8080/myFridge">나의 냉장고</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="http://localhost:8080/myPage/">마이 페이지</a>
+                    </li>
+                  </ul>
+                  <form class="d-flex mt-3" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </nav>
     </div>
 </header>
