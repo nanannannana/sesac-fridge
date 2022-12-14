@@ -4,6 +4,9 @@ const router = express.Router();
 
 // 로그인 렌더 - 예지
 // localhost:8080/signin 
-router.get("/signin", user.getSignin);
+router.get("/signIn", user.getSignin);
+
+router.get("/signUp",user.getSignup);
+router.post("/signUp",user.postSignup);
 
 module.exports = router;

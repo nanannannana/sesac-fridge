@@ -1,0 +1,28 @@
+<%-include('../main/head.ejs') %>
+<link rel="stylesheet" type="text/css" href="/static/css/user/signUp.css">
+<script src="/static/script/user/signUp.js"></script>
+</head>
+<body id="body_background">
+    <header>
+        <img src="/static/img/color_logo.png" id="logo_img" class="mt-2 ms-4" style="width:30px; float: left;">
+    </header>
+    <div id="signup_card" class="controller">
+        <div class="card text-center" style="width: 22rem;">
+            <div id="signup_card_body" class="card-body">
+              <h5 id="signup_title" class="card-title">회원가입</h5>
+              <h6 class="card-subtitle mb-2 text-muted mb-4">정보를 모두 입력하고 회원가입 버튼을 눌러주세요.</h6>
+              <p class="card-text">
+                <form id="form_signup">
+                    <span id="id_title">이메일 </span><input type="email" name="user_id" placeholder="아이디"><br>
+                    <span id="pw_title">비밀번호 </span><input class="mt-2" type="password" name="user_pw" placeholder="비밀번호"><br>
+                    <span id="name_title">이름 </span><input class="mt-2" type="text" name="user_name" placeholder="이름"><br>
+                    <span id="num_title">번호 </span><input class="mt-2" type="text" name="user_phone" placeholder="휴대폰 번호(10~11글자)"><br>
+                    <button type="button" id="button" class="btn mt-4 mb-3" click="signup()">회원가입</button>
+                </form>
+                <a id="idpw_find" href="#">돌아가기</a>
+              </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
