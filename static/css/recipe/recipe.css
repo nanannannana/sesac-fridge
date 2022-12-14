@@ -1,0 +1,67 @@
+#filter {
+    background-color: var(--main-yellow);
+    margin-bottom: 50px;
+    /*안의 컨텐츠에 따라 달라지는 height*/
+    overflow: hidden;
+    height: auto;
+}
+
+/*필터 버튼*/
+#filter > div > * {
+    margin:10px;
+    background-color: white;
+    border : 2px solid var(--btn-success);
+}
+
+/*필터 버튼 클릭 시*/
+#filter_box :focus {
+    font-weight: bold;
+    background-color: var(--btn-success);
+    border : none;
+}
+
+/*레시피 카드*/
+.grid-item {
+    margin-bottom: 30px;
+    border-radius: 10px;
+    overflow: hidden;
+    height: auto;
+    position : relative;
+    width: 200px;
+    display: inline-block;
+    background-color : var(--main-yellow);
+} 
+
+/*이미지*/
+.grid-item img {
+    display: block;
+    min-width: 100%;
+    max-width: 100%;
+} 
+
+/*버튼, 제목*/
+.recipe_detail {
+    text-align: center;
+    width:100%;
+    /* background-color: aliceblue; */
+}
+
+/*제목*/
+.title {
+    padding:10px;
+}
+
+/*레시피 카드 안에 버튼*/
+.show_recipe {
+    background-color: var(--btn-success);
+}
+.show_cook {
+    background-color: var(--point-coral);
+}
+
+/* white-space: nowrap;
+transform: translate(-50%, 0) */
+
+.ingd_time > div {
+    padding: 5px;
+}
