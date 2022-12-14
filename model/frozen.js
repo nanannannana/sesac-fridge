@@ -12,7 +12,7 @@ const frozen = (Sequelize, DataTypes) => {
                 allowNull : false,
                 defaultValue : DataTypes.NOW,
             },
-            frozen_range : {
+            frozen_int : {
                 type : DataTypes.INTEGER,
                 allowNull : false,
                 defaultValue : 100,

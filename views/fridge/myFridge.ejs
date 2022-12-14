@@ -1,15 +1,5 @@
 <%-include('../main/head.ejs') %>
-
-    <link href="static/css/fridge/myFridge.css" rel="stylesheet">
-    <script>
-    //임의의 data
-    const fresh_example = {
-        fresh_name : "저지방 우유",
-        fresh_expire : "2022-12-29",
-        fresh_range : 100
-    }
-    </script>
-    
+    <link href="/static/css/fridge/myFridge.css" rel="stylesheet" type="text/css">    
 <%-include('../main/header.ejs') %>
 <main>
     <div class="container main">
@@ -22,70 +12,50 @@
             
             <div class="row">
                 <!-- 냉장고 내부 식재료 리스트 -->
-                <form class="outline fridge_outline col-7" id="ingd_form">
+                <div class="fridge_outline col-8">  
+                <form class="outline" id="ingd_form">
                     <ul>
-                        <li>
-                            <input type="checkbox" name="ingd" value="양파" id="양파" onclick="addToList(this);"><br>
-                            <label for="양파">양파</label><br>
-                            <input type="range"><br><p>2022년 12월 29일</p>
-                            <button type="button" value="양파" onclick="updateIngd(this);">수량 변경</button>
-                        </li>
-                        <li>
-                            <input type="checkbox" name="ingd" value="아스파라거스" id="아스파라거스" onclick="addToList(this);"><br>
-                            <label for="아스파라거스">아스파라거스</label>
-                            <input type="range"><br><p>2022년 12월 29일</p>
-                        </li>
-                        <li>
-                            <input type="checkbox" name="ingd" value="우유" id="우유" onclick="addToList(this);"><br>
-                            <label for="우유">우유</label><br>
-                            <input type="range"><br><p>2022년 12월 29일</p>
-                        </li>
-                        <li>
-                            <input type="checkbox" name="ingd" value="새송이버섯" id="새송이버섯" onclick="addToList(this);"><br>
-                            <label for="새송이버섯">새송이 버섯</label>
-                            <input type="range"><br><p>2022년 12월 29일</p>
-                        </li>
-                    </ul>
-                    <ul>
-                        <li>
-                            <input type="checkbox" name="ingd" value="양파" id="양파2" onclick="addToList(this);"><br>
-                            <label for="양파2">양파2</label><br>
-                            <input type="range"><br><p>2022년 12월 29일</p>
-                        </li>
-                        <li>
-                            <input type="checkbox" name="ingd" value="아스파라거스" id="아스파라거스2" onclick="addToList(this);"><br>
-                            <label for="아스파라거스2">아스파라거스2</label>
-                            <input type="range"><br><p>2022년 12월 29일</p>
-                        </li>
-                        <li>
-                            <input type="checkbox" name="ingd" value="우유" id="우유2" onclick="addToList(this);"><br>
-                            <label for="우유2">우유2</label><br>
-                            <input type="range"><br><p>2022년 12월 29일</p>
-                        </li>
-                        <li>
-                            <input type="checkbox" name="ingd" value="새송이버섯" id="새송이버섯2" onclick="addToList(this);"><br>
-                            <label for="새송이버섯2">새송이 버섯2</label>
-                            <input type="range"><br><p>2022년 12월 29일</p>
-                        </li>
-                    </ul>                                                    
-                </form>
+                        <%for(let i=0; i<fresh_list.length; i++){%>
+                            <%if(i%4==0){%>
+                            </ul>
+                            <ul>
+                            <li>
+                                <input type="checkbox" name="ingd" value="<%=fresh_list[i].fresh_name%>" id="<%=fresh_list[i].fresh_name%>" onclick="addToList(this);"><br>
+                                <label for="<%=fresh_list[i].fresh_name%>"><%=fresh_list[i].fresh_name%></label><br>
+                                <input type="range" value="<%=fresh_list[i].fresh_range%>"><br><p><%=fresh_list[i].fresh_expire%></p>
+                                <button type="button" value="<%=fresh_list[i].fresh_name%>" onclick="updateIngd(this);">수정</button>
+                            </li>
+                            <%}else{%>
+                            <li>
+                                <input type="checkbox" name="ingd" value="<%=fresh_list[i].fresh_name%>" id="<%=fresh_list[i].fresh_name%>" onclick="addToList(this);"><br>
+                                <label for="<%=fresh_list[i].fresh_name%>"><%=fresh_list[i].fresh_name%></label><br>
+                                <input type="range" value="<%=fresh_list[i].fresh_range%>"><br><p><%=fresh_list[i].fresh_expire%></p>
+                                <button type="button" value="<%=fresh_list[i].fresh_name%>" onclick="updateIngd(this);">수정</button>
+                            </li>
+                            <%}%>
+                        <%}%>                                                   
+                    </form>
+                    </div>
 
                 <!-- 선택한 장바구니 식재료 리스트 -->
-                <div class="col-5">
+                <div class="col-4">
                     <div class="outline basket_outline d-flex justify-content-center">
                         <img src="/static/img/basket.png" class="w-50" alt="This is a cart image">
+                    </div>
+                    <div class="col-4 checked_ingd_list">
+
                     </div>
                 </div>
             </div>
         <!-- 하단 btn -->
             <div class="row btn_row pt-5 pb-5">
-                <div class="ingd_btn_row col-7">
+                <div class="ingd_btn_row col-8">
                     <button type="button" class="addIngd_btn me-3" id="addIngd" onclick="addIngd();">추가</button>        
                     <button type="button" class="updateIngd_btn" id="updateIngd">변경</button>         
                     <button type="button" class="deleteIngd_btn ms-3" id="deleteIngd">제거</button>
                 </div>
-                <div class="recipe_btn_row col-5">
-                    <button type="button" class="resultRecipe_btn" onclick="resultRecipe();">레시피 확인하기</button>
+                <div class="recipe_btn_row col-4">
+                    <button type="button" class="resultRecipe_btn" id="resultRecipe" onclick="resultRecipe();">레시피 확인하기</button>
                 </div> 
             </div>                          
         </div>
@@ -117,23 +87,24 @@
         }
 
         // 식재료 추가 btn
+
         var ingdName, ingdRange=100, ingdExpire;
         function addIngd(){
-                var form = document.createElement("div");
+                var addIngd_input = document.createElement("div");
                 var date = new Date();
                 var today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
-                    form.innerHTML = `
+                    addIngd_input.innerHTML = `<form id=addIngd_input_form>
                     <span>식재료 이름 : </span>
                     <input type="text" id=ingdName" oninput="changeName(this.value);"><br><br>
                     <span id="tfIngdRange">100%</span><br>
                     <input style="width:60%;" type="range" id="ingdRange" value=100 step=50 min=0 max=100
                         onchange="changeRange(this.value);" oninput="window.changeRange(this.value);"><br><br>
                     <span id="tfIngdExpire">유통기한 : </span>
-                    <input type="date" id="ingdExpire" min=${today}" oninput="changeExpire(this.value);"><br>`;                          
+                    <input type="date" id="ingdExpire" min=${today}" oninput="changeExpire(this.value);"><br></form>`;                          
             swal({
                 title: '보관할 식재료의 정보를 알려주세요',
                 text: '최초 입력시 수량은 100%로 설정해주세요',
-                content: form,
+                content: addIngd_input,
                 buttons : {
                     catch : {text:"추가", value:"confirmed" },
                     cancel : "취소",
@@ -149,15 +120,14 @@
                             expire : ingdExpire
                         }
                     }).then((response)=>{
-                        console.log(response.data);
-
-
-                    
+                        console.log('post addIngd response.data : ', response.data);
+                        window.location.href="/foods/"; 
                 })}
             })
         }
 
         // 식재료 입력값 변수 할당        
+        
         window.changeRange = function (value){
             var tfIngdRange = document.getElementById("tfIngdRange");
             tfIngdRange.innerHTML = value + "%";
