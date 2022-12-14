@@ -1,9 +1,68 @@
 <%-include('../main/head.ejs') %>
-
+<link href="static/css/recipe/recipe.css" rel="stylesheet">
+<script src="static/script/recipe/recipe.js"></script>
 <%-include('../main/header.ejs') %>
+<div class="container-fluid" id="filter">
+    <div class="container" id="filter_box">
+      <button class="btn">반찬</button>
+      <button class="btn">밥</button>
+      <button class="btn">국/탕</button>
+      <button class="btn">건강/웰빙</button>
+      <button class="btn">야식</button>
+    </div>
+</div>
 <main>
-    <div class="container" style="background-color: skyblue;">
-       레시피 추천 페이지
-       <%=data.user_id%>
+  <div class="grid container">
+      <div class="grid-item">
+        <img src="https://recipe1.ezmember.co.kr/cache/recipe/2022/11/15/9e01753c1b0f35315692fd5c984db4be1_m.jpg"/>
+        <div class="recipe_detail">
+          <div class="btns">
+            <button class="btn show_recipe" type="button">레시피보기</button>
+            <button class="btn show_cook" type="button">요리하기</button>
+          </div>
+          <div class="title">제목이 들어갈 자리입니다.
+          </div>
+        </div>
+        <!--재료, 시간-->
+        <div class="ingd_time">
+          <div><i class="fas fa-regular fa-bowl-food"></i> : 아스파라거스, 꽃등심, 우유, 달걀</div>
+          <div><i class="fa-regular fa-clock"></i> : 30분이내</div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <img src="https://recipe1.ezmember.co.kr/cache/recipe/2022/12/08/bee55782d741a15d576e72693333352d1.jpg" />
+        <div class="title">제목이 들어갈 자리입니다.</div>
+      </div>
+      <div class="grid-item">
+        <img src="https://recipe1.ezmember.co.kr/cache/recipe/2022/12/14/39461c6a0cf25b9f352b851d071506351_m.jpg" />
+        <div class="title">fspekpgkspegkespgkpp제목이 들어갈 자리입니다.</div>
+      </div>
+      <div class="grid-item">
+        <img src="https://recipe1.ezmember.co.kr/cache/recipe/2018/07/07/784b7e46b2cb23659576da8cd0df5bde1_m.jpg" />
+        <div class="title">제목이 들어갈 자리입니다.</div>
+      </div>
+      <div class="grid-item">
+        <img src="https://i.postimg.cc/zvyyDzqP/5.png" />
+        <div class="title">제목이 들어갈 자리입니다.</div>
+      </div>
+      <div class="grid-item">
+        <img src="https://i.postimg.cc/BZz3Jy9S/custom1.png" />
+        <div class="title">fspekpgkspegkespgkpp제목이 들어갈 자리입니다.</div>
+      </div>
+      <div class="grid-item">
+        <img src="https://i.postimg.cc/XYTgXByp/calendar1.png" />
+        <div class="title">제목이 들어갈 자리입니다.</div>
+      </div>
+      <div class="grid-item">
+        <img src="https://i.postimg.cc/BZz3Jy9S/custom1.png" />
+        <div class="title">fspekpgkspegkespgkpp제목이 들어갈 자리입니다.</div>
+      </div>
+      <div class="grid-item">
+        <img src="https://i.postimg.cc/XYTgXByp/calendar1.png" />
+        <div class="title">제목이 들어갈 자리입니다.</div>
+      </div>
+      <!--grid-item-->
+  </div>
+  <!--grid container-->
 </main>
 <%-include('../main/footer.ejs') %>
