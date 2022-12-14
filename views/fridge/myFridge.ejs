@@ -1,6 +1,14 @@
 <%-include('../main/head.ejs') %>
 
     <link href="static/css/fridge/myFridge.css" rel="stylesheet">
+    <script>
+    //임의의 data
+    const fresh_example = {
+        fresh_name : "저지방 우유",
+        fresh_expire : "2022-12-29",
+        fresh_range : 100
+    }
+    </script>
     
 <%-include('../main/header.ejs') %>
 <main>
@@ -14,12 +22,13 @@
             
             <div class="row">
                 <!-- 냉장고 내부 식재료 리스트 -->
-                <form class="ingd_form outline fridge_outline col-7">
+                <form class="outline fridge_outline col-7" id="ingd_form">
                     <ul>
                         <li>
                             <input type="checkbox" name="ingd" value="양파" id="양파" onclick="addToList(this);"><br>
                             <label for="양파">양파</label><br>
                             <input type="range"><br><p>2022년 12월 29일</p>
+                            <button type="button" value="양파" onclick="updateIngd(this);">수량 변경</button>
                         </li>
                         <li>
                             <input type="checkbox" name="ingd" value="아스파라거스" id="아스파라거스" onclick="addToList(this);"><br>
@@ -71,27 +80,20 @@
         <!-- 하단 btn -->
             <div class="row btn_row pt-5 pb-5">
                 <div class="ingd_btn_row col-7">
-                    <button type="button" class="addIngd_btn me-3" onclick="">추가</button>        
-                    <button type="button" class="updateIngd_btn" onclick="">변경</button>         
-                    <button type="button" class="deleteIngd_btn ms-3" onclick="">제거</button>
+                    <button type="button" class="addIngd_btn me-3" id="addIngd" onclick="addIngd();">추가</button>        
+                    <button type="button" class="updateIngd_btn" id="updateIngd">변경</button>         
+                    <button type="button" class="deleteIngd_btn ms-3" id="deleteIngd">제거</button>
                 </div>
                 <div class="recipe_btn_row col-5">
-                    <button type="button" class="resultRecipe_btn" onclick="resultRecipe();">Recipe</button>
+                    <button type="button" class="resultRecipe_btn" onclick="resultRecipe();">레시피 확인하기</button>
                 </div> 
             </div>                          
         </div>
     </div>
 
-  
-   
-    <script>
-        //임의의 value
-        const fresh_example = {
-            fresh_name : "양파",
-            fresh_expire : "2022-12-29",
-            fresh_range : 100
-        }
 
+    <script>
+       
         $(".ingd_form input[type=range]").attr({ step:50 });
         $(".ingd_form input[type=range]").addClass("form-range");
 
@@ -113,6 +115,102 @@
                 }
             }
         }
+
+        // 식재료 추가 btn
+        var ingdName, ingdRange=100, ingdExpire;
+        function addIngd(){
+                var form = document.createElement("div");
+                var date = new Date();
+                var today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
+                    form.innerHTML = `
+                    <span>식재료 이름 : </span>
+                    <input type="text" id=ingdName" oninput="changeName(this.value);"><br><br>
+                    <span id="tfIngdRange">100%</span><br>
+                    <input style="width:60%;" type="range" id="ingdRange" value=100 step=50 min=0 max=100
+                        onchange="changeRange(this.value);" oninput="window.changeRange(this.value);"><br><br>
+                    <span id="tfIngdExpire">유통기한 : </span>
+                    <input type="date" id="ingdExpire" min=${today}" oninput="changeExpire(this.value);"><br>`;                          
+            swal({
+                title: '보관할 식재료의 정보를 알려주세요',
+                text: '최초 입력시 수량은 100%로 설정해주세요',
+                content: form,
+                buttons : {
+                    catch : {text:"추가", value:"confirmed" },
+                    cancel : "취소",
+                } 
+            }).then((value)=>{
+                if(value=="confirmed"){
+                axios({
+                        method : "post",
+                        url : "/myFridge/addIngd",
+                        data : {
+                            name : ingdName,
+                            range : ingdRange,
+                            expire : ingdExpire
+                        }
+                    }).then((response)=>{
+                        console.log(response.data);
+
+
+                    
+                })}
+            })
+        }
+
+        // 식재료 입력값 변수 할당        
+        window.changeRange = function (value){
+            var tfIngdRange = document.getElementById("tfIngdRange");
+            tfIngdRange.innerHTML = value + "%";
+            ingdRange = value;
+        }
+        function changeName(value){
+            ingdName = value;
+        }
+        function changeExpire(value){
+            ingdExpire = value;
+        }
+
+
+        // 식재료 수정 btn
+        function updateIngd( update_ingd_name, update_ingd_range ){
+            const ingdName = update_ingd_name;
+            const inputValue = update_ingd_range;
+            
+            Swal.fire({
+            title: `냉장고에 남은 ${update_ingd_name}은 얼마인가요?`,
+            html: `
+            <input
+                type="number"
+                value="${inputValue}"
+                step="50"
+                class="swal2-input"
+                id="range-value">`,
+            input: 'range',
+            inputValue,
+            inputAttributes: {
+                min: 0,
+                max: 100,
+                step: 50
+            },
+            didOpen: () => {
+            const inputRange = Swal.getInput();
+            const inputNumber = Swal.getHtmlContainer().querySelector('#range-value');
+
+            // remove default output
+                inputRange.nextElementSibling.style.display = 'none'
+                inputRange.style.width = '100%'
+
+            // sync input[type=number] with input[type=range]
+                inputRange.addEventListener('input', () => {
+                inputNumber.value = inputRange.value
+            })
+
+            // sync input[type=range] with input[type=number]
+                inputNumber.addEventListener('change', () => {
+                inputRange.value = inputNumber.value
+            })
+            }
+        })}
 
         // 선택한 식재료 포함된 레시피 SELECT
         function resultRecipe(){
