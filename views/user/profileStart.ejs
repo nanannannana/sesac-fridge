@@ -22,14 +22,17 @@
             <div id="profile_box" class="h-50 pt-5">
                 <p id="profile_box_text" style="font-weight:bold;">비밀번호</p>
                 <p id="profile_box_text">를 입력해주세요!</p>
+                <form id="form_hidden" method="post" action="/myPage/profileEdit">
+                    <input type="hidden" type="text" name="hidden_id" value="id">
+                </form>
                 <form id="form_profile">
                     <div id="id_box">
-                        <sapn>ID </sapn><input type="text" name="id" value="id" readonly>
+                        <sapn>이메일 </sapn><input type="email" name="user_id" value="id" readonly>
                     </div>
                     <div id="pw_box" class="mt-2">
-                        <sapn>PW </sapn><input type="password" name="pw">
+                        <sapn>비밀번호 </sapn><input type="password" name="user_pw">
                     </div>
-                    <button type="button" id="button" class="btn mt-3">확인</button>
+                    <button type="button" id="button" class="btn mt-3" onclick="pw_confirm()">확인</button>
                 </form>
             </div>
             </div>

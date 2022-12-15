@@ -1,0 +1,14 @@
+#text_box {
+    padding-top:30%;
+    text-align: center;
+}
+#text_box > div:nth-child(1), #text_box > div:nth-child(2), #text_box > div:nth-child(3) {
+    font-size: 50px;
+}
+#text_box > div:nth-child(4) {
+    color: var(--btn-warn);
+    font-weight: bold;
+}
+#text_box > div:nth-child(5) {
+    font-size: 20px;
+}
