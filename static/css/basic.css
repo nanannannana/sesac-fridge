@@ -19,3 +19,15 @@
 button {
     border : none;
 }
+
+/* header 부분 */
+#header_box {
+    margin-left: 150px;
+    margin-right: 150px;
+}
+
+/* 임시 logo사이즈 및 굵기 지정 */
+#logo_text {
+    font-family: 'NanumSquareAceb';
+    font-size: 30px;
+}

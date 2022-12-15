@@ -11,6 +11,13 @@ exports.getProfileStart = function(req,res) {
     res.render("user/profileStart")
 }
 // 회원정보 수정
-exports.getProfileEdit = function(req,res) {
+exports.postProfileEdit = function(req,res) {
     res.render("user/profileEdit")
+}
+// 회원탈퇴 렌더
+exports.postProfileDel = function(req,res) {
+    res.render("user/profileDel");
+}
+exports.deleteProfileDel = function(req,res) {
+    res.send(true);
 }

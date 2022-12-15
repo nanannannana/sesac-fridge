@@ -7,6 +7,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding-top: 100px;
+    padding-bottom: 100px;
 }
 #profile_box > div {
     text-align: left;
@@ -14,6 +16,7 @@
 }
 #profile_box > div > span {
     font-family: 'NanumSquareAceb';
+    font-size: 20px;
 }
 
 #button_del {

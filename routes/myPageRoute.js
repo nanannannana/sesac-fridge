@@ -9,6 +9,10 @@ router.get("/wishList", myPage.getWishList);
 // 회원정보 렌더
 router.get("/profile", myPage.getProfileStart);
 // 회원정보 수정
-router.get("/profileEdit", myPage.getProfileEdit);
+router.post("/profileEdit", myPage.postProfileEdit);
+// 회원탈퇴 렌더
+router.post("/profileDel", myPage.postProfileDel);
+// 회원탈퇴 완료
+router.delete("/profileDel", myPage.deleteProfileDel);
 
 module.exports = router;
