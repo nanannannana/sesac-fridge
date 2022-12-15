@@ -1,9 +1,7 @@
 <%-include('../main/head.ejs')%>
-
 <link rel="stylesheet" type="text/css" href="/static/css/user/myPageBasic.css">
-<link rel="stylesheet" type="text/css" href="/static/css/user/profileStart.css">
-<link rel="stylesheet" type="text/javascript" href="/static/script/user/profileStart.js">
-
+<link rel="stylesheet" type="text/css" href="/static/css/user/profileEdit.css">
+<script type="text/javascript" src="/static/script/user/profileEdit.js"></script>
 <%-include('../main/header.ejs')%>
 <main>
     <div id="main_background" class="container text-center">
@@ -15,13 +13,28 @@
             </div>
             <div class="col-1"></div>
             <div id="out_box2" class="col-8">
-            <div id="title_box">
-                <p id="title_box_text" style="font-weight:bold;">김새싹님</p>
-                <p id="title_box_text" >의 회원정보</p>
-            </div>
-            <div>
-                id/pw/name/phonenum
-            </div>
+                <div id="title_box">
+                    <p id="title_box_text" style="font-weight:bold;">김새싹님</p>
+                    <p id="title_box_text" >의 회원정보</p>
+                </div>
+                <form id="form_profile" class="h-75 pt-5">
+                    <div id="profile_box" class="h-75">
+                        <div>
+                            <span>이메일: </span><input type="email" name="user_id" value="아이디" readonly>
+                        </div>
+                        <div>
+                            <span>비밀번호: </span><input type="password" name="user_pw">
+                        </div>
+                        <div>
+                            <span>이름: </span><input type="text" name="user_name">
+                        </div>
+                        <div>
+                            <span>휴대번호: </span><input type="text" name="user_phone">
+                        </div>
+                    </div>
+                    <button type="button" id="button_del" class="btn mt-4 me-5" style="float:right;">탈퇴하기</button>
+                    <button type="button" id="button" class="btn mt-4 me-2" style="float:right;">수정완료</button>
+                </form>
             </div>
         </div>
     </div>

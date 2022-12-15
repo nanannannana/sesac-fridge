@@ -25,15 +25,6 @@
     font-size: 25px;
 }
 
-#button {
-    background-color: #ffffff;
-    color: var(--btn-success);
-    border: 1px solid var(--btn-success);
-}
-#button:hover {
-    background-color: var(--btn-success);
-    color: #ffffff;
-}
 #idpw_find, #idpw_find:active:visited {
     display: block;
     font-size: 12px;

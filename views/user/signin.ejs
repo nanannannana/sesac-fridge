@@ -1,6 +1,7 @@
 <%-include('../main/head.ejs') %>
+<link rel="stylesheet" type="text/css" href="/static/css/user/myPageBasic.css">
 <link rel="stylesheet" type="text/css" href="/static/css/user/signIn.css">
-<link rel="stylesheet" type="text/css" href="/static/script/user/signIn.js">
+<script type="text/javascript" src="static/script/user/signIn.js"></script>
 </head>
 <body id="body_background">
     <header>
@@ -12,16 +13,15 @@
               <h5 id="signin_title" class="card-title">로그인</h5>
               <h6 class="card-subtitle mb-2 text-muted mb-3">이메일과 비밀번호를 입력하세요</h6>
               <p class="card-text">
-                <form>
+                <form id="form_signin">
                     <span>이메일 </span><input type="email" name="user_id" placeholder="이메일"><br>
                     <span>비밀번호 </span><input class="mt-2" type="password" name="user_pw" placeholder="비밀번호">
-                    <button type="button" id="button" class="btn mt-3 mb-3">로그인</button>
+                    <button type="button" id="button" class="btn mt-3 mb-3" onclick="signin()">로그인</button>
                 </form>
                 <a id="idpw_find" href="#">아이디/비밀번호 찾기</a>
               </p>
             </div>
         </div>
     </div>
-    
 </body>
 </html>
