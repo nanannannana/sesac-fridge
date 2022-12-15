@@ -1,52 +1,96 @@
-.main { 
+.d_none {display: none;}
+
+.myFridgePage_main { 
     background-color: var(--main-yellow);
 }
+
+.grid_box { border: 1px solid green;}
+
+.myFridgePage_box { min-height: 1440px; }
 
 /* 페이지 타이틀 */
 .myFridge_title { text-align: center; font-size: xx-large; font-weight: bold;}
 
-/* 냉장고 & 장바구니 위치 정렬 */
-.outline {
+
+/* 냉장고&장바구니 박스 */
+.top_row {margin: 0;}
+
+/* 냉장고 버튼 & 레시피 버튼 박스 */
+.bottom_row {margin-bottom: 0;}
+
+ /* 냉장고 내부 전체*/
+.fridge_box {
+    background-color: white;
+    min-height : 700px;
+    overflow-y: auto;
+}
+
+ /* 냉장고 내부 식재료 박스
+.fridge_ingd_list_box {
     display: table;
     table-layout: fixed;
     margin: 0 auto;
-}
-
- /* 냉장고 내부 전체*/
-.fridge_outline {
-    background-color: white;
     overflow-y: auto;
 }
+
 /* 냉장고 내부 식재료 행 */
-#ingd_form ul {
+/* #ingd_form ul {
     display: table-row;
     text-align: center;
     border-bottom: 2px solid black;
-}
+    margin: 0; padding: 0;
+} */
 /* 냉장고 내부 식재료 개별 요소 */
-#ingd_form li {
+/* #ingd_form li {
     display: table-cell;    
     vertical-align: middle;
     list-style-type: none;
     font-size: 20px;
     font-weight: bold;
+} */ 
+
+ /* 냉장고 내부 식재료 박스*/
+.fridge_ingd_list_box {
+    height : 100%;
 }
+
+/* 냉장고 내부 식재료 개별 요소 */
+#ingd_form>div{
+    display: inline-block;
+    list-style-type: none;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin : 5px; padding: 5px;
+}
+
+#ingd_form label {
+    margin: 10px;
+    cursor: pointer;
+}
+
 /* 식재료 유통기한 */
 #ingd_form p {
     font-size : 10px;
 }
+
+#ingd_form input[type=checkbox] {
+    transform : scale(1.5);
+    cursor: pointer;
+}
+
 /* 식재료 수량 range bar*/
 #ingd_form input[type=range] {
-    cursor: pointer;
-    width: 70%;
-    margin-top: 10px;
+    width: 90%;
 }
+
 /* 식재료 수량 range thumb */
 #ingd_form input[type=range]::-ms-range-thumb {
     -ms-appearance: none;
     background-color: var(--btn-success);
 }
 
+/* 식재료 수량 변경 btn */
 #ingd_form button {
     width: 60px; height: 30px;
     border-radius: 10px;
@@ -62,8 +106,20 @@
     transform: translateY(2px);
 }
 
+/* 장바구니 식재료 리스트 박스 */
+#basket_ingd_list_box {
+    display: flex;
+    padding-top: 10px;
+}
+#basket_ingd_list_box p {
+    display: inline-block;
+    width :50%;
+    font-size: 24px;
+    font-weight: bolder;
+}
+
 /* 페이지 하단 btn 공통 적용 */
-.btn_row button {
+.bottom_row button {
     box-shadow: 0 2px 4px darkslategrey;
     border : none;
     cursor: pointer;
@@ -71,15 +127,15 @@
     z-index: 1;
 }
 /* 페이지 하단 버튼 클릭시 */
-.btn_row button:active {
+.bottom_row button:active {
     box-shadow: 0 0 2px darkslategray;
     transform: translateY(2px);
 }
 
 /* 버튼 위치 정렬 */
-.btn_row>div{ display:flex; align-items: center;}
-.ingd_btn_row { justify-content: space-around;}
-.recipe_btn_row {justify-content: center;}
+.bottom_row>div{ display:flex; align-items: center;}
+.fridge_btn_box { justify-content: space-around;}
+.recipe_btn_box {justify-content: center;}
 
 /* 냉장고 버튼 모양 */
 #addIngd, #updateIngd, #deleteIngd {

@@ -31,10 +31,10 @@ exports.postResultRecipe = (req,res) => {
 exports.postAddIngd = async (req,res)=>{
     console.log( " postAddIngd req.body : ", req.body );
     let data = {
-        fresh_name : req.body.ingdName,
-        fresh_range : req.body.ingdRange,
-        fresh_expire : req.body.ingdExpire
-    };
+        fresh_name : req.body.name,
+        fresh_range : req.body.range,
+        fresh_expire : req.body.expire
+    }
 
     let result = await fresh.create(data);
     console.log( "postAddIngd result : ", result);
