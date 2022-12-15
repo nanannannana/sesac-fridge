@@ -1,4 +1,4 @@
-function signup {
+function signup() {
     var form = document.getElementById("form_signup");
     var data = {
         user_id: form.user_id.value,
@@ -11,14 +11,8 @@ function signup {
         url: "/signup",
         data: data
     })
-    .then(function() {
-        Swal.fire({
-            icon: 'success',
-            title: '회원가입이 완료되었습니다!',
-            text: '확인 버튼 클릭 시 로그인 창으로 넘어갑니다.',
-            showConfirmButton: true,
-            confirmButtonText: 확인,
-            timer: 1500
-        })
+    .then(async function() {
+        await swal("Good job!", "You clicked the button!", "success");
+        location.href="/signin";
     })
 }

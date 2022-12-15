@@ -1,7 +1,7 @@
 #profile_box {
     background-color: white;
-    border-radius: 7%;
-    box-shadow: 0px 0px 24px #efefef;
+    border-radius: 3%;
+    box-shadow: 0px 0px 15px #efefef;
 }
 #profile_box_text {
     display: inline-block;
@@ -9,13 +9,4 @@
 }
 #form_profile > #id_box, #pw_box {
     font-weight: bold;
-}
-#button {
-    background-color: #ffffff;
-    color: var(--btn-success);
-    border: 1px solid var(--btn-success);
-}
-#button:hover {
-    background-color: var(--btn-success);
-    color: #ffffff;
 }
