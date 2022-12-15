@@ -52,11 +52,22 @@
 }
 
 /*레시피 카드 안에 버튼*/
-.show_recipe {
+/* .show_recipe {
     background-color: var(--btn-success);
 }
 .show_cook {
-    background-color: var(--point-coral);
+    background-color: var(--btn-warn);
+} */
+
+.show_recipe, .show_cook {
+    background-color: var(--btn-success);
+    color: white;
+    border: 1px solid var(--btn-success);
+}
+
+.show_recipe:hover , .show_cook:hover {
+    background-color: var(--btn-success);
+    color: #ffffff;
 }
 
 /* white-space: nowrap;
