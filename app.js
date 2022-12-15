@@ -1,6 +1,10 @@
 const express = require("express");
 const app = express();
 const port = 8080;
+const dotenv = require('dotenv');
+
+dotenv.config(); 
+console.log( process.env.PORT );
 
 app.use("/static", express.static("static"));
 
