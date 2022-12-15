@@ -17,8 +17,8 @@
                     <p id="title_box_text" style="font-weight:bold;">김새싹님</p>
                     <p id="title_box_text" >의 회원정보</p>
                 </div>
-                <form id="form_profile" class="h-75 pt-5">
-                    <div id="profile_box" class="h-75">
+                <form id="form_profile" class="h-50">
+                    <div id="profile_box" class="h-100">
                         <div>
                             <span>이메일: </span><input type="email" name="user_id" value="아이디" readonly>
                         </div>
@@ -32,11 +32,14 @@
                             <span>휴대번호: </span><input type="text" name="user_phone">
                         </div>
                     </div>
-                    <button type="button" id="button_del" class="btn mt-4 me-5" style="float:right;">탈퇴하기</button>
+                    <button type="button" id="button_del" class="btn mt-4 me-4" style="float:right;" onclick="profile_del()">탈퇴하기</button>
                     <button type="button" id="button" class="btn mt-4 me-2" style="float:right;">수정완료</button>
                 </form>
             </div>
         </div>
     </div>
 </main>
+<form id="form_hidden" method="post" action="/myPage/profileDel">
+    <input type="hidden" name="user_id" value="아이디">
+</form>
 <%-include('../main/footer.ejs')%>

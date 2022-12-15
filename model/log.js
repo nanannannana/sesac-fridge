@@ -1,28 +1,27 @@
-const frozen = (Sequelize, DataTypes) => {
+const log = (Sequelize, DataTypes) => {
     return Sequelize.define(
-        "frozen",
+        "log",
         {
-            frozen_name : {
-                type : DataTypes.STRING(20),
-                allowNull : false,
-                primaryKey : true,
-            }, 
-            frozen_date : {
-                type : DataTypes.DATEONLY,
-                allowNull : false,
-                defaultValue : DataTypes.NOW,
-            },
-            frozen_range : {
+            log_id : {
                 type : DataTypes.INTEGER,
                 allowNull : false,
-                defaultValue : 100,
-            }
+                primaryKey : true,
+                autoIncrement : true,
+            }, 
+            recipe_recipe_id : {
+                type : DataTypes.INTEGER,
+                allowNull : false,
+            },
+            user_user_id : {
+                type : DataTypes.STRING(40),
+                allowNull : false,
+            },
         },
         {
             charset: 'utf8mb4',
             collate: 'utf8mb4_unicode_ci',
             underscored: true, // 카멜표기법 -> 스네이크로
-            tableName : "frozen",
+            tableName : "log",
             freezeTableName : true,
             timestamps : false,
             paranoid: false, // true : deletedAt이라는 컬럼이 생기고 지운 시각이 기록
@@ -30,4 +29,4 @@ const frozen = (Sequelize, DataTypes) => {
     )
 }
 
-module.exports = frozen;
+module.exports = log;
