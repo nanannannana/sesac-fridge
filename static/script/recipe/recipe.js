@@ -1,7 +1,9 @@
 $(function(){
     $(".grid").masonry({
-    columnWidth: 70,
-    itemSelector: '.grid-item',
+        columnWidth: 70,
+        itemSelector: '.grid-item',
+        horizontalOrder: true,
+        transitionDuration: '0.2s'
     });
 
 })
