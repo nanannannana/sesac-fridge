@@ -12,8 +12,12 @@ const recipe = (Sequelize, DataTypes) => {
                 type : DataTypes.STRING(50),
                 allowNull : false,
             },
-            recipe_ingd : {
+            recipe_url : {
                 type : DataTypes.STRING(50),
+                allowNull : false,
+            },
+            recipe_ingd : {
+                type : DataTypes.STRING(40),
                 allowNull : false,
             },
             recipe_time : {
@@ -21,7 +25,7 @@ const recipe = (Sequelize, DataTypes) => {
                 allowNull : false,
             },
             recipe_img : {
-                type : DataTypes.BLOB,
+                type : DataTypes.STRING(100),
                 allowNull : false,
             },
             recipe_tag : {
