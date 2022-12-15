@@ -1,45 +1,68 @@
-.main { background-color: var(--main-yellow);}
+.main { 
+    background-color: var(--main-yellow);
+}
 
+/* 페이지 타이틀 */
 .myFridge_title { text-align: center; font-size: xx-large; font-weight: bold;}
 
+/* 냉장고 & 장바구니 위치 정렬 */
 .outline {
     display: table;
     table-layout: fixed;
     margin: 0 auto;
 }
 
+ /* 냉장고 내부 전체*/
 .fridge_outline {
     background-color: white;
+    overflow-y: auto;
 }
-
-.fridge_outline ul {
+/* 냉장고 내부 식재료 행 */
+#ingd_form ul {
     display: table-row;
     text-align: center;
     border-bottom: 2px solid black;
 }
-.fridge_outline li {
+/* 냉장고 내부 식재료 개별 요소 */
+#ingd_form li {
     display: table-cell;    
     vertical-align: middle;
     list-style-type: none;
     font-size: 20px;
     font-weight: bold;
 }
-
-.fridge_outline p {
+/* 식재료 유통기한 */
+#ingd_form p {
     font-size : 10px;
 }
-
-.fridge_outline input[type=range] {
+/* 식재료 수량 range bar*/
+#ingd_form input[type=range] {
     cursor: pointer;
     width: 70%;
     margin-top: 10px;
 }
-
-.fridge_outline input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
+/* 식재료 수량 range thumb */
+#ingd_form input[type=range]::-ms-range-thumb {
+    -ms-appearance: none;
     background-color: var(--btn-success);
 }
 
+#ingd_form button {
+    width: 60px; height: 30px;
+    border-radius: 10px;
+    margin: auto;
+    background-color: var(--btn-success);
+    border : none;
+    cursor: pointer;
+    color: white; font-size: 12px; font-weight: lighter;
+    z-index: 1;
+}
+#ingd_form button:active {
+    box-shadow: 0 2px 4px darkslategrey;
+    transform: translateY(2px);
+}
+
+/* 페이지 하단 btn 공통 적용 */
 .btn_row button {
     box-shadow: 0 2px 4px darkslategrey;
     border : none;
@@ -47,25 +70,26 @@
     color: white; font-size: 24px; font-weight: bolder;
     z-index: 1;
 }
-
+/* 페이지 하단 버튼 클릭시 */
 .btn_row button:active {
     box-shadow: 0 0 2px darkslategray;
     transform: translateY(2px);
 }
 
+/* 버튼 위치 정렬 */
 .btn_row>div{ display:flex; align-items: center;}
 .ingd_btn_row { justify-content: space-around;}
 .recipe_btn_row {justify-content: center;}
 
-
-.ingd_btn_row button {
+/* 냉장고 버튼 모양 */
+#addIngd, #updateIngd, #deleteIngd {
     width: 100px; height: 100px;
     border-radius: 70%;
     margin: auto;
     background-color: var(--btn-success);
 }
-
-.resultRecipe_btn {
+/* 레시피 버튼 모양 */
+#resultRecipe {
     width : 250px; height : 100px;
     border-radius: 20px;
     background-color: var(--btn-warn);
