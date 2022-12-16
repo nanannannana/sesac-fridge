@@ -27,17 +27,28 @@ exports.postResultRecipe = (req,res) => {
     res.send( true );
 }
 
-// 새로운 식재료 추가
-exports.postAddIngd = async (req,res)=>{
-    console.log( " postAddIngd req.body : ", req.body );
-    let data = {
-        fresh_name : req.body.name,
-        fresh_range : req.body.range,
-        fresh_expire : req.body.expire
-    }
-
+// 냉장실에 새로운 식재료 추가
+exports.postAddToFresh = async (req,res)=>{
+    console.log( " postAddToFresh req.body : ", req.body );
+        let data = {
+            fresh_name : req.body.name,
+            fresh_range : req.body.range,
+            fresh_expire : req.body.expire
+        }
     let result = await fresh.create(data);
-    console.log( "postAddIngd result : ", result);
+    console.log( "postAddToFresh result : ", result);
+    res.send( result );
+}
 
+// 냉동실에 새로운 식재료 추가
+exports.postAddToFrozen = async (req,res)=>{
+    console.log( " postAddToFrozen req.body : ", req.body );
+        let data = {
+            frozen_name : req.body.name,
+            frozen_date : req.body.date,
+            frozen_range : req.body.range
+        }
+    let result = await frozen.create(data);
+    console.log( "postAddToFrozen result : ", result);
     res.send( result );
 }

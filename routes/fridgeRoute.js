@@ -8,7 +8,9 @@ router.get("/", myFridge.getMyFridge);
 // 선택한 식재료 포함된 레시피 산출 - 영은
 router.post("/resultRecipe", myFridge.postResultRecipe);
 
-// 식재료 추가
-router.post("/addIngd", myFridge.postAddIngd);
+// 식재료 냉장고 추가
+router.post("/addToFresh", myFridge.postAddToFresh);
+router.post("/addToFrozen", myFridge.postAddToFrozen);
+
 
 module.exports = router;
