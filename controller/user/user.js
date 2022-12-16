@@ -5,9 +5,13 @@ exports.getSignin = function(req,res) {
     res.render("user/signIn");
 }
 exports.postSigninFlag = async function(req,res) {
-    let result = await user.findAll({where:{user_id:req.body.user_id}});
-    if (result.length>0) res.send(true)
-    else res.send(false);
+    if (req.body.signin_flag=="false") {
+        res.send(false);
+    } else if(req.body.user_id) {
+        let result = await user.findAll({where:{user_id:req.body.user_id, user_pw: req.body.user_pw}});
+        if (result.length>0) res.send(true)
+        else res.send(false);
+    }
 }
 
 // 회원가입 페이지 렌더

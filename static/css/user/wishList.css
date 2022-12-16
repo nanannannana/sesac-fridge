@@ -1,7 +1,33 @@
-#wishlist_box {
+#wishlist_card_box > div {
+    justify-content: space-between;
+}
+#wishlist_card_box > div > div  {
+    width:30%;
+    height:400px;
+}
+#wishlist_card_box > div > div > img {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+#wishlist_card_box > div > div:nth-child(1),
+#wishlist_card_box > div > div:nth-child(2),
+#wishlist_card_box > div > div:nth-child(3) {
+    margin-bottom: 70px;
+}
+
+#wishlist_box > nav {
+    margin-top: 40px;
+}
+#wishlist_box, #wishlist_card_box > div {
+    height:100%;
+}
+/* #wishlist_box {
     display: flex;
     justify-content: space-between;
 }
 #card {
     display: inline-block;
-}
+} */
