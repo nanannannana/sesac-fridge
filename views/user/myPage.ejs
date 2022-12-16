@@ -1,11 +1,71 @@
 <%-include('../main/head.ejs') %>
-
 <link rel="stylesheet" type="text/css" href="/static/css/user/myPageBasic.css">
 <link rel="stylesheet" type="text/css" href="/static/css/user/myPage.css">
-<link rel="stylesheet" type="text/javascript" href="/static/script/user/myPage.js">
-
+<script type="text/javascript" src="/static/script/user/myPage.js"></script>
 <%-include('../main/header.ejs') %>
 <main>
+    <div id="mypage_nav" class="container-fluid">
+        <div id="mypage_nav_textbox">
+            <span>나의 프로필 |</span>
+            <span> 찜리스트 |</span>
+            <span> 회원정보수정</span>
+        </div>
+    </div>
+    <div class="container">
+        <div id="chart_box">
+            <p id="box_title"><span>김새싹님</span>의 통계차트</p>
+            <div style="background-color:#b9b9b9; width:100%; height:200px;">차트</div>
+        </div>
+        <div id="recent_recipe_box">
+            <div id="recent_recipe_title_img">
+                <div id="recent_recipe_title_text">
+                    <span>최근 본</span>
+                    <span>레시피</span>
+                </div>
+            </div>
+            <div class="container" id="recent_recipe_card_box" style="margin-left: -5%;">
+                <div class="row" style="flex-direction: row-reverse;">
+                    <% for (var i=1 ; i<5 ; i++ ) { %>
+                        <div id="recent_recipe_card" class="card col-5">
+                            <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="card-link">Card link</a>
+                            <a href="#" class="card-link">Another link</a>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <div id="recent_cook_box">
+            <div id="recent_cook_title_img">
+                <div id="recent_cook_title_text">
+                    <span>최근에</span>
+                    <span>한 요리</span>
+                </div>
+            </div>
+            <div class="container" id="recent_cook_card_box" style="margin-right: -5%;">
+                <div class="row">
+                    <% for (var i=1 ; i<5 ; i++ ) { %>
+                        <div id="recent_recipe_card" class="card col-5">
+                            <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="card-link">Card link</a>
+                            <a href="#" class="card-link">Another link</a>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <div class="mt-5"></div>
+    </div>
+</main>
+<!-- <main>
     <div id="main_background" class="container text-center">
         <div class="row mx-4">
           <div id="out_box1" class="col-3 vh-100">
@@ -34,7 +94,7 @@
                     <h4 id="in_box1_title" class=" mb-4">최근 본 레시피</h4>
                     <% for (var i=1; i<5 ;i++) { %>
                     <div id="card" class="card text-bg-dark" style="width:180px; height:250px;">
-                        <!-- <img src="../../static/img/color_logo.png" class="card-img" style="width:150px; height: 150px;"> -->
+                        <img src="../../static/img/color_logo.png" class="card-img" style="width:150px; height: 150px;">
                         <div class="card-img-overlay">
                         <h5 class="card-title">Card title</h5>
                         <p class="card-text">요리제목</p>
@@ -47,7 +107,7 @@
                     <h4 id="in_box2_title" class=" mb-4">최근에 한 요리</h4>
                     <% for (var i=1; i<5 ;i++) { %>
                         <div id="card" class="card text-bg-dark" style="width:180px; height:250px;">
-                            <!-- <img src="../../static/img/color_logo.png" class="card-img" style="width:150px; height: 150px;"> -->
+                            <img src="../../static/img/color_logo.png" class="card-img" style="width:150px; height: 150px;">
                             <div class="card-img-overlay">
                             <h5 class="card-title">Card title</h5>
                             <p class="card-text">요리제목</p>
@@ -60,5 +120,5 @@
           </div>
       </div>
     </div>
-</main>
+</main> -->
 <%-include('../main/footer.ejs') %>

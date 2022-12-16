@@ -1,51 +1,43 @@
-#body_background {
+#background_img {
     height: 100vh;
     width: 100vw;
     background: no-repeat url("/static/img/fridge3.jpg") 0 / cover;
-    display: flex;
-    flex-direction: column;
+    position: absolute;
+    z-index:-1;
 }
-#logo_img {
-    display: block;
-}
-
-#signup_background {
+#signup_box {
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 80%;
 }
-#signup_card {
-    padding: 30px 10px 50px 0px;
-    background-color: var(--main-yellow);
+#btn_id_check, #button {
+    display: block;
+    width:100%;
 }
-#signup_title {
+#signup_title, #signup_side_title {
     font-family: 'NanumSquareAceb';
-    font-size: 25px;
-}
-#form_text {
-    text-align: left;
-    padding: 0px 0px 0px 85px;
-}
-#id_title, #pw_title, #name_title, #num_title {
-    font-family: 'NanumSquareAceb';
+    color: white;
+    text-shadow:0px 0px 3px #000;
 }
 #idpw_find, #idpw_find:active:visited {
     display: block;
     font-size: 12px;
+    font-family: 'NanumSquareAceb';
     text-align: right;
-    color: black;
+    color: white;
+    text-shadow:0px 0px 3px #000;
     text-decoration: none;
-    margin: 30px 30px 0px 0px;
+    /* margin: 30px 30px 0px 0px; */
 }
 
 #btn_id_check {
-    background-color: white;
-    border: 1px solid #b9b9b9;
-    color: #b9b9b9;
+    background-color: #b9b9b9;
+    color: white;
 }
 #btn_id_check:hover {
     background-color: #b9b9b9;
+    border: 1px solid #747474;
     color: #ffffff;
 }

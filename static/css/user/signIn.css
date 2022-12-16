@@ -1,15 +1,37 @@
-#body_background {
+#background_img {
     height: 100vh;
     width: 100vw;
     background: no-repeat url("/static/img/fridge3.jpg") 0 / cover;
+    position: absolute;
+    z-index:-1;
+}
+#signin_box {
+    height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-#logo_img {
+#button {
     display: block;
+    width:100%;
 }
-
-#signin_card {
+#signin_title, #signin_side_title {
+    font-family: 'NanumSquareAceb';
+    color: white;
+    text-shadow:0px 0px 3px #000;
+}
+#idpw_find, #idpw_find:active:visited {
+    display: block;
+    font-size: 12px;
+    font-family: 'NanumSquareAceb';
+    text-align: right;
+    color: white;
+    text-shadow:0px 0px 3px #000;
+    text-decoration: none;
+    /* margin: 30px 30px 0px 0px; */
+}
+/* #signin_card {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,4 +53,4 @@
     text-align: right;
     color: black;
     text-decoration: none;
-}
+} */

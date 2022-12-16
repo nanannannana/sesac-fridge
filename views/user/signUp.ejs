@@ -3,32 +3,27 @@
 <link rel="stylesheet" type="text/css" href="/static/css/user/signUp.css">
 <script type="text/javascript" src="static/script/user/signUp.js"></script>
 </head>
-<body id="body_background">
+<body>
+    <div id="background_img"></div>
     <header>
         <img src="/static/img/color_logo.png" id="logo_img" class="mt-2 ms-4" style="width:30px; float: left;">
     </header>
-    <div id="signup_background" class="controller">
-        <div id="signup_card" class="card text-center" style="width: 30rem;">
-            <div id="signup_card_body" class="card-body">
-              <div class="card-title">
-                <h5 id="signup_title" class="card-title mb-3">회원가입</h5>
-                <h6 class="card-subtitle mb-2 text-muted mb-5">정보를 모두 입력하고 회원가입 버튼을 눌러주세요.</h6>
-              </div>
-              <div class="card-text">
-                <form id="form_signup">
-                    <div id="form_text">
-                        <span id="id_title">이메일 </span><input type="email" name="user_id" placeholder="아이디">
-                        <button type="button" id="btn_id_check"class="btn" onclick="id_check()">중복확인</button><br>
-                        <span id="pw_title">비밀번호 </span><input class="mt-3" type="password" name="user_pw" placeholder="비밀번호"><br>
-                        <span id="name_title">이름 </span><input class="mt-3" type="text" name="user_name" placeholder="이름"><br>
-                        <span id="num_title">번호 </span><input class="mt-3" type="text" name="user_phone" placeholder="휴대폰 번호(10~11글자)"><br>
-                    </div>
-                    <button type="button" id="button" class="btn mt-5 mb-3" onclick="signup()">회원가입</button>
-                </form>
-                <a id="idpw_find" href="#">돌아가기</a>
-              </div>
-            </div>
-        </div>
+    <div id="signup_box">
+      <div class="text-center">
+        <h5 id="signup_title" class="mb-3" style="font-size:30px">회원가입</h5>
+        <h6 id="signup_side_title" class="mb-2 mb-5">정보를 모두 입력하고 회원가입 버튼을 눌러주세요.</h6>
+        <form id="form_signup">
+          <div id="form_text">
+              <input class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" type="email" name="user_id" placeholder="이메일('@'포함 입력)"><br>
+              <button type="button" id="btn_id_check" class="btn" onclick="id_check()">중복확인</button><br>
+              <input class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" type="password" name="user_pw" placeholder="비밀번호(영문, 숫자, 특수문자 중 2개 사용)"><br>
+              <input class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" type="text" name="user_name" placeholder="이름"><br>
+              <input class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" type="text" name="user_phone" placeholder="휴대폰 번호(10~11글자)"><br>
+          </div>
+          <button type="button" id="button" class="btn mb-3" onclick="signup()">회원가입</button>
+        </form>
+        <a id="idpw_find" href="http://localhost:8080/">돌아가기</a>
+      </div>
     </div>
 </body>
 </html>
