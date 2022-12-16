@@ -27,9 +27,30 @@ exports.postResultRecipe = (req,res) => {
     res.send( true );
 }
 
+// 입력한 식재료 중복여부 확인
+exports.postCheckIngdName = async (req, res)=>{
+    console.log("postCheckIngdName req.body:", req.body);
+
+    if(req.body.isFresh){
+        let result = await fresh.findOne({
+            where : {fresh_name : req.body.name}
+        });
+        console.log("check result : ", result );
+        if(result===null){ res.send(true);}
+        else{ res.send(false);}
+    }else{
+        let result = await frozen.findOne({
+            where : {frozen_name : req.body.name}
+        });
+        console.log("check result : ", result );
+        if(result===null){ res.send(true);}
+        else{ res.send(false);}
+    }
+}
+
 // 냉장실에 새로운 식재료 추가
 exports.postAddToFresh = async (req,res)=>{
-    console.log( " postAddToFresh req.body : ", req.body );
+    console.log( "postAddToFresh req.body : ", req.body );
         let data = {
             fresh_name : req.body.name,
             fresh_range : req.body.range,
@@ -42,7 +63,7 @@ exports.postAddToFresh = async (req,res)=>{
 
 // 냉동실에 새로운 식재료 추가
 exports.postAddToFrozen = async (req,res)=>{
-    console.log( " postAddToFrozen req.body : ", req.body );
+    console.log( "postAddToFrozen req.body : ", req.body );
         let data = {
             frozen_name : req.body.name,
             frozen_date : req.body.date,
@@ -51,4 +72,22 @@ exports.postAddToFrozen = async (req,res)=>{
     let result = await frozen.create(data);
     console.log( "postAddToFrozen result : ", result);
     res.send( result );
+}
+
+exports.deleteDeleteIngd = async (req,res)=>{
+    console.log( "postDeleteIngd req.body : ", req.body);
+
+    if(req.body.fridgeName == "fresh"){
+        let result = await fresh.destroy({ 
+            where : {fresh_name : req.body.name}
+        });
+        console.log('delete result : ', result);
+        res.send( req.body);
+    }else{ let result = await frozen.destroy({
+            where : { frozen_name : req.body.name}
+        });
+        console.log('delete result : ', result);
+        res.send( req.body);
+    }
+    
 }
