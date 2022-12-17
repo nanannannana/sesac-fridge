@@ -1,64 +1,15 @@
-// $(function(){
-//     // init Masonry
-//     var $grid = $('.grid');
-//     $grid.imagesLoaded(()=>{
-//         $grid.masonry({
-//             columnWidth: '.grid-item',
-//             itemSelector: '.grid-item',
-//             gutter: 10,
-//             horizontalOrder: true,
-//             transitionDuration: '0.2s',
-//         });
-//     });
-
-//     window.onscroll = () => {
-//         if((window.innerHeight + window.scrollY >= document.body.offsetHeight)) {
-//             alert("바닥");
-//             $grid.masonry("appended", "<h1>추가추가</h1>", true);
-//         }
-//     }
-
-    // window.onscroll = () => {
-    //     // window height + window scrollY 값이 document height보다 클 때,
-    //     if((window.innerHeight + window.scrollY >= document.body.offsetHeight)) {
-    //         console.log("바닥");
-    //         // for(var i=0; i<6; i++){
-    //             let addContent = "<div class='grid-item'>";
-    //             addContent += "<img src='https://recipe1.ezmember.co.kr/cache/recipe/2016/10/19/92c7f040e2595e5504b027a28f74959d1_m.jpg'>";
-    //             addContent += "<div class='title'>제목이 들어갈 자리입니다.</div></div>";
-    //         // }
-    //         // $(".grid").append(addContent);
-    //         $grid.append(addContent).masonry('appended', addContent, 'reload');
-    //     }
-    //     // if($(window).scrollTop()+200 >= $(document).height() - $(window).height){
-    //     //     alert("바닥");
-    //     // }
-    // }
-
+// 최근 본 레시피 클릭 시 log 테이블에 추가
+function insertLog(id, url) {
+    let recipe_id = id;
+    axios({
+        method : "post",
+        url : "/recipe/insertToLog",
+        data : { id : recipe_id },
+    }).then((res)=>{
+        console.log(res.data);
+    })
  
-    // window.onscroll = function(e) {
-    //     if($(window).scrollTop()+200>=$(document).height() - $(window).height()){
-    //         console.log("바닥");
-    //         if(!isFetching){
-    //             isFetching=true;
-    //             $("#loading").css("display","block");
-    //             console.log(isFetching);
-    //             logLists(); // 콘텐츠 추가
-    //         }
-    //     }
-    // };
-    
-
-// })
-// let msnry = new Masonry( '.grid', {
-//     itemSelector: '.grid-item',
-//     columnWidth: 200,
-//     gutter : 20,
-// });
-
-// imagesLoaded( '.grid' ).on( 'progress', function() {
-//     msnry.layout();
-// });
+}
 
 
 // function zeroFill(sVal, nCnt){ // zeroFill(값, 채울갯수)
@@ -83,4 +34,3 @@
 // 		itemSelector : 'img', // img 태그를 대상으로 masonry 적용
 // 		fitWidth : true // 내용물을 가운데 정렬하기, CSS margin:0 auto; 설정이 필요함
 // 	});
-// });
