@@ -9,11 +9,16 @@ router.get("/", myFridge.getMyFridge);
 router.post("/resultRecipe", myFridge.postResultRecipe);
 
 // 식재료 존재 여부 확인
-router.post("/checkIngdName", myFridge.postCheckIngdName);
+router.post("/checkFresh", myFridge.postCheckFresh);
+router.post("/checkFrozen", myFridge.postCheckFrozen);
 
 // 식재료 냉장고 추가
 router.post("/addToFresh", myFridge.postAddToFresh);
 router.post("/addToFrozen", myFridge.postAddToFrozen);
+
+// 식재료 입력값 수정
+router.patch("/updateFresh", myFridge.patchUpdateFresh);
+router.patch("/updateFrozen", myFridge.patchUpdateFrozen);
 
 // 냉장고에서 식재료 제거
 router.delete("/deleteIngd", myFridge.deleteDeleteIngd);

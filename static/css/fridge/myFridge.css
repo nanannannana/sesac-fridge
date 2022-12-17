@@ -36,11 +36,10 @@
 /* 냉장고 내부 식재료 개별 요소 */
 .fridge_ingd_box>div{
     display: inline-block;
-    list-style-type: none;
-    text-align: center;
-    font-size: 20px;
+    font-size : 20px;
     font-weight: bold;
-    margin : 5px; padding: 5px;
+    width :20%;
+    margin : 0.5em; padding: 0.5em;
 }
 
 .fridge_ingd_box label {
@@ -64,8 +63,8 @@
 }
 
 /* 식재료 수량 range thumb */
-.fridge_ingd_box input[type=range]::-ms-range-thumb {
-    -ms-appearance: none;
+.fridge_ingd_box input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
     background-color: var(--btn-success);
 }
 
@@ -85,21 +84,41 @@
     transform: translateY(2px);
 }
 
-/* 장바구니 식재료 리스트 박스 */
-#basket_ingd_list_box {
+/* 장바구니  박스 */
+.basket_box{
+    max-height : 100%;
     text-align: center;
+}
+.basket_img_box {
     padding-top: 20px;
 }
-#basket_ingd_list_box>div {
-    font-weight: bolder;
-    font-size: x-large;
+
+#basket_ingd_box {
+    height : 60%;
+    overflow-y: auto;
 }
-#basket_ingd_list_box>p {
+
+.basket_ingd {
     display: inline-block;
-    width :50%;
+    width :40%;
+    padding-top:1em;
+}
+
+#basket_ingd_box span {
     font-size: 24px;
     font-weight: bolder;
 }
+
+.basket_text, .warn_text {
+    font-weight: bolder;
+    font-size: x-large;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+/* 부트스트랩 아이콘 사이즈*/
+#basketArrow,#basketWarn {font-size: 3rem; display: block;} 
+#checkIcon {font-size: 2rem;}
 
 /* 페이지 하단 btn 공통 적용 */
 .bottom_row button {
@@ -134,5 +153,6 @@
     border-radius: 20px;
     background-color: var(--btn-warn);
 }
+
 
 
