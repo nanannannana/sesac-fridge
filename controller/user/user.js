@@ -31,8 +31,13 @@ exports.postIdCheck = async function(req,res) {
     else res.send(true);
 }
 
-// 회원가입 완료
-exports.postSignupFlag = async function(req,res) {
+// 회원가입 실패
+exports.postPwCheck = function(req,res) {
+    res.send(false);
+}
+
+// 회원가입 성공
+exports.updateSignupUpdate = async function(req,res) {
     if (req.body.false) res.send("none")
     else if (req.body.user_id) {
         let result = await user.findAll({where:{user_id: req.body.user_id}});

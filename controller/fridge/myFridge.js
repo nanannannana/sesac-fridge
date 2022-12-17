@@ -12,6 +12,8 @@ exports.getMyFridge = async (req,res) => {
     let frozen_result = await frozen.findAll({
         order : [["frozen_date", "ASC"]]
     });
+
+    console.log("list :", fresh_result.length, frozen_result.length );
     
     res.render("fridge/myFridge", { fresh_list : fresh_result, frozen_list : frozen_result });
 }
