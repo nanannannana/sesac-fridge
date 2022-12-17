@@ -1,10 +1,59 @@
 $(function(){
-    $(".grid").masonry({
-        columnWidth: 70,
+    // init Masonry
+    var $grid = $('.grid').masonry({
+        columnWidth: '.grid-item',
         itemSelector: '.grid-item',
+        gutter: 10,
         horizontalOrder: true,
-        transitionDuration: '0.2s'
+        transitionDuration: '0.2s',
     });
+
+    // layout Masonry after each image loads
+    $grid.imagesLoaded().progress(()=>{
+        $grid.masonry('layout');
+    });
+
+    let msnry = $grid.data('masonry');
+    $grid.infiniteScroll({
+        append:'.grid-item',
+        outlayer : msnry,
+        history : 'push'
+    })
+
+    // window.onscroll = () => {
+    //     // window height + window scrollY 값이 document height보다 클 때,
+    //     if((window.innerHeight + window.scrollY >= document.body.offsetHeight)) {
+    //         console.log("바닥");
+    //         // for(var i=0; i<6; i++){
+    //             let addContent = "<div class='grid-item'>";
+    //             addContent += "<img src='https://recipe1.ezmember.co.kr/cache/recipe/2016/10/19/92c7f040e2595e5504b027a28f74959d1_m.jpg'>";
+    //             addContent += "<div class='title'>제목이 들어갈 자리입니다.</div></div>";
+    //         // }
+    //         // $(".grid").append(addContent);
+    //         $grid.append(addContent).masonry('appended', addContent, 'reload');
+    //     }
+    //     // if($(window).scrollTop()+200 >= $(document).height() - $(window).height){
+    //     //     alert("바닥");
+    //     // }
+    // }
+
+ 
+    // 부드럽게 위로 가기
+    function goTop() {
+        window.scrollTo({top:0, behavior:'auto'});
+    }
+    // window.onscroll = function(e) {
+    //     if($(window).scrollTop()+200>=$(document).height() - $(window).height()){
+    //         console.log("바닥");
+    //         if(!isFetching){
+    //             isFetching=true;
+    //             $("#loading").css("display","block");
+    //             console.log(isFetching);
+    //             logLists(); // 콘텐츠 추가
+    //         }
+    //     }
+    // };
+    
 
 })
 // let msnry = new Masonry( '.grid', {

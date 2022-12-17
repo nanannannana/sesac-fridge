@@ -5,9 +5,9 @@ const { recipe } = require("../../model");
 // }
 
 exports.getRecipe = async (req, res) => {
-    // let result = await recipe.findAll(); 
-    // console.log(result[0]);
-    res.render("recipe/recipe");
+    let result = await recipe.findAll(); 
+    console.log(result[0]);
+    res.render("recipe/recipe", {data : result[0]});
 }
 
 
