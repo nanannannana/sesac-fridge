@@ -4,18 +4,19 @@
 } 
 main {
     min-height: 100%;
+    position: relative;
 } */
 #mypage_nav {
     background-color: var(--main-yellow);
-    height:50px;
+    height:70px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 50px;
+    margin-bottom: 100px;
 }
 #mypage_nav_textbox > span {
-    font-family: "NanumSquareAceb";
+    font-size: 20px;
 }
 /* 마이페이지 공통 title 관련 */
 #box_title {
@@ -24,37 +25,6 @@ main {
 #box_title > span {
     font-family: 'NanumSquareAceb';
 }
-/* #main_background {
-    background-color: var(--main-yellow);
-} */
-/* outbox1 */
-/* #out_box1 {
-    background-color: #ffffff;
-    border-radius: 5%;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    padding-top:50px;
-}
-#out_box1_text {
-    margin-left: 30px;
-    text-align: left;
-    font-family: "NanumSquareAceb";
-    font-size: 20px;
-} */
-
-/* outbox2 */
-/* #out_box2 {
-    margin-top:30px;
-    margin-bottom: 30px;
-} */
-/* in_box1 */
-/* #title_box {
-    text-align: left;
-}
-#title_box_text {
-    display: inline-block;
-    font-size: 30px;
-} */
 
 /* button */
 /* #button {
@@ -73,6 +43,15 @@ main {
 }
 #button:hover {
     background-color: var(--btn-success);
-    border: 1px solid #556962;
     color: #ffffff;
+    transform: scale(1.01);
+}
+#button2 {
+    background-color: white;
+    color: var(--btn-success);
+    border: 1px solid var(--btn-success);
+}
+#button2:hover {
+    background-color: var(--btn-success);
+    color: white;
 }

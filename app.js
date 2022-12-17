@@ -1,10 +1,15 @@
 const express = require("express");
 const app = express();
 const dotenv = require('dotenv');
+const session = require('express-session');
 dotenv.config(); 
 
 app.use("/static", express.static("static"));
-
+app.use(session({
+    secret: "111",
+    resave: false,
+    saveUninitialized: true
+}));
 
 // ejs 등록
 app.set("view engine", "ejs");

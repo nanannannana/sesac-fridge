@@ -9,8 +9,12 @@ exports.postSigninFlag = async function(req,res) {
         res.send(false);
     } else if(req.body.user_id) {
         let result = await user.findAll({where:{user_id:req.body.user_id, user_pw: req.body.user_pw}});
-        if (result.length>0) res.send(true)
-        else res.send(false);
+        if (result.length>0) {
+            req.session.user = req.body.user_id;
+            res.send(true);
+        } else {
+            res.send(false);
+        }
     }
 }
 
