@@ -1,11 +1,10 @@
 /* 마이페이지 nav_bar 관련 */
-/* html, body {
+html, body {
     height: 100%;
 } 
 main {
     min-height: 100%;
-    position: relative;
-} */
+}
 #mypage_nav {
     background-color: var(--main-yellow);
     height:70px;
