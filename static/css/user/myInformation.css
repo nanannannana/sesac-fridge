@@ -1,0 +1,17 @@
+#form_info {
+    margin: 0% 30% 0% 30%;
+}
+#form_info > div {
+    flex-direction: column;
+}
+#form_info > div > input {
+    width:100%;
+    margin-bottom: 50px;
+}
+#form_info > div > p {
+    font-size: 20px;
+    font-weight: bold;
+}
+#form_info > button {
+    float: right;
+}
