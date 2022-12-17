@@ -100,7 +100,7 @@
 
 .basket_ingd {
     display: inline-block;
-    width :40%;
+    width :100%;
     padding-top:1em;
 }
 
@@ -117,8 +117,9 @@
 }
 
 /* 부트스트랩 아이콘 사이즈*/
-#basketArrow,#basketWarn {font-size: 3rem; display: block;} 
-#checkIcon {font-size: 2rem;}
+#basket_arrow,#basket_warn {font-size: 3rem; display: block;}
+#smile_emoji {font-size: 3rem; display: inline; z-index: 1; color: white;} 
+#check_icon {font-size: 2rem;}
 
 /* 페이지 하단 btn 공통 적용 */
 .bottom_row button {
@@ -137,10 +138,25 @@
 /* 버튼 위치 정렬 */
 .bottom_row>div{ display:flex; align-items: center;}
 .fridge_btn_box { justify-content: space-around;}
-.recipe_btn_box {justify-content: center;}
+.recipe_btn_box {display: flex; position: relative; justify-content: center;}
+#result_recipe,#smile_rmoji {position: absolute;}
+
+/* 냉장고 버튼 bg 정렬 */
+.fresh_box, .frozen_box, .change_box { display: flex; position: relative; width:30%; justify-content: center; align-items: center;}
+.fresh_box>button, .frozen_box>button, .showUpdate_btn {position: absolute;}
+.fresh_bg, .frozen_bg { 
+    width: 120px; height: 120px; 
+    border-radius: 70%; background-color : var(--main-yellow);
+    margin: auto;
+}
+
+/* 냉장고 버튼 bg 변경 class */
+.first_bg {background-color: darkslategrey;}
+.second_bg {background-color: var(--main-yellow);}
+.third_bg {background-color: var(--btn-warn);}
 
 /* 냉장고 버튼 모양 */
-.fridge_btn_box>button {
+.addIngd_btn, .change_box>button {
     width: 110px; height: 110px;
     border-radius: 70%;
     margin: auto;
@@ -148,7 +164,7 @@
     white-space: normal;
 }
 /* 레시피 버튼 모양 */
-#resultRecipe {
+#result_recipe {
     width : 260px; height : 100px;
     border-radius: 20px;
     background-color: var(--btn-warn);
