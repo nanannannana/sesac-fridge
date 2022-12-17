@@ -21,7 +21,7 @@
     color: white;
     text-shadow:0px 0px 3px #000;
 }
-#idpw_find, #idpw_find:active:visited {
+#signin_box > div > a, #signin_box > div > a:active:visited {
     display: block;
     font-size: 12px;
     font-family: 'NanumSquareAceb';
@@ -31,26 +31,3 @@
     text-decoration: none;
     /* margin: 30px 30px 0px 0px; */
 }
-/* #signin_card {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 80%;
-
-}
-#signin_card_body {
-    background-color: var(--main-yellow);
-}
-#signin_title {
-    font-family: 'NanumSquareAceb';
-    font-size: 25px;
-}
-
-#idpw_find, #idpw_find:active:visited {
-    display: block;
-    font-size: 12px;
-    text-align: right;
-    color: black;
-    text-decoration: none;
-} */

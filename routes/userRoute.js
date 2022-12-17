@@ -9,9 +9,11 @@ router.get("/signIn", user.getSignin);
 router.post("/signinFlag",user.postSigninFlag);
 // 회원가입 렌더
 router.get("/signUp",user.getSignup);
-// 중복아이디 확인
+// 회원가입 중복아이디 확인
 router.post("/idCheck",user.postIdCheck);
+// 회원가입 비밀번호 확인
+router.post("/pwCheck", user.postPwCheck);
 // 회원가입 성공
-router.post("/signupFlag",user.postSignupFlag);
+router.patch("/signupUpdate",user.updateSignupUpdate);
 
 module.exports = router;

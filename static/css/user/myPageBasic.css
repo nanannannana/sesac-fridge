@@ -4,7 +4,6 @@
 } 
 main {
     min-height: 100%;
-    position: relative;
 } */
 #mypage_nav {
     background-color: var(--main-yellow);
@@ -17,6 +16,9 @@ main {
 }
 #mypage_nav_textbox > span {
     font-size: 20px;
+}
+#mypage_nav_textbox > span:nth-child(1):hover, #mypage_nav_textbox > span:nth-child(3):hover, #mypage_nav_textbox > span:nth-child(5):hover {
+    font-weight:  bold;
 }
 /* 마이페이지 공통 title 관련 */
 #box_title {
