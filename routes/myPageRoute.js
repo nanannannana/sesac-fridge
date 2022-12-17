@@ -10,12 +10,14 @@ router.get("/wishList", myPage.getWishList);
 router.get("/profile", myPage.getPwConfirm);
 router.post("/profile", myPage.postPwConfirm);
 // 회원정보 렌더
-router.post("/profile/myInformation", myPage.postMyInformation);
+router.post("/profile/myInfo", myPage.postMyInfo);
 // 회원정보 수정
-router.post("/profileEdit", myPage.postProfileEdit);
+router.patch("/profile/myInfo", myPage.patchMyInfoUpdate);
+// 회원정보 수정 확인
+router.post("/profile/myInfoCheck", myPage.postMyInfoCheck);
 // 회원탈퇴 렌더
-router.post("/profileDel", myPage.postProfileDel);
+router.post("/profile/myInfoDel", myPage.postMyInfoDel);
 // 회원탈퇴 완료
-router.delete("/profileDel", myPage.deleteProfileDel);
+router.delete("/profile/myInfoDel", myPage.deleteMyInfoDel);
 
 module.exports = router;

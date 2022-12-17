@@ -47,8 +47,8 @@ function signup() {
     var phone_check = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
     if (id_check.test(form.user_id.value)==false || form.user_id.value=="") {
         axios({
-            method: "post",
-            url: "/signupflag",
+            method: "patch",
+            url: "/signupUpdate",
             data: {false: "none"}
         })
         .then(function(res) {
@@ -68,8 +68,8 @@ function signup() {
         })
     } else if(pw_check.test(form.user_pw.value)==false || form.user_pw.value=="") {
         axios({
-            method: "post",
-            url: "/signupflag",
+            method: "patch",
+            url: "/signupUpdate",
             data: {false: "none"}
         })
         .then(function(res) {
@@ -79,35 +79,48 @@ function signup() {
                 text: '영문, 숫자, 특수문자 중 2가지 조합으로 작성해 주세요.',
             });
         })
-    } else if(name_check.test(form.user_name.value)==false || form.user_name.value=="") {
+    } else if(form.user_pw.value!==form.user_pw_check.value) {
         axios({
             method: "post",
-            url: "/signupflag",
+            url: "/pwCheck"
+        })
+        .then(function() {
+            Swal.fire({
+                icon: 'warning',
+                title: '비밀번호가 일치하지 않습니다!',
+                text: '비밀번호를 다시 입력해 주세요.',
+            });
+        })
+    } else if(name_check.test(form.user_name.value)==false || form.user_name.value=="") {
+        axios({
+            method: "patch",
+            url: "/signupUpdate",
             data: {false: "none"}
         })
         .then(function(res) {
             Swal.fire({
                 icon: 'error',
-                title: '이름을 입력해 주세요!'
+                title: '이름을 정확히 입력해 주세요!',
+                text: "빈칸 불가, 두 글자 이상으로 작성해 주세요."
             });
         })
     } else if(phone_check.test(form.user_phone.value)==false || form.user_phone.value=="") {
         axios({
-            method: "post",
-            url: "/signupflag",
+            method: "patch",
+            url: "/signupUpdate",
             data: {false: "none"}
         })
         .then(function(res) {
             Swal.fire({
                 icon: 'error',
-                title: '전화번호를 정확히 입력해 주세요!',
+                title: '핸드폰 번호를 정확히 입력해 주세요!',
                 text: '10~11글자로 입력해 주세요.'
             });
         })
     } else {
         axios({
-            method: "post",
-            url: "/signupflag",
+            method: "patch",
+            url: "/signupUpdate",
             data: {
                 user_id: form.user_id.value,
                 user_pw: form.user_pw.value,

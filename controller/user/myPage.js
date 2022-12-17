@@ -1,4 +1,6 @@
 const { user } = require("../../model/");
+const { fresh } = require("../../model/");
+const { frozen } = require("../../model/");
 
 // 마이 페이지 렌더 - 예지
 exports.getMyPage = function(req,res) {
@@ -19,24 +21,42 @@ exports.postPwConfirm = async function(req,res) {
     else res.send(false);
 }
 // 회원정보 수정 페이지 렌더
-exports.postMyInformation = async function(req,res) {
+exports.postMyInfo = async function(req,res) {
     let result = await user.findAll({where: {user_id: req.body.user_id}});
-    console.log(result[0].user_pw);
-    res.render("user/myInformation", {
+    console.log(result[0]);
+    res.render("user/myInfo", {
         user_id: result[0].user_id,
+        user_pw: result[0].user_pw,
         user_name: result[0].user_name,
         user_phone: result[0].user_phone
     });
 }
-
 // 회원정보 수정
-exports.postProfileEdit = function(req,res) {
-    res.render("user/profileEdit");
+exports.patchMyInfoUpdate = async function(req,res) {
+    let data = {
+        user_id: req.body.user_id,
+        user_pw: req.body.user_pw,
+        user_name: req.body.user_name,
+        user_phone: req.body.user_phone
+    };
+    await user.update(data, {where: {user_id: req.body.user_id}});
+    res.send(true);
+}
+// 회원정보 수정 확인
+exports.postMyInfoCheck = function(req,res) {
+    res.send(true);
 }
 // 회원탈퇴 렌더
-exports.postProfileDel = function(req,res) {
-    res.render("user/profileDel");
+exports.postMyInfoDel = async function(req,res) {
+    let fresh_count = await fresh.findAndCountAll();
+    let frozen_count = await frozen.findAndCountAll();
+    res.render("user/myInfoDel", {
+        user_id: req.body.user_id,
+        ingd_count: fresh_count.count+frozen_count.count
+    });
 }
-exports.deleteProfileDel = function(req,res) {
+// 회원탈퇴 완료
+exports.deleteMyInfoDel = async function(req,res) {
+    await user.destroy({where: {user_id: req.body.user_id}});
     res.send(true);
 }
