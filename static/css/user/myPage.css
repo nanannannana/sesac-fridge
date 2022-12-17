@@ -1,6 +1,9 @@
+#recipe_box {
+    margin-top: 200px;
+}
+
 /* 최근 본 레시피 관련 */
 #recent_recipe_box {
-    margin-top:100px;
     display: flex;
     justify-content: space-between;
 }
@@ -26,6 +29,9 @@
 }
 #recent_recipe_card_box, #recent_cook_card_box {
     width: 70%;
+}
+#recent_recipe_card, #recent_cook_card {
+    height: 300px;
 }
 #recent_recipe_card_box > div > div:nth-child(1),
 #recent_recipe_card_box > div > div:nth-child(3),
@@ -59,23 +65,3 @@
     align-items: center;
     border-radius: 5%;
 }
-/* #chart {
-    display: inline-block;
-    background-color:#ffffff;
-    width: 500px;
-    height: 200px;
-} */
-
-/* in_box2 */
-/* #recipe_box {
-    background-color: #ffffff;
-    border-radius: 5%;
-    margin-bottom: 20px;
-}
-#in_box1_title, #in_box2_title {
-    text-align:left;
-    font-weight: bold;
-}
-#card { 
-    display: inline-block;
-} */
