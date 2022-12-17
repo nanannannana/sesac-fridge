@@ -1,3 +1,4 @@
+
 #filter {
     background-color: var(--main-yellow);
     margin-bottom: 50px;
@@ -7,10 +8,15 @@
 }
 
 /*필터 버튼*/
-#filter > div > * {
+#filter_box > .btn {
     margin:10px;
     background-color: white;
     border : 2px solid var(--btn-success);
+    border-radius: 30px;
+}
+
+.filter {
+    font-size:1.2rem;
 }
 
 /*필터 버튼 클릭 시*/
@@ -19,6 +25,28 @@
     background-color: var(--btn-success);
     border : none;
 }
+
+.card {
+    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+}
+
+.image-container {
+    position: relative
+}
+
+.thumbnail-img {
+    border-radius: 10px !important
+}
+
+/*레시피 카드에 마우스 오버시*/
+.card:hover {
+	opacity: 0.8;
+	animation: post-ani 0.8s linear 1;
+}
+
 
 
 /*레시피 카드*/
@@ -32,6 +60,7 @@
     display: inline-block;
     background-color : var(--main-yellow);
 } 
+
 
 /*이미지*/
 .grid-item img {
@@ -60,10 +89,12 @@
     background-color: var(--btn-warn);
 } */
 
+/*레시피 보기, 요리 하기 버튼*/
 .show_recipe, .show_cook {
     background-color: var(--btn-success);
     color: white;
     border: 1px solid var(--btn-success);
+    margin: 5px;
 }
 
 .show_recipe:hover , .show_cook:hover {

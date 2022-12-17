@@ -16,6 +16,13 @@
     list-style-type: none;
 }
 
+html, body {
+    height: 100%;
+} 
+main {
+    min-height: 100%;
+}
+
 button {
     border : none;
 }
@@ -30,4 +37,9 @@ button {
 #logo_text {
     font-family: 'NanumSquareAceb';
     font-size: 30px;
+}
+
+/*a태그 기본 지정*/
+a:visited {
+    color : black;
 }

@@ -1,24 +1,22 @@
-$(function(){
-    // init Masonry
-    var $grid = $('.grid').masonry({
-        columnWidth: '.grid-item',
-        itemSelector: '.grid-item',
-        gutter: 10,
-        horizontalOrder: true,
-        transitionDuration: '0.2s',
-    });
+// $(function(){
+//     // init Masonry
+//     var $grid = $('.grid');
+//     $grid.imagesLoaded(()=>{
+//         $grid.masonry({
+//             columnWidth: '.grid-item',
+//             itemSelector: '.grid-item',
+//             gutter: 10,
+//             horizontalOrder: true,
+//             transitionDuration: '0.2s',
+//         });
+//     });
 
-    // layout Masonry after each image loads
-    $grid.imagesLoaded().progress(()=>{
-        $grid.masonry('layout');
-    });
-
-    let msnry = $grid.data('masonry');
-    $grid.infiniteScroll({
-        append:'.grid-item',
-        outlayer : msnry,
-        history : 'push'
-    })
+//     window.onscroll = () => {
+//         if((window.innerHeight + window.scrollY >= document.body.offsetHeight)) {
+//             alert("바닥");
+//             $grid.masonry("appended", "<h1>추가추가</h1>", true);
+//         }
+//     }
 
     // window.onscroll = () => {
     //     // window height + window scrollY 값이 document height보다 클 때,
@@ -38,10 +36,6 @@ $(function(){
     // }
 
  
-    // 부드럽게 위로 가기
-    function goTop() {
-        window.scrollTo({top:0, behavior:'auto'});
-    }
     // window.onscroll = function(e) {
     //     if($(window).scrollTop()+200>=$(document).height() - $(window).height()){
     //         console.log("바닥");
@@ -55,7 +49,7 @@ $(function(){
     // };
     
 
-})
+// })
 // let msnry = new Masonry( '.grid', {
 //     itemSelector: '.grid-item',
 //     columnWidth: 200,
