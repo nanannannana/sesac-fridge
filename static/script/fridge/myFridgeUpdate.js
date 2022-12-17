@@ -6,16 +6,20 @@ function showUpdateBtns(){
     $(".updateIngd_btn").removeClass("d_none");
     $(".deleteIngd_btn").removeClass("d_none");
     $(".warn_text").removeClass("d_none");
-    $("#basketWarn").removeClass("hidden");
+    $("#basket_warn").removeClass("hidden");
+    $("#smile_emoji").removeClass("hidden");
+
 
     $("#showUpdateBtns").addClass("d_none");
-    $(".addIngd_btn").addClass("d_none");
+    $(".fresh_box").remove();
+    $(".frozen_box").remove();
+    $(".change_box").css("width","100%");
     $(".fridge_ingd_box input[type=checkbox]").addClass("d_none");
     $("#basket_ingd_box").addClass("hidden");
     $(".basket_text").addClass("d_none");
-    $("#basketArrow").addClass("hidden");
-    $("#resultRecipe").html("변경 완료 후 이용해주세요");
-    $("#resultRecipe").attr("disabled",true);
+    $("#basket_arrow").addClass("hidden");
+    $("#result_recipe").html("");
+    $("#result_recipe").attr("disabled",true);
 }
 // 변경-취소 Btn 클릭시,
 function cancelUpdate(){
@@ -39,7 +43,7 @@ async function clickUpdate(ingd){
             Swal.fire({
                 html : `
                 <span>식재료 이름 : </span>
-                <input type="text" style="margin-bottom:1em;" class="swal2-input" id="freshName_inp" value="${thisName}"><br>
+                <input type="text" style="margin-bottom:1em;" class="swal2-input" id="freshName_inp" value="${thisName}" disabled><br>
                 <div id="tfIngdRange" style="margin:1em;"></div>
                 <input type="range" style="width:70%; margin-top:0; cursor: pointer;" 
                     class="swal2-range" id="freshRange_inp" value=${thisRange} step=50
@@ -124,7 +128,7 @@ function updateFresh(result){
         Swal.fire({
         icon: 'success',
         text : `
-        ${result.value.name} ${result.value.range}%가 
+        ${result.value.name}(이/가) 
         ${result.value.expire}까지 냉장실에 보관됩니다
         `.trim(),
         confirmButtonText: '확인',
@@ -149,8 +153,7 @@ function updateFrozen(result){
         Swal.fire({
         icon: 'success',
         text : `
-        ${result.value.date}에 구매한 ${result.value.name} 
-        ${result.value.range}%가 냉동실에 보관됩니다`.trim(),
+        ${result.value.date}에 구매한 ${result.value.name}(이/가) 냉동실에 보관됩니다`.trim(),
         confirmButtonText: '확인',
         confirmButtonColor: '#7E998F',
         preConfirm:()=>{window.location.href="/myFridge/";}
@@ -197,7 +200,7 @@ function deleteIngd( name, fridgeName ){
                 confirmButtonColor: '#7E998F',
                 confirmButtonText: '확인',
             }).then((result)=>{
-                if(result.isDismissed){
+                if(result.isConfirmed){
                     window.location.href="/myFridge/";
                     showUpdateBtns();
                 }

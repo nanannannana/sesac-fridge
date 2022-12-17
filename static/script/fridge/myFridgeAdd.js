@@ -91,8 +91,7 @@ var today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
         Swal.fire({
         icon: 'success',
         text : `
-        ${result.value.name} ${result.value.range}%가 
-        ${result.value.expire}까지 냉장실에 보관됩니다
+        ${result.value.name}(이/가) ${result.value.expire}까지 냉장실에 보관됩니다
         `.trim(),
         confirmButtonText: '확인',
         confirmButtonColor: '#7E998F',
@@ -102,8 +101,8 @@ var today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
  }
 
 
-//  냉동실에 식재료 추가
-// 냉장실에 추가 btn 클릭시,
+// 냉동실에 식재료 추가
+// 냉동실에 추가 btn 클릭시,
 // 중복 여부 검사
 async function checkFrozen(){
     const { value: frozenName } = await Swal.fire({
@@ -150,7 +149,7 @@ function frozenModal(frozenName){
           const frozenDate = Swal.getPopup().querySelector('#frozenDate_inp').value;
     
           if (!frozenName || frozenRange==0 || !frozenDate) {
-            Swal.showValidationMessage(`바르게 입력해주세요`)
+            Swal.showValidationMessage(`바르게 입력했는지 확인해주세요`)
           }
           return { 
             name : frozenName,
@@ -180,8 +179,7 @@ function addToFrozen(result){
         Swal.fire({
         icon: 'success',
         text : `
-        ${result.value.date}에 구매한 ${result.value.name} 
-        ${result.value.range}%가 냉동실에 보관됩니다`.trim(),
+        ${result.value.date}에 구매한 ${result.value.name}(이/가) 냉동실에 보관됩니다`.trim(),
         confirmButtonText: '확인',
         confirmButtonColor: '#7E998F',
         preConfirm:()=>{window.location.href="/myFridge/";}

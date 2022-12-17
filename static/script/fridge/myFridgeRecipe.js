@@ -1,7 +1,7 @@
 
  $(".fridge_ingd_box input[type=range]").attr({ step:50 });
  $(".fridge_ingd_box input[type=range]").addClass("form-range");
- $("#basketArrow").addClass("animate__animated animate__fadeInDown");
+ $("#basket_arrow").addClass("animate__animated animate__fadeInDown");
 
  // 선택한 식재료 포함된 레시피 SELECT
  function resultRecipe(){
@@ -23,7 +23,7 @@ function addToList( box1 ){
         checkedIngdList.push( box1.value );
         $("#basket_ingd_box").append(`
         <div class="${box1.value}_in basket_ingd">
-        <i class="bi bi-check2-square animate__animated animate__fadeInDown" id="checkIcon"></i>
+        <i class="bi bi-check2-square animate__animated animate__fadeInDown" id="check_icon"></i>
         <span class="animate__animated animate__fadeInDown">${box1.value}</span></div>`);
         console.log( checkedIngdList );
     }else{
