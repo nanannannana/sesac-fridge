@@ -4,6 +4,7 @@
     background: no-repeat url("/static/img/fridge3.jpg") 0 / cover;
     position: absolute;
     z-index:-1;
+    filter: blur(2px);
 }
 #signup_box {
     height: 100vh;
@@ -11,6 +12,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+#signup_box_child {
+    width: 30%;
 }
 #btn_id_check, #button {
     display: block;
@@ -21,9 +25,9 @@
     color: white;
     text-shadow:0px 0px 3px #000;
 }
-#idpw_find, #idpw_find:active:visited {
+#back_main, #back_main:active:visited {
     display: block;
-    font-size: 12px;
+    font-size: 15px;
     font-family: 'NanumSquareAceb';
     text-align: right;
     color: white;
@@ -35,9 +39,13 @@
 #btn_id_check {
     background-color: #b9b9b9;
     color: white;
+    border: 1px solid #b9b9b9;
 }
 #btn_id_check:hover {
     background-color: #b9b9b9;
-    border: 1px solid #747474;
     color: #ffffff;
+    transform: scale(1.01);
+}
+#form_signup > div, #btn_id_check, #btn_id_check:hover {
+    margin-bottom: 20px;
 }

@@ -1,3 +1,9 @@
+function phone_num_hyphen(target) {
+    target.value = target.value
+     .replace(/[^0-9]/g, '')
+     .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+}
+
 // 아이디 이메일 유효성 검사
 function id_check() {
     var user_id = document.getElementById("form_signup").user_id.value;
@@ -76,7 +82,7 @@ function signup() {
             Swal.fire({
                 icon: 'error',
                 title: '비밀번호를 정확히 입력해 주세요!',
-                text: '영문, 숫자, 특수문자 중 2가지 조합으로 작성해 주세요.',
+                text: '영문+숫자+특수문자 조합으로 8~16글자로 작성해 주세요.',
             });
         })
     } else if(form.user_pw.value!==form.user_pw_check.value) {
@@ -114,7 +120,7 @@ function signup() {
             Swal.fire({
                 icon: 'error',
                 title: '핸드폰 번호를 정확히 입력해 주세요!',
-                text: '10~11글자로 입력해 주세요.'
+                text: '10~11글자, 숫자만 입력해 주세요.'
             });
         })
     } else {
@@ -125,7 +131,7 @@ function signup() {
                 user_id: form.user_id.value,
                 user_pw: form.user_pw.value,
                 user_name: form.user_name.value,
-                user_phone: form.user_phone.value
+                user_phone: form.user_phone.value.replace(/-/g, '')
             }
         })
         .then(async function(res) {

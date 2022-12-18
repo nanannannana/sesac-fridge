@@ -1,17 +1,67 @@
 const { user } = require("../../model/");
 const { fresh } = require("../../model/");
 const { frozen } = require("../../model/");
+const { recipe_like } = require("../../model/");
+const { recipe } = require("../../model");
 
 // 마이 페이지 렌더 - 예지
-exports.getMyPage = function(req,res) {
+exports.postMyPage = function(req,res) {
     res.render("user/myPage");
 }
 // 찜리스트 렌더
-exports.getWishList = function(req,res) {
-    res.render("user/wishList");
+exports.postWishList = async function(req,res) {
+    // join조건에 부합한 row count
+    let rec_like_count = await recipe_like.findAndCountAll({
+        include: [
+            {
+                model: recipe,
+                required: true,
+                attributes: ["recipe_id", "recipe_url", "recipe_img", "recipe_title"]
+            }
+        ],
+        where: {user_user_id: req.session.user}
+    });
+    let rec_like = await recipe_like.findAll({
+        include: [
+            {
+                model: recipe,
+                required: true,
+                attributes: ["recipe_id", "recipe_url", "recipe_img", "recipe_title"]
+            }
+        ],
+        where: {user_user_id: req.session.user}
+    });
+    // join문 결과 확인
+    // console.log(rec_like_count.count);
+    // console.log(rec_like[i].recipe);
+    var recipe_id = [];
+    var recipe_img = [];
+    var recipe_url = [];
+    var recipe_title = [];
+    for (var i=0 ; i < rec_like_count.count ; i++) {
+        recipe_id.push(rec_like[i].recipe.recipe_id);
+        recipe_img.push(rec_like[i].recipe.recipe_img);
+        recipe_url.push(rec_like[i].recipe.recipe_url);
+        recipe_title.push(rec_like[i].recipe.recipe_title);
+    }
+    res.render("user/wishList", {
+        recipe_id: recipe_id,
+        recipe_img: recipe_img,
+        recipe_title: recipe_title,
+        recipe_url: recipe_url
+    });
 }
+// 찜리스트 정보 삭제
+exports.deleteWishListDel = async function(req,res) {
+    let result = await recipe_like.findAll({where: {recipe_recipe_id: req.body.recipe_id}});
+    let like_id = result[0].like_id;
+    await recipe_like.destroy({where:{like_id: like_id}});
+    res.send(true);
+}
+
+
 // 회원정보 수정 전 비밀번호 확인
-exports.getPwConfirm = function(req,res) {
+exports.postPwInput = function(req,res) {
     res.render("user/pwConfirm", {user_id: req.session.user});
     console.log(req.session.user);
 }
