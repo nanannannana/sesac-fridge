@@ -5,17 +5,31 @@
     background-color: var(--main-yellow);
 }
 
-.myFridgePage_box { min-height: 1024px; }
+.myFridgePage_box { 
+    height : 100vh;
+    display : flex;
+    flex-direction: column;
+    justify-content:space-around;
+    padding-bottom: 2rem;
+}
 
 /* 페이지 타이틀 */
-.myFridge_title { text-align: center; font-size: xx-large; font-weight: bold;}
+.myFridge_title { 
+    text-align: center; 
+    font-size: xx-large; 
+    font-weight: bold;}
 
 
 /* 냉장고&장바구니 박스 */
-.top_row {margin: 0; height: 80vh;}
+.top_row {
+    margin-left:3rem; 
+    margin-right: 3rem;
+    min-height: 60vh;}
 
 /* 냉장고 버튼 & 레시피 버튼 박스 */
-.bottom_row {margin-bottom: 0;}
+.bottom_row {
+    margin:3rem;
+}
 
  /* 냉장고 내부 전체*/
 .fridge_box {
@@ -68,7 +82,7 @@
     background-color: var(--btn-success);
 }
 
-/* 식재료 수량 변경 btn */
+/* 식재료 정보 수정 btn */
 .fridge_ingd_box button {
     width: 60px; height: 30px;
     border-radius: 10px;
@@ -76,12 +90,14 @@
     background-color: var(--btn-success);
     border : none;
     cursor: pointer;
-    color: white; font-size: 12px; font-weight: lighter;
+    color: white; 
+    font-size: 12px; 
+    font-weight: lighter;
     z-index: 1;
 }
 .fridge_ingd_box button:active {
     box-shadow: 0 2px 4px darkslategrey;
-    transform: translateY(2px);
+    transform: translateY(3px);
 }
 
 /* 장바구니  박스 */
@@ -117,46 +133,38 @@
 }
 
 /* 부트스트랩 아이콘 사이즈*/
-#basket_arrow,#basket_warn {font-size: 3rem; display: block;}
-#smile_emoji {font-size: 3rem; display: inline; z-index: 1; color: white;} 
-#check_icon {font-size: 2rem;}
+#basket_arrow,#basket_warn {
+    font-size: 3rem; 
+    display: block;
+}
+#smile_emoji {
+    font-size: 3rem; 
+    display: inline; 
+    z-index: 3; 
+    color: white;
+} 
+#check_icon {
+    font-size: 2rem;
+}
 
 /* 페이지 하단 btn 공통 적용 */
 .bottom_row button {
     box-shadow: 0 2px 4px darkslategrey;
     border : none;
     cursor: pointer;
-    color: white; font-size: 22px; font-weight: bolder;
+    color: white; 
+    font-size: 22px; 
+    font-weight: bolder;
     z-index: 1;
 }
-/* 페이지 하단 버튼 클릭시 */
+/* 페이지 하단 버튼 클릭시 motion */
 .bottom_row button:active {
     box-shadow: 0 0 3px darkslategray;
     transform: translateY(3px);
 }
 
-/* 버튼 위치 정렬 */
-.bottom_row>div{ display:flex; align-items: center;}
-.fridge_btn_box { justify-content: space-around;}
-.recipe_btn_box {display: flex; position: relative; justify-content: center;}
-#result_recipe,#smile_rmoji {position: absolute;}
-
-/* 냉장고 버튼 bg 정렬 */
-.fresh_box, .frozen_box, .change_box { display: flex; position: relative; width:30%; justify-content: center; align-items: center;}
-.fresh_box>button, .frozen_box>button, .showUpdate_btn {position: absolute;}
-.fresh_bg, .frozen_bg { 
-    width: 120px; height: 120px; 
-    border-radius: 70%; background-color : var(--main-yellow);
-    margin: auto;
-}
-
-/* 냉장고 버튼 bg 변경 class */
-.first_bg {background-color: darkslategrey;}
-.second_bg {background-color: var(--main-yellow);}
-.third_bg {background-color: var(--btn-warn);}
-
 /* 냉장고 버튼 모양 */
-.addIngd_btn, .change_box>button {
+.fridge_btn_box button:nth-child(even) {
     width: 110px; height: 110px;
     border-radius: 70%;
     margin: auto;
@@ -169,6 +177,40 @@
     border-radius: 20px;
     background-color: var(--btn-warn);
 }
+
+/* 하단 버튼 전체 위치 정렬 */
+.bottom_row>div{ /*fridge & recipe_btn_box*/
+    display:flex; 
+    align-items: center;
+    justify-content: center;
+}
+
+/* 레시피 버튼 정렬 */
+.recipe_btn_box {
+    position: relative; 
+}
+#result_recipe,#smile_emoji {
+    position: absolute;
+}
+
+/* 냉장고 버튼 bg 정렬 */
+.fridge_btn_box>div { 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; 
+    width:33%;
+}
+.fridge_btn_box button {
+    position: absolute;
+}
+.fridge_btn_box button:nth-child(odd) { 
+    width: 120px; height: 120px; 
+    border-radius: 70%; 
+    background-color : var(--main-yellow);
+    margin: auto;
+}
+
 
 
 

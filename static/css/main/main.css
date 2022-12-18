@@ -1,0 +1,49 @@
+/* main {background-color: var(--main-yellow);} */
+.mainPage_main {background-color: var(--main-yellow);}
+.mainPage_box { 
+  min-height: 1440px; 
+  text-align: center; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-around;
+}
+
+.mainPage_box>div>p {
+  font-size: 30px; 
+  font-weight: bolder; 
+  margin-bottom: 0;
+}
+
+.first_row_main, .second_row_main, .third_row_main {
+    display: flex; 
+    justify-content: center;
+}
+.closest_fresh_box, .closest_frozen_box, .best_recipe_box {
+    background-color: white; 
+    max-width: 95%;
+    display: flex; 
+    justify-content: space-around; 
+    margin: 3rem; 
+    margin-top: 1rem; 
+    max-height: 30vh;}
+
+.mainPage_box card {
+  max-width: 18rem; 
+  max-height: 30%;
+}
+.frs_card, .frz_card {
+  margin:2rem; 
+  margin-left:1rem; 
+  margin-right: 1rem;
+} 
+.br_card {
+  margin:2rem; 
+  margin-top: 3rem; 
+  margin-bottom: 3rem;
+} 
+.br_img {
+  width:18rem;
+}
+
+
+

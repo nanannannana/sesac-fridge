@@ -5,3 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .type("Jihyang")
       .go();
   });
+
+
+  if(logTime)
+  {$(".expire_count").removeClass("d_none");}
