@@ -1,16 +1,11 @@
 <%-include('../main/head.ejs')%>
 <link rel="stylesheet" type="text/css" href="/static/css/user/myPageBasic.css">
 <link rel="stylesheet" type="text/css" href="/static/css/user/pwConfirm.css">
+<script type="text/javascript" src="/static/script/user/myPagebasic.js"></script>
 <script type="text/javascript" src="/static/script/user/pwConfirm.js"></script>
 <%-include('../main/header.ejs')%>
 <main>
-    <div id="mypage_nav" class="container-fluid">
-        <div id="mypage_nav_textbox">
-            <span type="button" onclick="location.href='/myPage'">나의 프로필 </span><span> | </span>
-            <span type="button" onclick="location.href='/myPage/wishList'">  찜리스트 </span><span> | </span>
-            <span type="button" onclick="location.href='/myPage/myInfo'"> 회원정보수정</span>
-        </div>
-    </div>
+    <%-include('myPageBasic.ejs')%>
     <div class="container">
         <p id="pw_input_box_title"><span style="font-weight:bold;">비밀번호</span>를 입력해주세요!</p>
         <form id="form_hidden" action="/myPage/profile/myInfo" method="post">

@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/static/script/main/header.js"></script>
 </head>
 <body>
 <header>
@@ -23,10 +24,13 @@
                         <a class="nav-link active" aria-current="page" href="http://localhost:8080/recipe/">레시피 추천</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="http://localhost:8080/myFridge">나의 냉장고</a>
+                        <!-- <button class="nav-link active" style="background-color: white;" aria-current="page" onclick="myfridge_go()">나의 냉장고</button>
+                        <form id="myfridge_go" action="/myFridge" method="post"></form> -->
+                        <a class="nav-link active" aria-current="page" href="http://localhost:8080/myFridge/">나의 냉장고</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="http://localhost:8080/myPage/">마이 페이지</a>
+                        <button class="nav-link active" style="background-color: white;" aria-current="page" onclick="mypage_go()">마이 페이지</button>
+                        <form id="mypage_go" action="/myPage" method="post"></form>
                     </li>
                   </ul>
                   <form class="d-flex mt-3" role="search">

@@ -1,10 +1,8 @@
-const { SHOWTABLES } = require("sequelize/types/query-types");
-
 function pw_confirm() {
     form = document.getElementById("form_pw_confirm");
     axios({
         method: "post",
-        url: "/myPage/profile",
+        url: "/myPage/profilePwConfirm",
         data: {
             user_id: form.user_id.value,
             user_pw: form.user_pw.value
