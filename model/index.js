@@ -70,16 +70,16 @@ db.recipe.hasOne(db.recipe_like, {
 // 3. log 테이블과 user 테이블
 // 1-1. log 테이블의 user_id는 user 테이블의 user_id를 참조하고 있다.
 // db.log의 user_id는 db.user의 user_id에 속한다.
-db.recipe_like.belongsTo(db.user, {
-    forienKey : "user_user_id", // like테이블의 forienkey할 컬럼 이름
+db.log.belongsTo(db.user, {
+    forienKey : "user_user_id", // log테이블의 forienkey할 컬럼 이름
     targetKey : "user_id", // user테이블의 user_id컬럼 이름
     onDelete : "cascade",
     onUpdate : "cascade",
 })
 // 1-2. user 테이블의 user_id는 log 테이블의 user_id에 참조된다.
 // db.User는 가지고있다. 많이. db.log를
-db.user.hasMany(db.recipe_like, {
-    forienKey : "user_user_id", // like테이블의 forienkey할 컬럼 이름
+db.user.hasMany(db.log, {
+    forienKey : "user_user_id", // log테이블의 forienkey할 컬럼 이름
     sourceKey : "user_id", // user테이블의 user_id컬럼 이름
     onDelete : "cascade",
     onUpdate : "cascade",
@@ -88,16 +88,16 @@ db.user.hasMany(db.recipe_like, {
 // 4. log 테이블과 recipe 테이블
 // 2-1. log 테이블의 recipe_id는 recipe 테이블의 recipe_id를 참조하고 있다.
 // db.log의 recipe_id는 db.recipe의 recipe_id에 속한다.
-db.recipe_like.belongsTo(db.recipe, {
-    forienKey : "recipe_recipe_id", // like테이블의 forienkey할 컬럼 이름
+db.log.belongsTo(db.recipe, {
+    forienKey : "recipe_recipe_id", // log테이블의 forienkey할 컬럼 이름
     targetKey : "recipe_id", // recipe테이블의 recipe_id 컬럼
     onDelete : "cascade",
     onUpdate : "cascade",
 })
 // 2-2. recipe 테이블의 recipe_id는 log 테이블의 recipe_id에 참조된다.
 // db.recipe는 가지고있다 db.log를
-db.recipe.hasOne(db.recipe_like, {
-    forienKey : "recipe_recipe_id", // like테이블의 forienkey할 컬럼 이름
+db.recipe.hasOne(db.log, {
+    forienKey : "recipe_recipe_id", // log테이블의 forienkey할 컬럼 이름
     sourceKey : "recipe_id", // recipe테이블의 recipe_id 컬럼
     onDelete : "cascade",
     onUpdate : "cascade",

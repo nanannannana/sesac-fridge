@@ -1,3 +1,9 @@
+function phone_num_hyphen(target) {
+    target.value = target.value
+     .replace(/[^0-9]/g, '')
+     .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+}
+
 function info_update() {
     var form = document.getElementById("form_info");
     var pw_check = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
@@ -59,7 +65,7 @@ function info_update() {
                 user_id: form.user_id.value,
                 user_pw: form.user_pw_new.value,
                 user_name: form.user_name.value,
-                user_phone: form.user_phone.value
+                user_phone: form.user_phone.value.replace(/-/g, '')
             }
         })
         .then(function() {

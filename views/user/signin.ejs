@@ -10,13 +10,15 @@
         <img src="/static/img/color_logo.png" id="logo_img" class="mt-2 ms-4" style="width:30px; float: left;">
     </header>
     <div id="signin_box">
-      <div class="text-center">
-        <h5 id="signin_title" class="mb-3" style="font-size:30px">로그인</h5>
-        <h6 id="signin_side_title" class="mb-2 mb-5">이메일과 비밀번호를 입력하세요.</h6>
+      <div id="signin_box_child"class="text-center">
+        <h5 id="signin_title" class="mb-3" style="font-size:45px">로그인</h5>
+        <h6 id="signin_side_title" class="mb-2 mb-5" style="font-size:20px">이메일과 비밀번호를 입력하세요.</h6>
         <form id="form_signin">
-          <div id="form_text">
-              <input class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" type="email" name="user_id" placeholder="이메일('@'포함 입력)"><br>
-              <input class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" type="password" name="user_pw" placeholder="비밀번호"><br>
+          <div class="input-group input-group-lg">
+            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="user_id" placeholder="이메일('@'포함 입력)">
+          </div>
+          <div class="input-group input-group-lg">
+            <input type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="user_pw" placeholder="비밀번호">
           </div>
           <button type="button" id="button" class="btn mb-3" onclick="signin()">로그인</button>
         </form>

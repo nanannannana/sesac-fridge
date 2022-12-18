@@ -5,7 +5,9 @@ const session = require('express-session');
 dotenv.config(); 
 
 app.use("/static", express.static("static"));
+
 app.use(cookieParser());
+
 app.use(session({
     secret: "111",
     resave: false,

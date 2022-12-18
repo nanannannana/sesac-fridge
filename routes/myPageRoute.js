@@ -3,12 +3,14 @@ const myPage = require("../controller/user/myPage");
 const router = express.Router();
 
 // 마이페이지 렌더 - 예지
-router.get("/", myPage.getMyPage);
+router.post("/", myPage.postMyPage);
+router.post("/chart", myPage.postMyPageChart);
 // 찜리스트 렌더
-router.get("/wishList", myPage.getWishList);
+router.post("/wishList", myPage.postWishList);
+router.delete("/wishListDel", myPage.deleteWishListDel);
 // 회원정보 수정 전 비밀번호 확인
-router.get("/profile", myPage.getPwConfirm);
-router.post("/profile", myPage.postPwConfirm);
+router.post("/profile", myPage.postPwInput);
+router.post("/profilePwConfirm", myPage.postPwConfirm);
 // 회원정보 렌더
 router.post("/profile/myInfo", myPage.postMyInfo);
 // 회원정보 수정

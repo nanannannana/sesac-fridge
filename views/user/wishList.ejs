@@ -1,28 +1,28 @@
 <%-include('../main/head.ejs') %>
 <link rel="stylesheet" type="text/css" href="/static/css/user/myPageBasic.css">
 <link rel="stylesheet" type="text/css" href="/static/css/user/wishList.css">
+<script type="text/javascript" src="/static/script/user/myPagebasic.js"></script>
 <script type="text/javascript" src="/static/script/user/wishList.js"></script>
 <%-include('../main/header.ejs') %>
 <main>
-    <div id="mypage_nav" class="container-fluid">
-        <div id="mypage_nav_textbox">
-            <span type="button" onclick="location.href='/myPage'">나의 프로필 </span><span> | </span>
-            <span type="button" onclick="location.href='/myPage/wishList'">  찜리스트 </span><span> | </span>
-            <span type="button" onclick="location.href='/myPage/myInfo'"> 회원정보수정</span>
-        </div>
-    </div>
+    <%-include('myPageBasic.ejs')%>
     <div id="wishlist_box" class="container">
             <p id="box_title"><span>김새싹님</span>의 찜리스트</p>
             <div id="wishlist_card_box">
-                <% for (var i=1 ; i<2 ; i++ ) { %>
-                    <div class="card mb-4 me-4">
-                        <img src="/static/img/recipe.jpg" class="card-img" alt="...">
-                        <div id="card_hover" class="card-img-overlay" onclick="recipe_go()">
-                            <h1 id="card_text" class="card-title">레시피 제목</h1>
-                            <h5 id="card_text" class="card-text" type="button" onclick="">레시피 보기</h5>
+                <div id="wishlist_card_box_child">
+                    <% for (var i=0 ; i<recipe_id.length ; i++ ) { %>
+                        <div id="card_size" class="card mb-4 me-3">
+                            <img src="<%=recipe_img[i]%>" class="card-img" alt="...">
+                            <div id="card_hover" class="card-img-overlay">
+                                <i id="heart_icon" class="bi bi-heart-fill" type="button" onclick="wishlist_del('<%=recipe_id[i]%>',this)"></i>
+                                <div id="card_text_box">
+                                    <h1 id="card_text" class="card-title"><%=recipe_title[i]%></h1>
+                                    <h5 id="card_text" class="card-text" type="button" onclick="location.href='<%=recipe_url[i]%>'">레시피 보기</h5>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                <% } %>
+                    <% } %>
+                </div>
             </div>
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">

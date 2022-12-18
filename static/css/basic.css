@@ -16,6 +16,7 @@
     list-style-type: none;
 }
 
+/*바텀 안넘어오게*/
 html, body {
     height: 100%;
 } 
@@ -23,6 +24,7 @@ main {
     min-height: 100%;
 }
 
+/*기본 버튼 설정*/
 button {
     border : none;
 }

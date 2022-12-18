@@ -4,6 +4,7 @@
     background: no-repeat url("/static/img/fridge3.jpg") 0 / cover;
     position: absolute;
     z-index:-1;
+    filter: blur(2px);
 }
 #signin_box {
     height: 100vh;
@@ -30,4 +31,10 @@
     text-shadow:0px 0px 3px #000;
     text-decoration: none;
     /* margin: 30px 30px 0px 0px; */
+}
+#signin_box_child {
+    width:20%;
+}
+#form_signin > div {
+    margin-bottom: 20px;
 }
