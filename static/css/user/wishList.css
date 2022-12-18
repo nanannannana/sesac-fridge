@@ -1,7 +1,5 @@
-#wishlist_card_box > div {
-    justify-content: space-between;
-}
 #card_size  {
+    display: inline-block;
     width:410px;
     height: 450px;
     padding:0;

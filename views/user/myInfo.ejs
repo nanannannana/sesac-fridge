@@ -24,7 +24,7 @@
                 <p>이름: </p>
                 <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="user_name" value="<%=user_name%>">
                 <p>핸드폰 번호: </p>
-                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="user_phone" value="<%=user_phone%>">
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" oninput="phone_num_hyphen(this)" name="user_phone" value="<%=user_phone%>">
             </div>
             <button type="button" id="button_del" class="btn" onclick="info_del()">회원탈퇴</button>
             <button type="button" id="button2" class="btn me-2" onclick="info_update()">수정완료</button>

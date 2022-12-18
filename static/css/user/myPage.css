@@ -1,5 +1,14 @@
-#recipe_box {
-    margin-top: 200px;
+#chart_box_child {
+    display:flex;
+    justify-content: space-between;
+}
+#chart_1, #chart_2 {
+    width: 45%;
+    display: inline-block;
+}
+
+#chart_box {
+    margin-bottom: 150px;
 }
 
 /* 최근 본 레시피 관련 */
