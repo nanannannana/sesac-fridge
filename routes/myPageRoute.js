@@ -4,6 +4,7 @@ const router = express.Router();
 
 // 마이페이지 렌더 - 예지
 router.post("/", myPage.postMyPage);
+router.post("/chart", myPage.postMyPageChart);
 // 찜리스트 렌더
 router.post("/wishList", myPage.postWishList);
 router.delete("/wishListDel", myPage.deleteWishListDel);

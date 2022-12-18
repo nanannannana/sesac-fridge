@@ -1,16 +1,29 @@
 <%-include('../main/head.ejs') %>
 <link rel="stylesheet" type="text/css" href="/static/css/user/myPageBasic.css">
 <link rel="stylesheet" type="text/css" href="/static/css/user/myPage.css">
+<link rel="stylesheet" type="text/css" href="path/to/chartjs/dist/Chart.min.css">
 <script type="text/javascript" src="/static/script/user/myPagebasic.js"></script>
 <script type="text/javascript" src="/static/script/user/myPage.js"></script>
 <%-include('../main/header.ejs') %>
 <main>
     <%-include('myPageBasic.ejs')%>
+    <form id="form_hidden">
+        <input type="hidden" name="ingd_name" value="<%=ingd_name%>">
+        <input type="hidden" name="recipe_tag" value="<%=recipe_tag%>">
+    </form>
     <div class="container">
         <div id="chart_box">
             <p id="box_title"><span>김새싹님</span>의 통계차트</p>
-            <div style="background-color:#b9b9b9; width:100%; height:300px;">차트</div>
+            <div id="chart_box_child">
+                <div id="chart_1">
+                    <canvas id="myChart"></canvas>
+                </div>
+                <div id="chart_2">
+                    <canvas id="myChart2" ></canvas>
+                </div>
+            </div>
         </div>
+        <hr>
         <div id="recipe_box">
             <p id="box_title"><span>김새싹님</span>의 레시피</p>
             <div id="recent_recipe_box">
