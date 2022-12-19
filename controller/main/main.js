@@ -3,14 +3,27 @@ const { frozen } = require("../../model");
 const { recipe } = require("../../model");
 
 // 메인 페이지 렌더 - 주안
+
 exports.getMain = async (req,res) => {
 
-    // if(req.session.user){let log_time=new Date(today.setDate(today.getDate() + 2));}
+    var date = new Date();
+    const log_date = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()+2}`;
 
     // let result = await fresh.findAndCountAll({
-    //     where : {
-
-    //     }
+    //     raw:true,
+    //     include: [
+    //         {
+    //             model: recipe,
+    //             attributes: ['recipe_ingd']
+    //         }
+    //     ],
+    //     attributes: ['fresh_name'],
+    //     where: {user_user_id: req.session.user}
     // })
-    res.render("main/main");
+
+    // console.log(result);
+
+    if(req.session.user){ res.render("main/main")}
+    else{ res.render("main/main"); }
+    
 }

@@ -39,7 +39,15 @@ const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
         title: '냉장실에 보관할 재료를 알려주세요',
         html: `
             <span>식재료 이름 : </span>
-            <input type="text" style="margin-bottom:1em;" class="swal2-input" id="freshName_inp" value="${freshName}" disabled><br>
+            <input type="text" class="swal2-input" id="freshName_inp" value="${freshName}" disabled><br>
+            <select id="freshCategory_inp" class="swal2-select" style="width:16rem; height:3rem;">
+                <option value="NOT" selected>카테고리를 선택해주세요</option>
+                <option value="fruit">과일-채소류</option>
+                <option value="seafood">어패류</option>
+                <option value="meat">육류</option>
+                <option value="readymade">완제품</option>
+                <option value="etc">기타</option>
+            </select>
             <div id="tfIngdRange" style="margin:1em;">아직 사용하거나 먹지 않았어요</div>
             <input type="range" style="width:70%; margin-top:0; cursor: pointer;" 
                 class="swal2-range" id="freshRange_inp" value=100 step=50
@@ -53,9 +61,11 @@ const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
         preConfirm: () => {
           const freshRange = Swal.getPopup().querySelector('#freshRange_inp').value;
           const freshExpire = Swal.getPopup().querySelector('#freshExpire_inp').value;
+          const freshCategory = Swal.getPopup().querySelector('#freshCategory_inp').value;
+          console.log("fresh_ct :", freshCategory);
 
         // input 미입력 시 알림 
-        if( !freshName || freshRange==0 || !freshExpire) {
+        if( !freshName || freshRange==0 || !freshExpire || freshCategory=="NOT") {
             Swal.showValidationMessage(`바르게 입력해주세요`)
         }
 
@@ -66,7 +76,9 @@ const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
           return { 
             name : freshName,
             range : freshRange,
-            expire : freshExpire }
+            expire : freshExpire,
+            category : freshCategory
+        }
         }
       }).then((result) => {
         if(result.isConfirmed){
@@ -84,6 +96,7 @@ const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
         name : result.value.name,
         range : result.value.range,
         expire : result.value.expire,
+        category : result.value.category
         }
     }).then((response)=>{
         console.log('post addToFresh res.data : ', response.data);
