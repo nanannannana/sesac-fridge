@@ -41,15 +41,12 @@ document.addEventListener("DOMContentLoaded", function () {
     url: "/myPage/chart",
     data: {
       ingd_name: form.ingd_name.value,
-      recipe_tag: form.recipe_tag.value
+      cook_tag: form.cook_tag.value
     }
   })
   .then(function(res) {
     // chart1_labels 내용 넣기
-    const chart1_labels = [];
-    for (var i=0 ; i<res.data[0].length;i++) {
-      chart1_labels.push(res.data[0][i]);
-    }
+    const chart1_labels = [...new Set(res.data[0])];
     // Color 랜덤 지정
     const Color = [];
     for (var k=0 ; k<res.data[0].length;k++) {
@@ -74,21 +71,27 @@ document.addEventListener("DOMContentLoaded", function () {
         data: Object.values(ingd_count),
       }]
     };
+    const chart1_options = {
+      // plugins: {
+      //   title: {
+      //     display: true,
+      //     text: "냉장고 속 재료",
+      //     fontSize: 30,
+      //   }
+      // },
+      responsive: false
+    };
     const chart1_config = {
       type: 'doughnut',
       data: chart1_data,
-      options: {}
+      options: chart1_options
     };
     const myChart = new Chart(
       document.getElementById('myChart'),
       chart1_config
     );
     //chart2_labels에 내용 넣기
-    // hijklmnop
-    const chart2_labels = [];
-    for (var m=0 ; m<res.data[1].length; m++) {
-      chart2_labels.push(res.data[1][m]);
-    }
+    const chart2_labels = [...new Set(res.data[1])]; //문자열 중복 제거
     //Color 랜덤 지정
     const Color2 = [];
     for (var n=0 ; n<res.data[1].length;n++) {
@@ -114,9 +117,11 @@ document.addEventListener("DOMContentLoaded", function () {
       }]
     };
     const chart2_config = {
-      type: 'polarArea',
+      type: 'bar',
       data: chart2_data,
-      options: {}
+      options: {
+        responsive: false
+      }
     };
     const myChart2 = new Chart(
       document.getElementById('myChart2'),

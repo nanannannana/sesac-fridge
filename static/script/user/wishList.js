@@ -20,7 +20,7 @@ function wishlist_del(recipe_id, target) {
                             </form>
                             <div id="card_text_box">
                                 <h1 id="card_text" class="card-title">${res.data.recipe_title[i]}</h1>
-                                <h5 id="card_text" class="card-text" type="button" onclick="location.href='${res.data.recipe_url[i]}'">레시피 보기</h5>
+                                <h5 id="card_text" class="card-text" type="button" onclick="location.href='${res.data.recipe_url[i]}'" target="_blank">레시피 보기</h5>
                             </div>
                         </div>
                     </div>
