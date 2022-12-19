@@ -20,6 +20,10 @@ const fresh = (Sequelize, DataTypes) => {
             user_user_id : {
                 type : DataTypes.STRING(40),
                 allowNull : false,
+            },
+            fresh_category : {
+                type : DataTypes.STRING(15),
+                allowNull : false,
             }
         },
         {
