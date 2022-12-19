@@ -30,6 +30,10 @@ const recipe = (Sequelize, DataTypes) => {
             },
             recipe_tag : {
                 type : DataTypes.STRING(5),
+            },
+            recipe_pick : {
+                type : DataTypes.INTEGER,
+                defaultValue : 0,
             }
         },
         {

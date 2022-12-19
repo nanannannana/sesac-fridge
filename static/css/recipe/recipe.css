@@ -45,12 +45,12 @@
 }
 
 /*좋아요 버튼*/
-.time + button {
+.btns {
     height:30px;
     background-color: var(--btn-warn);
 }
 /*좋아요 버튼 클릭 시*/
-.time + button:hover {
+.btns:hover {
     background-color : red;
     scale:0.9;
     font-weight:bold;
