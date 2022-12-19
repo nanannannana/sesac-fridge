@@ -139,5 +139,42 @@ db.recipe.hasOne(db.cooklog, {
     onUpdate : "cascade",
 })
 
+// 7. fresh 테이블과 user 테이블
+// 7-1. fresh 테이블의 user_id는 user 테이블의 user_id를 참조하고 있다.
+// db.fresh의 user_id는 db.user의 user_id에 속한다.
+db.fresh.belongsTo(db.user, {
+    foreignKey : "user_user_id", // fresh테이블의 foreignkey할 컬럼 이름
+    targetKey : "user_id", // user테이블의 user_id컬럼 
+    onDelete : "cascade",
+    onUpdate : "cascade",
+})
+// 7-2. user 테이블의 user_id는 fresh 테이블의 user_id에 참조된다.
+// db.user는 가지고있다. 많이. db.fresh를
+db.user.hasMany(db.fresh, {
+    foreignKey : "user_user_id", // fresh테이블의 foreignkey할 컬럼 이름
+    sourceKey : "user_id", // user테이블의 user_id컬럼 
+    onDelete : "cascade",
+    onUpdate : "cascade",
+})
+
+// 8. fresh 테이블과 recipe 테이블
+// 8-1. frozen 테이블의 user_id는 user 테이블의 user_id를 참조하고 있다.
+// db.frozen의 user_id는 db.user의 user_id에 속한다.
+db.frozen.belongsTo(db.user, {
+    foreignKey : "recipe_recipe_id", // frozen테이블의 foreignkey할 컬럼 이름
+    targetKey : "user_id", // user테이블의 user_id 컬럼
+    onDelete : "cascade",
+    onUpdate : "cascade",
+})
+// 8-2. user 테이블의 user_id는 frozen 테이블의 user_id에 참조된다.
+// db.user는 가지고있다 db.frozen를
+db.user.hasMany(db.frozen, {
+    foreignKey : "recipe_recipe_id", // frozen테이블의 foreignkey할 컬럼 이름
+    sourceKey : "user_id", // user테이블의 user_id 컬럼
+    onDelete : "cascade",
+    onUpdate : "cascade",
+})
+
+
 
 module.exports = db;
