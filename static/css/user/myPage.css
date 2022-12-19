@@ -1,14 +1,16 @@
 #chart_box_child {
     display:flex;
     justify-content: space-between;
+    margin-top:2%;
 }
 #chart_1, #chart_2 {
-    width: 45%;
-    display: inline-block;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bolder;
 }
 
 #chart_box {
-    margin-bottom: 150px;
+    margin-bottom: 100px;
 }
 
 /* 최근 본 레시피 관련 */
@@ -42,8 +44,8 @@
 #recent_recipe_card, #recent_cook_card {
     height: 300px;
 }
-#recent_recipe_card_box > div > div:nth-child(1),
-#recent_recipe_card_box > div > div:nth-child(3),
+#recent_recipe_card_box > div > div:nth-child(2),
+#recent_recipe_card_box > div > div:nth-child(4),
 #recent_cook_card_box > div > div:nth-child(2),
 #recent_cook_card_box > div > div:nth-child(4) {
     margin-left: 20px;
@@ -53,6 +55,12 @@
 #recent_cook_card_box > div > div:nth-child(1),
 #recent_cook_card_box > div > div:nth-child(2) {
     margin-bottom: 20px;
+}
+#recent_recipe_card_box > div > div, #recent_cook_card_box > div > div {
+    flex-grow: 1;
+}
+#recent_recipe_card_box {
+    margin-left: 4%;
 }
 
 /* 최근에 한 요리 관련 */
@@ -73,4 +81,21 @@
     justify-content: center;
     align-items: center;
     border-radius: 5%;
+}
+#recent_cook_card_box {
+    margin-right: 4%;
+}
+
+/* 최근 본 레시피 카드 관련 */
+#recipe_name, #cook_name {
+    text-decoration: none;
+    font-family: 'NanumSquareAceb';
+    font-size: 30px;
+    font-weight: border;
+    color: white;
+    text-shadow: 0px 0px 3px #000;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+#recipe_name:hover, #cook_name:hover {
+    background-color:rgba(0, 0, 0, 0);
 }

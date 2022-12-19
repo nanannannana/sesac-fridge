@@ -4,75 +4,90 @@ const { frozen } = require("../../model/");
 const { recipe_like } = require("../../model/");
 const { recipe } = require("../../model/");
 const { log } = require("../../model/");
+const { cooklog } = require("../../model/");
 
 // 마이 페이지 렌더 - 예지
 exports.postMyPage = async function(req,res) {
-    var fresh_count = await fresh.findAndCountAll();
     var fresh_result = await fresh.findAll();
-    var frozen_count = await frozen.findAndCountAll();
     var frozen_result = await frozen.findAll();
-    let recipe_tag_count = await log.findAndCountAll({
-        include: [
-            {
-                model: recipe,
-                required: true,
-                attributes: ["recipe_tag"]
-            }
-        ],
-        where: {user_user_id: req.session.user}
-    });
-    let recipe_tag = await log.findAll({
+    let cook_result = await cooklog.findAll({
         raw: true,
         include: [
             {
                 model: recipe,
                 required: true,
-                attributes: ["recipe_tag"]
+                attributes: ["recipe_tag", "recipe_title","recipe_url","recipe_img"]
             }
         ],
         where: {user_user_id: req.session.user},
+        order: [['cooklog_id', 'DESC']],
         limit: 10
     });
-    var ingd_name = [];
-    for (var i=0 ; i < fresh_count.count ; i++) {
-        ingd_name.push(fresh_result[i].fresh_name);
-    }
-    for (var k=0 ; k < frozen_count.count ; k++) {
-        ingd_name.push(frozen_result[k].frozen_name);
-    }
-    var recipe_tag_list = [];
-    for (var j = 0; j < recipe_tag_count.count ; j++) {
-        if (recipe_tag[j]['recipe.recipe_tag']==null) {
-            recipe_tag_list.push("기타");
-        } else {
-            recipe_tag_list.push(recipe_tag[j]['recipe.recipe_tag']);
-        }
-    }
-    res.render("user/myPage", {
-        ingd_name: ingd_name,
-        recipe_tag: recipe_tag_list
-    });
-}
-exports.postMyPageChart = function(req,res) {
-    const ingd_name_list = req.body.ingd_name.split(",");
-    const recipe_tag_list = req.body.recipe_tag.split(",");
-    // console.log(ingd_name_list);
-    res.send([ingd_name_list,recipe_tag_list]);
-}
-
-// 찜리스트 렌더
-exports.postWishList = async function(req,res) {
-    // join조건에 부합한 row count
-    let rec_like_count = await recipe_like.findAndCountAll({
+    let recipe_result = await log.findAll({
+        raw: true,
         include: [
             {
                 model: recipe,
                 required: true,
-                attributes: ["recipe_id", "recipe_url", "recipe_img", "recipe_title"]
+                attributes: ["recipe_title","recipe_url","recipe_img"]
             }
         ],
-        where: {user_user_id: req.session.user}
+        where: {user_user_id: req.session.user},
+        order: [['log_id', 'DESC']],
+        limit: 4
+    })
+    // 냉장, 냉동 재료 관련 배열
+    var ingd_name = [];
+    for (var i=0 ; i < fresh_result.length ; i++) {
+        ingd_name.push(fresh_result[i].fresh_name);
+    }
+    for (var k=0 ; k < frozen_result.length ; k++) {
+        ingd_name.push(frozen_result[k].frozen_name);
+    }
+    // 최근에 한 요리 차트 관련 배열
+    var cook_tag_list = [];
+    for (var j = 0; j < cook_result.length ; j++) {
+        if (cook_result[j]['recipe.recipe_tag']==null) {
+            cook_tag_list.push("기타");
+        } else {
+            cook_tag_list.push(cook_result[j]['recipe.recipe_tag']);
+        }
+    }
+    //최근에 한 요리/최근 본 레시피 카드 관련 배열
+    var cook_title_list = [];
+    var cook_url_list = [];
+    var cook_img_list = [];
+    var recipe_title_list = [];
+    var recipe_url_list = [];
+    var recipe_img_list = [];
+    for (var l=0 ; l < 4 ; l++) {
+        cook_title_list.push(cook_result[l]['recipe.recipe_title']);
+        cook_url_list.push(cook_result[l]['recipe.recipe_url']);
+        cook_img_list.push(cook_result[l]['recipe.recipe_img']);
+        recipe_title_list.push(recipe_result[l]['recipe.recipe_title']);
+        recipe_url_list.push(recipe_result[l]['recipe.recipe_url']);
+        recipe_img_list.push(recipe_result[l]['recipe.recipe_img']);
+    }
+    res.render("user/myPage", {
+        ingd_name: ingd_name,
+        cook_tag: cook_tag_list,
+        cook_title: cook_title_list,
+        cook_url: cook_url_list,
+        cook_img: cook_img_list,
+        recipe_title: recipe_title_list,
+        recipe_url: recipe_url_list,
+        recipe_img: recipe_img_list
     });
+}
+exports.postMyPageChart = function(req,res) {
+    const ingd_name_list = req.body.ingd_name.split(",");
+    const cook_tag_list = req.body.cook_tag.split(",");
+    // console.log(ingd_name_list);
+    res.send([ingd_name_list,cook_tag_list]);
+}
+
+// 찜리스트 렌더
+exports.postWishList = async function(req,res) {
     let rec_like = await recipe_like.findAll({
         include: [
             {
@@ -90,7 +105,7 @@ exports.postWishList = async function(req,res) {
     var recipe_img = [];
     var recipe_url = [];
     var recipe_title = [];
-    for (var i=0 ; i < rec_like_count.count ; i++) {
+    for (var i=0 ; i < rec_like.length ; i++) {
         recipe_id.push(rec_like[i].recipe.recipe_id);
         recipe_img.push(rec_like[i].recipe.recipe_img);
         recipe_url.push(rec_like[i].recipe.recipe_url);
@@ -107,21 +122,8 @@ exports.postWishList = async function(req,res) {
 exports.deleteWishListDel = async function(req,res) {
     let result = await recipe_like.findAll({where: {recipe_recipe_id: req.body.recipe_id}});
     let like_id = result[0].like_id;
-    await recipe.update({ // recipe tb 컬럼 수정
-        recipe_pick : 0,
-        where : { recipe_id : req.body.id}
-    })
+    await recipe.update({recipe_pick : 0},{ where : { recipe_id : req.body.recipe_id}});
     await recipe_like.destroy({where:{like_id: like_id}});
-    let rec_like_count = await recipe_like.findAndCountAll({
-        include: [
-            {
-                model: recipe,
-                required: true,
-                attributes: ["recipe_id", "recipe_url", "recipe_img", "recipe_title"]
-            }
-        ],
-        where: {user_user_id: req.session.user}
-    });
     let rec_like = await recipe_like.findAll({
         include: [
             {
@@ -136,7 +138,7 @@ exports.deleteWishListDel = async function(req,res) {
     var recipe_img = [];
     var recipe_url = [];
     var recipe_title = [];
-    for (var i=0 ; i < rec_like_count.count ; i++) {
+    for (var i=0 ; i < rec_like.length ; i++) {
         recipe_id.push(rec_like[i].recipe.recipe_id);
         recipe_img.push(rec_like[i].recipe.recipe_img);
         recipe_url.push(rec_like[i].recipe.recipe_url);

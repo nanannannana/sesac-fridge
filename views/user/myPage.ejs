@@ -9,17 +9,19 @@
     <%-include('myPageBasic.ejs')%>
     <form id="form_hidden">
         <input type="hidden" name="ingd_name" value="<%=ingd_name%>">
-        <input type="hidden" name="recipe_tag" value="<%=recipe_tag%>">
+        <input type="hidden" name="cook_tag" value="<%=cook_tag%>">
     </form>
     <div class="container">
         <div id="chart_box">
             <p id="box_title"><span>김새싹님</span>의 통계차트</p>
             <div id="chart_box_child">
                 <div id="chart_1">
-                    <canvas id="myChart"></canvas>
+                    <p>냉장고 속 재료 비율 차트</p>
+                    <canvas id="myChart" width="550px;"></canvas>
                 </div>
                 <div id="chart_2">
-                    <canvas id="myChart2" ></canvas>
+                    <p>최근에 한 요리 카테고리별 차트(10개)</p>
+                    <canvas id="myChart2" width="650px;" height="599.99px;"></canvas>
                 </div>
             </div>
         </div>
@@ -33,17 +35,12 @@
                         <span>레시피</span>
                     </div>
                 </div>
-                <div class="container" id="recent_recipe_card_box" style="margin-left: -5%;">
-                    <div class="row" style="flex-direction: row-reverse;">
-                        <% for (var i=1 ; i<5 ; i++ ) { %>
-                            <div id="recent_recipe_card" class="card col-5">
-                                <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="card-link">Card link</a>
-                                <a href="#" class="card-link">Another link</a>
-                                </div>
+                <div class="container" id="recent_recipe_card_box">
+                    <div class="row">
+                        <% for (var i=0 ; i<4 ; i++ ) { %>
+                            <div id="recent_recipe_card" class="card col-5" style="padding:0px;">
+                                <img src="<%=recipe_img[i]%>" class="card-img" style="width:100%; height: 100%;"alt="...">
+                                <a href="<%=recipe_url[i]%>" target="_blank" id="recipe_name" class="card-link card-img-overlay"><%=recipe_title[i]%></a>                                
                             </div>
                         <% } %>
                     </div>
@@ -56,17 +53,12 @@
                         <span>한 요리</span>
                     </div>
                 </div>
-                <div class="container" id="recent_cook_card_box" style="margin-right: -5%;">
+                <div class="container" id="recent_cook_card_box">
                     <div class="row">
-                        <% for (var i=1 ; i<5 ; i++ ) { %>
-                            <div id="recent_cook_card" class="card col-5">
-                                <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="card-link">Card link</a>
-                                <a href="#" class="card-link">Another link</a>
-                                </div>
+                        <% for (var i=0 ; i<4 ; i++ ) { %>
+                            <div id="recent_recipe_card" class="card col-5" style="padding:0px;">
+                                <img src="<%=cook_img[i]%>" class="card-img" style="width:100%; height: 100%;"alt="...">
+                                <a href="<%=cook_url[i]%>" id="recipe_name" class="card-link card-img-overlay" target="_blank"><%=cook_title[i]%></a>                                
                             </div>
                         <% } %>
                     </div>

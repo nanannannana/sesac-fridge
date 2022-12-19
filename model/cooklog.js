@@ -21,7 +21,7 @@ const cooklog = (Sequelize, DataTypes) => {
             charset: 'utf8mb4',
             collate: 'utf8mb4_unicode_ci',
             underscored: true, // 카멜표기법 -> 스네이크로
-            tableName : "log",
+            tableName : "cooklog",
             freezeTableName : true,
             timestamps : false,
             paranoid: false, // true : deletedAt이라는 컬럼이 생기고 지운 시각이 기록
