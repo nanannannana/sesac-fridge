@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const dotenv = require('dotenv');
 const session = require('express-session');
+const cookieParser = require("cookie-parser");
 dotenv.config(); 
 
 app.use("/static", express.static("static"));
