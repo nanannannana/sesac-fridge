@@ -3,12 +3,13 @@
 <%-include('../main/header.ejs') %>
 <div class="container-fluid" id="filter">
     <div class="container" id="filter_box">
-      <button class="btn filter" type="button" onclick="selectFilter('반찬')">반찬</button>
-      <button class="btn filter" type="button" onclick="selectFilter('밥')">밥</button>
-      <button class="btn filter" type="button" onclick="selectFilter('국/탕')">국/탕</button>
-      <button class="btn filter" type="button" onclick="selectFilter('건강/웰빙')">건강/웰빙</button>
-      <button class="btn filter" type="button" onclick="selectFilter('야식')">야식</button>
+      <button class="btn filter" onclick="selectFilter('반찬')">반찬</button>
+      <button class="btn filter" onclick="selectFilter('밥')">밥</button>
+      <button class="btn filter" onclick="selectFilter('국/탕')">국/탕</button>
+      <button class="btn filter" onclick="selectFilter('건강/웰빙')">건강/웰빙</button>
+      <button class="btn filter" onclick="selectFilter('야식')">야식</button>
     </div>
+    밥
 </div>
 <main>
   <div class="container mt-5 ">
@@ -56,7 +57,7 @@
                 <div class="btn_inner text-center p-1"> 
                   <input type="button" class="btn show_recipe" 
                   onclick="insertLog('<%=data[i].recipe_id%>', '<%=data[i].recipe_url%>')" value="레시피보기">
-                  <input type="button" class="btn show_cook" onclick="cooking()" value="요리하기">
+                  <input type="button" class="btn show_cook" value="요리하기">
                 </div>
             </div>
             <!--btn_outer-->

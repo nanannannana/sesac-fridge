@@ -55,6 +55,10 @@ exports.postWishList = async function(req,res) {
 exports.deleteWishListDel = async function(req,res) {
     let result = await recipe_like.findAll({where: {recipe_recipe_id: req.body.recipe_id}});
     let like_id = result[0].like_id;
+    await recipe.update({ // recipe tb 컬럼 수정
+        recipe_pick : 0,
+        where : { recipe_id : req.body.id}
+    })
     await recipe_like.destroy({where:{like_id: like_id}});
     res.send(true);
 }
