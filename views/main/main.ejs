@@ -6,14 +6,6 @@
     <!-- <h3 id="title">여기가 main 페이지 입니다.</h3>         -->
     <div class="container-xl mainPage_main">
         <div class="container-fluid mainPage_box">
-          <div class="expire_count d_none">
-            임박 상품 :
-          </div>
-
-
-
-
-
             <!-- <img src="static/img/sesac.gif" style="width:100px"> -->
             <!-- Row 냉장식품 -->
             <div class="row first_row_main">
@@ -125,5 +117,48 @@
     </div>
     <a href="/recipe">레시피</a>
     <a href="/signIn">로그인</a>
+    <div class="d_none" id="log_welcome">
+      임박 상품
+    </div>
+
+    <div class="modal" tabindex="-1" id="expModal">
+      <div class="modal-dialog ">
+        <div class="modal-content">
+          <div class="modal-header text-bg-primary">
+            <h5 class="modal-title">슬픈 소식</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" style="text-align : center;">
+            <h5><%=user_name%>님,</h5>
+            <p>유통기한이 지난 식료품 <strong><%=exp_count%></strong>개가 냉장고에서 삭제되었어요</p>
+          </div>
+          <div class="modal-footer  justify-content-between">
+            <div class="form-check form-switch form-check-reverse">
+              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckReverse" onclick="modalCheck();">
+              <label class="form-check-label" for="flexSwitchCheckReverse">오늘 그만보기</label>
+            </div>
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
 </main>
+
+<script>
+  const expModal = new bootstrap.Modal('#expModal');
+
+  console.log("'<%=isLogin%>' :", "<%=isLogin%>");
+    if ("<%=isLogin%>" == "true"){
+      $("#log_welcome").removeClass("d_none");
+      $("#log_welcome").text("<%=user_name%>" + "님, 유통기한이 임박한 식재료" + "<%=fresh_count%>" + "개가 기다리고 있어요 !");
+      if("<%=EXP_MODAL%>" !== "1") expModal.show();
+  }
+</script>
+
+
 <%-include('footer.ejs') %>
