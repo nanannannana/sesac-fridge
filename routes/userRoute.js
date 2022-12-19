@@ -15,5 +15,7 @@ router.post("/idCheck",user.postIdCheck);
 router.post("/pwCheck", user.postPwCheck);
 // 회원가입 성공
 router.patch("/signupUpdate",user.updateSignupUpdate);
+// 아이디/비밀번호 찾기
+router.post("/find",user.postFind);
 
 module.exports = router;

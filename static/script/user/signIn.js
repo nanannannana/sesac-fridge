@@ -1,3 +1,17 @@
+function phone_num_hyphen(target) {
+    if (target!=="") {
+        $("#phone_num").removeClass("is-invalid");
+    }
+    target.value = target.value
+     .replace(/[^0-9]/g, '')
+     .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+}
+function name_click(target) {
+    if (target!=="") {
+        $("#user_name").removeClass("is-invalid");
+    }
+}
+
 function signin() {
     var form = document.getElementById("form_signin");
     var data = {
@@ -42,3 +56,24 @@ function signin() {
     }
 
 }
+function id_find() {
+    var form = document.getElementById("form_id_find");
+    if (form.user_name.value=="") {
+        $("#user_name").addClass("is-invalid");
+    } else if(form.user_phone.value=="") {
+        $("#phone_num").addClass("is-invalid");
+    } else {
+        axios({
+            method: "post",
+            url: "/find",
+            data: {
+                user_name: form.user_name.value,
+                user_phone: form.user_phone.value.replace(/-/g, '')
+            }
+        })
+        .then(function(res) {
+            console.log(res.data.user_id);
+        })
+    }
+}
+// signup/signin 수정 아이디 비번 찾기 만들기

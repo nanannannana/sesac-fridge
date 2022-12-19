@@ -38,3 +38,36 @@
 #form_signin > div {
     margin-bottom: 20px;
 }
+
+/* Modal 정리 */
+#icon {
+    margin-top: 3px;
+    margin-right: 10px;
+}
+#modal_title {
+    font-size: 25px;
+}
+#form_id_find {
+    text-align: left;
+}
+#input_phone_num_title {
+    margin-top: 16px;
+}
+#input_phone_num_title, #input_name_title {
+    font-size: 18px;
+    font-weight: bold;
+}
+#button2, #button2:hover {
+    font-size: 18px;
+}
+#button3 {
+    background-color: white;
+    border: 1px solid #b9b9b9;
+    color: #b9b9b9;
+    font-size: 18px;
+}
+#button3:hover {
+    background-color: #b9b9b9;
+    color: white;
+    font-size: 18px;
+}

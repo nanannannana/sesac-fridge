@@ -1,7 +1,30 @@
 function phone_num_hyphen(target) {
+    if (target!=="") {
+        $("#phone_num").removeClass("is-invalid");
+    }
     target.value = target.value
      .replace(/[^0-9]/g, '')
      .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+}
+function id_click(target) {
+    if (target!=="") {
+        $("#user_name").removeClass("is-invalid");
+    }
+}
+function pw_click(target) {
+    if (target!=="") {
+        $("#user_name").removeClass("is-invalid");
+    }
+}
+function pw_check_click(target) {
+    if (target!=="") {
+        $("#user_name").removeClass("is-invalid");
+    }
+}
+function name_click(target) {
+    if (target!=="") {
+        $("#user_name").removeClass("is-invalid");
+    }
 }
 
 // 아이디 이메일 유효성 검사

@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
     method: "post",
     url: "/myPage/chart",
     data: {
-      ingd_name: form.ingd_name.value,
+      fresh_category: form.fresh_category.value,
       cook_tag: form.cook_tag.value
     }
   })
