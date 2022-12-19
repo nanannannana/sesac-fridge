@@ -6,6 +6,8 @@ dotenv.config();
 
 app.use("/static", express.static("static"));
 
+app.use(cookieParser());
+
 app.use(session({
     secret: "111",
     resave: false,
@@ -33,6 +35,8 @@ app.use("/", userRouter);
 app.get("*", (req,res)=>{
     res.render("./main/404");
 })
+
+
 
 app.listen(process.env.PORT, ()=>{
     console.log("server open : ", process.env.PORT);

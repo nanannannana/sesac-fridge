@@ -13,7 +13,9 @@ function showUpdateBtns(){
     $("#showUpdateBtns").addClass("d_none");
     $(".fresh_box").remove();
     $(".frozen_box").remove();
-    $(".change_box").css("width","100%");
+    $(".change_box1").remove();
+    $(".change_box2").css("width","50%");
+    $(".change_box3").css("width","50%");
     $(".fridge_ingd_box input[type=checkbox]").addClass("d_none");
     $("#basket_ingd_box").addClass("hidden");
     $(".basket_text").addClass("d_none");

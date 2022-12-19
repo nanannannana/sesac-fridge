@@ -29,19 +29,111 @@ button {
     border : none;
 }
 
-/* header 부분 */
+/*a태그 기본 지정*/
+a:visited {
+    color : black;
+}
+
+
+
+
+/* header.css */
 #header_box {
     margin-left: 150px;
     margin-right: 150px;
 }
 
+/* navbar */
 /* 임시 logo사이즈 및 굵기 지정 */
 #logo_text {
     font-family: 'NanumSquareAceb';
     font-size: 30px;
 }
-
-/*a태그 기본 지정*/
-a:visited {
-    color : black;
+#logo_text>img {
+    width:50px;
 }
+/* navber open img */
+.navbar-toggler {
+    width:30px;
+}
+/* navbar 글씨 */
+.nav_text {
+    font-size:x-large; 
+    font-family: 'NanumSquareAceb'; 
+    font-weight: bolder;
+}
+
+/* search bar */
+#hd_search {
+    width:200px;
+}
+#hd_search i {
+    color: black; 
+    vertical-align: middle;
+}
+.form-control::placeholder {
+    font-size: 0.95rem;
+    color: #aaa;
+    font-style: italic;
+}
+
+/* header.css END */
+
+
+
+
+/* footer.css */
+.footer {
+    background-color: var(--footer-brown);  
+    min-height: 250px;
+}
+.footer>a {display: none;}
+
+.footer>.row {
+    justify-content:space-between;
+}
+.ft_left, .ft_right { 
+    width:300px; 
+}
+
+/* footer 좌측 */
+#sesac_logo {
+    width: 100px;
+}
+
+/* footer 우측 */
+.ft_right {
+    justify-content: end;
+}
+
+/* family site select 정렬*/
+.ft_right select {
+    padding:0.4; 
+    background-color: transparent;
+}
+.ft_right option { 
+    padding : 0.5px; 
+}
+/* contact us 정렬*/
+.ft_contact {
+    flex-direction:column; 
+    align-items:flex-end;
+}
+.ft_contact>p {
+    font-size:24px; 
+    font-family: 'NanumSquareAcr'; 
+    font-weight: lighter;
+}
+.ft_contact i {
+    font-size:2.2rem; 
+    vertical-align: middle; 
+    color: black;
+}
+#notion_logo {
+    width:3rem; 
+    padding-bottom:0.3rem;
+}
+#figma_logo {
+    width:1.6rem;
+}
+/* footer.css END */

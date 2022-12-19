@@ -2,44 +2,38 @@
 </head>
 <body>
 <header>
-    <div class="container-fluid" style="height:100px;">
-        <nav class="navbar">
-            <div id="header_box" class="container-fluid">
-              <a id="logo_text" class="navbar-brand" href="#">냉장고 집사</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-                <img src="/static/img/color_logo.png" style="width:30px; margin:10px; float: right;">
-                <!-- <img src="/static/img/nocolor_logo.png" style="width:30px; margin:10px; float: right;"> -->
-              </button>
-              <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-                <div class="offcanvas-header">
-                  <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <div class="container-fluid" style="height:100px;"> 
+        <nav class="navbar bg-white">
+            <div class="container-fluid" id="header_box">
+                <a class="navbar-brand" href="#" id="logo_text">냉장고 집사<img src="static/img/sesac.gif"></a>
+                <img src="/static/img/color_logo.png" class="navbar-toggler p-0 border-0" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="navbar-nav me-auto" >
+                        <ul class="nav nav_text justify-content-center">
+                            <li class="nav-item me-3 ms-5">
+                                <a class="nav-link active" aria-current="page" href="#">신선제품 관리</a>
+                            </li>
+                            <li class="nav-item me-3 ms-3">
+                                <a class="nav-link active" aria-current="page" href="http://localhost:8080/recipe/">레시피 추천</a>
+                            </li>
+                            <li class="nav-item me-3 ms-3">
+                                <a class="nav-link active" aria-current="page" href="http://localhost:8080/myFridge">나의 냉장고</a>
+                            </li>
+                            <li class="nav-item me-3 ms-3">
+                                <a class="nav-link active" aria-current="page" href="http://localhost:8080/myPage/">마이 페이지</a>
+                            </li>
+                            <li class="nav-item ms-4">
+                                <div class="input-group border rounded-pill p-1" id="hd_search">
+                                    <div class="input-group-prepend border-0">
+                                      <button id="button-addon4" type="button" class="btn btn-link text-info"><i class="fa fa-search"></i></button>
+                                    </div>
+                                    <input type="search" placeholder="Search" aria-describedby="button-addon4" class="form-control bg-none border-0">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="offcanvas-body">
-                  <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">신선제품 관리</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="http://localhost:8080/recipe/">레시피 추천</a>
-                    </li>
-                    <li class="nav-item">
-                        <!-- <button class="nav-link active" style="background-color: white;" aria-current="page" onclick="myfridge_go()">나의 냉장고</button>
-                        <form id="myfridge_go" action="/myFridge" method="post"></form> -->
-                        <a class="nav-link active" aria-current="page" href="http://localhost:8080/myFridge/">나의 냉장고</a>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link active" style="background-color: white;" aria-current="page" onclick="mypage_go()">마이 페이지</button>
-                        <form id="mypage_go" action="/myPage" method="post"></form>
-                    </li>
-                  </ul>
-                  <form class="d-flex mt-3" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                  </form>
-                </div>
-              </div>
             </div>
-          </nav>
+        </nav>
     </div>
 </header>

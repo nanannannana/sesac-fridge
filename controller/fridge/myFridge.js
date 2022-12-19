@@ -18,16 +18,6 @@ exports.getMyFridge = async (req,res) => {
     res.render("fridge/myFridge", { fresh_list : fresh_result, frozen_list : frozen_result });
 }
 
-// 선택한 식재료로 레시피 찾기
-exports.postResultRecipe = (req,res) => {
-    console.log( "req.body.checkedIngdList : ", req.body.checkedIngdList );
-    // let result = await Recipe.findAll({
-    //     attributes : [ "recipe_title" ],
-    //     where : { recipe_ingd : req.body.checkedIngdList[0] }
-    // } 
-    // console.log("postResultRecipe result : ", result );
-    res.send( true );
-}
 
 // 냉장실 입력한 식재료 중복여부 확인 
 exports.postCheckFresh = async (req, res)=>{

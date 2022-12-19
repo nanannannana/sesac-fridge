@@ -3,7 +3,7 @@
 
 //냉장실 & 냉동실 식재료 추가
 var date = new Date();
-var today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
+const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
 
 // 냉장실에 식재료 추가 
 // 냉장실에 추가 btn 클릭시,

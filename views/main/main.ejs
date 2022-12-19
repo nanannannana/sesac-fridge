@@ -1,10 +1,122 @@
 <%-include('head.ejs') %>
+<link href="/static/css/main/main.css" rel="stylesheet" type="text/css">
 <script src="static/script/main/main.js"></script>
 <%-include('header.ejs') %>
 <main>
-    <div class="container">
-        <h1 id="title">여기가 main 페이지 입니다.</h1>
-        <img src="static/img/sesac.gif" style="width:100px">
+    <!-- <h3 id="title">여기가 main 페이지 입니다.</h3>         -->
+    <div class="container-xl mainPage_main">
+        <div class="container-fluid mainPage_box">
+          <div class="expire_count d_none">
+            임박 상품 :
+          </div>
+            <!-- <img src="static/img/sesac.gif" style="width:100px"> -->
+            <!-- Row 냉장식품 -->
+            <div class="row first_row_main">
+                <p>냉장식품</p>
+                <div class="closest_fresh_box">
+                    <div class="card frs_card border-success">
+                        <div class="card-header">Header</div>
+                        <div class="card-body text-success">
+                          <h5 class="card-title">Success card title</h5>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>
+                    <div class="card frs_card border-success">
+                        <div class="card-header">Header</div>
+                        <div class="card-body text-success">
+                          <h5 class="card-title">Success card title</h5>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>
+                    <div class="card frs_card border-success">
+                        <div class="card-header">Header</div>
+                        <div class="card-body text-success">
+                          <h5 class="card-title">Success card title</h5>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>
+                    <div class="card frs_card border-success">
+                        <div class="card-header">Header</div>
+                        <div class="card-body text-success">
+                          <h5 class="card-title">Success card title</h5>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Row 냉동식품 -->
+            <div class="row second_row_main">
+                <p>냉동식품</p>
+                <div class="closest_frozen_box">
+                    <div class="card frz_card">
+                        <div class="card-header">Header</div>
+                        <div class="card-body">
+                          <h5 class="card-title">Light card title</h5>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>
+                    <div class="card frz_card">
+                        <div class="card-header">Header</div>
+                        <div class="card-body">
+                          <h5 class="card-title">Light card title</h5>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>
+                    <div class="card frz_card">
+                        <div class="card-header">Header</div>
+                        <div class="card-body">
+                          <h5 class="card-title">Light card title</h5>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>
+                    <div class="card frz_card">
+                        <div class="card-header">Header</div>
+                        <div class="card-body">
+                          <h5 class="card-title">Light card title</h5>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Row 레시피 -->
+            <div class="row third_row_main">
+                <p>레시피</p>
+                <div class="best_recipe_box">
+                    <div class="card br_card">
+                        <img src="https://www.chipotle.com/content/dam/chipotle/global-site-design/en/values/values-2020/img/hero-burrito-lg.png" class="card-img br_img" alt="br_card1">
+                        <div class="card-img-overlay">
+                          <h5 class="card-title">Card title</h5>
+                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                          <p class="card-text"><small>Last updated 3 mins ago</small></p>
+                        </div>
+                    </div>
+                    <div class="card br_card">
+                        <img src="https://www.chipotle.com/content/dam/chipotle/global-site-design/en/values/values-2020/img/hero-burrito-lg.png" class="card-img br_img" alt="br_card2">
+                        <div class="card-img-overlay">
+                          <h5 class="card-title">Card title</h5>
+                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                          <p class="card-text"><small>Last updated 3 mins ago</small></p>
+                        </div>
+                    </div>
+                    <div class="card br_card">
+                        <img src="https://www.chipotle.com/content/dam/chipotle/global-site-design/en/values/values-2020/img/hero-burrito-lg.png" class="card-img br_img" alt="br_card3">
+                        <div class="card-img-overlay">
+                          <h5 class="card-title">Card title</h5>
+                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                          <p class="card-text"><small>Last updated 3 mins ago</small></p>
+                        </div>
+                    </div>
+                    <div class="card br_card">
+                        <img src="https://www.chipotle.com/content/dam/chipotle/global-site-design/en/values/values-2020/img/hero-burrito-lg.png" class="card-img br_img" alt="br_card">
+                        <div class="card-img-overlay">
+                          <h5 class="card-title">Card title</h5>
+                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                          <p class="card-text"><small>Last updated 3 mins ago</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 <%-include('footer.ejs') %>
