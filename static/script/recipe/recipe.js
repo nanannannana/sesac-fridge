@@ -1,3 +1,4 @@
+// 필터 클릭시 페이지 이동
 function selectFilter(filter) {
     axios({
         method : "get",
@@ -19,7 +20,6 @@ function insertLog(id, url) {
         location.href=url;
     })
 }
-
 
 // 빈 하트 클릭 시 recipe_like 테이블에 추가
 function insertLike(element, id) {
