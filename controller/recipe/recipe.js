@@ -4,21 +4,60 @@ const { recipe_like } = require("../../model");
 const { fresh } = require("../../model");
 const { frozen } = require("../../model");
 
+const { Op } = require("sequelize");  // where 안에 조건절을 위해
+
 // 레시피 추천 페이지
 exports.getRecipe = async (req, res) => {
     console.log(req.session.user);
-    let result = await recipe.findAll({
-        include : [{
-            model : fresh,
-        }],
-        include : [{
-            model : frozen,
-        }],
-        raw : true, // dataValues만 가져오기
-        where : { recipe_tag : null }
-    });
-    console.log(result);
-    res.render("recipe/recipe", {data : result});
+    let freRes = await fresh.findAll({
+        raw : true,
+        attributes : [['fresh_name', 'name'], ['fresh_range', 'range']]
+    })
+    let froRes = await frozen.findAll({
+        raw : true,
+        attributes : [['frozen_name', 'name'], ['frozen_range', 'range']]
+    })
+    let ingdRes = [];   // fresh와 frozen에 있는 모든 값
+    let ingdName = [];  // 식재료
+    let ingdRange = []; // 수량
+
+    // 식재료와 수량을 ingRes에
+    freRes.forEach((item)=>{
+        ingdRes.push(item)
+    })
+    froRes.forEach((item)=>{
+        ingdRes.push(item)
+    })
+    
+    // 식재료 수량 변수 각각 변수에 집어넣기
+    for(var i=0;i<ingdRes.length;i++){
+        ingdName.push(ingdRes[i].name);
+        ingdRange.push(ingdRes[i].range);
+    }
+    let ingdNameStr = ingdName.join("|"); // 일치하는 재료를 찾기 위해서 ingName을 문자열로
+ 
+    // 식재료가 있을 때
+    if(ingdRes){
+        let ingdRecipe = await recipe.findAll(
+            {
+                raw : true, // dataValues만 가져오기
+                where : { recipe_ingd : { [Op.regexp] : ingdNameStr} }
+            }
+        )
+        console.log(ingdName);
+        console.log(ingdRange);
+        res.render("recipe/recipe", {data : ingdRecipe, ingdName : ingdName, ingdRange : ingdRange});
+    }else{ // 식재료가 없을 때
+        let result = await recipe.findAll(
+            {
+                raw : true, 
+                where : { recipe_tag : null }
+            }
+        );
+        console.log("result : ", result);
+        res.render("recipe/recipe", {data : result});
+    }
+    
 }
 
 // 필터로 검색
