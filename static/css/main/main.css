@@ -1,3 +1,7 @@
+.d_none {
+  display: none;
+}
+
 /* main {background-color: var(--main-yellow);} */
 .mainPage_main {background-color: var(--main-yellow);}
 .mainPage_box { 
