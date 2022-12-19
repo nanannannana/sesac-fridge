@@ -38,9 +38,9 @@ function insertLike(element, id) {
 }
 
 // 요리하기 버튼을 누르면 alert창 뜨게 하기 
-function cooking(){
+function cooking(ingred){
     swal.fire({
-        title: "Good job!",
+        title: ingred,
         text: "You clicked the button!",
         icon: "success",
         button: "Aww yiss!",

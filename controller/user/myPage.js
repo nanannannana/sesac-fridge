@@ -8,8 +8,9 @@ const { cooklog } = require("../../model/");
 
 // 마이 페이지 렌더 - 예지
 exports.postMyPage = async function(req,res) {
-    var fresh_result = await fresh.findAll();
-    var frozen_result = await frozen.findAll();
+    var fresh_result = await fresh.findAll({
+        raw:true
+    });
     let cook_result = await cooklog.findAll({
         raw: true,
         include: [
@@ -36,13 +37,10 @@ exports.postMyPage = async function(req,res) {
         order: [['log_id', 'DESC']],
         limit: 4
     })
-    // 냉장, 냉동 재료 관련 배열
-    var ingd_name = [];
-    for (var i=0 ; i < fresh_result.length ; i++) {
-        ingd_name.push(fresh_result[i].fresh_name);
-    }
-    for (var k=0 ; k < frozen_result.length ; k++) {
-        ingd_name.push(frozen_result[k].frozen_name);
+    // 냉장고 카테고리 배열
+    var fresh_category_list = [];
+    for (var i=0; i<fresh_result.length ; i++) {
+        fresh_category_list.push(fresh_result[i].fresh_category);
     }
     // 최근에 한 요리 차트 관련 배열
     var cook_tag_list = [];
@@ -69,7 +67,7 @@ exports.postMyPage = async function(req,res) {
         recipe_img_list.push(recipe_result[l]['recipe.recipe_img']);
     }
     res.render("user/myPage", {
-        ingd_name: ingd_name,
+        fresh_category: fresh_category_list,
         cook_tag: cook_tag_list,
         cook_title: cook_title_list,
         cook_url: cook_url_list,
@@ -78,12 +76,13 @@ exports.postMyPage = async function(req,res) {
         recipe_url: recipe_url_list,
         recipe_img: recipe_img_list
     });
+
 }
 exports.postMyPageChart = function(req,res) {
-    const ingd_name_list = req.body.ingd_name.split(",");
+    const fresh_category_list = req.body.fresh_category.split(",");
     const cook_tag_list = req.body.cook_tag.split(",");
     // console.log(ingd_name_list);
-    res.send([ingd_name_list,cook_tag_list]);
+    res.send([fresh_category_list,cook_tag_list]);
 }
 
 // 찜리스트 렌더

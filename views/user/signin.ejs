@@ -22,8 +22,38 @@
           </div>
           <button type="button" id="button" class="btn mb-3" onclick="signin()">로그인</button>
         </form>
-        <a href="http://localhost:8080/">아이디/비밀번호 찾기</a>
+        <a href="http://localhost:8080/" data-bs-toggle="modal" data-bs-target="#Modal">아이디 찾기</a>
+        <div class="modal fade animate__animated animate__fadeInDown" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <i id="icon" class="bi bi-check-circle fa-2x"></i>
+                <h1 id="modal_title" class="modal-title" id="ModalLabel">아이디 찾기</h1>
+                <button id="close_btn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="form_id_find" class="needs-validation" novalidate>
+                  <p id="input_name_title">이름</p>
+                  <div class="input-group input-group-lg">
+                    <input type="text" id="user_name" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="user_name" placeholder="이름" oninput="name_click(this);" required>
+                    <div class="invalid-feedback">이름을 입력하세요.</div>
+                  </div>
+                  <p id="input_phone_num_title">휴대폰 번호</p>
+                  <div class="input-group input-group-lg">
+                    <input id="phone_num" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" oninput="phone_num_hyphen(this);" name="user_phone" placeholder="휴대폰 번호" required>
+                    <div class="invalid-feedback">휴대폰 번호를 입력하세요.</div>
+                  </div>
+                  <div class="modal-footer">
+                    <button id="button3" type="button" class="btn" data-bs-dismiss="modal">닫기</button>
+                    <button id="button2" type="button" class="btn" onclick="id_find()">확인</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
         <a href="http://localhost:8080/signUp">회원가입</a>
+        
       </div>
     </div>
 </body>
