@@ -24,7 +24,7 @@
                         <i class="bi bi-alarm"></i>&nbsp;
                         <%=data[i].recipe_time%>
                       </span>
-                      <button type="button" class="btn btns">
+                      <button type="button" class="btn btns" title="<%=data[i].recipe_id%>">
                         <% if (data[i].recipe_pick == 0) { %>
                           <h5><i class="bi bi-balloon-heart" 
                             onclick="insertLike(this, '<%=data[i].recipe_id%>')"></i>
@@ -43,10 +43,25 @@
                         <h5><%=data[i].recipe_title%></h5>
                     </div>
                     <div class="d-flex justify-content-between align-items-center pt-2">
-                        <span>
+                        <div>
+                          <div>
                           <i class="fas fa-regular fa-bowl-food"></i>&nbsp;
                           <%=data[i].recipe_ingd%>
-                        </span> 
+                          </div>
+                          <div class="pt-2" style="color: red">나의 냉장고와 일치하는 재료 :
+                          <% let recp_ingd = ingdResult[i].toString().split('\n')%>
+                          <% let myingd = ingdName.toString().split(',')%>
+                          <% let ingred = "" %>
+                          <% for(var j=0; j<recp_ingd.length; j++) { %>
+                              <% for(var k=0; k<myingd.length; k++) { %>
+                                   <% if(recp_ingd[j] == myingd[k]) { %>
+                                        <%= myingd[k]%>
+                                        <% ingred += myingd[k] %>
+                                   <% } %>
+                              <% } %>
+                          <% } %> 
+                          </div> 
+                        </div>
                     </div>
                 </div>
                 <!--name_ingd-->
@@ -56,7 +71,7 @@
                 <div class="btn_inner text-center p-1"> 
                   <input type="button" class="btn show_recipe" 
                   onclick="insertLog('<%=data[i].recipe_id%>', '<%=data[i].recipe_url%>')" value="레시피보기">
-                  <input type="button" class="btn show_cook" onclick="cooking()" value="요리하기">
+                  <input type="button" class="btn show_cook" onclick="cooking('<%=ingred%>')" value="요리하기">
                 </div>
             </div>
             <!--btn_outer-->
