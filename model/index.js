@@ -161,7 +161,7 @@ db.user.hasMany(db.fresh, {
 // 8-1. frozen 테이블의 user_id는 user 테이블의 user_id를 참조하고 있다.
 // db.frozen의 user_id는 db.user의 user_id에 속한다.
 db.frozen.belongsTo(db.user, {
-    foreignKey : "recipe_recipe_id", // frozen테이블의 foreignkey할 컬럼 이름
+    foreignKey : "user_user_id", // frozen테이블의 foreignkey할 컬럼 이름
     targetKey : "user_id", // user테이블의 user_id 컬럼
     onDelete : "cascade",
     onUpdate : "cascade",
@@ -169,7 +169,7 @@ db.frozen.belongsTo(db.user, {
 // 8-2. user 테이블의 user_id는 frozen 테이블의 user_id에 참조된다.
 // db.user는 가지고있다 db.frozen를
 db.user.hasMany(db.frozen, {
-    foreignKey : "recipe_recipe_id", // frozen테이블의 foreignkey할 컬럼 이름
+    foreignKey : "user_user_id", // frozen테이블의 foreignkey할 컬럼 이름
     sourceKey : "user_id", // user테이블의 user_id 컬럼
     onDelete : "cascade",
     onUpdate : "cascade",

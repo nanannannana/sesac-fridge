@@ -148,17 +148,15 @@
 
 
 </main>
-
 <script>
-  const expModal = new bootstrap.Modal('#expModal');
+const expModal = new bootstrap.Modal('#expModal');
 
-  console.log("'<%=isLogin%>' :", "<%=isLogin%>");
-    if ("<%=isLogin%>" == "true"){
-      $("#log_welcome").removeClass("d_none");
-      $("#log_welcome").text("<%=user_name%>" + "님, 유통기한이 임박한 식재료" + "<%=fresh_count%>" + "개가 기다리고 있어요 !");
-      if("<%=EXP_MODAL%>" !== "1") expModal.show();
-  }
+console.log("'<%#=isLogin%>' :", "<%#=isLogin%>");
+  if ("<%#=isLogin%>" == "true"){
+    $("#log_welcome").removeClass("d_none");
+    $("#log_welcome").text("<%#=user_name%>" + "님, 유통기한이 임박한 식재료" + "<%#=fresh_count%>" + "개가 기다리고 있어요 !");
+    if("<%#=EXP_MODAL%>" !== "1") expModal.show();
+}
 </script>
-
 
 <%-include('footer.ejs') %>
