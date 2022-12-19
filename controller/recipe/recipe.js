@@ -6,16 +6,18 @@ const { frozen } = require("../../model");
 
 const { Op } = require("sequelize");  // where 안에 조건절을 위해
 
-// 레시피 추천 페이지
+// 레시피 추천 페이지 유저 갖고 있는 재료 기준으로
 exports.getRecipe = async (req, res) => {
     console.log(req.session.user);
     let freRes = await fresh.findAll({
         raw : true,
-        attributes : [['fresh_name', 'name'], ['fresh_range', 'range']]
+        attributes : [['fresh_name', 'name'], ['fresh_range', 'range']],
+        where : { user_user_id : req.session.user}
     })
     let froRes = await frozen.findAll({
         raw : true,
-        attributes : [['frozen_name', 'name'], ['frozen_range', 'range']]
+        attributes : [['frozen_name', 'name'], ['frozen_range', 'range']],
+        where : { user_user_id : req.session.user}
     })
     let ingdRes = [];   // fresh와 frozen에 있는 모든 값
     let ingdName = [];  // 식재료
@@ -38,12 +40,10 @@ exports.getRecipe = async (req, res) => {
  
     // 식재료가 있을 때
     if(ingdRes){
-        let ingdRecipe = await recipe.findAll(
-            {
+        let ingdRecipe = await recipe.findAll({
                 raw : true, // dataValues만 가져오기
                 where : { recipe_ingd : { [Op.regexp] : ingdNameStr} }
-            }
-        )
+        })
         console.log(ingdName);
         console.log(ingdRange);
         res.render("recipe/recipe", {data : ingdRecipe, ingdName : ingdName, ingdRange : ingdRange});
@@ -57,7 +57,6 @@ exports.getRecipe = async (req, res) => {
         console.log("result : ", result);
         res.render("recipe/recipe", {data : result});
     }
-    
 }
 
 // 필터로 검색
