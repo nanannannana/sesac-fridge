@@ -78,6 +78,7 @@ exports.postMyPage = async function(req,res) {
         recipe_url: recipe_url_list,
         recipe_img: recipe_img_list
     });
+
 }
 exports.postMyPageChart = function(req,res) {
     const ingd_name_list = req.body.ingd_name.split(",");
