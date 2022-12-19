@@ -45,6 +45,7 @@ const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
                 <option value="fruit">과일-채소류</option>
                 <option value="seafood">어패류</option>
                 <option value="meat">육류</option>
+                <option value="dairy">유제품</option>
                 <option value="readymade">완제품</option>
                 <option value="etc">기타</option>
             </select>
