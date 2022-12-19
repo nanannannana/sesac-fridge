@@ -8,16 +8,16 @@ const { Op } = require("sequelize");  // where 안에 조건절을 위해
 
 // 레시피 추천 페이지 유저 갖고 있는 재료 기준으로
 exports.getRecipe = async (req, res) => {
-    console.log(req.session.user);
+    // console.log(req.session.user);
     let freRes = await fresh.findAll({
         raw : true,
         attributes : [['fresh_name', 'name'], ['fresh_range', 'range']],
-        where : { user_user_id : req.session.user}
+        where : { user_user_id : "root@naver.com"}
     })
     let froRes = await frozen.findAll({
         raw : true,
         attributes : [['frozen_name', 'name'], ['frozen_range', 'range']],
-        where : { user_user_id : req.session.user}
+        where : { user_user_id : "root@naver.com"}
     })
     let ingdRes = [];   // fresh와 frozen에 있는 모든 값
     let ingdName = [];  // 식재료
@@ -37,16 +37,23 @@ exports.getRecipe = async (req, res) => {
         ingdRange.push(ingdRes[i].range);
     }
     let ingdNameStr = ingdName.join("|"); // 일치하는 재료를 찾기 위해서 ingName을 문자열로
- 
+    console.log("ingdRes : ", ingdRes);
+
     // 식재료가 있을 때
     if(ingdRes){
         let ingdRecipe = await recipe.findAll({
                 raw : true, // dataValues만 가져오기
                 where : { recipe_ingd : { [Op.regexp] : ingdNameStr} }
         })
-        console.log(ingdName);
-        console.log(ingdRange);
-        res.render("recipe/recipe", {data : ingdRecipe, ingdName : ingdName, ingdRange : ingdRange});
+
+        // 레시피 tb에서 식재료만 담는 변수
+        let ingdResult = []; 
+        for(var i=0; i<ingdRecipe.length;i++) {
+            ingdResult.push(ingdRecipe[i].recipe_ingd);
+        }
+        
+        res.render("recipe/recipe", {data : ingdRecipe, ingdName : ingdName, 
+            ingdRange : ingdRange, ingdResult : ingdResult});
     }else{ // 식재료가 없을 때
         let result = await recipe.findAll(
             {
@@ -54,7 +61,7 @@ exports.getRecipe = async (req, res) => {
                 where : { recipe_tag : null }
             }
         );
-        console.log("result : ", result);
+        console.log("식재료가 없을 때")
         res.render("recipe/recipe", {data : result});
     }
 }
@@ -97,7 +104,7 @@ exports.postInsertToLog = async (req,res) => {
         where : { recipe_recipe_id : req.body.id },
         defaults : {
             recipe_recipe_id : req.body.id,
-            user_user_id : req.session.user,
+            user_user_id : "root@naver.com",
         }
     });
     // find해서 create 하지 못해도 true넘기고, create해도 true
@@ -116,7 +123,7 @@ exports.postInsertToLike = async (req,res) => {
         where : { recipe_recipe_id : req.body.id },
         defaults : {
             recipe_recipe_id : req.body.id,
-            user_user_id : req.session.user
+            user_user_id : "root@naver.com",
         }
     })
     // find에서 create 하지 못해도 true 넘기고, create해도 true
