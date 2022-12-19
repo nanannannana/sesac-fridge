@@ -16,6 +16,10 @@ const fresh = (Sequelize, DataTypes) => {
                 type : DataTypes.INTEGER,
                 allowNull : false,
                 defaultValue : 100,
+            },
+            fresh_category : {
+                type : DataTypes.STRING(15),
+                allowNull : false,
             }
         },
         {

@@ -47,7 +47,8 @@ exports.postAddToFresh = async (req,res)=>{
         let data = {
             fresh_name : req.body.name,
             fresh_range : req.body.range,
-            fresh_expire : req.body.expire
+            fresh_expire : req.body.expire,
+            fresh_category : req.body.category
         }
     let result = await fresh.create(data);
     console.log( "postAddToFresh result : ", result);
