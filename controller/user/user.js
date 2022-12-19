@@ -18,6 +18,17 @@ exports.postSigninFlag = async function(req,res) {
     }
 }
 
+//아이디 비밀번호 찾기
+exports.postFind = async function(req,res) {
+    let result = await user.findAll({
+        where: {
+            user_name: req.body.user_name,
+            user_phone: req.body.user_phone
+        }
+    })
+    res.send(result[0]);
+}
+
 // 회원가입 페이지 렌더
 exports.getSignup = function(req,res) {
     res.render("user/signUp");

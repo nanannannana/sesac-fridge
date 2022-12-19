@@ -8,7 +8,7 @@
 <main>
     <%-include('myPageBasic.ejs')%>
     <form id="form_hidden">
-        <input type="hidden" name="ingd_name" value="<%=ingd_name%>">
+        <input type="hidden" name="fresh_category" value="<%=fresh_category%>">
         <input type="hidden" name="cook_tag" value="<%=cook_tag%>">
     </form>
     <div class="container">
@@ -16,7 +16,7 @@
             <p id="box_title"><span>김새싹님</span>의 통계차트</p>
             <div id="chart_box_child">
                 <div id="chart_1">
-                    <p>냉장고 속 재료 비율 차트</p>
+                    <p>냉장실 재료 카테고리별 차트</p>
                     <canvas id="myChart" width="550px;"></canvas>
                 </div>
                 <div id="chart_2">
