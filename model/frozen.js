@@ -2,6 +2,11 @@ const frozen = (Sequelize, DataTypes) => {
     return Sequelize.define(
         "frozen",
         {
+            frozen_id : {
+                type : DataTypes.INTEGER,
+                allowNull : false,
+                primaryKey : true,
+            },
             frozen_name : {
                 type : DataTypes.STRING(20),
                 allowNull : false,
