@@ -1,11 +1,15 @@
 const fresh = (Sequelize, DataTypes) => {
     return Sequelize.define(
         "fresh",
-        {
+        {   
+            fresh_id : {
+                type : DataTypes.INTEGER,
+                allowNull : false,
+                primaryKey : true,
+            },
             fresh_name : {
                 type : DataTypes.STRING(20),
                 allowNull : false,
-                primaryKey : true,
             }, 
             fresh_expire : {
                 type : DataTypes.DATEONLY,
