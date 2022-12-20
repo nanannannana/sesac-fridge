@@ -6,6 +6,7 @@ const fresh = (Sequelize, DataTypes) => {
                 type : DataTypes.INTEGER,
                 allowNull : false,
                 primaryKey : true,
+                autoIncrement : true,
             },
             fresh_name : {
                 type : DataTypes.STRING(20),
