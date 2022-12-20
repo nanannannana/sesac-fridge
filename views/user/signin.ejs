@@ -13,18 +13,21 @@
       <div id="signin_box_child"class="text-center">
         <h5 id="signin_title" class="mb-3" style="font-size:45px">로그인</h5>
         <h6 id="signin_side_title" class="mb-2 mb-5" style="font-size:20px">이메일과 비밀번호를 입력하세요.</h6>
-        <form id="form_signin">
+        <form id="form_signin" class="needs-validation" novalidate>
           <div class="input-group input-group-lg">
-            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="user_id" placeholder="이메일('@'포함 입력)">
+            <input id="user_id" type="text" class="form-control rounded" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="user_id" placeholder="이메일('@'포함 입력)" oninput="id_click(this);" required>
+            <div class="invalid-feedback">아이디를 입력하세요.</div>
           </div>
           <div class="input-group input-group-lg">
-            <input type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="user_pw" placeholder="비밀번호">
+            <input id="user_pw" type="password" class="form-control rounded" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="user_pw" placeholder="비밀번호" oninput="pw_click(this);" required>
+            <div class="invalid-feedback">비밀번호를 입력하세요.</div>
           </div>
           <button type="button" id="button" class="btn mb-3" onclick="signin()">로그인</button>
         </form>
-        <a href="http://localhost:8080/" data-bs-toggle="modal" data-bs-target="#Modal">아이디 찾기</a>
-        <div class="modal fade animate__animated animate__fadeInDown" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
+
+        <a href="#ModalToggle" data-bs-toggle="modal" role="button">아이디 찾기</a>
+        <div class="modal fade animate__animated animate__fadeInDown" id="ModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
                 <i id="icon" class="bi bi-check-circle fa-2x"></i>
@@ -32,22 +35,91 @@
                 <button id="close_btn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form id="form_id_find" class="needs-validation" novalidate>
+                <form id="form_id_find">
                   <p id="input_name_title">이름</p>
                   <div class="input-group input-group-lg">
-                    <input type="text" id="user_name" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="user_name" placeholder="이름" oninput="name_click(this);" required>
-                    <div class="invalid-feedback">이름을 입력하세요.</div>
+                    <input type="text" id="user_name" class="form-control rounded" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="user_name" placeholder="이름">
                   </div>
                   <p id="input_phone_num_title">휴대폰 번호</p>
                   <div class="input-group input-group-lg">
-                    <input id="phone_num" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" oninput="phone_num_hyphen(this);" name="user_phone" placeholder="휴대폰 번호" required>
-                    <div class="invalid-feedback">휴대폰 번호를 입력하세요.</div>
+                    <input id="phone_num" type="text" class="form-control rounded" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" oninput="phone_num_hyphen(this);" name="user_phone" placeholder="휴대폰 번호" required>
                   </div>
-                  <div class="modal-footer">
-                    <button id="button3" type="button" class="btn" data-bs-dismiss="modal">닫기</button>
-                    <button id="button2" type="button" class="btn" onclick="id_find()">확인</button>
+                  <br>
+                  <div id="modal_footer" class="modal-footer px-0">
+                    <button id="warn_button" type="button" class="btn" data-bs-target="#ModalToggle3" data-bs-toggle="modal">비밀번호 찾기</button>
+                    <div>
+                      <button id="button3" type="button" class="btn" data-bs-dismiss="modal">닫기</button>
+                      <button id="find_button" data-bs-target="#ModalToggle2" data-bs-toggle="modal" type="button" class="btn" onclick="id_find()" disabled>확인</button>
+                    </div>
                   </div>
                 </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="ModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <i id="icon" class="bi bi-check-circle fa-2x"></i>
+                <h1 id="modal_title" class="modal-title fs-5" id="exampleModalToggleLabel2">아이디 찾기</h1>
+                <button id="close_btn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div id="modal_body" class="modal-body">
+                <div id="modal_body_box">
+                  <p id="modal_2page_text"><span id="res_data_user_name"></span>님의 이메일은</p>
+                  <p id="modal_2page_text"><span id="res_data_user_id"></span> 입니다.</span></p>
+                  <button id="button2" type="button" class="btn pw_find_btn" data-bs-target="#ModalToggle3" data-bs-toggle="modal">비밀번호 찾기</button>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button id="warn_button" type="button" class="btn" data-bs-dismiss="modal">로그인 하기</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="ModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel3" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <i id="icon" class="bi bi-check-circle fa-2x"></i>
+                <h1 id="modal_title" class="modal-title fs-5" id="exampleModalToggleLabel2">비밀번호 찾기</h1>
+                <button id="close_btn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="form_pw_find">
+                  <p id="input_name_title">이메일</p>
+                  <div class="input-group input-group-lg">
+                    <input type="text" id="user_id_2" class="form-control rounded" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="user_id" placeholder="이메일">
+                  </div>
+                  <p id="input_phone_num_title">휴대폰 번호</p>
+                  <div class="input-group input-group-lg">
+                    <input id="phone_num_2" type="text" class="form-control rounded" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" oninput="phone_num_hyphen(this);" name="user_phone" placeholder="휴대폰 번호" required>
+                  </div>
+                  <div class="modal-footer px-0">
+                    <button id="button3" type="button" class="btn" data-bs-dismiss="modal">닫기</button>
+                    <button id="find_button_2" data-bs-target="#ModalToggl4" data-bs-toggle="modal" type="button" class="btn" onclick="pw_find()" disabled>확인</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="ModalToggl4" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <i id="icon" class="bi bi-check-circle fa-2x"></i>
+                <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">비밀번호 찾기</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div id="modal_body_2" class="modal-body">
+                <div id="modal_body_box_2">
+                  <p>비밀번호 문자로 보냄</p>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button id="button3" type="button" class="btn" data-bs-dismiss="modal">닫기</button>
               </div>
             </div>
           </div>
