@@ -1,12 +1,7 @@
 // 필터 클릭시 페이지 이동
 function selectFilter(filter) {
-    axios({
-        method : "get",
-        url : "/recipe/selectFilter",
-        params : { tag : filter }
-    }).then((res)=> {
-        console.log(res.data);
-    })
+    location.href="/recipe?tag=" + filter;
+    
 }
 
 // 최근 본 레시피 클릭 시 log 테이블에 추가
@@ -37,69 +32,97 @@ function insertLike(element, id) {
     })
 }
 
-// 요리하기 버튼을 누르면 alert창 뜨게 하기 
-function cooking(data){
-    // 넘어온 배열을 ,로 짜르고 ingArr에 넣기
-    let ingArr = data.split(",");
-    
-    if(ingArr[0] == "") { // 식재료가 없는 경우
+// 요리하기 버튼을 누르면 alert 창
+function cooking(data, range){
+    // 넘어온 문자열로 짜르고 ingArr에 넣기(여러개일 경우를 대비해)
+    let ingArr = data.split(",");    // 식재료
+    let rangeArr = range.split(","); // 식재료 비율
+    let rangeData = rangeArr.map((i) => Number(i));
+
+    if(ingArr.length === 1) { // 식재료가 하나인 경우
+        swal.fire({
+            title : "<span>요리를 하고도 남을 재료가 있다면 적어주시고, \n 만약 그렇지 않다면 확인버튼을 눌러주세요. :)</span>",
+            html : `<div class="mb-3"></div>
+                <input type="checkbox" id="ingr" title="${ingArr[0]}" value="${rangeData[0]}" />&nbsp;
+                <label for="ingr">${ingArr[0]}</label>`,
+            confirmButtonText : "확인",
+            showCancelButton : true,
+            focusConfirm : false,
+            preConfirm: () => {
+                let ingd_name = Swal.getPopup().querySelector("#ingr").title;
+                let ingd_range = Swal.getPopup().querySelector("#ingr").value;
+
+                // 체크박스 체크 여부
+                const checkbox = document.querySelector("#ingr");
+                if(!checkbox.checked) Swal.showValidationMessage("체크해주세요")
+                return {
+                    name : ingd_name,
+                    range : ingd_range,
+                }
+            }
+        }).then((result)=>{
+            if(result.isConfirmed){
+                updateToFridge(result);
+            }
+        })
+    }else if(ingArr.length > 1){  // 식재료가 여러개인 경우
+        // 일치하는 식재료 checkbox들
+        let input = "";
+        for(var i=0; i<ingArr.length; i++){
+            input += `<input type='checkbox' class="ingd" id="i${[i]}" title="${ingArr[i]}" value="${rangeData[i]}"/>
+                      <label for="${ingArr[i]}">${ingArr[i]}</label>&nbsp;&nbsp;`;
+        }
+        console.log(input);
+        swal.fire({
+            title : "<span>이 레시피로 요리를 하고도 남을 재료가 있다면 적어주세요 :)</span>",
+            html : input,
+            confirmButtonText : "확인",
+            showCancelButton : true,
+            focusConfirm : false,
+            preConfirm: () => {
+                // 백쪽에 넘겨줄 재료와 비율
+                let multiple_ingd = [];
+                for(var i=0; i<ingArr.length; i++) {
+                    multiple_ingd.push(Swal.getPopup().getElementsByTagName("input")[i].title);
+                    multiple_ingd.push(Swal.getPopup().getElementsByTagName("input")[i].value);
+                }
+                console.log(multiple_ingd);
+                
+                // 체크박스 체크 여부
+                // const checkbox = document.querySelector("input[type=checkbox]");
+                // if(!checkbox.checked) Swal.showValidationMessage("체크해주세요")
+                // return {
+                //     name : ingd_name,
+                //     range : ingd_range,
+                // }
+            }
+        })
+        
+    }else if(ingArr[0] == ""){  // 식재료가 없는 경우
         swal.fire({
             title : "냉장고에 있는 식품과 일치하는 재료가 없어 차감될 식재료가 없습니다. :)",
             confirmButtonText : "확인",
             showCancelButton : true,
             focusConfirm : false,
         })
-    }else if(ingArr.length ==1) { // 식재료가 하나인 경우
-        swal.fire({
-            title : "<span<이 레시피로 요리를 하고도 남을 재료가 있다면 적어주세요 :)</span>",
-            html : `<form>"
-            //     <input type="text" class="swal2-input" id="freshName_inp"><br>
-            //     <div id="tfIngdRange" style="margin:1em;">아직 사용하거나 먹지 않았어요</div>
-            //     <input type="range" style="width:70%; margin-top:0; cursor: pointer;" 
-            //     class="swal2-range" id="freshRange_inp" value=100 step=50
-            //     oninput="window.changeRange(this.value);"><br>
-            // </form>`,
-            confirmButtonText : "확인",
-            showCancelButton : true,
-            focusConfirm : false,
-        })
-    }else if(ingArr.length > 1) { // 식재료가 여러개인 경우
-        // ingArr.forEach((item)=>{
-        //     ingred.push(item);
-        // })
-        console.log(ingArr);
     }
-    // if(ingArr.length == 1) { // 식재료가 하나일 경우
-    //     console.log(ingArr);
-    // }else if(ingArr.length > 1) { // 식재료가 여러개일 경우
-    //     ingArr.forEach((item)=>{
-    //         ingred.push(item);
-    //     })
-    //     console.log(ingArr);
-    // }
-    let html = "<span<이 레시피로 요리를 하고도 남을 재료가 있다면 적어주세요 :)</span>";
-    // for(var i=0;i<ingArr.length;i++){
-    //     html += `<input type='checkbox' value=${ingred[i]}/>`;
-    //     console.log(html);
-    // }
-    // swal.fire({
-    //     title: ingred + "이 차감됩니다.",
-    //     html: 
-    //     cook += "<span>이 레시피로 요리를 하고도 남을 재료가 있다면 적어주세요 :)</span>"
-    //    "<form>"
-        //     <input type="text" class="swal2-input" id="freshName_inp"><br>
-        //     <div id="tfIngdRange" style="margin:1em;">아직 사용하거나 먹지 않았어요</div>
-        //     <input type="range" style="width:70%; margin-top:0; cursor: pointer;" 
-        //     class="swal2-range" id="freshRange_inp" value=100 step=50
-        //     oninput="window.changeRange(this.value);"><br>
-        // </form>
-        
-        // `,
-        // confirmButtonText : '확인',
-        // showCancelButton : true,
-        // focusConfirm : false,
-    // });
 }
+
+// 수정을 위한 체크한 정보 fresh와 frozen DB로 전송
+function updateToFridge(result){
+    let data = {
+        name : result.value.name,
+        range : result.value.range
+    }
+    axios({
+        method : "patch",
+        url : "/recipe/toFridge",
+        data : data
+    }).then((res)=>{
+        
+    })
+}
+
 
 
 // for(var i=0;i<length;i++){
