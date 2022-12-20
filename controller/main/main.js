@@ -110,4 +110,11 @@ exports.postModalCookie = (req, res) => {
     res.send(true);
 }
 
-
+// 로그아웃 버튼
+exports.getLogOut = (req,res) => {
+    req.session.destroy((err)=>{
+        console.log( 'logOut req.session :', req.session );
+        if(err) throw err;
+        res.redirect('/');
+    })
+}

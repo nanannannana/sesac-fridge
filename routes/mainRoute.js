@@ -9,4 +9,9 @@ router.post("/modalCookie", main.postModalCookie);
 
 
 
+
+//로그아웃
+router.get("/logout", main.getLogOut);
+
+
 module.exports = router;

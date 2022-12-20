@@ -1,14 +1,16 @@
 .d_none {display: none;}
 .hidden {visibility: hidden;}
 
-.swal2-container.swal2-backdrop-show, .swal2-container.swal2-noanimation {
-    background: rgba(0,0,0,.6);
-}
 .myFridgePage_main { 
     background-color: var(--main-yellow);
 }
 
-body {opacity: 50%;}
+body.swal2-shown > [aria-hidden="true"] {
+    transition: 0.1s filter;
+    filter: blur(700px);
+    filter : opacity(20%);
+    background : var(--main-yellow);
+}
 
 .myFridgePage_box { 
     height : 100vh;

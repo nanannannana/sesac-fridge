@@ -8,5 +8,6 @@ function mypage_go() {
     mypage_go.submit();
 }
 
-const login_flag = document.getElementById("login_flag");
-// if ("")
+function logout_go(){
+    window.location.href='/logout';
+}

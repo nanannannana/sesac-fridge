@@ -10,7 +10,8 @@ function emptyAlert(fridgeName){
         },
         hideClass: {
           popup: 'animate__animated animate__fadeOutUp'
-        }
+        },
+        
       })
 }
 
