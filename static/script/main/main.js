@@ -1,3 +1,4 @@
+
 // document.addEventListener("DOMContentLoaded", () => {
 //     new TypeIt("#title")
 //       .pause(1000) // 1초

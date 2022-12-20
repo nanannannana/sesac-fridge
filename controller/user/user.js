@@ -4,29 +4,49 @@ const { user } = require("../../model/");
 exports.getSignin = function(req,res) {
     res.render("user/signIn");
 }
+// 로그인 확인
 exports.postSigninFlag = async function(req,res) {
-    if (req.body.signin_flag=="false") {
+    let result = await user.findAll({where:{user_id:req.body.user_id, user_pw: req.body.user_pw}});
+    if (result.length>0) {
+        req.session.user = req.body.user_id;
+        const option = {
+            httpOnly: true,
+            maxAge: 3*24*60*60*1000 //3일 뒤 자동로그인 해제
+        };
+        res.cookie("user_id",req.body.remember_me_check,option); //서버에서 쿠키 생성 => 클라이언트로 보내기
+        res.send(true);
+    } else {
         res.send(false);
-    } else if(req.body.user_id) {
-        let result = await user.findAll({where:{user_id:req.body.user_id, user_pw: req.body.user_pw}});
-        if (result.length>0) {
-            req.session.user = req.body.user_id;
-            res.send(true);
-        } else {
-            res.send(false);
-        }
     }
 }
 
 //아이디 비밀번호 찾기
-exports.postFind = async function(req,res) {
+exports.postIdFind = async function(req,res) {
     let result = await user.findAll({
         where: {
             user_name: req.body.user_name,
             user_phone: req.body.user_phone
         }
-    })
-    res.send(result[0]);
+    });
+    if (result[0]===undefined) {
+        res.send("undefined");
+    } else {
+        res.send(result[0]);
+    }
+}
+exports.postPwFind = async function(req,res) {
+    let result = await user.findAll({
+        where: {
+            user_id: req.body.user_id,
+            user_phone: req.body.user_phone
+        }
+    });
+    console.log(result[0]);
+    if (result[0]===undefined) {
+        res.send("undefined");
+    } else {
+        res.send(result[0]);
+    }
 }
 
 // 회원가입 페이지 렌더
@@ -42,27 +62,19 @@ exports.postIdCheck = async function(req,res) {
     else res.send(true);
 }
 
-// 회원가입 실패
-exports.postPwCheck = function(req,res) {
-    res.send(false);
-}
-
 // 회원가입 성공
-exports.updateSignupUpdate = async function(req,res) {
-    if (req.body.false) res.send("none")
-    else if (req.body.user_id) {
-        let result = await user.findAll({where:{user_id: req.body.user_id}});
-        let data = {
-            user_id: req.body.user_id,
-            user_pw: req.body.user_pw,
-            user_name: req.body.user_name,
-            user_phone: req.body.user_phone
-        }
-        if (result.length>0) {
-            res.send(false);
-        } else {
-            await user.create(data);
-            res.send(true);
-        }
+exports.postSignupUpdate = async function(req,res) {
+    let result = await user.findAll({where:{user_id: req.body.user_id}});
+    let data = {
+        user_id: req.body.user_id,
+        user_pw: req.body.user_pw,
+        user_name: req.body.user_name,
+        user_phone: req.body.user_phone
+    }
+    if (result.length>0) {
+        res.send(false);
+    } else {
+        await user.create(data);
+        res.send(true);
     }
 }

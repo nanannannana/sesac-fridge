@@ -11,11 +11,10 @@ router.post("/signinFlag",user.postSigninFlag);
 router.get("/signUp",user.getSignup);
 // 회원가입 중복아이디 확인
 router.post("/idCheck",user.postIdCheck);
-// 회원가입 비밀번호 확인
-router.post("/pwCheck", user.postPwCheck);
 // 회원가입 성공
-router.patch("/signupUpdate",user.updateSignupUpdate);
+router.post("/signupUpdate",user.postSignupUpdate);
 // 아이디/비밀번호 찾기
-router.post("/find",user.postFind);
+router.post("/idFind", user.postIdFind);
+router.post("/pwFind", user.postPwFind)
 
 module.exports = router;

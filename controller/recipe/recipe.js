@@ -31,68 +31,47 @@ exports.getRecipe = async (req, res) => {
         ingdRes.push(item)
     })
     
-    // 식재료 수량 변수 각각 변수에 집어넣기
+    // 식재료 수량과 변수를 각각 ingdName과 ingdRange에 집어넣기
     for(var i=0;i<ingdRes.length;i++){
-        ingdName.push(ingdRes[i].name);
+        ingdName.push(ingdRes[i].name + "");
         ingdRange.push(ingdRes[i].range);
     }
-    let ingdNameStr = ingdName.join("|"); // 일치하는 재료를 찾기 위해서 ingName을 문자열로
-    console.log("ingdRes : ", ingdRes);
 
-    // 식재료가 있을 때
-    if(ingdRes){
-        let ingdRecipe = await recipe.findAll({
-                raw : true, // dataValues만 가져오기
-                where : { recipe_ingd : { [Op.regexp] : ingdNameStr} }
-        })
+    let ingdNameStr = ingdName.join(",|,"); // 일치하는 재료를 찾기 위해서 ingName을 문자열로
 
-        // 레시피 tb에서 식재료만 담는 변수
+    // 식재료가 있을 때 일치하는 식재료가 있으면 보여주고, 식재료가 없을 때는 recipe_tag가 없는 것을 보여준다.
+    let where = {};
+    if ( ingdRes ) where["recipe_ingd"] = { [Op.regexp] : ingdNameStr};
+    else where["recipe_tag"] = null;
+    if ( req.query.tag ) where["recipe_tag"] = req.query.tag;
+
+    console.log(req.query.tag);
+    // recipe 테이블에 있는 데이터 가져오기
+    let recipes = await recipe.findAll({
+        raw : true, // dataValues만 가져오기
+        where
+    });
+    let result = { data: recipes }; // 데이터 결과를 result안에 집어넣기.
+ 
+    // 식재료가 있을 때 프론트 단에서 사용할 나의 재료 이름과 수량
+    if ( ingdRes ) {
         let ingdResult = []; 
-        for(var i=0; i<ingdRecipe.length;i++) {
-            ingdResult.push(ingdRecipe[i].recipe_ingd);
+        for(var i=0; i<recipes.length;i++) {
+            ingdResult.push(recipes[i].recipe_ingd);
         }
-        
-        res.render("recipe/recipe", {data : ingdRecipe, ingdName : ingdName, 
-            ingdRange : ingdRange, ingdResult : ingdResult});
-    }else{ // 식재료가 없을 때
-        let result = await recipe.findAll(
-            {
-                raw : true, 
-                where : { recipe_tag : null }
-            }
-        );
-        console.log("식재료가 없을 때")
-        res.render("recipe/recipe", {data : result});
+        result["ingdName"] = ingdName;
+        result["ingdRange"] = ingdRange;
+        result["ingdResult"] = ingdResult;
+    }
+    res.render("recipe/recipe", result);
+    if(req.query.tag == "반찬") {
+       console.log(result);
     }
 }
 
-// 필터로 검색
-exports.getSelectFilter = async (req, res) => {
-    console.log("req.query: ", req.query);
-    let result = await recipe.findAll({
-        raw : true, 
-        where : { recipe_tag : req.query.tag }
-    });
-    switch(req.query.tag) {
-        case "반찬" : 
-            res.render("/recipe/sidedish", {data : result});
-            console.log("rend가 왜안되냐고");
-            break;
-        case "밥" :
-            res.render("recipe/rice", {data : result});
-            break;
-        case "국/탕" :
-            res.render("recipe/soup", {data : result});
-            break;
-        case "건강/웰빙" :
-            res.render("recipe/diet", {data : result});
-            break;
-        case "야식" :
-            res.render("recipe/nightsnack", {data : result});
-            break;
-        default : 
-            console.log("어딘가 이상합니다..?");
-    }
+// fresh와 frozen DB에 range 데이터 수정
+exports.patchToFridge = async (req,res) => {
+    console.log(req.body);
 }
 
 

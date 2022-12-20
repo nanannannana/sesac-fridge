@@ -1,7 +1,9 @@
+<link href="/static/css/main/header.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/static/script/main/header.js"></script>
 </head>
 <body>
 <header>
+
     <div class="container-fluid" style="height:120px;">
         <div class="header_top">
             <span>정새싹님 |</span>
@@ -9,11 +11,13 @@
                 <form id="mypage_go" action="/myPage" method="post"></form>
             </div>
             <div onclick="logout_go();">로그아웃</div>
+            <button id="login_flag"></button>
+            <p style="clear:both; margin:0px;"></p>
         </div>
         <nav class="navbar bg-white">
             <div class="container-fluid" id="header_box">
                 <a class="navbar-brand" href="#" id="logo_text">냉장고 집사<img src="static/img/sesac.gif"></a>
-                <img src="/static/img/color_logo.png" class="navbar-toggler p-0 border-0" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <img src="/static/img/color_logo.png" class="navbar-toggler p-0 border-0" style="border-radius:0;" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="navbar-nav me-auto" >
                         <ul class="nav nav_text justify-content-center">
