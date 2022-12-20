@@ -5,6 +5,7 @@ const router = express.Router();
 
 // 나의 냉장고 페이지 렌더 - 영은
 router.get("/", myFridge.getMyFridge);
+router.post("/", myFridge.postEmptyAlertCookie);
 
 // 식재료 존재 여부 확인
 router.post("/checkFresh", myFridge.postCheckFresh);

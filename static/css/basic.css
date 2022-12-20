@@ -34,13 +34,18 @@ a:visited {
     color : black;
 }
 
-
-
-
 /* header.css */
 #header_box {
     margin-left: 150px;
     margin-right: 150px;
+}
+
+.header_top {
+    display:flex;
+    flex-direction: column;
+    justify-content: end;
+    text-align: center;
+    padding-right: 5rem;
 }
 
 /* navbar */
