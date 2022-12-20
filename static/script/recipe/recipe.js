@@ -37,13 +37,11 @@ function insertLike(element, id) {
     })
 }
 
-let ingred = []; // 넘어온 일치하는 재료를 넣기
-
 // 요리하기 버튼을 누르면 alert창 뜨게 하기 
 function cooking(data){
     // 넘어온 배열을 ,로 짜르고 ingArr에 넣기
     let ingArr = data.split(",");
-    console.log(ingArr[0]);
+    
     if(ingArr[0] == "") { // 식재료가 없는 경우
         swal.fire({
             title : "냉장고에 있는 식품과 일치하는 재료가 없어 차감될 식재료가 없습니다. :)",
@@ -52,7 +50,19 @@ function cooking(data){
             focusConfirm : false,
         })
     }else if(ingArr.length ==1) { // 식재료가 하나인 경우
-        console.log(ingArr);
+        swal.fire({
+            title : "<span<이 레시피로 요리를 하고도 남을 재료가 있다면 적어주세요 :)</span>",
+            html : `<form>"
+            //     <input type="text" class="swal2-input" id="freshName_inp"><br>
+            //     <div id="tfIngdRange" style="margin:1em;">아직 사용하거나 먹지 않았어요</div>
+            //     <input type="range" style="width:70%; margin-top:0; cursor: pointer;" 
+            //     class="swal2-range" id="freshRange_inp" value=100 step=50
+            //     oninput="window.changeRange(this.value);"><br>
+            // </form>`,
+            confirmButtonText : "확인",
+            showCancelButton : true,
+            focusConfirm : false,
+        })
     }else if(ingArr.length > 1) { // 식재료가 여러개인 경우
         // ingArr.forEach((item)=>{
         //     ingred.push(item);
@@ -76,15 +86,13 @@ function cooking(data){
     //     title: ingred + "이 차감됩니다.",
     //     html: 
     //     cook += "<span>이 레시피로 요리를 하고도 남을 재료가 있다면 적어주세요 :)</span>"
-    //     cook += "<form>"
-
-        // for(var i=0)
+    //    "<form>"
         //     <input type="text" class="swal2-input" id="freshName_inp"><br>
         //     <div id="tfIngdRange" style="margin:1em;">아직 사용하거나 먹지 않았어요</div>
         //     <input type="range" style="width:70%; margin-top:0; cursor: pointer;" 
         //     class="swal2-range" id="freshRange_inp" value=100 step=50
         //     oninput="window.changeRange(this.value);"><br>
-        // // </form>
+        // </form>
         
         // `,
         // confirmButtonText : '확인',

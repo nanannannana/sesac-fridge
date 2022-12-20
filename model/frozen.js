@@ -6,11 +6,11 @@ const frozen = (Sequelize, DataTypes) => {
                 type : DataTypes.INTEGER,
                 allowNull : false,
                 primaryKey : true,
+                autoIncrement : true,
             },
             frozen_name : {
                 type : DataTypes.STRING(20),
                 allowNull : false,
-                primaryKey : true,
             }, 
             frozen_date : {
                 type : DataTypes.DATEONLY,
