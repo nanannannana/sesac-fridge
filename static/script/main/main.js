@@ -5,3 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
       .type("Jihyang")
       .go();
   });
+
+  function modalCheck(){
+    axios({
+        method : 'post',
+        url : '/modalCookie'
+    })
+  }

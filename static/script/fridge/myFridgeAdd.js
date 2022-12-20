@@ -42,12 +42,12 @@ const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
             <input type="text" class="swal2-input" id="freshName_inp" value="${freshName}" disabled><br>
             <select id="freshCategory_inp" class="swal2-select" style="width:16rem; height:3rem;">
                 <option value="NOT" selected>카테고리를 선택해주세요</option>
-                <option value="fruit">과일-채소류</option>
-                <option value="seafood">어패류</option>
-                <option value="meat">육류</option>
-                <option value="dairy">유제품</option>
-                <option value="readymade">완제품</option>
-                <option value="etc">기타</option>
+                <option value="과일">과일</option>
+                <option value="채소">채소</option>
+                <option value="수산물">수산물</option>
+                <option value="육류">육류</option>
+                <option value="유제품">유제품</option>
+                <option value="기타">기타(완제품 등)</option>
             </select>
             <div id="tfIngdRange" style="margin:1em;">아직 사용하거나 먹지 않았어요</div>
             <input type="range" style="width:70%; margin-top:0; cursor: pointer;" 

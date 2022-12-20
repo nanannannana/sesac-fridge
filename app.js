@@ -5,6 +5,11 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 dotenv.config(); 
 
+// ejs 등록
+app.set("view engine", "ejs");
+app.use(express.urlencoded({extended:true}));
+app.use(express.json());
+
 app.use("/static", express.static("static"));
 
 app.use(cookieParser());
@@ -15,10 +20,6 @@ app.use(session({
     saveUninitialized: true
 }));
 
-// ejs 등록
-app.set("view engine", "ejs");
-app.use(express.urlencoded({extended:true}));
-app.use(express.json());
 
 // 라우터 등록
 const mainRouter = require("./routes/mainRoute");     // 메인

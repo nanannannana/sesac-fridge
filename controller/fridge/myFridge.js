@@ -5,17 +5,23 @@ const { recipe } = require("../../model");
 
 // 나의 냉장고 페이지 렌더 - 영은
 exports.getMyFridge = async (req,res) => {
-    let fresh_result = await fresh.findAll({
-        order : [["fresh_expire", "ASC"]]
-    });
-
-    let frozen_result = await frozen.findAll({
-        order : [["frozen_date", "ASC"]]
-    });
-
-    console.log("list :", fresh_result.length, frozen_result.length );
+    if(req.session.user){
+        let fresh_result = await fresh.findAndCountAll({
+            where : {user_user_id : req.session.user},
+            order : [["fresh_expire", "ASC"]]
+        });
     
-    res.render("fridge/myFridge", { fresh_list : fresh_result, frozen_list : frozen_result });
+        let frozen_result = await frozen.findAndCountAll({
+            where : {user_user_id : req.session.user},
+            order : [["frozen_date", "ASC"]]
+        });
+    
+        console.log("list :", fresh_result.count, frozen_result.count );
+        res.render("fridge/myFridge", { fresh_list : fresh_result.rows, frozen_list : frozen_result.rows });
+    }else{
+        res.render("fridge/myFridgeNotLogIn");
+    }
+    
 }
 
 
@@ -23,7 +29,10 @@ exports.getMyFridge = async (req,res) => {
 exports.postCheckFresh = async (req, res)=>{
     console.log("postCheckFresh req.body:", req.body);
         let result = await fresh.findOne({
-            where : {fresh_name : req.body.name}
+            where : {
+                user_user_id : req.session.user,
+                fresh_name : req.body.name
+            }
         });
         console.log("checkFresh result : ", result );
         if(result===null){ res.send(true);}
@@ -34,7 +43,10 @@ exports.postCheckFresh = async (req, res)=>{
 exports.postCheckFrozen = async (req, res)=>{
     console.log("postCheckFrozen req.body:", req.body);
         let result = await frozen.findOne({
-            where : {frozen_name : req.body.name}
+            where : {
+                user_user_id : req.session.user,
+                frozen_name : req.body.name
+            }
         });
         console.log("checkFrozen result : ", result );
         if(result===null){ res.send(true);}
@@ -48,7 +60,8 @@ exports.postAddToFresh = async (req,res)=>{
             fresh_name : req.body.name,
             fresh_range : req.body.range,
             fresh_expire : req.body.expire,
-            fresh_category : req.body.category
+            fresh_category : req.body.category,
+            user_user_id : req.session.user
         }
     let result = await fresh.create(data);
     console.log( "postAddToFresh result : ", result);
@@ -61,7 +74,8 @@ exports.postAddToFrozen = async (req,res)=>{
         let data = {
             frozen_name : req.body.name,
             frozen_date : req.body.date,
-            frozen_range : req.body.range
+            frozen_range : req.body.range,
+            user_user_id : req.session.user
         }
     let result = await frozen.create(data);
     console.log( "postAddToFrozen result : ", result);
@@ -76,7 +90,9 @@ exports.patchUpdateFresh = async (req,res)=>{
         fresh_expire : req.body.expire    
     }
     let result = await fresh.update(data, {
-        where : {fresh_name : req.body.name}
+        where : {
+            user_user_id : req.session.user,
+            fresh_name : req.body.name}
     })
     console.log( 'update result : ', result );
     res.send(result);
@@ -89,7 +105,10 @@ exports.patchUpdateFrozen = async (req,res)=>{
         frozen_range : req.body.range    
     }
     let result = await frozen.update(data, {
-        where : {frozen_name : req.body.name}
+        where : {
+            user_user_id : req.session.user,
+            frozen_name : req.body.name
+        }
     })
     console.log( 'update result : ', result );
     res.send(result);
@@ -101,12 +120,18 @@ exports.deleteDeleteIngd = async (req,res)=>{
 
     if(req.body.fridgeName == "fresh"){
         let result = await fresh.destroy({ 
-            where : {fresh_name : req.body.name}
+            where : {
+                user_user_id : req.session.user,
+                fresh_name : req.body.name
+            }
         });
         console.log('delete result : ', result);
         res.send( req.body);
     }else{ let result = await frozen.destroy({
-            where : { frozen_name : req.body.name}
+            where : { 
+                user_user_id : req.session.user,
+                frozen_name : req.body.name
+            }
         });
         console.log('delete result : ', result);
         res.send( req.body);
