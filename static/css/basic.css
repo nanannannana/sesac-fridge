@@ -42,7 +42,6 @@ a:visited {
 
 .header_top {
     display:flex;
-    flex-direction: column;
     justify-content: end;
     text-align: center;
     padding-right: 5rem;
