@@ -18,33 +18,35 @@ const { Op } = require("sequelize");
 
 // 메인 페이지 렌더 - 영은
 exports.getMain = async (req,res) => {
-    // 로그인 한 경우,
-    // 임박 식재료 개수
-        let fresh_count = await fresh.findAndCountAll({
-            where: {
-                fresh_expire : {
-                    [Op.gte] : today,
-                    [Op.lte] : date
-                }
-            },
-        })
-
-    // 유통기한 지난 식재료 개수 & list
-        let exp_list = await fresh.findAndCountAll({
-            where : {
-                fresh_expire : {
-                    [Op.lt] : exp_date
-                }
-            }
-        })
-        // console.log("log fresh_count :", fresh_count.count );
-        // console.log("log exp_list :", exp_list.rows );
-    
-    //로그인한 경우 session에서 user name
-    // & cookie 에서 EXP_MODAL value 확인
-    
-    // user name
+    // 로그인 한 경우,    
     if(req.session.user){ 
+            // 임박 식재료 개수
+            let fresh_count = await fresh.findAndCountAll({
+                where: {
+                    fresh_expire : {
+                        [Op.gte] : today,
+                        [Op.lte] : date
+                    },
+                    user_user_id : req.session.user                
+                },
+            })
+    
+        // 유통기한 지난 식재료 개수 & list
+            let exp_list = await fresh.findAndCountAll({
+                where : {
+                    fresh_expire : {
+                        [Op.lt] : exp_date
+                    },
+                    user_user_id : req.session.user
+                }
+            })
+            // console.log("log fresh_count :", fresh_count.count );
+            // console.log("log exp_list :", exp_list.rows );
+        
+        //로그인한 경우 session에서 user name
+        // & cookie 에서 EXP_MODAL value 확인
+
+        // user name
         let user_name = await user.findOne({
             attributes : ["user_name"],
             where : {user_id : req.session.user}
