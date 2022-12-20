@@ -35,6 +35,10 @@ a:visited {
 }
 
 /* header.css */
+.d_none {
+    display : none;
+}
+
 #header_box {
     margin-left: 150px;
     margin-right: 150px;
