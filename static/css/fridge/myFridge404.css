@@ -1,9 +1,14 @@
 .d_none {display: none;}
 .hidden {visibility: hidden;}
 
+.swal2-container.swal2-backdrop-show, .swal2-container.swal2-noanimation {
+    background: rgba(0,0,0,.6);
+}
 .myFridgePage_main { 
     background-color: var(--main-yellow);
 }
+
+body {opacity: 50%;}
 
 .myFridgePage_box { 
     height : 100vh;
@@ -45,21 +50,6 @@
     height : 50%;
     overflow-y: auto;
     text-align: center;
-}
-
-.fridge_ingd_box::-webkit-scrollbar {
-    width: 8px;  /* 스크롤바의 너비 */
-}
-
-.fridge_ingd_box::-webkit-scrollbar-thumb {
-    height: 30%; /* 스크롤바의 길이 */
-    background: #217af4; /* 스크롤바의 색상 */
-    
-    border-radius: 10px;
-}
-
-.fridge_ingd_box::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
 }
 
 /* 냉장고 내부 식재료 개별 요소 */

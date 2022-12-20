@@ -8,11 +8,13 @@
     // console.log("'<%=isLogin%>' :", "<%=isLogin%>");
 
   </script>
-
+    <div class="d_none" id="welcome_user">
+      <div class="col-2.5"></div>
+    </div>
   <a href="/recipe">레시피</a>
   <a href="/signIn">로그인</a>
-  <h1 class="d_none" id="welcome_user">
-  </h1>
+  <!-- 로그인시 임박상품 수 노출 -->
+
     <!-- <h3 id="title">여기가 main 페이지 입니다.</h3>         -->
     <div class="container-xl mainPage_main">
         <div class="container-fluid mainPage_box">
@@ -155,7 +157,7 @@
 
         if ("<%=isLogin%>" == "true"){
         $("#welcome_user").removeClass("d_none");
-        $("#welcome_user").text("<%=user_name%>" + "님, 유통기한이 임박한 식재료 " + "<%=fresh_count%>" + "개가 기다리고 있어요 ! ");
+        $("#welcome_user div").html("<%=user_name%>님🌱<br/>유통기한이 임박한 식재료 <%=fresh_count%>개가 기다리고 있어요 !");
       }
     </script>
 

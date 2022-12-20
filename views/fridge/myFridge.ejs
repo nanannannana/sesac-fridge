@@ -1,5 +1,6 @@
 <%-include('../main/head.ejs') %>
     <link href="/static/css/fridge/myFridge.css" rel="stylesheet" type="text/css">
+    <script src="/static/script/fridge/myFridge.js" type="text/javascript"></script>
     <script src="/static/script/fridge/myFridgeAdd.js" type="text/javascript"></script>
     <script src="/static/script/fridge/myFridgeUpdate.js" type="text/javascript"></script>
     <script src="/static/script/fridge/myFridgeRecipe.js" type="text/javascript"></script>
@@ -8,42 +9,12 @@
     <!-- 처음 냉장고 페이지 렌더시,  -->
     <script>
         if("<%=fresh_list.length%>"<1 && "<%=frozen_list.length%>"<1){
-    Swal.fire({
-        title: '냉장고가 비었어요',
-        text : '식재료를 보관하고 냉장고 집사를 이용해보세요',
-        icon: 'info',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
+            emptyAlert("냉장실과 냉장고가");
+        }else if("<%=fresh_list.length%>"<1){
+            emptyAlert("냉장실이");
+        }else if("<%=frozen_list.length%>"<1){
+            emptyAlert("냉장고가");
         }
-      })
-}else if("<%=fresh_list.length%>"<1){
-    Swal.fire({
-        title: '냉장실이 비었어요',
-        text : '식재료를 보관하고 냉장고 집사를 이용해보세요',
-        icon: 'info',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        }
-      })
-}else if("<%=frozen_list.length%>"<1){
-    Swal.fire({
-        title: '냉동실이 비었어요',
-        text : '식재료를 보관하고 냉장고 집사를 이용해보세요',
-        icon: 'info',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        }
-      })
-}
     </script>
 
 <main>
@@ -60,27 +31,29 @@
                 <div class="fridge_box col-8">                   
                     <form class="fridge_ingd_box mt-1" id="fresh_form" name="fresh">
                         <h3>냉장실</h3>
-                            <%for(let j=0; j<fresh_list.length; j++){%>
+                            <%for(let i=0; i<fresh_list.length; i++){%>
                                 <div>
-                                    <input type="checkbox" name="ingd" value="<%=fresh_list[j].fresh_name%>" id="<%=fresh_list[j].fresh_name%>" onclick="addToList(this);">
-                                    <label for="<%=fresh_list[j].fresh_name%>"><%=fresh_list[j].fresh_name%></label><br>
-                                    <input type="range" value="<%=fresh_list[j].fresh_range%>" step="50" disabled><br>
-                                    <p><%=fresh_list[j].fresh_expire%></p>
-                                    <button type="button" class="d_none updateIngd_btn" value="<%=fresh_list[j].fresh_name%>" onclick="clickUpdate(this);">수정</button>
-                                    <button type="button" class="d_none deleteIngd_btn" value="<%=fresh_list[j].fresh_name%>" onclick="clickDelete(this);">삭제</button>
+                                    <span class="d_none fresh_id"><%=fresh_list[i].fresh_id%></span>
+                                    <input type="checkbox" name="ingd" value="<%=fresh_list[i].fresh_name%>" id="<%=fresh_list[i].fresh_name%>" onclick="addToList(this);">
+                                    <label for="<%=fresh_list[i].fresh_name%>"><%=fresh_list[i].fresh_name%></label><br>
+                                    <input type="range" value="<%=fresh_list[i].fresh_range%>" step="50" disabled><br>
+                                    <p><%=fresh_list[i].fresh_expire%></p>
+                                    <button type="button" class="d_none updateIngd_btn" value="<%=fresh_list[i].fresh_name%>" onclick="clickUpdate(this);">수정</button>
+                                    <button type="button" class="d_none deleteIngd_btn" value="<%=fresh_list[i].fresh_name%>" onclick="clickDelete(this);">삭제</button>
                                 </div>
                             <%}%>                                                   
                     </form>
                     <form class="fridge_ingd_box" id="frozen_form" name="frozen">
                         <h3>냉동실</h3>
-                            <%for(let i=0; i<frozen_list.length; i++){%>
+                            <%for(let j=0; j<frozen_list.length; j++){%>
                                 <div>
-                                    <input type="checkbox" name="ingd" value="<%=frozen_list[i].frozen_name%>" id="<%=frozen_list[i].frozen_name%>" onclick="addToList(this);">
-                                    <label for="<%=frozen_list[i].frozen_name%>"><%=frozen_list[i].frozen_name%></label><br>
-                                    <input type="range" value="<%=frozen_list[i].frozen_range%>" step="50" disabled><br>
-                                    <p><%=frozen_list[i].frozen_date%></p>
-                                    <button type="button" class="d_none updateIngd_btn" value="<%=frozen_list[i].frozen_name%>" onclick="clickUpdate(this);">수정</button>
-                                    <button type="button" class="d_none deleteIngd_btn" value="<%=frozen_list[i].frozen_name%>" onclick="clickDelete(this);">삭제</button>
+                                    <span class="d_none frozen_id"><%=frozen_list[j].frozen_id%></span>
+                                    <input type="checkbox" name="ingd" value="<%=frozen_list[j].frozen_name%>" id="<%=frozen_list[j].frozen_name%>" onclick="addToList(this);">
+                                    <label for="<%=frozen_list[j].frozen_name%>"><%=frozen_list[j].frozen_name%></label><br>
+                                    <input type="range" value="<%=frozen_list[j].frozen_range%>" step="50" disabled><br>
+                                    <p><%=frozen_list[j].frozen_date%></p>
+                                    <button type="button" class="d_none updateIngd_btn" value="<%=frozen_list[j].frozen_name%>" onclick="clickUpdate(this);">수정</button>
+                                    <button type="button" class="d_none deleteIngd_btn" value="<%=frozen_list[j].frozen_name%>" onclick="clickDelete(this);">삭제</button>
                                 </div>
                             <%}%>                                                   
                     </form>
@@ -132,9 +105,7 @@
             </div>                          
         </div>
     </div>
-
-    <script>
-       
-    </script>
 </main>
+
+
 <%-include('../main/footer.ejs') %>

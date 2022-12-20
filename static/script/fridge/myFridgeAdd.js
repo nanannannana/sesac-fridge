@@ -31,7 +31,17 @@ const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
             })
         }
     })
-    if(freshName){freshModal(freshName);}
+    if(freshName){
+        Swal.fire({
+            icon: 'warning',
+            title : freshName,
+            text: '입력하신 이름이 맞는지 확인해주세요',
+            confirmButtonText: '확인',
+            confirmButtonColor: '#7E998F',
+            showCancelButton:true,
+            preConfirm:()=>{freshModal(freshName);}
+          })
+    }
  }
  //식재료 정보 입력 받기 
  async function freshModal(freshName){
@@ -140,7 +150,18 @@ async function checkFrozen(){
             })
         }
     })
-    if(frozenName){frozenModal(frozenName);}
+    if(frozenName){
+        Swal.fire({
+            icon: 'warning',
+            title : frozenName,
+            text: '입력하신 이름이 맞는지 확인해주세요',
+            confirmButtonText: '확인',
+            confirmButtonColor: '#7E998F',
+            showCancelButton:true,
+            preConfirm:()=>{frozenModal(frozenName);}
+          })
+        frozenModal(frozenName);
+    }
  }
 function frozenModal(frozenName){
     Swal.fire({

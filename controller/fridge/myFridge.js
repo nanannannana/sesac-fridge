@@ -15,15 +15,40 @@ exports.getMyFridge = async (req,res) => {
             where : {user_user_id : req.session.user},
             order : [["frozen_date", "ASC"]]
         });
-    
+
         console.log("list :", fresh_result.count, frozen_result.count );
-        res.render("fridge/myFridge", { fresh_list : fresh_result.rows, frozen_list : frozen_result.rows });
+        if(req.cookies.EMPTY_ALERT==1){
+            res.render("fridge/myFridge", { 
+                fresh_list : fresh_result.rows, 
+                frozen_list : frozen_result.rows,
+                empty_alert : true
+            });
+        }else{
+            res.render("fridge/myFridge", { 
+                fresh_list : fresh_result.rows, 
+                frozen_list : frozen_result.rows,
+                empty_alert : false
+            });
+        }
     }else{
-        res.render("fridge/myFridgeNotLogIn");
+        res.render("fridge/myFridge404");
     }
     
 }
 
+// 빈 냉장고 알림 Cookie
+exports.postEmptyAlertCookie = async (req,res) => {
+    let exp_date = new Date(); 
+    exp_date.setHours(23,59,59);
+
+    if(req.session.user){
+        res.cookie("EMPTY_ALERT","1", {
+            httpOnly : true,
+            expires : exp_date,
+        });
+        res.send(true);
+    }
+}
 
 // 냉장실 입력한 식재료 중복여부 확인 
 exports.postCheckFresh = async (req, res)=>{
