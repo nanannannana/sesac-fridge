@@ -1,3 +1,4 @@
+// 아이디/비밀번호 찾기에서 input창 모두 입력 시 버튼 활성화 되는 함수
 window.onload = function() {
     const user_name_click = document.getElementById("user_name");
     const user_pw_click = document.getElementById("phone_num");
@@ -26,13 +27,13 @@ window.onload = function() {
         }
     }
 }
-
-
+// 핸드폰 번호 자동 하이픈 생성하는 함수
 function phone_num_hyphen(target) {
     target.value = target.value
      .replace(/[^0-9]/g, '')
      .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
 }
+// input창 클릭 시 validate문구 없어지게 하는 함수
 function id_click(target) {
     if (target!=="") {
         $("#user_id").removeClass("is-invalid");
@@ -43,14 +44,22 @@ function pw_click(target) {
         $("#user_pw").removeClass("is-invalid");
     }
 }
-
+// 로그인 버튼 클릭 시 동작하는 함수
 function signin() {
     var form = document.getElementById("form_signin");
-    var data = {
-        user_id: form.user_id.value,
-        user_pw: form.user_pw.value,
-        remember_me_check: form.remember_me_check.value
-    };
+    if ($('input:checkbox[id="remember_me_check"]').is(":checked")) {
+        var data = {
+            user_id: form.user_id.value,
+            user_pw: form.user_pw.value,
+            remember_me_check: form.remember_me_check.value
+        };
+    } else {
+        var data = {
+            user_id: form.user_id.value,
+            user_pw: form.user_pw.value,
+            remember_me_check: "0"
+        };
+    }
     if (form.user_id.value == "") {
         $("#user_id").addClass("is-invalid");
     } else if(form.user_pw.value == "") {
@@ -62,6 +71,7 @@ function signin() {
             data: data
         })
         .then(async function(res) {
+            form.reset();
             if (res.data) {
                 await Swal.fire({
                     icon: 'success',
@@ -81,6 +91,7 @@ function signin() {
     }
 
 }
+// 아이디 찾기 클릭 시 동작하는 함수
 function id_find() {
     var form = document.getElementById("form_id_find");
     axios({
@@ -116,6 +127,7 @@ function id_find() {
         }
     })
 }
+// 비밀번호 찾기 클릭 시 동작하는 함수
 function pw_find() {
     var form = document.getElementById("form_pw_find");
     axios({
@@ -127,6 +139,7 @@ function pw_find() {
         }
     })
     .then(function(res) {
+        form.reset();
         console.log(res.data);
         if (res.data=="undefined") {
             $("#modal_body_text_2").remove();
@@ -148,4 +161,3 @@ function pw_find() {
         }
     })
 }
-// signup/signin 수정 아이디 비번 찾기 만들기

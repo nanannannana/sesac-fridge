@@ -15,6 +15,8 @@ router.post("/idCheck",user.postIdCheck);
 router.post("/signupUpdate",user.postSignupUpdate);
 // 아이디/비밀번호 찾기
 router.post("/idFind", user.postIdFind);
-router.post("/pwFind", user.postPwFind)
+router.post("/pwFind", user.postPwFind);
+//로그아웃
+router.post("/signOut", user.postSignOut);
 
 module.exports = router;

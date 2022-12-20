@@ -54,7 +54,7 @@ exports.getMain = async (req,res) => {
         console.log("log user_name : ", user_name.user_name );  
         if(req.cookies.user_id=="1" && req.cookies.EXP_MODAL==1) { //자동로그인 o & 모달 오늘안봄 O
             res.render("main/main", {
-                user_login: true,
+                is_remember_me: true,
                 isLogin : true, 
                 fresh_count : fresh_count.count,
                 exp_count : exp_list.count,
@@ -63,7 +63,7 @@ exports.getMain = async (req,res) => {
             }); 
         } else if (req.cookies.user_id!=="1" && req.cookies.EXP_MODAL==1) { // 자동로그인 x & 모달 오늘안봄 o
             res.render("main/main", {
-                user_login: false,
+                is_remember_me: false,
                 isLogin : true, 
                 fresh_count : fresh_count.count,
                 exp_count : exp_list.count,
@@ -72,7 +72,7 @@ exports.getMain = async (req,res) => {
             }); 
         } else if (req.cookies.user_id=="1" && req.cookies.EXP_MODAL!==1) { //자동로그인 o & 모달 오늘 안봄x
             res.render("main/main",{ //로그인 O & 모달 오늘안봄 X
-                user_login:true,
+                is_remember_me:true,
                 isLogin : true, 
                 fresh_count : fresh_count.count,
                 exp_count : exp_list.count,
@@ -81,7 +81,7 @@ exports.getMain = async (req,res) => {
             })
         } else { //자동로그인 x & 모달 오늘 안봄x
             res.render("main/main",{ //로그인 O & 모달 오늘안봄 X
-                user_login:false,
+                is_remember_me:false,
                 isLogin : true, 
                 fresh_count : fresh_count.count,
                 exp_count : exp_list.count,
@@ -91,7 +91,7 @@ exports.getMain = async (req,res) => {
         }
     } else { 
         res.render("main/main", { //로그인 X
-            user_login: false,
+            is_remember_me: false,
             isLogin : false, 
             fresh_count : false,
             exp_count : false,

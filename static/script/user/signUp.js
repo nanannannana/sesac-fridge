@@ -84,13 +84,14 @@ function signup() {
                 user_phone: form.user_phone.value.replace(/-/g, '')
             }
         })
-        .then(function(res) {
+        .then(async function(res) {
             if (res.data) {
-                Swal.fire({
+                await Swal.fire({
                     icon: 'success',
                     title: '회원가입을 완료했습니다!',
                     text: '버튼을 누르면 메인페이지로 이동합니다.'
                 });
+                form.reset();
                 location.href="/signIn";
             } else {
                 Swal.fire({

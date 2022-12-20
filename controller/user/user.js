@@ -7,11 +7,12 @@ exports.getSignin = function(req,res) {
 // 로그인 확인
 exports.postSigninFlag = async function(req,res) {
     let result = await user.findAll({where:{user_id:req.body.user_id, user_pw: req.body.user_pw}});
+    console.log(req.body);
     if (result.length>0) {
         req.session.user = req.body.user_id;
         const option = {
             httpOnly: true,
-            maxAge: 3*24*60*60*1000 //3일 뒤 자동로그인 해제
+            maxAge: 3*24*60*60*1000 //3일 뒤 자동로그인 설정 만료
         };
         res.cookie("user_id",req.body.remember_me_check,option); //서버에서 쿠키 생성 => 클라이언트로 보내기
         res.send(true);
@@ -77,4 +78,11 @@ exports.postSignupUpdate = async function(req,res) {
         await user.create(data);
         res.send(true);
     }
+}
+//로그아웃
+exports.postSignOut = function(req,res) {
+    req.session.destroy(function(err) {
+        if (err) throw err;
+        res.send(true);
+    })
 }

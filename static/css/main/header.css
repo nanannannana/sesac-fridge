@@ -1,5 +1,10 @@
-/* #login_flag {
+#header_top {
     float: right;
-    background-color: white;
-    margin-right: 7%;
-} */
+    margin: 5px 20px 0px 0px;
+}
+#header_top > span {
+    font-size: 18px;
+}
+#heder_nav:hover {
+    font-weight: bold;
+}
