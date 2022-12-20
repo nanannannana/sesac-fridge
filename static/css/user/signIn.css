@@ -47,7 +47,7 @@
 #modal_title {
     font-size: 25px;
 }
-#form_id_find {
+#form_id_find, #form_pw_find {
     text-align: left;
 }
 #input_phone_num_title {
@@ -70,4 +70,43 @@
     background-color: #b9b9b9;
     color: white;
     font-size: 18px;
+}
+#find_button, #find_button_2 {
+    background-color: var(--btn-success);
+    color: white;
+    font-size: 18px;
+}
+#res_data_user_id {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--btn-warn);
+}
+#res_data_user_name {
+    font-size: 20px;
+    font-weight: bold;
+}
+#modal_2page_text:nth-child(1) {
+    font-size: 20px;
+    margin:1rem 0px 0px 0px;
+}
+#modal_2page_text:nth-child(2) {
+    font-size: 20px;
+    margin:0px 0px 1rem 0px;
+}
+.pw_find_btn {
+    margin:0px 0px 15px 0px;
+}
+#warn_button {
+    background-color: white;
+    color: var(--btn-warn);
+    border: 1px solid var(--btn-warn);
+    font-size: 18px;
+}
+#warn_button:hover {
+    background-color: var(--btn-warn);
+    color: white;
+    font-size: 18px;
+}
+#modal_footer {
+    justify-content: space-between;
 }
