@@ -4,10 +4,16 @@ const { user } = require("../../model/");
 exports.getSignin = function(req,res) {
     res.render("user/signIn");
 }
+// 로그인 확인
 exports.postSigninFlag = async function(req,res) {
     let result = await user.findAll({where:{user_id:req.body.user_id, user_pw: req.body.user_pw}});
     if (result.length>0) {
         req.session.user = req.body.user_id;
+        const option = {
+            httpOnly: true,
+            maxAge: 3*24*60*60*1000 //3일 뒤 자동로그인 해제
+        };
+        res.cookie("user_id",req.body.remember_me_check,option); //서버에서 쿠키 생성 => 클라이언트로 보내기
         res.send(true);
     } else {
         res.send(false);

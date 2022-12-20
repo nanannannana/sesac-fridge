@@ -18,31 +18,31 @@ const { Op } = require("sequelize");
 
 // 메인 페이지 렌더 - 영은
 exports.getMain = async (req,res) => {
-    // 로그인 한 경우,    
+    // 로그인 한 경우,  
     if(req.session.user){ 
-            // 임박 식재료 개수
-            let fresh_count = await fresh.findAndCountAll({
-                where: {
-                    fresh_expire : {
-                        [Op.gte] : today,
-                        [Op.lte] : date
-                    },
-                    user_user_id : req.session.user                
+        // 임박 식재료 개수
+        let fresh_count = await fresh.findAndCountAll({
+            where: {
+                fresh_expire : {
+                    [Op.gte] : today,
+                    [Op.lte] : date
                 },
-            })
-    
+                user_user_id : req.session.user                
+            },
+        })
+
         // 유통기한 지난 식재료 개수 & list
-            let exp_list = await fresh.findAndCountAll({
-                where : {
-                    fresh_expire : {
-                        [Op.lt] : exp_date
-                    },
-                    user_user_id : req.session.user
-                }
-            })
-            // console.log("log fresh_count :", fresh_count.count );
-            // console.log("log exp_list :", exp_list.rows );
-        
+        let exp_list = await fresh.findAndCountAll({
+            where : {
+                fresh_expire : {
+                    [Op.lt] : exp_date
+                },
+                user_user_id : req.session.user
+            }
+        })
+        // console.log("log fresh_count :", fresh_count.count );
+        // console.log("log exp_list :", exp_list.rows );
+
         //로그인한 경우 session에서 user name
         // & cookie 에서 EXP_MODAL value 확인
 
@@ -51,33 +51,54 @@ exports.getMain = async (req,res) => {
             attributes : ["user_name"],
             where : {user_id : req.session.user}
         });
-    console.log("log user_name : ", user_name.user_name );
-
-        if(req.cookies.EXP_MODAL==1){
-            res.render("main/main", {  // 로그인 O & 모달 오늘안봄 O
+        console.log("log user_name : ", user_name.user_name );  
+        if(req.cookies.user_id=="1" && req.cookies.EXP_MODAL==1) { //자동로그인 o & 모달 오늘안봄 O
+            res.render("main/main", {
+                user_login: true,
                 isLogin : true, 
                 fresh_count : fresh_count.count,
                 exp_count : exp_list.count,
                 user_name : user_name.user_name,
                 exp_modal : true 
             }); 
-        }else{
+        } else if (req.cookies.user_id!=="1" && req.cookies.EXP_MODAL==1) { // 자동로그인 x & 모달 오늘안봄 o
+            res.render("main/main", {
+                user_login: false,
+                isLogin : true, 
+                fresh_count : fresh_count.count,
+                exp_count : exp_list.count,
+                user_name : user_name.user_name,
+                exp_modal : true 
+            }); 
+        } else if (req.cookies.user_id=="1" && req.cookies.EXP_MODAL!==1) { //자동로그인 o & 모달 오늘 안봄x
             res.render("main/main",{ //로그인 O & 모달 오늘안봄 X
-                    isLogin : true, 
-                    fresh_count : fresh_count.count,
-                    exp_count : exp_list.count,
-                    user_name : user_name.user_name,
-                    exp_modal : false
+                user_login:true,
+                isLogin : true, 
+                fresh_count : fresh_count.count,
+                exp_count : exp_list.count,
+                user_name : user_name.user_name,
+                exp_modal : false
             })
-        }        
+        } else { //자동로그인 x & 모달 오늘 안봄x
+            res.render("main/main",{ //로그인 O & 모달 오늘안봄 X
+                user_login:false,
+                isLogin : true, 
+                fresh_count : fresh_count.count,
+                exp_count : exp_list.count,
+                user_name : user_name.user_name,
+                exp_modal : false
+            })
+        }
+    } else { 
+        res.render("main/main", { //로그인 X
+            user_login: false,
+            isLogin : false, 
+            fresh_count : false,
+            exp_count : false,
+            user_name : false,
+            exp_modal : false
+        });  
     }
-    else{ res.render("main/main", { //로그인 X
-        isLogin : false, 
-        fresh_count : false,
-        exp_count : false,
-        user_name : false,
-        exp_modal : false
-    });  }
 }
 
 // 식재료 삭제 알림 modal cookie 생성

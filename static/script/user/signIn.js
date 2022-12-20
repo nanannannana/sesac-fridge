@@ -48,7 +48,8 @@ function signin() {
     var form = document.getElementById("form_signin");
     var data = {
         user_id: form.user_id.value,
-        user_pw: form.user_pw.value
+        user_pw: form.user_pw.value,
+        remember_me_check: form.remember_me_check.value
     };
     if (form.user_id.value == "") {
         $("#user_id").addClass("is-invalid");

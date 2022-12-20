@@ -22,7 +22,7 @@
     color: white;
     text-shadow:0px 0px 3px #000;
 }
-#signin_box > div > a, #signin_box > div > a:active:visited {
+#signin_box > div > a, #signin_box > div > a:active:visited, #remember_me_check_test {
     display: block;
     font-size: 15px;
     font-family: 'NanumSquareAceb';
@@ -35,8 +35,16 @@
 #signin_box_child {
     width:400px;
 }
-#form_signin > div {
+#form_signin > div:nth-child(1) {
     margin-bottom: 20px;
+}
+#remember_me_check {
+    margin: 10px 3px 10px 0px;
+    float: left;
+}
+#remember_me_check_test {
+    margin: 5px 0px 10px 0px;
+    float: left;
 }
 
 /* Modal 정리 */
