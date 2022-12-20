@@ -5,18 +5,17 @@
 <header>
 
     <div class="container-fluid" style="height:100px;">
-        <div class="header_top">
+        <!-- 로그인 시, d_none 제거 user_name - 내 정보 - 로그아웃 노출 -->
+        <div class="header_top d_none">
             <span>정새싹님 |</span>
-            <span onclick="mypage_go();">내 정보 |
+            <button type="button" onclick="mypage_go();">내 정보 |
                 <form id="mypage_go" action="/myPage" method="post"></form>
-            </span>
-            <span onclick="logout_go();">로그아웃</span>
-            <button id="login_flag"></button>
-            <p style="clear:both; margin:0px;"></p>
+            </button>
+            <button type="button" onclick="logout_go();">로그아웃</button>
         </div>
         <nav class="navbar bg-white">
             <div class="container-fluid" id="header_box">
-                <a class="navbar-brand" href="#" id="logo_text">냉장고 집사<img src="static/img/sesac.gif"></a>
+                <a class="navbar-brand" href="/" id="logo_text">냉장고 집사<img src="static/img/sesac.gif"></a>
                 <img src="/static/img/color_logo.png" class="navbar-toggler p-0 border-0" style="border-radius:0;" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="navbar-nav me-auto" >
@@ -25,10 +24,10 @@
                                 <a class="nav-link active" aria-current="page" href="#">신선제품 관리</a>
                             </li>
                             <li class="nav-item me-3 ms-3">
-                                <a class="nav-link active" aria-current="page" href="http://localhost:8080/recipe">레시피 추천</a>
+                                <a class="nav-link active" aria-current="page" href="/recipe">레시피 추천</a>
                             </li>
                             <li class="nav-item me-3 ms-3">
-                                <a class="nav-link active" aria-current="page" href="http://localhost:8080/myFridge">나의 냉장고</a>
+                                <a class="nav-link active" aria-current="page" href="/myFridge">나의 냉장고</a>
                             </li>
                             <li class="nav-item me-3 ms-3">
                             </li>
@@ -46,4 +45,5 @@
             </div>
         </nav>
     </div>
+
 </header>
