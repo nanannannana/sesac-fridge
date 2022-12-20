@@ -37,14 +37,38 @@ function insertLike(element, id) {
     })
 }
 
+let ingred = []; // 넘어온 데이터를 넣기
 // 요리하기 버튼을 누르면 alert창 뜨게 하기 
 function cooking(ingred){
-    swal.fire({
-        title: ingred,
-        text: "You clicked the button!",
-        icon: "success",
-        button: "Aww yiss!",
-    });
+    // 넘어온 배열을 ,로 짜르기
+    let ingArr = ingred.split(",");
+    if(ingArr.length == 1) { // 식재료가 하나일 경우
+        ingred.push(ingred);
+        console.log(ingred);
+    }else { // 식재료가 여러개일 경우
+        ingArr.forEach((item)=>{
+            ingred.push(item);
+            console.log(item);
+        })
+    }
+    // swal.fire({
+    //     title: ingred + "이 차감됩니다.",
+    //     html: 
+    //     cook += "<span>이 레시피로 요리를 하고도 남을 재료가 있다면 적어주세요 :)</span>",
+    //     cook += "<form>";
+    //     for(var i=0)
+    //         <input type="text" class="swal2-input" id="freshName_inp"><br>
+    //         <div id="tfIngdRange" style="margin:1em;">아직 사용하거나 먹지 않았어요</div>
+    //         <input type="range" style="width:70%; margin-top:0; cursor: pointer;" 
+    //         class="swal2-range" id="freshRange_inp" value=100 step=50
+    //         oninput="window.changeRange(this.value);"><br>
+    //     </form>
+        
+    //     `,
+    //     confirmButtonText : '확인',
+    //     showCancelButton : true,
+    //     focusConfirm : false,
+    // });
 }
 
 
