@@ -47,6 +47,7 @@ function pw_click(target) {
 // 로그인 버튼 클릭 시 동작하는 함수
 function signin() {
     var form = document.getElementById("form_signin");
+    // 자동로그인 관련 함수
     if ($('input:checkbox[id="remember_me_check"]').is(":checked")) {
         var data = {
             user_id: form.user_id.value,

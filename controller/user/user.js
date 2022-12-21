@@ -14,8 +14,13 @@ exports.postSigninFlag = async function(req,res) {
             httpOnly: true,
             maxAge: 3*24*60*60*1000 //3일 뒤 자동로그인 설정 만료
         };
-        res.cookie("user_id",req.body.remember_me_check,option); //서버에서 쿠키 생성 => 클라이언트로 보내기
-        res.send(true);
+        // 자동로그인
+        if (req.body.remember_me_check==1) {
+            res.cookie("user_id",req.body.user_id,option); //서버에서 쿠키 생성 => 클라이언트로 보내기
+            res.send(true);
+        } else {
+            res.send(true);
+        }
     } else {
         res.send(false);
     }
@@ -81,6 +86,13 @@ exports.postSignupUpdate = async function(req,res) {
 }
 //로그아웃
 exports.postSignOut = function(req,res) {
+    //쿠키 삭제
+    const option = {
+        httpOnly: true,
+        maxAge: 0,
+    }
+    res.cookie("user_id",null,option);
+    // 세션 삭제
     req.session.destroy(function(err) {
         if (err) throw err;
         res.send(true);
