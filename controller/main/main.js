@@ -16,7 +16,6 @@ const { Op } = require("sequelize");
     
 // 메인 페이지 렌더 - 영은
 exports.getMain = async (req,res) => {
-
     // render시 필요한 key-value's
     // [1] 로그인 여부 T/F - isLogin
     // [2] 유통기한 임박(2일 이내) 식재료 수 - fresh_count
@@ -27,7 +26,10 @@ exports.getMain = async (req,res) => {
     // 1) 로그인 확인 ----------------------------- [1]
     // 1-2) session user id의 fresh 식재료 확인----  [2].[3]
     // 1-3) session user name 확인 ---------------- [4]
-    if(req.session.user){ 
+
+    // 자동로그인O
+    if (req.cookies.user_id) {
+    req.session.user = req.cookies.user_id;
         // 임박 식재료 개수
         let fresh_count = await fresh.findAndCountAll({
             where: {
@@ -54,31 +56,47 @@ exports.getMain = async (req,res) => {
             attributes : ["user_name"],
             where : {user_id : req.session.user}
         });
-        console.log("log user_name : ", user_name.user_name );  
-
-
         // 2) 자동로그인 확인 ----------------------- [5]
+        res.render("main/main", {
+            isLogin : true, 
+            fresh_count : fresh_count.count,
+            exp_count : exp_list.count,
+            user_name : user_name.user_name,
+        }); 
+    } else if(req.session.user) {
+        let fresh_count = await fresh.findAndCountAll({
+            where: {
+                fresh_expire : {
+                    [Op.gte] : today,
+                    [Op.lte] : date
+                },
+                user_user_id : req.session.user                
+            },
+        })
+        // 유통기한 지난 식재료 개수 & list
+        let exp_list = await fresh.findAndCountAll({
+            where : {
+                fresh_expire : {
+                    [Op.lt] : today
+                },
+                user_user_id : req.session.user
+            }
+        })
+        exp_list_arr=exp_list.rows; //global 배열에 유통기한 지난 식재료 목록 담음 
 
-        if(req.cookies.user_id=="1") { //자동로그인 o 
-            res.render("main/main", {
-                is_remember_me: true,
-                isLogin : true, 
-                fresh_count : fresh_count.count,
-                exp_count : exp_list.count,
-                user_name : user_name.user_name,
-            }); 
-        } else { //자동로그인 x 
-            res.render("main/main",{ 
-                is_remember_me:false,
-                isLogin : true, 
-                fresh_count : fresh_count.count,
-                exp_count : exp_list.count,
-                user_name : user_name.user_name,
-            })
-        }
-    } else { 
+        // user name
+        let user_name = await user.findOne({
+            attributes : ["user_name"],
+            where : {user_id : req.session.user}
+        });
+        res.render("main/main", {
+            isLogin : true, 
+            fresh_count : fresh_count.count,
+            exp_count : exp_list.count,
+            user_name : user_name.user_name,
+        }); 
+    } else {
         res.render("main/main", { //로그인 X
-            is_remember_me: false,
             isLogin : false, 
             fresh_count : false,
             exp_count : false,

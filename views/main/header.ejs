@@ -4,17 +4,28 @@
 <body>
 <header>
 
-    <div class="container-fluid" style="height:100px;" id="header_box">
-        <div clas="row">
+
+    <div class="container-fluid" style="height:100px;">
+        <div class="row">
             <div id="header_top">
-                <span>정새싹님 </span><span> | </span>
-                <span id="heder_nav" type="button" onclick="mypage_go()"> 내정보 </span><span> | </span>
-                <span id="heder_nav" type="button" onclick="location.href='/signIn'"> 로그인</span>
-                <span id="heder_nav" type="button" onclick="signout_go();"> 로그인</span>
-                <form id="mypage_go" action="/myPage" method="post"></form>
+                <div id="delete_box">
+                    <span>정새싹님 </span><span> | </span>
+                    <span id="heder_nav" type="button" onclick="mypage_go()"> 내정보 </span><span> | </span>
+                    <span id="sign_in" type="button" onclick="location.href='/signIn'"> 로그인</span>
+                    <span id="sign_out" type="button" onclick="signout_go();"> 로그아웃</span>
+                    <form id="mypage_go" action="/myPage" method="post"></form>
+                </div>
             </div>
-        </div>    
-        
+        </div>
+        <script>
+            if("<%=isLogin%>"=="true") {
+                $("#sign_in").addClass("sign_in_none");
+                $("#sign_out").removeClass("sign_out_none");
+            } else {
+                $("#sign_in").removeClass("sign_in_none");
+                $("#sign_out").addClass("sign_out_none");
+            }
+        </script>  
         <nav class="row navbar navbar-expand-lg bg-white">
             <div class="container-fluid">
                 <!-- 반응형으로 창 작아지면 보이는 toggle button -->
@@ -37,7 +48,6 @@
 
 
     </div>
-            
         <!-- <nav class="navbar bg-white">
             <div class="container-fluid" id="header_box">
                 <a class="navbar-brand" href="/" id="logo_text">냉장고 집사<img src="static/img/sesac.gif"></a>
@@ -69,5 +79,4 @@
                 </div>
             </div>
         </nav> -->
-
 </header>
