@@ -8,23 +8,9 @@
 
 <%-include('../main/header.ejs') %>
 
-<script>
-    window.onload = function testSwal(){
-        Swal.fire({
-            title: '로그인 후 이용해주세요',
-            confirmButtonColor: '#7E998F',
-            allowOutsideClick : false,
-            preConfirm : ()=>{
-                window.location.href="/";
-            }
-        });
-    }
-</script>
-
 <main>
     <div class="container-xl myFridgePage_main">
-      
-        <div class="cotainer-fluid myFridgePage_box">
+         <div class="cotainer-fluid myFridgePage_box">
             <div class="myFridge_title pt-3 pb-3">
                 나의 냉장고
             </div>

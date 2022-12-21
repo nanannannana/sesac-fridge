@@ -4,21 +4,29 @@ const { recipe } = require("../../model");
 const { user } = require("../../model");
 const { Op } = require("sequelize");
 
-//global variable
+//global variables
 //로그인 시각 기준으로 시간 set
-    let today = new Date();
-   
-    let exp_date = new Date(); 
-    exp_date.setHours(23,59,59);
-    // console.log("exp_date : ",exp_date);
-
-    let date = new Date(); //date : 이틀 후
+    let today = new Date();  
+    
+    let date = new Date(); // 오늘+2일 후
     date.setDate( date.getDate()+2 ); 
-    // console.log( "date: ",  date );
 
+    let exp_list_arr = new Array(); // 유통기한 지난 식재료 > getMain - exp_list에서 받을 예정
+
+    
 // 메인 페이지 렌더 - 영은
 exports.getMain = async (req,res) => {
-    // 로그인 한 경우,  
+
+    // render시 필요한 key-value's
+    // [1] 로그인 여부 T/F - isLogin
+    // [2] 유통기한 임박(2일 이내) 식재료 수 - fresh_count
+    // [3] 유통기한 지난 식재료 수 - exp_count (식재료 목록도 필요)
+    // [4] username - user_name
+    // [5] 자동 로그인 여부 T/F - is_remember_me
+
+    // 1) 로그인 확인 ----------------------------- [1]
+    // 1-2) session user id의 fresh 식재료 확인----  [2].[3]
+    // 1-3) session user name 확인 ---------------- [4]
     if(req.session.user){ 
         // 임박 식재료 개수
         let fresh_count = await fresh.findAndCountAll({
@@ -30,21 +38,16 @@ exports.getMain = async (req,res) => {
                 user_user_id : req.session.user                
             },
         })
-
         // 유통기한 지난 식재료 개수 & list
         let exp_list = await fresh.findAndCountAll({
             where : {
                 fresh_expire : {
-                    [Op.lt] : exp_date
+                    [Op.lt] : today
                 },
                 user_user_id : req.session.user
             }
         })
-        // console.log("log fresh_count :", fresh_count.count );
-        // console.log("log exp_list :", exp_list.rows );
-
-        //로그인한 경우 session에서 user name
-        // & cookie 에서 EXP_MODAL value 확인
+        exp_list_arr=exp_list.rows; //global 배열에 유통기한 지난 식재료 목록 담음 
 
         // user name
         let user_name = await user.findOne({
@@ -52,41 +55,25 @@ exports.getMain = async (req,res) => {
             where : {user_id : req.session.user}
         });
         console.log("log user_name : ", user_name.user_name );  
-        if(req.cookies.user_id=="1" && req.cookies.EXP_MODAL==1) { //자동로그인 o & 모달 오늘안봄 O
+
+
+        // 2) 자동로그인 확인 ----------------------- [5]
+
+        if(req.cookies.user_id=="1") { //자동로그인 o 
             res.render("main/main", {
                 is_remember_me: true,
                 isLogin : true, 
                 fresh_count : fresh_count.count,
                 exp_count : exp_list.count,
                 user_name : user_name.user_name,
-                exp_modal : true 
             }); 
-        } else if (req.cookies.user_id!=="1" && req.cookies.EXP_MODAL==1) { // 자동로그인 x & 모달 오늘안봄 o
-            res.render("main/main", {
-                is_remember_me: false,
-                isLogin : true, 
-                fresh_count : fresh_count.count,
-                exp_count : exp_list.count,
-                user_name : user_name.user_name,
-                exp_modal : true 
-            }); 
-        } else if (req.cookies.user_id=="1" && req.cookies.EXP_MODAL!==1) { //자동로그인 o & 모달 오늘 안봄x
-            res.render("main/main",{ //로그인 O & 모달 오늘안봄 X
-                is_remember_me:true,
-                isLogin : true, 
-                fresh_count : fresh_count.count,
-                exp_count : exp_list.count,
-                user_name : user_name.user_name,
-                exp_modal : false
-            })
-        } else { //자동로그인 x & 모달 오늘 안봄x
-            res.render("main/main",{ //로그인 O & 모달 오늘안봄 X
+        } else { //자동로그인 x 
+            res.render("main/main",{ 
                 is_remember_me:false,
                 isLogin : true, 
                 fresh_count : fresh_count.count,
                 exp_count : exp_list.count,
                 user_name : user_name.user_name,
-                exp_modal : false
             })
         }
     } else { 
@@ -96,25 +83,23 @@ exports.getMain = async (req,res) => {
             fresh_count : false,
             exp_count : false,
             user_name : false,
-            exp_modal : false
         });  
     }
 }
 
-// 식재료 삭제 알림 modal cookie 생성
-exports.postModalCookie = (req, res) => {
-    res.cookie("EXP_MODAL","1", {
-        httpOnly : true,
-        expires : exp_date,
-    });
-    res.send(true);
-}
+// getMain에서 담은 유통기한 지난 식재료 global 배열 exp_list_arr
+// 의 요소들 DB에서 차례로 삭제
+exports.deleteDeleteAlert = async (req,res) => {
+    console.log("exp_list_arr : ", exp_list_arr);
 
-// 로그아웃 버튼
-exports.getLogOut = (req,res) => {
-    req.session.destroy((err)=>{
-        console.log( 'logOut req.session :', req.session );
-        if(err) throw err;
-        res.redirect('/');
-    })
+    for(i=0; i<exp_list_arr.length; i++){
+        let result = await fresh.destroy({ 
+            where : {
+                user_user_id : req.session.user,
+                fresh_name : exp_list_arr[i].fresh_name
+            }
+        });
+        console.log('delete result : ', result); 
+    }
+    res.send(true);
 }

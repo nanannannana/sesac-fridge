@@ -122,38 +122,24 @@
             </div>
         </div>
     </div>
-    
-
-    <div class="modal" tabindex="-1" id="expModal">
-      <div class="modal-dialog ">
-        <div class="modal-content">
-          <div class="modal-header text-bg-primary">
-            <h5 class="modal-title">슬픈 소식</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body" style="text-align : center;">
-            <h5><%=user_name%>님,</h5>
-            <p>유통기한이 지난 식료품 <strong><%=exp_count%></strong>개가 냉장고에서 삭제되었어요</p>
-          </div>
-          <div class="modal-footer  justify-content-between">
-            <div class="form-check form-switch form-check-reverse">
-              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckReverse" onclick="modalCheck();">
-              <label class="form-check-label" for="flexSwitchCheckReverse">오늘 그만보기</label>
-            </div>
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <script>
-      const expModal = new bootstrap.Modal('#expModal');
-        if("<%=exp_modal%>"!=="true" && "<%=isLogin%>" == "true") expModal.show();
+      // 1. 오늘 첫 로그인 시 - 오늘을 기준으로 유통기한 지난 식재료 존재하면 DB에서 삭제 & 삭제 알림 
+      // 2. 당일 재로그인 시 - 알림 안 뜸 (유통기한 지난 식재료는 첫 로그인때 삭제되었기 때문에 삭제할 필요X 알림 필요X)
+      // 3. 다음날 첫 로그인 시 - 유통기한 지난 식재료 존재하면 DB에서 삭제 & 알림 ... 1~2 반복
+      // 4. 만약 당일 첫 로그인인데 유통기한 지난 식재료 없으면(exp_count<1) DB에서 삭제X 알림X
 
-        if ("<%=isLogin%>" == "true"){
-        $("#welcome_user").removeClass("d_none");
+      //로그인 O
+      if ( "<%=isLogin%>" == "true" ){ 
+        $("#welcome_user").removeClass("d_none"); //user 환영 인사말 display
         $("#welcome_user div").html("<%=user_name%>님🌱<br/>유통기한이 임박한 식재료 <%=fresh_count%>개가 기다리고 있어요 !");
+        console.log("<%=user_name%>","<%=exp_count%>");
+
+        if( "<%=exp_count%>" > 0 ){ // 삭제할 식재료 존재 & 로그인 O
+          deleteAlert("<%=user_name%>","<%=exp_count%>"); // 식재료 삭제 & 알림
+        }
       }
+ 
     </script>
 
 </main>

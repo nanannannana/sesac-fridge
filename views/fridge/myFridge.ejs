@@ -7,26 +7,25 @@
 
 <%-include('../main/header.ejs') %>
     <!-- 처음 냉장고 페이지 렌더시,  -->
+    <!-- 알림 팝업 쿠키 없으면 show  -->
     <script>
+    if("<%=empty_alert%>"!=="true"){ 
         if("<%=fresh_list.length%>"<1 && "<%=frozen_list.length%>"<1){
-            emptyAlert("냉장실과 냉장고가");
+            emptyAlert("냉장실과 냉동실");
         }else if("<%=fresh_list.length%>"<1){
-            emptyAlert("냉장실이");
+            emptyAlert("냉장실");
         }else if("<%=frozen_list.length%>"<1){
-            emptyAlert("냉장고가");
+            emptyAlert("냉동실");
         }
+    }
     </script>
-
 <main>
     <div class="container-xl myFridgePage_main">
-      
         <div class="cotainer-fluid myFridgePage_box">
             <div class="myFridge_title pt-3 pb-3">
                 나의 냉장고
             </div>
-            
             <div class="row top_row">
-
                 <!-- 냉장고 내부 식재료 리스트 -->
                 <div class="fridge_box col-8">                   
                     <form class="fridge_ingd_box mt-1" id="fresh_form" name="fresh">
@@ -106,6 +105,5 @@
         </div>
     </div>
 </main>
-
 
 <%-include('../main/footer.ejs') %>
