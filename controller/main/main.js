@@ -27,9 +27,13 @@ exports.getMain = async (req,res) => {
     // 1-2) session user id의 fresh 식재료 확인----  [2].[3]
     // 1-3) session user name 확인 ---------------- [4]
 
-    // 자동로그인O
-    if (req.cookies.user_id) {
-    req.session.user = req.cookies.user_id;
+    // 로그인 여부로 if문을 나눔
+    // 1) 로그인을 한 경우,
+    if (req.session.user) {
+        // 자동로그인 여부 확인
+        // 자동로그인 설정X(쿠키 값 undefined): final_user_id는 req.session.user(세션에 넣어둔 user_id값이 아이디가 됨)
+        // 자동로그인 설정O(쿠키 값 有): final_user_id는 req.cookies.user_id(쿠키에 넣어둔 user_id값이 아이디가 됨)
+        const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
         // 임박 식재료 개수
         let fresh_count = await fresh.findAndCountAll({
             where: {
@@ -37,7 +41,7 @@ exports.getMain = async (req,res) => {
                     [Op.gte] : today,
                     [Op.lte] : date
                 },
-                user_user_id : req.session.user                
+                user_user_id : final_user_id               
             },
         })
         // 유통기한 지난 식재료 개수 & list
@@ -46,7 +50,7 @@ exports.getMain = async (req,res) => {
                 fresh_expire : {
                     [Op.lt] : today
                 },
-                user_user_id : req.session.user
+                user_user_id : final_user_id
             }
         })
         exp_list_arr=exp_list.rows; //global 배열에 유통기한 지난 식재료 목록 담음 
@@ -54,41 +58,9 @@ exports.getMain = async (req,res) => {
         // user name
         let user_name = await user.findOne({
             attributes : ["user_name"],
-            where : {user_id : req.session.user}
+            where : {user_id : final_user_id}
         });
         // 2) 자동로그인 확인 ----------------------- [5]
-        res.render("main/main", {
-            isLogin : true, 
-            fresh_count : fresh_count.count,
-            exp_count : exp_list.count,
-            user_name : user_name.user_name,
-        }); 
-    } else if(req.session.user) {
-        let fresh_count = await fresh.findAndCountAll({
-            where: {
-                fresh_expire : {
-                    [Op.gte] : today,
-                    [Op.lte] : date
-                },
-                user_user_id : req.session.user                
-            },
-        })
-        // 유통기한 지난 식재료 개수 & list
-        let exp_list = await fresh.findAndCountAll({
-            where : {
-                fresh_expire : {
-                    [Op.lt] : today
-                },
-                user_user_id : req.session.user
-            }
-        })
-        exp_list_arr=exp_list.rows; //global 배열에 유통기한 지난 식재료 목록 담음 
-
-        // user name
-        let user_name = await user.findOne({
-            attributes : ["user_name"],
-            where : {user_id : req.session.user}
-        });
         res.render("main/main", {
             isLogin : true, 
             fresh_count : fresh_count.count,

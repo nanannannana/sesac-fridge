@@ -1,4 +1,3 @@
-<link href="/static/css/main/header.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/static/script/main/header.js"></script>
 </head>
 <body>
@@ -16,16 +15,7 @@
                     <form id="mypage_go" action="/myPage" method="post"></form>
                 </div>
             </div>
-        </div>
-        <script>
-            if("<%=isLogin%>"=="true") {
-                $("#sign_in").addClass("sign_in_none");
-                $("#sign_out").removeClass("sign_out_none");
-            } else {
-                $("#sign_in").removeClass("sign_in_none");
-                $("#sign_out").addClass("sign_out_none");
-            }
-        </script>  
+        </div> 
         <nav class="row navbar navbar-expand-lg bg-white">
             <div class="container-fluid">
                 <!-- 반응형으로 창 작아지면 보이는 toggle button -->
@@ -45,9 +35,16 @@
             </li>
             </div>
         </nav>
-
-
     </div>
+    <script>
+        if("<%=isLogin%>"=="true") {
+            $("#sign_in").addClass("sign_in_none");
+            $("#sign_out").removeClass("sign_out_none");
+        } else {
+            $("#sign_in").removeClass("sign_in_none");
+            $("#sign_out").addClass("sign_out_none");
+        }
+    </script> 
         <!-- <nav class="navbar bg-white">
             <div class="container-fluid" id="header_box">
                 <a class="navbar-brand" href="/" id="logo_text">냉장고 집사<img src="static/img/sesac.gif"></a>
