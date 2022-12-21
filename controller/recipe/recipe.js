@@ -11,19 +11,20 @@ exports.getRecipe = async (req, res) => {
     // console.log(req.session.user);
     let freRes = await fresh.findAll({
         raw : true,
-        attributes : [['fresh_name', 'name'], ['fresh_range', 'range']],
+        attributes : [['fresh_id', 'id'],['fresh_name', 'name'], ['fresh_range', 'range']],
         where : { user_user_id : "root@naver.com"}
     })
     let froRes = await frozen.findAll({
         raw : true,
-        attributes : [['frozen_name', 'name'], ['frozen_range', 'range']],
+        attributes : [['frozen_id', 'id'],['frozen_name', 'name'], ['frozen_range', 'range']],
         where : { user_user_id : "root@naver.com"}
     })
     let ingdRes = [];   // fresh와 frozen에 있는 모든 값
     let ingdName = [];  // 식재료
     let ingdRange = []; // 수량
+    let ingdId = [];    // 식재료 pk
 
-    // 식재료와 수량을 ingRes에
+    // 냉장, 냉동 테이블에서 select한 결과 합쳐서 ingdRes에 넣기
     freRes.forEach((item)=>{
         ingdRes.push(item)
     })
@@ -31,12 +32,12 @@ exports.getRecipe = async (req, res) => {
         ingdRes.push(item)
     })
     
-    // 식재료 수량과 변수를 각각 ingdName과 ingdRange에 집어넣기
+    // 식재료 이름, 비율, pk를 각각 ingdName과 ingdRange에 집어넣기
     for(var i=0;i<ingdRes.length;i++){
+        ingdId.push(ingdRes[i].id);
         ingdName.push(ingdRes[i].name + "");
         ingdRange.push(ingdRes[i].range);
     }
-
     let ingdNameStr = ingdName.join(",|,"); // 일치하는 재료를 찾기 위해서 ingName을 문자열로
 
     // 식재료가 있을 때 일치하는 식재료가 있으면 보여주고, 식재료가 없을 때는 recipe_tag가 없는 것을 보여준다.
@@ -45,7 +46,7 @@ exports.getRecipe = async (req, res) => {
     else where["recipe_tag"] = null;
     if ( req.query.tag ) where["recipe_tag"] = req.query.tag;
 
-    console.log(req.query.tag);
+    console.log("req.query.tag: ", req.query.tag);
     // recipe 테이블에 있는 데이터 가져오기
     let recipes = await recipe.findAll({
         raw : true, // dataValues만 가져오기
@@ -59,6 +60,7 @@ exports.getRecipe = async (req, res) => {
         for(var i=0; i<recipes.length;i++) {
             ingdResult.push(recipes[i].recipe_ingd);
         }
+        result["ingdId"] = ingdId;
         result["ingdName"] = ingdName;
         result["ingdRange"] = ingdRange;
         result["ingdResult"] = ingdResult;
@@ -70,6 +72,8 @@ exports.getRecipe = async (req, res) => {
 // fresh와 frozen DB에 range 데이터 수정
 exports.patchToFridge = async (req,res) => {
     console.log(req.body);
+
+    
 }
 
 
