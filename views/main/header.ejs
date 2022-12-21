@@ -4,13 +4,40 @@
 <body>
 <header>
 
-    <div class="container-fluid" style="height:100px;">
-        <div id="header_top">
-            <span>정새싹님 </span><span> | </span>
-            <span id="heder_nav" type="button" onclick="mypage_go()"> 내정보 </span><span> | </span>
-            <span id="heder_nav" type="button" onclick="location.href='/signIn'"> 로그인</span>
-            <span id="heder_nav" type="button" onclick="signout_go();"> 로그인</span>
-            <form id="mypage_go" action="/myPage" method="post"></form>
+    <div class="container-fluid" style="height:100px;" id="header_box">
+        <div clas="row">
+            <div id="header_top">
+                <span>정새싹님 </span><span> | </span>
+                <span id="heder_nav" type="button" onclick="mypage_go()"> 내정보 </span><span> | </span>
+                <span id="heder_nav" type="button" onclick="location.href='/signIn'"> 로그인</span>
+                <span id="heder_nav" type="button" onclick="signout_go();"> 로그인</span>
+                <form id="mypage_go" action="/myPage" method="post"></form>
+            </div>
+        </div>    
+        
+        <nav class="row navbar navbar-expand-lg bg-white">
+            <div class="container-fluid">
+                <!-- 반응형으로 창 작아지면 보이는 toggle button -->
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span> 
+              </button>
+              <a class="navbar-brand" href="/" id="logo_text">냉장고 집사<img src="static/img/sesac.gif"></a>
+
+            <form class="d-flex" role="search" id="hd_search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-light" type="submit">Search</button>
+            </form>
+            <!-- 확정 아니고 수정 전까지 실 사용용....링크 버튼 입니다! -->
+            <li class="nav-item me-3 ms-3">
+                <a class="nav-link active" aria-current="page" href="/recipe">레시피 추천</a>
+                <a class="nav-link active" aria-current="page" href="/myFridge">나의 냉장고</a>
+            </li>
+            </div>
+        </nav>
+
+
+    </div>
+            
         <!-- <nav class="navbar bg-white">
             <div class="container-fluid" id="header_box">
                 <a class="navbar-brand" href="/" id="logo_text">냉장고 집사<img src="static/img/sesac.gif"></a>
@@ -42,6 +69,5 @@
                 </div>
             </div>
         </nav> -->
-    </div>
 
 </header>
