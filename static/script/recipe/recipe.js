@@ -1,7 +1,6 @@
 // 필터 클릭시 페이지 이동
 function selectFilter(filter) {
     location.href="/recipe?tag=" + filter;
-    
 }
 
 // 최근 본 레시피 클릭 시 log 테이블에 추가
@@ -33,15 +32,19 @@ function insertLike(element, id) {
 }
 
 
+// 전역변수 let inputcnt, const checkbox
+let inputcnt = 0;  // 전역변수로 설정해서 input 태그 개수 가져오기(input radiobox가 여러개일 때)
 
 // 요리하기 버튼을 누르면 뜰 alert 창
-async function cooking(data, range){
+async function cooking(data, range, pk){
     // 넘어온 문자열로 짜르고 ingArr에 넣기(여러개일 경우를 대비해)
     let ingArr = data.split(",");    // 식재료
     let rangeArr = range.split(","); // 식재료 비율
     let rangeData = rangeArr.map((i) => Number(i));
+    let pkData = pk.split(",").map((i) => Number(i));; // pk
 
-    if(ingArr.length === 1) { // 식재료가 하나인 경우
+    // 식재료가 하나인 경우
+    if(ingArr.length === 1) { 
         // sweet alert
         const steps = ['1', '2']
         const swalQueueStep = Swal.mixin({
@@ -126,7 +129,7 @@ async function cooking(data, range){
                                     \n 다른 레시피에서 사용할 수 없어요! :(`
                         })
                     }
-                    updateToFridge(resultData);
+                    updateToFridge(resultData, pkData);
                 }
             }
         }
@@ -221,15 +224,18 @@ async function cooking(data, range){
                     }
                 } else if (steps[currentStep] == 2) { 
                     let radio = "";
+                    let cnt = 0;
                     for(var i=0; i<resultData.length; i++){
-                        radio += `${[resultData[i].name]}이/가
-                                    <input type='radio' name="${resultData[i].name}" value="${resultData[i].range}"
-                                    id="radio1" onclick="checkRadio(this)"/>&nbsp;남아요
+                        inputcnt ++;
+                        cnt ++;
+                        radio +=`${[resultData[i].name]} 이/가
+                                <input type='radio' name="${resultData[i].name}" value="${resultData[i].range}"
+                                id="radio1" title="${cnt}" onclick="checkRadio(this, ${cnt})"/>&nbsp;남아요
 
-                                    <input type='radio' name="${resultData[i].name}" value="${resultData[i].range}"
-                                    id="radio2" onclick="checkRadio(this)"/>&nbsp;안남아요<br><br>`;
+                                <input type='radio'  name="${resultData[i].name}" value="${resultData[i].range}"
+                                id="radio2" title="${cnt}" onclick="checkRadio(this, ${cnt})"/>&nbsp;안남아요<br><br>`;
                     }
-                    console.log(radio);
+                    
                     var result = await swalQueueStep.fire({
                         title: '요리를 하고 냉장고에 재료가 남는다면 체크해주세요!',
                         inputValue: values[currentStep],
@@ -238,23 +244,23 @@ async function cooking(data, range){
                         currentProgressStep: currentStep,
                         preConfirm: () => {
                             //체크박스 체크 여부 
-                            let cnt = 0; // 체크박스 확인할 변수
-                            // 배열안에서 모든 체크박스가 checked가 안됐을때(false일 때), cnt++
+                            let falsechk = 0; // 체크박스 확인할 변수
+                            let truechk = 0;
+                            // 배열안에서 모든 라디오버튼이 checked가 안됐을때 alert창 띄우기
+                            // 배열안에서 하나라도 라디오 버튼이 체크 안되면 alert창 띄우기
                             for(var i=0;i<resultData.length;i++){
-                                // if(!document.getElementById(`${resultData[i].name}`).checked){
-                                //     cnt++;
-                                // } 
-                                if(!document.getElementById(`${resultData[i].name}`).checked){
-                                    cnt ++;
+                                if(!$(`input[type=radio][name=${resultData[i].name}]:checked`).is(':checked')){
+                                    falsechk++;
+                                }else if($(`input[type=radio][name=${resultData[i].name}]:checked`).is(':checked')){
+                                    truechk++;
                                 }
                             }
-                            if(cnt == resultData.length) { 
-                                Swal.showValidationMessage("한 개는 꼭 골라주세요! :(")
+                            if(falsechk == resultData.length || truechk < resultData.length) { 
+                                Swal.showValidationMessage("모두 꼭 골라주세요! :(")
                             }
                         }
                     })
 
-                    
                     if(result) {// 남으면 => rangeData가 50이면 그대로 유지, 0이면 +50 
                         // if(result.value === 'true' && resultData[1] === 0) {
                         //     var lastidx = resultData[1];
@@ -266,6 +272,7 @@ async function cooking(data, range){
                         //     resultData.push(lastidx-50);
                         //     console.log(resultData);
                         // } 
+                        console.log(result);
                         
                     }
                 } else  break; 
@@ -290,7 +297,7 @@ async function cooking(data, range){
                                     \n 다른 레시피에서 사용할 수 없어요! :(`
                         })
                     }
-                    updateToFridge(resultData);
+                    //updateToFridge(resultData);
                 }
             }
         }
@@ -314,7 +321,7 @@ function checkIngd(htmlTag) {
         checkboxArr.push(htmlTag.title);
         console.log(checkboxArr);
     }else { // 
-        var idx = checkboxArr.indexOf(htmlTag.value); // 해당 value의 idx 배열에서 찾고,
+        var idx = checkboxArr.indexOf(htmlTag.value); // 해당 클릭한 이름의 idx를 배열에서 찾고,
         checkboxArr.slice(idx, idx+1);
 
         while(idx > -1 ) { // idx=0부터 배열에서 해당 idx의 name,range 삭제
@@ -324,41 +331,52 @@ function checkIngd(htmlTag) {
         }
     }
 }
-const radioArr = []; // 전역변수로 설정해서 라디오버튼에 체크했을 때 참고
-function checkRadio(htmlTag) {
-    htmlTag.checked
-    // if(htmlTag.checked == true) { //남으면 => rangeData가 50이면 그대로 유지, 0이면 +50 
-        
-    //     radioArr.push(htmlTag.name);
-    //     radioArr.push(htmlTag.value);
-    //     console.log(radioArr);
-    // }
-    if(htmlTag.checked == true) {
 
-        if(htmlTag.id == "radio1") { // 남아요 버튼일 때 => value가 50이면 그대로 유지, 0이면 +50
-            console.log(htmlTag.name);
-            console.log(htmlTag.value);
-            console.log("----------");
-            if(htmlTag.range == "50") {
-                console.log(htmlTag.value);
-            }else {
-                console.log("", htmlTag.value);
+// 라디오버튼의 checked 된 것의 재료이름과 수량 갖고오기
+let radioArr = []; // 전역변수로 설정해서 라디오버튼에 체크했을 때 참고
+function checkRadio(htmlTag, cnt) {
+    // inputcnt 초기화 하는거 잊지말기!!
+
+    for(var i=1;i<=inputcnt;i++){      // for문으로 input 개수 만큼 for문 돌리기 
+        if(cnt == i) {                 // input 순서대로 (첫 번째 input => cnt 1)
+            if(htmlTag.checked) {      // 라디오 버튼이라 항상 check 됨
+                if(htmlTag.id == "radio1") { // 남아요 버튼일 때 => range가 50이면 그대로 유지, 0이면 +50
+                    radioArr.push(htmlTag.name); // 체크했을 때 무조건 name은 radioArr안에
+                    if(htmlTag.value == 50) radioArr.push(htmlTag.value);
+                    else radioArr.push(htmlTag.value+50);
+                    chkvalue(htmlTag.name);
+                }else if(htmlTag.id == "radio2") { // 안남아요 버튼일 때(DB에서 삭제)
+                    radioArr.push(htmlTag.name); // 체크했을 때 무조건 name은 radioArr안에
+                    if(htmlTag.value == 50) radioArr.push(htmlTag.value-50);
+                    else radioArr.push(htmlTag.value);
+                    chkvalue(htmlTag.name);
+                }
             }
-        }else { // 안남아요 버튼일 때
-    
+        } 
+    }
+    // console.log(radioArr);
+
+    // name이 중복되면 삭제, 최초입력이면 무조건 length와 idx 2차이
+    // 삭제 되는 경우는 length와 idx의 차이가 2보다 클 때 무조건 삭제
+    function chkvalue (name){
+        let idx = radioArr.indexOf(name); 
+        if(radioArr.length-idx > 2){
+            radioArr.splice(radioArr.indexOf(name), 2);
         }
     }
-
-    
 }
 
-
-
 // 수정을 위한 체크한 정보 fresh와 frozen DB로 전송
-function updateToFridge(result){
+function updateToFridge(result, pkData){
+    let pkResult = 0;
+
+    // 재료가 하나일 때만 number로
+    if(pkData[0]) pkResult = Number(pkData);
+    else pkResult = pkData;
     let data = {
         name : result[0],
         range : result[1],
+        pk : pkResult,
     }
     axios({
         method : "patch",
