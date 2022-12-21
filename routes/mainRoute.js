@@ -4,14 +4,16 @@ const router = express.Router();
 
 // 메인 페이지 렌더 - 영은
 router.get("/", main.getMain);
-// 쿠키 생성
-router.post("/modalCookie", main.postModalCookie);
+// 유통기한 지난 식재료 삭제 - 영은
+router.delete("/deleteAlert", main.deleteDeleteAlert);
 
 
 
 
-//로그아웃
-router.get("/logout", main.getLogOut);
+
+
+
+
 
 
 module.exports = router;

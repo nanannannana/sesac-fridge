@@ -31,15 +31,15 @@ const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
             })
         }
     })
-    if(freshName){
+    if(freshName){ //입력한 식재료 명 바르게 썼는지 확인
         Swal.fire({
-            icon: 'warning',
+            icon: 'info',
             title : freshName,
-            text: '입력하신 이름이 맞는지 확인해주세요',
+            text: '입력하신 이름이 맞나요?',
             confirmButtonText: '확인',
             confirmButtonColor: '#7E998F',
             showCancelButton:true,
-            preConfirm:()=>{freshModal(freshName);}
+            preConfirm:()=>{freshModal(freshName);} //확인 클릭 - 나머지 정보 입력창으로
           })
     }
  }
@@ -73,28 +73,23 @@ const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
           const freshRange = Swal.getPopup().querySelector('#freshRange_inp').value;
           const freshExpire = Swal.getPopup().querySelector('#freshExpire_inp').value;
           const freshCategory = Swal.getPopup().querySelector('#freshCategory_inp').value;
-          console.log("fresh_ct :", freshCategory);
+          console.log("fresh_ct :", freshCategory); 
 
         // input 미입력 시 알림 
-        if( !freshName || freshRange==0 || !freshExpire || freshCategory=="NOT") {
+        if( !freshName || freshRange==0 || !freshExpire || freshCategory=="NOT") { 
             Swal.showValidationMessage(`바르게 입력해주세요`)
         }
-
-        //   if(checkIngdResult!==true){
-        //     console.log("global checkIngdResult :", checkIngdResult);
-        //     Swal.showValidationMessage(`이미 냉장고에 보관 중인 식재료예요`)
-        //   }
           return { 
-            name : freshName,
+            name : freshName, // 이미 중복check한 식재료명 그대로 
             range : freshRange,
             expire : freshExpire,
             category : freshCategory
         }
         }
       }).then((result) => {
-        if(result.isConfirmed){
+        if(result.isConfirmed){ //확인 클릭 - DB에 추가
             addToFresh(result);            
-        }else if (result.isDismissed){
+        }else if (result.isDismissed){ //취소 클릭 - 냉장고 page로
             window.location.href="/myFridge/";}
     })
  }
@@ -119,7 +114,7 @@ const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
         `.trim(),
         confirmButtonText: '확인',
         confirmButtonColor: '#7E998F',
-        preConfirm:()=>{window.location.href="/myFridge/";}
+        preConfirm:()=>{window.location.href="/myFridge/";} // 입력 확인 btn 클릭 - 냉장고 page로
         })
     })
  }
@@ -150,15 +145,15 @@ async function checkFrozen(){
             })
         }
     })
-    if(frozenName){
+    if(frozenName){ //입력한 식재료 명 바르게 썼는지 확인
         Swal.fire({
-            icon: 'warning',
+            icon: 'info',
             title : frozenName,
-            text: '입력하신 이름이 맞는지 확인해주세요',
+            text: '입력하신 이름이 맞나요?',
             confirmButtonText: '확인',
             confirmButtonColor: '#7E998F',
             showCancelButton:true,
-            preConfirm:()=>{frozenModal(frozenName);}
+            preConfirm:()=>{frozenModal(frozenName);}  //확인 클릭 - 나머지 정보 입력창으로
           })
         frozenModal(frozenName);
     }
@@ -182,19 +177,20 @@ function frozenModal(frozenName){
         preConfirm: () => {
           const frozenRange = Swal.getPopup().querySelector('#frozenRange_inp').value;
           const frozenDate = Swal.getPopup().querySelector('#frozenDate_inp').value;
-    
+          
+            // input 미입력 시 알림 
           if (!frozenName || frozenRange==0 || !frozenDate) {
             Swal.showValidationMessage(`바르게 입력했는지 확인해주세요`)
           }
           return { 
-            name : frozenName,
+            name : frozenName, // 이미 중복check한 식재료명 그대로
             range : frozenRange,
             date : frozenDate }
         }
       }).then((result) => {
-        if(result.isConfirmed){
+        if(result.isConfirmed){ //확인 클릭 - DB에 추가
             addToFrozen(result);            
-        }else if (result.isDismissed) {
+        }else if (result.isDismissed) { //취소 클릭 - 냉장고 page로
             window.location.href="/myFridge/";}       
     })
  }
@@ -217,12 +213,12 @@ function addToFrozen(result){
         ${result.value.date}에 구매한 ${result.value.name}(이/가) 냉동실에 보관됩니다`.trim(),
         confirmButtonText: '확인',
         confirmButtonColor: '#7E998F',
-        preConfirm:()=>{window.location.href="/myFridge/";}
+        preConfirm:()=>{window.location.href="/myFridge/";}  // 입력 확인 btn 클릭 - 냉장고 page로
         })
     })
  }
 
- // 식재료 입력값 변수 할당        
+ // 입력창에서 range 조작에 따라 range bar 상단에 text 노출        
  window.changeRange = function(value){
     $("#frozenRange_inp").removeClass("animate__animated animate__shakeX");
     var tfIngdRange = document.getElementById("tfIngdRange");

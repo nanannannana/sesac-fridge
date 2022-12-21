@@ -5,7 +5,7 @@ const { recipe } = require("../../model");
 
 // 나의 냉장고 페이지 렌더 - 영은
 exports.getMyFridge = async (req,res) => {
-    if(req.session.user){
+    if(req.session.user){ //로그인 후 
         let fresh_result = await fresh.findAndCountAll({
             where : {user_user_id : req.session.user},
             order : [["fresh_expire", "ASC"]]
@@ -15,25 +15,23 @@ exports.getMyFridge = async (req,res) => {
             where : {user_user_id : req.session.user},
             order : [["frozen_date", "ASC"]]
         });
-
-        console.log("list :", fresh_result.count, frozen_result.count );
-        if(req.cookies.EMPTY_ALERT==1){
+        // console.log("list :", fresh_result.count, frozen_result.count );
+        if(req.cookies.EMPTY_ALERT==1){  //로그인 O & 오늘안봄클릭 O
             res.render("fridge/myFridge", { 
                 fresh_list : fresh_result.rows, 
                 frozen_list : frozen_result.rows,
                 empty_alert : true
             });
         }else{
-            res.render("fridge/myFridge", { 
+            res.render("fridge/myFridge", { //로그인 O & 오늘안봄클릭 X
                 fresh_list : fresh_result.rows, 
                 frozen_list : frozen_result.rows,
                 empty_alert : false
             });
         }
-    }else{
+    }else{ //로그인 X
         res.render("fridge/myFridge404");
-    }
-    
+    }  
 }
 
 // 빈 냉장고 알림 Cookie
