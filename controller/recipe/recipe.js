@@ -64,9 +64,7 @@ exports.getRecipe = async (req, res) => {
         result["ingdResult"] = ingdResult;
     }
     res.render("recipe/recipe", result);
-    if(req.query.tag == "반찬") {
-       console.log(result);
-    }
+    
 }
 
 // fresh와 frozen DB에 range 데이터 수정
