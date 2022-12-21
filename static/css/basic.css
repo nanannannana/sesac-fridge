@@ -60,10 +60,10 @@ a:visited {
 #logo_text>img {
     width:50px;
 }
-/* navber open img */
-.navbar-toggler {
+/* navber open btn */
+/* .navbar-toggler {
     width:30px;
-}
+} */
 /* navbar 글씨 */
 .nav_text {
     font-size:x-large; 
@@ -73,12 +73,9 @@ a:visited {
 
 /* search bar */
 #hd_search {
-    width:200px;
+    width:20rem;
 }
-#hd_search i {
-    color: black; 
-    vertical-align: middle;
-}
+
 .form-control::placeholder {
     font-size: 0.95rem;
     color: #aaa;
