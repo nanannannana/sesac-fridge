@@ -14,7 +14,6 @@
 }
 
 /* 최근 본 레시피 관련 */
-/* 최근 본 레시피 타이틀 설정 */
 #recent_recipe_box {
     display: flex;
     justify-content: space-between;
@@ -42,12 +41,9 @@
 #recent_recipe_card_box, #recent_cook_card_box {
     width: 70%;
 }
-/* 최근 본 레시피& 최근에 한 요리 카드 박스 높이 */
 #recent_recipe_card, #recent_cook_card {
     height: 300px;
 }
-
-/* 최근 본 레시피 각 카드 마진 */
 #recent_recipe_card_box > div > div:nth-child(2),
 #recent_recipe_card_box > div > div:nth-child(4),
 #recent_cook_card_box > div > div:nth-child(2),
@@ -104,9 +100,16 @@
     background-color:rgba(0, 0, 0, 0);
 }
 #blank_box {
-    background-color: #b9b9b9;
-    height: 100%;
+    background-color: #4d4d4d;
+    height: 300px;
+}
+#blank_box:hover {
+    background-color: #616161;
+    height: 300px;
 }
 #recent_recipe_card_box > div, #recent_cook_card_box > div {
     height: 300px;
 }
+/* .blur {
+    filter: blur(3px);
+} */

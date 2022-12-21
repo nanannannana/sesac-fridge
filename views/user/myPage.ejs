@@ -17,11 +17,11 @@
             <div id="chart_box_child">
                 <div id="chart_1">
                     <p>냉장실 재료 카테고리별 차트</p>
-                    <canvas id="myChart" width="550px;"></canvas>
+                    <canvas class="blur" id="myChart" width="550px;"></canvas>
                 </div>
                 <div id="chart_2">
                     <p>최근에 한 요리 카테고리별 차트(10개)</p>
-                    <canvas id="myChart2" width="650px;" height="599.99px;"></canvas>
+                    <canvas id="myChart2" class="blur" width="650px;" height="599.99px;"></canvas>
                 </div>
             </div>
         </div>
@@ -38,12 +38,12 @@
                 <div class="container" id="recent_recipe_card_box">
                     <div class="row">
                         <%switch (recipe_title.length) {                             
-                            case 1: undefined%>
-                            <% for(var l=1; l<5 ; l++ ) {%>
+                            case 0: %>
+                            <% for(var r=1; r<5 ; r++ ) {%>
                                 <div id="blank_box" class="card col-5"></div>
                             <% } %>
                         <% break;
-                            case 2: 1 %>
+                            case 1: 1%>
                             <div id="recent_recipe_card" class="card col-5" style="padding:0px;">
                                 <img src="<%=recipe_img[0]%>" class="card-img" style="width:100%; height: 300px;"alt="...">
                                 <a href="<%=recipe_url[0]%>" target="_blank" id="recipe_name" class="card-link card-img-overlay"><%=recipe_title[0]%></a>                                
@@ -52,7 +52,7 @@
                                 <div id="blank_box" class="card col-5"></div>
                             <% } %>
                         <% break;
-                            case 3: 2 %>
+                            case 2: 2 %>
                             <% for (var i=0 ; i<2 ; i++ ) { %>
                                 <div id="recent_recipe_card" class="card col-5" style="padding:0px;">
                                     <img src="<%=recipe_img[i]%>" class="card-img" style="width:100%; height: 100%;"alt="...">
@@ -63,7 +63,7 @@
                                 <div id="blank_box" class="card col-5"></div>
                             <% } %>
                         <% break;
-                            case 4: 3 %>
+                            case 3: 3 %>
                             <% for (var j=0 ; j<3 ; j++ ) { %>
                                 <div id="recent_recipe_card" class="card col-5" style="padding:0px;">
                                     <img src="<%=recipe_img[j]%>" class="card-img" style="width:100%; height: 100%;"alt="...">
@@ -72,7 +72,7 @@
                             <% } %>
                             <div id="blank_box" class="card col-5"></div>
                         <% break;
-                            case 5: 4 %>
+                            case 4: 4 %>
                             <% for (var k=0 ; k<4 ; k++ ) { %>
                                 <div id="recent_recipe_card" class="card col-5" style="padding:0px;">
                                     <img src="<%=recipe_img[k]%>" class="card-img" style="width:100%; height: 100%;"alt="...">
@@ -95,6 +95,11 @@
                 <div class="container" id="recent_cook_card_box">
                     <div class="row">
                         <%switch (cook_title.length) { 
+                            case 0: %>
+                            <% for(var r=1; r<5 ; r++ ) {%>
+                                <div id="blank_box" class="card col-5"></div>
+                            <% } %>
+                        <% break;
                             case 1: 1%>
                             <div id="recent_cook_card" class="card col-5" style="padding:0px;">
                                 <img src="<%=cook_img[0]%>" class="card-img" style="width:100%; height: 100%;"alt="...">

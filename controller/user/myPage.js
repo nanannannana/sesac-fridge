@@ -8,10 +8,12 @@ const { cooklog } = require("../../model/");
 
 // 마이 페이지 렌더 - 예지
 exports.postMyPage = async function(req,res) {
+    // 자동로그인 했을 떄
     if (req.cookies.user_id) {
         req.session.user = req.cookies.user_id;
         var fresh_result = await fresh.findAll({
-            raw:true
+            raw:true,
+            where: {user_user_id: req.session.user}
         });
         let cook_result = await cooklog.findAll({
             raw: true,
@@ -26,7 +28,6 @@ exports.postMyPage = async function(req,res) {
             order: [['cooklog_id', 'DESC']],
             limit: 10
         });
-        console.log("cookresult:", cook_result[0]['recipe.recipe_title']);
         let recipe_result = await log.findAll({
             raw: true,
             include: [
@@ -40,7 +41,6 @@ exports.postMyPage = async function(req,res) {
             order: [['log_id', 'DESC']],
             limit: 4
         })
-        console.log("recipe_result:",recipe_result[0]['recipe.recipe_title']);
         // 냉장고 카테고리 배열
         var fresh_category_list = [];
         for (var i=0; i<fresh_result.length ; i++) {
@@ -157,7 +157,7 @@ exports.postMyPage = async function(req,res) {
             recipe_url: recipe_url_list,
             recipe_img: recipe_img_list
         });
-    } else {
+    } else { // 자동로그인 x, 로그인 x
         res.render("user/myPage", {
             isLogin: false,
             fresh_category: fresh_category_list,
@@ -174,7 +174,6 @@ exports.postMyPage = async function(req,res) {
 exports.postMyPageChart = function(req,res) {
     const fresh_category_list = req.body.fresh_category.split(",");
     const cook_tag_list = req.body.cook_tag.split(",");
-    // console.log(ingd_name_list);
     res.send([fresh_category_list,cook_tag_list]);
 }
 

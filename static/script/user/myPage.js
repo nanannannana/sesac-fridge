@@ -10,12 +10,23 @@ document.addEventListener("DOMContentLoaded", function () {
   })
   .then(function(res) {
     // chart1_labels 내용 넣기
-    const chart1_labels = [...new Set(res.data[0])];
+    const chart1_labels = (res.data[0].length>0) ? [...new Set(res.data[0])] : ["채소", "수산물", "육류", "유제품"];
     //냉장고 속 재료 개수 확인
-    const ingd_count = {};
-    res.data[0].forEach(function(x) {
-      ingd_count[x] = (ingd_count[x] || 0)+1;
-    });
+    let ingd_count = {};
+    if (res.data[0].length>0) {
+      res.data[0].forEach(function(x) {
+        ingd_count[x] = (ingd_count[x] || 0)+1;
+      });
+      console.log(ingd_count);
+    } else {
+      ingd_count = {
+        "채소": 3,
+        "수산물": 4,
+        "육류": 1,
+        "유제품": 9
+      }
+    }
+    console.log(ingd_count);
     //chart1 정리
     const chart1_data = {
       labels: chart1_labels,
@@ -36,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
       chart1_config
     );
     //chart2_labels에 내용 넣기
-    const chart2_labels = [...new Set(res.data[1])]; //문자열 중복 제거
+    const chart2_labels = (res.data[1]==true) ? [...new Set(res.data[1])] : ["none"]; //문자열 중복 제거
     // Color 랜덤 지정
     const Color = [];
     for (var k=0 ; k<res.data[1].length;k++) {
@@ -48,9 +59,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     //recipe_tag 개별 수
     const recipe_tag_count = {};
-    res.data[1].forEach(function(x) {
-      recipe_tag_count[x] = (recipe_tag_count[x] || 0)+1;
-    });
+    if (res.data[1]==true) {
+      res.data[1].forEach(function(x) {
+        recipe_tag_count[x] = (recipe_tag_count[x] || 0)+1;
+      });
+    }
+    console.log(Object.values(recipe_tag_count));
     //chart2 정리
     const chart2_data = {
       labels: chart2_labels,
