@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   .then(function(res) {
     // chart1_labels 내용 넣기
     // 냉장고 카테고리 값 無: 임의의 값 넣기, 有: 해당 카테고리 값 넣기
-    const chart1_labels = (res.data[0][0]!=="") ? [...new Set(res.data[0])] : ["채소", "수산물", "육류", "유제품"];
+    const chart1_labels = (res.data[0][0]!=="") ? [...new Set(res.data[0])] : ["none"];
     //냉장고 속 재료 개수 확인
     // 냉장고 카테고리 값 無: 임의의 값 넣기, 有: 중복되는 카테고리명을 합친 뒤 개수와 함께 딕셔너리 형태로 넣기
     let ingd_count = {};
@@ -21,10 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     } else {
       ingd_count = {
-        "채소": 3,
-        "수산물": 4,
-        "육류": 1,
-        "유제품": 9
+        "none": 0
       }
     }
     //chart1 정리
@@ -36,10 +33,10 @@ document.addEventListener("DOMContentLoaded", function () {
       }]
     };
     const chart1_config = {
-      type: 'doughnut',
+      type: 'polarArea',
       data: chart1_data,
       options: {
-        responsive: false
+        responsive: false,
       }
     };
     const myChart = new Chart(
@@ -49,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //chart2_labels에 내용 넣기
     // 최근에 한 요리에 관한 값 無: 임의의 값 넣기, 有: 최근에 한 요리에 관한 카테고리 값 넣기
-    const chart2_labels = (res.data[1][0]!=="") ? [...new Set(res.data[1])] : ["밥","반찬","국/탕","간편식"]; //문자열 중복 제거
+    const chart2_labels = (res.data[1][0]!=="") ? [...new Set(res.data[1])] : ["none"]; //문자열 중복 제거
     // Color 랜덤 지정
     let Color = [];
     if (res.data[1][0]!=="") {
@@ -60,8 +57,6 @@ document.addEventListener("DOMContentLoaded", function () {
         var strRGBA = 'rgba(' + RGB_1 + ',' + RGB_2 + ',' + RGB_3 + ')';
         Color.push(strRGBA);
       }
-    } else {
-      Color = ["#FFBB00","#FFB2D9","#BCE55C","#B5B2FF"];
     }
     //recipe_tag 개별 수
     let recipe_tag_count = {};
@@ -71,10 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     } else {
       recipe_tag_count = {
-        "밥": 2,
-        "반찬": 2,
-        "국/탕": 5,
-        "간편식": 1
+        "none": 0
       }
     }
     console.log(Object.values(recipe_tag_count));

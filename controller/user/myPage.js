@@ -203,26 +203,27 @@ exports.postPwConfirm = async function(req,res) {
 }
 // 회원정보 수정 페이지 렌더
 exports.postMyInfo = async function(req,res) {
-    if (req.session.user) {
-        let result = await user.findAll({where: {user_id: req.body.user_id}});
-        console.log(result[0]);
+    if (req.cookies.user_id || req.session.user) {
+        const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
+        let result = await user.findOne({where: {user_id: req.body.user_id}});
         res.render("user/myInfo", {
             isLogin: true,
-            user_id: result[0].user_id,
-            user_pw: result[0].user_pw,
-            user_name: result[0].user_name,
-            user_phone: result[0].user_phone
+            user_id: result.user_id,
+            user_pw: result.user_pw,
+            user_name: result.user_name,
+            user_phone: result.user_phone
         });
     } else {
         res.render("user/myInfo", {
             isLogin: false,
-            user_id: result[0].user_id,
-            user_pw: result[0].user_pw,
-            user_name: result[0].user_name,
-            user_phone: result[0].user_phone
+            user_id: result.user_id,
+            user_pw: result.user_pw,
+            user_name: result.user_name,
+            user_phone: result.user_phone
         });
     }
 }
+
 // 회원정보 수정
 exports.patchMyInfoUpdate = async function(req,res) {
     let data = {
@@ -234,15 +235,17 @@ exports.patchMyInfoUpdate = async function(req,res) {
     await user.update(data, {where: {user_id: req.body.user_id}});
     res.send(true);
 }
-// 회원정보 수정 확인
-exports.postMyInfoCheck = function(req,res) {
-    res.send(true);
-}
+
 // 회원탈퇴 렌더
 exports.postMyInfoDel = async function(req,res) {
-    if (req.session.user) {
-        let fresh_count = await fresh.findAndCountAll();
-        let frozen_count = await frozen.findAndCountAll();
+    if (req.cookies.user_id || req.session.user) {
+        const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
+        let fresh_count = await fresh.findAndCountAll({
+            where: {user_user_id: final_user_id}
+        });
+        let frozen_count = await frozen.findAndCountAll({
+            where: {user_user_id: final_user_id}
+        });
         res.render("user/myInfoDel", {
             isLogin: true,
             user_id: req.body.user_id,

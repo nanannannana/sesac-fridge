@@ -11,14 +11,15 @@
         <form id="form_hidden" action="/myPage/profile/myInfo" method="post">
             <input type="hidden" name="user_id" value="<%=user_id%>">
         </form>
-        <form id="form_pw_confirm">
+        <form id="form_pw_confirm" class="needs-validation" novalidate>
                 <div class="input-group input-group-lg">
                     <span class="input-group-text" id="inputGroup-sizing-lg">이메일</span>
                     <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="user_id" value="<%=user_id%>" readonly>
                 </div>
                 <div class="input-group input-group-lg">
                     <span class="input-group-text" id="inputGroup-sizing-lg">비밀번호</span>
-                    <input type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="user_pw" placeholder="비밀번호를 입력해 주세요.">
+                    <input  id="user_pw" type="password" class="form-control rounded" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="user_pw" placeholder="비밀번호를 입력해 주세요." oninput="pw_click(this);" required>
+                    <div class="invalid-feedback">비밀번호를 정확히 입력하세요.</div>
                 </div>
             <button type="button" id="button" class="btn" onclick="pw_confirm()">확인</button>
         </form>
