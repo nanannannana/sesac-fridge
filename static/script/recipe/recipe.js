@@ -45,274 +45,182 @@ async function cooking(data, range){
     let rangeArr = range.split(","); // 식재료 비율
     let rangeData = rangeArr.map((i) => Number(i));
 
-    // 식재료가 하나인 경우
-    if(ingArr.length === 1) { 
-        // sweet alert
-        const steps = ['1', '2']
-        const swalQueueStep = Swal.mixin({
-            confirmButtonText: '확인',
-            cancelButtonText: '뒤로',
-            progressSteps: steps,
-            inputAttributes: {
-                required: true
-            },
-            reverseButtons: true,
-            showCloseButton: true,
-            allowEnterKey : true,
-            validationMessage: '사용할 재료를 선택해주세요 :('
-        })
-        async function backAndForth() {
-            const values = [];
-            let currentStep;
-            let resultData = [];      // 한 개의 식재료 보낼 배열
+    let input = "";
+    for(var i=0; i<ingArr.length; i++){
+        input += `<input type='checkbox' id="${[ingArr[i]]}" title="${rangeData[i]}"
+                        value="${ingArr[i]}" onclick="checkIngd(this)"/>
+                    <label for="${ingArr[i]}">&nbsp;${ingArr[i]}</label>&nbsp;&nbsp;&nbsp;`;
+    }
+    
+    // sweet alert
+    const steps = ['1', '2']
+    const swalQueueStep = Swal.mixin({
+        confirmButtonText: '확인',
+        cancelButtonText: '뒤로',
+        showCancelButton: true,
+        progressSteps: steps,
+        inputAttributes: {
+            required: true
+        },
+        reverseButtons: true,
+        showCloseButton: true,
+        allowEnterKey : true,
+    })
+    async function backAndForth() {
+        const values = [];
+        let currentStep;
+        let resultData = [];      // 첫 번째 단계에서 체크박스로 구분할 배열
+        let radioResultData = []; // 두 번째 단계에서 여러 식재료를 백엔드로 보낼 배열
 
-            for (currentStep = 0; currentStep < steps.length;) {
-                if (steps[currentStep] == 1) { 
-                    var result = await swalQueueStep.fire({
-                        title: '사용할 식재료를 선택해주세요!',
-                        // inputValue: values[currentStep],
-                        input : 'checkbox',
-                        inputPlaceholder : `${ingArr[0]}`,
-                        showCancelButton: currentStep > 0,
-                        currentProgressStep: currentStep,
-                    })
-                    // 확인 버튼을 누르면 식재료 사용하는 걸로 간주하고 -50 차감
-                    if(result) {
-                        resultData.push(`${ingArr[0]}`)
-                        resultData.push(`${rangeData[0]}`-50)
+        for (currentStep = 0; currentStep < steps.length;) {
+            if (steps[currentStep] == 1) { // 첫 번째 단계
+                var result = await swalQueueStep.fire({
+                    title: '사용할 식재료를 선택해주세요!',
+                    inputValue: values[currentStep],
+                    html : input,
+                    showCancelButton: currentStep > 0,
+                    currentProgressStep: currentStep,
+                    allowEnterKey : true,
+                    showCloseButton: true,
+                    preConfirm: () => {
+                        //라디오 버튼 체크 여부 
+                        let cnt = 0; // 체크박스 확인할 변수
+
+                        // 배열안에서 모든 체크박스가 checked가 안됐을때(false일 때), cnt++
+                        for(var i=0;i<ingArr.length;i++){
+                            if(!document.getElementById(`${ingArr[i]}`).checked){
+                                cnt++;
+                            } 
+                        }
+                        if(cnt == ingArr.length) { 
+                            Swal.showValidationMessage("사용할 재료를 선택해주세요 :(")
+                        }
                     }
-                } else if (steps[currentStep] == 2) { 
-                    var result = await swalQueueStep.fire({
-                        title: '요리를 하고 냉장고에 재료가 남는다면 체크해주세요!',
-                        inputValue: values[currentStep],
-                        input : 'radio',
-                        inputOptions : {
-                            'true': '남아요',
-                            'false': '안남아요',
-                        },
-                        inputValidator : (result) => {
-                            if(!result) {
-                                return "한 개는 꼭 골라주세요! :("
-                            }
-                        },
-                        showCancelButton: currentStep > 0,
-                        currentProgressStep: currentStep,
-                    })
-                    if(result) {// 남으면 => rangeData가 50이면 그대로 유지, 0이면 +50 
-                        if(result.value === 'true' && resultData[1] === 0) {
-                            var lastidx = resultData[1];
-                            resultData.pop();            
-                            resultData.push(lastidx+50);  
-                        }else if(result.value === 'false'){  // 안남으면 => rangeData를 0으로
-                            var lastidx = resultData[1];
-                            resultData.pop();
-                            resultData.push(lastidx-50);
-                            console.log("resultData: ", resultData);
-                        } 
+                })
+                // 첫 번째 단계에서 백으로 보내는 데이터 
+                // 확인 버튼을 누르면 체크된 값 가져와서 -50 하고 객체를 배열안에 넣기
+                if(result) {
+                    let resultObj = {};
+                    for(var i=0;i<=checkboxArr.length*2;i++) {
+                        resultObj = {
+                            "name" :  checkboxArr[0],
+                            "range": Number(checkboxArr[1])-50
+                        }
+                            resultData.push(resultObj);
+                            checkboxArr.splice(0,2);
                     }
-                } else  break; 
-            
-                if (result.value) {
-                    values[currentStep] = result.value
-                    currentStep++
-                } else if (result.dismiss === 'cancel') {
-                    currentStep--
-                    checkboxArr.splice(0) // 뒤로가기버튼 누르면 배열 요소 모두 삭제
-                    resultData.splice(0) 
-                } else break;
-               
-                if (currentStep === steps.length) {
-                    if(resultData[1] === 50) {
-                        var result = Swal.fire({
-                            title : `냉장고에 ${resultData[0]} 이/가 남았습니다 
-                                    \n 다른 레시피에도 사용할 수 있어요! :)` 
-                        })
-                    }else if(resultData[1] === 0) {
-                        var result = Swal.fire({
-                            title : `냉장고에서 ${resultData[0]} 이/가 없어집니다
-                                    \n 다른 레시피에서 사용할 수 없어요! :(`
-                        })
-                    }
-                    updateToFridge(resultData);
+                    console.log("백에 보내는 데이터: ", resultData); 
                 }
-            }
-        }
-        backAndForth();
+            } else if (steps[currentStep] == 2) { // 두 번째 단계
+                let radio = "";
+                let cnt = 0;
+                for(var i=0; i<resultData.length; i++){
+                    inputcnt ++;
+                    cnt ++;
+                    radio +=`${[resultData[i].name]} 이/가
+                            <input type='radio' name="${resultData[i].name}" value="${resultData[i].range}"
+                            id="radio1" title="${cnt}" onclick="checkRadio(this, ${cnt})"/>&nbsp;남아요
 
-    }else if(ingArr.length > 1){  // 식재료가 여러개인 경우
-        // 일치하는 식재료 checkbox들
-        let input = "";
-        for(var i=0; i<ingArr.length; i++){
-            input += `<input type='checkbox' id="${[ingArr[i]]}" title="${rangeData[i]}"
-                         value="${ingArr[i]}" onclick="checkIngd(this)"/>
-                      <label for="${ingArr[i]}">&nbsp;${ingArr[i]}</label>&nbsp;&nbsp;&nbsp;`;
-        }
-        
-        // sweet alert
-        const steps = ['1', '2']
-        const swalQueueStep = Swal.mixin({
-            confirmButtonText: '확인',
-            cancelButtonText: '뒤로',
-            showCancelButton: true,
-            progressSteps: steps,
-            inputAttributes: {
-                required: true
-            },
-            reverseButtons: true,
-            showCloseButton: true,
-            allowEnterKey : true,
-        })
-        async function backAndForth() {
-            const values = [];
-            let currentStep;
-            let resultData = [];      // 첫 번째 단계에서 체크박스로 구분할 배열
-            let radioResultData = []; // 두 번째 단계에서 여러 식재료를 백엔드로 보낼 배열
-
-            for (currentStep = 0; currentStep < steps.length;) {
-                if (steps[currentStep] == 1) { 
-                    var result = await swalQueueStep.fire({
-                        title: '사용할 식재료를 선택해주세요!',
-                        inputValue: values[currentStep],
-                        html : input,
-                        showCancelButton: currentStep > 0,
-                        currentProgressStep: currentStep,
-                        allowEnterKey : true,
-                        showCloseButton: true,
-                        preConfirm: () => {
-                            //라디오 버튼 체크 여부 
-                            let cnt = 0; // 체크박스 확인할 변수
-
-                            // 배열안에서 모든 체크박스가 checked가 안됐을때(false일 때), cnt++
-                            for(var i=0;i<ingArr.length;i++){
-                                if(!document.getElementById(`${ingArr[i]}`).checked){
-                                    cnt++;
-                                } 
-                            }
-                            if(cnt == ingArr.length) { 
-                                Swal.showValidationMessage("사용할 재료를 선택해주세요 :(")
-                            }
-                        }
-                    })
-                    // 확인 버튼을 누르면 체크된 값 가져와서 -50 하고 객체를 배열안에 넣기
-                    if(result) {
-                        let resultObj = {};
-                        for(var i=0;i<=checkboxArr.length*2;i++) {
-                            resultObj = {
-                                "name" :  checkboxArr[0],
-                                "range": Number(checkboxArr[1])-50
-                            }
-                                resultData.push(resultObj);
-                                checkboxArr.splice(0,2);
-                        }
-                        console.log("백에 보내는 데이터: ", resultData); 
-                    }
-                } else if (steps[currentStep] == 2) { 
-                    let radio = "";
-                    let cnt = 0;
-                    for(var i=0; i<resultData.length; i++){
-                        inputcnt ++;
-                        cnt ++;
-                        radio +=`${[resultData[i].name]} 이/가
-                                <input type='radio' name="${resultData[i].name}" value="${resultData[i].range}"
-                                id="radio1" title="${cnt}" onclick="checkRadio(this, ${cnt})"/>&nbsp;남아요
-
-                                <input type='radio'  name="${resultData[i].name}" value="${resultData[i].range}"
-                                id="radio2" title="${cnt}" onclick="checkRadio(this, ${cnt})"/>&nbsp;안남아요<br><br>`;
-                    }
-                    
-                    var result = await swalQueueStep.fire({
-                        title: '요리를 하고 냉장고에 재료가 남는다면 체크해주세요!',
-                        inputValue: values[currentStep],
-                        html : radio,
-                        showCancelButton: currentStep > 0,
-                        currentProgressStep: currentStep,
-                        allowEnterKey : true,
-                        showCloseButton: true,
-                        preConfirm: () => {
-                            //라디오 버튼 체크 여부 
-                            let falsechk = 0;
-                            let truechk = 0;
-                            // 배열안에서 모든 라디오버튼이 checked가 안됐을때 alert창 띄우기
-                            // 배열안에서 하나라도 라디오 버튼이 체크 안되면 alert창 띄우기
-                            for(var i=0;i<resultData.length;i++){
-                                if(!$(`input[type=radio][name=${resultData[i].name}]:checked`).is(':checked')){
-                                    falsechk++;
-                                }else if($(`input[type=radio][name=${resultData[i].name}]:checked`).is(':checked')){
-                                    truechk++;
-                                }
-                            }
-                            if(falsechk == resultData.length || truechk < resultData.length) { 
-                                Swal.showValidationMessage("모두 꼭 골라주세요! :(")
-                            }
-                        }
-                    })
-                        
-                    if(result) { // 백으로 보내는 데이터 처리 (radioArr)
-                        let resultObj = {};   // 백으로 보낼 데이터를 객체로 변환
-                        
-                        for(var i=0;i<radioArr.length*2;i++) {
-                            resultObj = {
-                                "name" : radioArr[0],
-                                "range" : Number(radioArr[1]),
-                            }
-                            radioResultData.push(resultObj);
-                            radioArr.splice(0,2);
-                        }
-                        // console.log("백에 보내는 데이터: radioResultData ", radioResultData); 
-                    }
-                } else  break; 
-            
-                if (result.value) {
-                    values[currentStep] = result.value
-                    currentStep++
-                } else if (result.dismiss === 'cancel') {
-                    currentStep--
-                    checkboxArr.splice(0) // 뒤로가기버튼 누르면 배열 요소 모두 삭제
-                    radioArr.splice(0)
-                    resultData.splice(0)
-                } else break;
+                            <input type='radio'  name="${resultData[i].name}" value="${resultData[i].range}"
+                            id="radio2" title="${cnt}" onclick="checkRadio(this, ${cnt})"/>&nbsp;안남아요<br><br>`;
+                }
                 
-                if (currentStep === steps.length) {
-                    let remain = "";  // 남는 식재료 이름 넣을 변수
-                    let left = "";    // 없어지는 식재료 이름 넣을 변수
-
-                    for(var i=0; i<radioResultData.length; i++) {
-                        if(radioResultData[i].range === 50) { // 
-                            remain += `${radioResultData[i].name}` + " ";
-                        }else if(radioResultData[i].range === 0) { 
-                            left += `${radioResultData[i].name}` + " ";
+                var result = await swalQueueStep.fire({
+                    title: '요리를 하고 냉장고에 재료가 남는다면 체크해주세요!',
+                    inputValue: values[currentStep],
+                    html : radio,
+                    showCancelButton: currentStep > 0,
+                    currentProgressStep: currentStep,
+                    allowEnterKey : true,
+                    showCloseButton: true,
+                    preConfirm: () => {
+                        //라디오 버튼 체크 여부 
+                        let falsechk = 0;
+                        let truechk = 0;
+                        // 배열안에서 모든 라디오버튼이 checked가 안됐을때 alert창 띄우기
+                        // 배열안에서 하나라도 라디오 버튼이 체크 안되면 alert창 띄우기
+                        for(var i=0;i<resultData.length;i++){
+                            if(!$(`input[type=radio][name=${resultData[i].name}]:checked`).is(':checked')){
+                                falsechk++;
+                            }else if($(`input[type=radio][name=${resultData[i].name}]:checked`).is(':checked')){
+                                truechk++;
+                            }
+                        }
+                        if(falsechk == resultData.length || truechk < resultData.length) { 
+                            Swal.showValidationMessage("모두 꼭 골라주세요! :(")
                         }
                     }
-                    if(remain) { // 남는 재료가 있을 때
-                         var result = Swal.fire({
-                            title : `냉장고에 ${remain} 이/가 남았습니다.
-                                    \n 다른 레시피에도 사용할 수 있어요! :)`,
-                            showCloseButton: true,
-                            allowEnterKey : true,
-                        })                        
-                    }if(left) { // 남는 재료가 없을 때
-                        var result = Swal.fire({
-                            title : `냉장고에서 ${left} 이/가 없어집니다.
-                                    \n 다른 레시피에서 사용할 수 없어요! :( `,
-                            showCloseButton: true,
-                            allowEnterKey : true,
-                        }) 
-                    }if(remain && left) { // 남는 재료도 있고, 없어지는 재료도 있을 때
-                        var result = Swal.fire({
-                            title : `냉장고에서 ${left} 이/가 없어지고, 
-                                    \n ${remain} 이/가 남았습니다.
-                                    \n 냉장고에서 재료 현황을 볼 수 있어요!`,
-                            showCloseButton: true,
-                            allowEnterKey : true,
-                        }) 
+                })
+                // 두 번째 단계에서 백으로 보내는 데이터 
+                if(result) { // 백으로 보내는 데이터 처리 (radioArr)
+                    let resultObj = {};   // 백으로 보낼 데이터를 객체로 변환
+                    
+                    for(var i=0;i<radioArr.length*2;i++) {
+                        resultObj = {
+                            "name" : radioArr[0],
+                            "range" : Number(radioArr[1]),
+                        }
+                        radioResultData.push(resultObj);
+                        radioArr.splice(0,2);
                     }
-                    updateToFridge(radioResultData);
+                    // console.log("백에 보내는 데이터: radioResultData ", radioResultData); 
                 }
+            } else  break; 
+        
+            // 방향키 설정
+            if (result.value) {
+                values[currentStep] = result.value
+                currentStep++
+            } else if (result.dismiss === 'cancel') {
+                currentStep--
+                checkboxArr.splice(0) // 뒤로가기버튼 누르면 배열 요소 모두 삭제
+                radioArr.splice(0)
+                resultData.splice(0)
+            } else break;
+            
+            // 두 번째 단계 완료 후 DB에 데이터 넘기기 성공했을 시에 alert 창
+            if (currentStep === steps.length) {
+                let remain = "";  // 남는 식재료 이름 넣을 변수
+                let left = "";    // 없어지는 식재료 이름 넣을 변수
+
+                for(var i=0; i<radioResultData.length; i++) {
+                    if(radioResultData[i].range === 50) { // 
+                        remain += `${radioResultData[i].name}` + " ";
+                    }else if(radioResultData[i].range === 0) { 
+                        left += `${radioResultData[i].name}` + " ";
+                    }
+                }
+                if(remain) { // 남는 재료가 있을 때
+                        var result = Swal.fire({
+                        title : `냉장고에 ${remain} 이/가 남았습니다.
+                                \n 다른 레시피에도 사용할 수 있어요! :)`,
+                        showCloseButton: true,
+                        allowEnterKey : true,
+                    })                        
+                }if(left) { // 남는 재료가 없을 때
+                    var result = Swal.fire({
+                        title : `냉장고에서 ${left} 이/가 없어집니다.
+                                \n 다른 레시피에서 사용할 수 없어요! :( `,
+                        showCloseButton: true,
+                        allowEnterKey : true,
+                    }) 
+                }if(remain && left) { // 남는 재료도 있고, 없어지는 재료도 있을 때
+                    var result = Swal.fire({
+                        title : `냉장고에서 ${left} 이/가 없어지고, 
+                                \n ${remain} 이/가 남았습니다.
+                                \n 냉장고에서 재료 현황을 볼 수 있어요!`,
+                        showCloseButton: true,
+                        allowEnterKey : true,
+                    }) 
+                }
+                updateToFridge(radioResultData);
             }
         }
-        backAndForth();
+    }
+    backAndForth();
         
-    }else if(ingArr[0] == ""){  // 식재료가 없는 경우
+    // 식재료가 없는 경우
+    if(ingArr[0] == ""){  
         swal.fire({
             title : "냉장고에 있는 식품과 일치하는 재료가 없어 차감될 식재료가 없습니다. :)",
             confirmButtonText : "확인",
@@ -379,24 +287,13 @@ function checkRadio(htmlTag, cnt) {
 
 // 수정을 위한 체크한 정보 fresh와 frozen DB로 전송
 function updateToFridge(result){
-    let data = {}
-    // 재료가 한 개일 때 {name : , range : }
-    if(typeof result[0] === 'string') {
-        data = {
-            name : result[0],
-            range : result[1],
-            result : "one"
-        }
-    }
-    // 재료가 여러 개일 때 ([{name : , range : },{}])
-    if(typeof result[0] === 'object') data = result
-
+    let data = result;
     axios({
         method : "patch",
         url : "/recipe/toFridge",
         data : data
     }).then((res)=>{
-        console.log("res.data : ", res);
+        console.log("res.data : ", res.data);
     })
 }
 
