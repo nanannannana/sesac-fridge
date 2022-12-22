@@ -59,21 +59,3 @@
   width:18rem;
 }
 
-#header_top {
-  float: right;
-  margin: 5px 20px 0px 0px;
-}
-#header_top > div > span {
-  font-size: 18px;
-}
-#heder_nav:hover, #sign_in:hover, #sign_out:hover {
-  font-weight: bold;
-}
-.sign_out_none {
-  display: none;
-}
-.sign_in_none {
-  display:none;
-}
-
-
