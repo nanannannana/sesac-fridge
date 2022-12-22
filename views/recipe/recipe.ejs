@@ -52,17 +52,14 @@
                           <% let recp_ingd = ingdResult[i].toString().slice(1,-1).split(",")%>
                           <% let myingd = ingdName.toString().split(',')%>
                           <% let myingd_range = ingdRange.toString().split(',')%>
-                          <% let myingd_pk = ingdId.toString().split(',')%>
                           <% let ingred = [] %>
                           <% let range = [] %>
-                          <% let pk = [] %>
                           <% for(var j=0; j<recp_ingd.length; j++) { %>
                               <% for(var k=0; k<myingd.length; k++) { %>
                                    <% if(recp_ingd[j] == myingd[k]) { %>
                                         <%= myingd[k]%>
                                         <% ingred.push(myingd[k]) %>
                                         <% range.push(myingd_range[k]) %>
-                                        <% pk.push(myingd_pk[k]) %>
                                    <% } %>
                               <% } %>
                           <% } %>  
@@ -77,7 +74,7 @@
                 <div class="btn_inner text-center p-1"> 
                   <input type="button" class="btn show_recipe" 
                   onclick="insertLog('<%=data[i].recipe_id%>', '<%=data[i].recipe_url%>')" value="레시피보기">
-                  <input type="button" class="btn show_cook" onclick="cooking('<%=ingred%>', '<%=range%>', '<%=pk%>')" value="요리하기">
+                  <input type="button" class="btn show_cook" onclick="cooking('<%=ingred%>', '<%=range%>')" value="요리하기">
                 </div>
             </div>
             <!--btn_outer-->

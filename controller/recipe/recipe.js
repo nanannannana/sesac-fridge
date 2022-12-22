@@ -11,18 +11,17 @@ exports.getRecipe = async (req, res) => {
     // console.log(req.session.user);
     let freRes = await fresh.findAll({
         raw : true,
-        attributes : [['fresh_id', 'id'],['fresh_name', 'name'], ['fresh_range', 'range']],
+        attributes : [['fresh_name', 'name'], ['fresh_range', 'range']],
         where : { user_user_id : "root@naver.com"}
     })
     let froRes = await frozen.findAll({
         raw : true,
-        attributes : [['frozen_id', 'id'],['frozen_name', 'name'], ['frozen_range', 'range']],
+        attributes : [['frozen_name', 'name'], ['frozen_range', 'range']],
         where : { user_user_id : "root@naver.com"}
     })
     let ingdRes = [];   // fresh와 frozen에 있는 모든 값
     let ingdName = [];  // 식재료
     let ingdRange = []; // 수량
-    let ingdId = [];    // 식재료 pk
 
     // 냉장, 냉동 테이블에서 select한 결과 합쳐서 ingdRes에 넣기
     freRes.forEach((item)=>{
@@ -34,7 +33,6 @@ exports.getRecipe = async (req, res) => {
     
     // 식재료 이름, 비율, pk를 각각 ingdName과 ingdRange에 집어넣기
     for(var i=0;i<ingdRes.length;i++){
-        ingdId.push(ingdRes[i].id);
         ingdName.push(ingdRes[i].name + "");
         ingdRange.push(ingdRes[i].range);
     }
@@ -60,7 +58,6 @@ exports.getRecipe = async (req, res) => {
         for(var i=0; i<recipes.length;i++) {
             ingdResult.push(recipes[i].recipe_ingd);
         }
-        result["ingdId"] = ingdId;
         result["ingdName"] = ingdName;
         result["ingdRange"] = ingdRange;
         result["ingdResult"] = ingdResult;
@@ -69,10 +66,85 @@ exports.getRecipe = async (req, res) => {
     
 }
 
-// fresh와 frozen DB에 range 데이터 수정
+// 요리하기 버튼 눌렀을 때 fresh와 frozen DB에 해당 식재료 range 수정
 exports.patchToFridge = async (req,res) => {
-    console.log(req.body);
+    // console.log(req.body);
 
+    if(req.body.result) { // 재료가 한 개로 있을 떄
+        let freRes = await fresh.findAll({
+            raw : true,
+            attributes : [['fresh_name', 'name'], ['fresh_range', 'range']],
+            where : {user_user_id : "root@naver.com" , fresh_name : req.body.name}
+        })
+        let froRes = await frozen.findAll({
+            raw : true,
+            attributes : [['frozen_name', 'name'], ['frozen_range', 'range']],
+            where : {user_user_id : "root@naver.com" , frozen_name : req.body.name}
+        })
+        console.log("freRes: ", freRes);
+        console.log("froRes: ", froRes);
+        console.log("freRes.length: ", freRes.length); 
+        console.log("froRes.length: ", froRes.length);
+
+        let data = { fresh_range : req.body.range };
+        
+        // 결과
+        if(freRes && froRes.length == 0) { // fresh 테이블에만 있는 경우
+            let result = await fresh.update(data, {
+                where : {
+                    user_user_id : "root@naver.com",
+                    fresh_name : req.body.name
+                }
+            }); 
+            console.log('frozen update result: ', result);
+            res.send(result);
+        }
+        if(froRes && freRes.length == 0) { // frozen 테이블에만 있는 경우
+            // let result = await frozen.update(data, {
+            //     where : {
+            //         user_user_id : "root@naver.com",
+            //         fresh_name : req.body.name
+            //     }
+            // }); 
+            // console.log('update result: ', result);
+            // res.send(result);
+            console.log(freRes, "는 빈객체");
+        }
+        if(freRes && froRes) { // fresh 테이블과 frozen테이블 둘 다 있는 경우
+
+        }
+
+    }else {  // 재료가 여러개 있을 때(체크 박스 여러 개있는 alert창)
+        let ingdName = [];
+        let ingdRange = [];
+        for(var i=0; i<req.body.length; i++) {
+            ingdName.push(req.body[i].name);
+            ingdRange.push(req.body[i].range);
+        }
+        let freRes = await fresh.findAll({
+            raw : true,
+            attributes : [['fresh_name', 'name'], ['fresh_range', 'range']],
+            where : {user_user_id : "root@naver.com", fresh_name : ingdName }
+        })
+        let froRes = await frozen.findAll({
+            raw : true,
+            attributes : [['frozen_name', 'name'], ['frozen_range', 'range']],
+            where : {user_user_id : "root@naver.com", frozen_name : ingdName }
+        })
+ 
+        
+        // 결과
+        if(freRes) { // fresh 테이블에 있는 경우
+ 
+        }
+        if(froRes) { // frozen 테이블에 있는 경우
+
+        }
+        if(freRes && froRes) { // fresh 테이블과 frozen테이블 둘 다 있는 경우
+
+        }
+    }
+    
     
 }
 
