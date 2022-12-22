@@ -17,9 +17,9 @@ exports.postSigninFlag = async function(req,res) {
         // 자동로그인
         if (req.body.remember_me_check==1) {
             res.cookie("user_id",req.body.user_id,option); //서버에서 쿠키 생성 => 클라이언트로 보내기
-            res.send(true);
+            res.send({result: true, username: result[0].user_name});
         } else {
-            res.send(true);
+            res.send({result: true, username: result[0].user_name});
         }
     } else {
         res.send(false);

@@ -14,7 +14,10 @@
 }
 
 #welcome_user mark {
-  background-color: var(--sub-green);
+  font-family: 'NanumSquareAceb';
+  font-weight: bolder;
+  background-color: white;
+  color: var(--btn-warn);
   border-radius: 100px;
 }
 

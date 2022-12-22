@@ -17,20 +17,22 @@ exports.getMyFridge = async (req,res) => {
         });
         // console.log("list :", fresh_result.count, frozen_result.count );
         if(req.cookies.EMPTY_ALERT==1){  //로그인 O & 오늘안봄클릭 O
-            res.render("fridge/myFridge", { 
+            res.render("fridge/myFridge", {
+                isLogin : true,
                 fresh_list : fresh_result.rows, 
                 frozen_list : frozen_result.rows,
                 empty_alert : true
             });
         }else{
             res.render("fridge/myFridge", { //로그인 O & 오늘안봄클릭 X
+                isLogin : true,
                 fresh_list : fresh_result.rows, 
                 frozen_list : frozen_result.rows,
                 empty_alert : false
             });
         }
     }else{ //로그인 X
-        res.render("fridge/myFridge404");
+        res.render("fridge/myFridge404", { isLogin : false });
     }  
 }
 
