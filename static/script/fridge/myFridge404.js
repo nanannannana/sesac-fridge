@@ -5,7 +5,7 @@ window.onload = function fridgeAlert(){
         confirmButtonColor: '#7E998F',
         allowOutsideClick : false,
         preConfirm : ()=>{
-            window.location.href="/";
+            window.location.href="/signIn";
         }
     });
 }

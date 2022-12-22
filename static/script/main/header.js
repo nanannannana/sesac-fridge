@@ -17,3 +17,5 @@ function signout_go() {
         location.href="/";
     })
 }
+
+

@@ -10,6 +10,12 @@
 }
 #welcome_user div {
   border-bottom : 2px dashed var(--sub-green);
+  font-size: large;
+}
+
+#welcome_user mark {
+  background-color: var(--sub-green);
+  border-radius: 100px;
 }
 
 /* main {background-color: var(--main-yellow);} */
