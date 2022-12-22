@@ -7,6 +7,7 @@
   justify-content: end;
   text-align: right;
   padding-right: 5rem;
+  padding-top: 1rem;
 }
 #welcome_user div {
   border-bottom : 2px dashed var(--sub-green);

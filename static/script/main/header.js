@@ -19,4 +19,20 @@ function signout_go() {
     })
 }
 
+//navbar mouseover 
+$(document).ready(()=>{
+    $("#nav_fridge").mouseover(()=>{
+        $("#nav_fridge img").css("opacity","0")
+    })
 
+    $("#nav_fridge").mouseout(()=>{
+        $("#nav_fridge img").css("opacity","1")
+    })
+    $("#nav_recipe").mouseover(()=>{
+        $("#nav_recipe img").css("opacity","0")
+    })
+
+    $("#nav_recipe").mouseout(()=>{
+        $("#nav_recipe img").css("opacity","1")
+    })
+})
