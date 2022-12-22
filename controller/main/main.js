@@ -28,8 +28,8 @@ exports.getMain = async (req,res) => {
     // 1-3) session user name 확인 ---------------- [4]
 
     // 로그인 여부로 if문을 나눔
-    // 1) 로그인을 한 경우,
-    if (req.session.user) {
+    // 1) 로그인(+ 자동로그인)을 한 경우,
+    if (req.cookies.user_id || req.session.user) {
         // 자동로그인 여부 확인
         // 자동로그인 설정X(쿠키 값 undefined): final_user_id는 req.session.user(세션에 넣어둔 user_id값이 아이디가 됨)
         // 자동로그인 설정O(쿠키 값 有): final_user_id는 req.cookies.user_id(쿠키에 넣어둔 user_id값이 아이디가 됨)
@@ -67,8 +67,8 @@ exports.getMain = async (req,res) => {
             exp_count : exp_list.count,
             user_name : user_name.user_name,
         }); 
-    } else {
-        res.render("main/main", { //로그인 X
+    } else { // 1) 로그인(+ 자동로그인)을 하지 않은 경우,
+        res.render("main/main", {
             isLogin : false, 
             fresh_count : false,
             exp_count : false,

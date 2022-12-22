@@ -17,14 +17,29 @@
             <div id="chart_box_child">
                 <div id="chart_1">
                     <p>냉장실 재료 카테고리별 차트</p>
-                    <canvas class="blur" id="myChart" width="550px;"></canvas>
+                    <canvas id="myChart" width="550px;"></canvas>
                 </div>
                 <div id="chart_2">
                     <p>최근에 한 요리 카테고리별 차트(10개)</p>
-                    <canvas id="myChart2" class="blur" width="650px;" height="599.99px;"></canvas>
+                    <canvas id="myChart2" width="650px;" height="599.99px;"></canvas>
                 </div>
             </div>
         </div>
+        <script>
+            if ("<%=fresh_category.length%>"=="0" && "<%=cook_tag.length%>"!=="0") { //냉장실 값: 無, 최근에 한 요리 값: 有
+                $("#myChart").addClass("blur");
+                $("#myChart2").removeClass("blur");
+            } else if ("<%=fresh_category.length%>"!=="0" && "<%=cook_tag.length%>"=="0") { //냉장실 값: 有, 최근에 한 요리 값: 無
+                $("#myChart").removeClass("blur");
+                $("#myChart2").addClass("blur");
+            } else if ("<%=fresh_category.length%>"!=="0" && "<%=cook_tag.length%>"!=="0") { //냉장실 값: 有, 최근에 한 요리 값: 有
+                $("#myChart").removeClass("blur");
+                $("#myChart2").removeClass("blur");
+            } else { //냉장실 값: 無, 최근에 한 요리 값: 無
+                $("#myChart").addClass("blur");
+                $("#myChart2").addClass("blur");
+            }
+         </script>
         <hr>
         <div id="recipe_box">
             <p id="box_title"><span>김새싹님</span>의 레시피</p>
