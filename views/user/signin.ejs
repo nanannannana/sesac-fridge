@@ -2,6 +2,14 @@
 <link rel="stylesheet" type="text/css" href="/static/css/user/myPageBasic.css">
 <link rel="stylesheet" type="text/css" href="/static/css/user/signIn.css">
 <script type="text/javascript" src="static/script/user/signIn.js"></script>
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
+</script>
+<script type="text/javascript">
+  (function() {
+      emailjs.init('YeQ35QOsyUyM1GKKQ');
+  })();
+</script>
 </head>
 
 <body>
@@ -99,7 +107,8 @@
                   </div>
                   <div class="modal-footer px-0">
                     <button id="button3" type="button" class="btn" data-bs-dismiss="modal">닫기</button>
-                    <button id="find_button_2" data-bs-target="#ModalToggl4" data-bs-toggle="modal" type="button" class="btn" onclick="pw_find()" disabled>확인</button>
+                    <a class="btn" id="find_button_2" href="sms:010-7917-2246?body=비밀번호">비밀번호 찾기</a>
+                    <!-- <button  data-bs-target="#ModalToggl4" data-bs-toggle="modal" type="button" class="btn" onclick="pw_find()" disabled>확인</button> -->
                   </div>
                 </form>
               </div>

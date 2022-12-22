@@ -1,3 +1,4 @@
+/* 김새싹님의 회원정보 관련 */
 #inform_box > p {
     font-size: 30px;
     text-align: center;
@@ -6,6 +7,7 @@
 #inform_box > p > span {
     font-weight: bold;
 }
+/* 회원정보 폼 관련 */
 #form_info {
     margin: 0% 30% 0% 30%;
 }
@@ -14,13 +16,14 @@
 }
 #form_info > div > input {
     width:100%;
-    margin-bottom: 50px;
 }
-#form_info > div > p {
+#form_info > p {
     font-size: 20px;
     font-weight: bold;
+    margin-top: 40px;
 }
 #form_info > button {
+    margin-top:20px;
     float: right;
 }
 #button_del {

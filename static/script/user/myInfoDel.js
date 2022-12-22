@@ -10,9 +10,8 @@ function info_del() {
     .then(async function() {
         await Swal.fire({
             icon: "success",
-            title: "회원 탈퇴가 완료되었습니다!",
-            text: "돌아와~"
+            title: "회원 탈퇴가 완료되었습니다!"
         });
-        location.href="/signUp";
+        location.href="/";
     })
 }

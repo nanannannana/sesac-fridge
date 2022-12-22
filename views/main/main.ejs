@@ -126,19 +126,18 @@
       // 2. 당일 재로그인 시 - 알림 안 뜸 (유통기한 지난 식재료는 첫 로그인때 삭제되었기 때문에 삭제할 필요X 알림 필요X)
       // 3. 다음날 첫 로그인 시 - 유통기한 지난 식재료 존재하면 DB에서 삭제 & 알림 ... 1~2 반복
       // 4. 만약 당일 첫 로그인인데 유통기한 지난 식재료 없으면(exp_count<1) DB에서 삭제X 알림X
-
       //로그인 O
       if ( "<%=isLogin%>" == "true" ){ 
         $("#welcome_user").removeClass("d_none"); //user 환영 인사말 display
         $("#welcome_user div").html("<span>"+`${localStorage.getItem("username")}`+"님🌱</span></br>유통기한이 임박한 식재료 <mark><%=fresh_count%>개</mark>가 기다리고 있어요 !");
         console.log(`${localStorage.getItem("username")}`,"<%=exp_count%>");
-
         if( "<%=exp_count%>" > 0 ){ // 삭제할 식재료 존재 & 로그인 O
           deleteAlert(`${localStorage.getItem("username")}`,"<%=exp_count%>"); // 식재료 삭제 & 알림
         }
       }
  
     </script>
+
 
 </main>
 

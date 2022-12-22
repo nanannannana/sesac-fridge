@@ -15,8 +15,6 @@ router.post("/profilePwConfirm", myPage.postPwConfirm);
 router.post("/profile/myInfo", myPage.postMyInfo);
 // 회원정보 수정
 router.patch("/profile/myInfo", myPage.patchMyInfoUpdate);
-// 회원정보 수정 확인
-router.post("/profile/myInfoCheck", myPage.postMyInfoCheck);
 // 회원탈퇴 렌더
 router.post("/profile/myInfoDel", myPage.postMyInfoDel);
 // 회원탈퇴 완료

@@ -12,34 +12,21 @@
         <input type="hidden" name="cook_tag" value="<%=cook_tag%>">
     </form>
     <div class="container">
-        <div id="chart_box">
+        <div id="chart_box" >
             <p id="box_title"><span>김새싹님</span>의 통계차트</p>
             <div id="chart_box_child">
                 <div id="chart_1">
-                    <p>냉장실 재료 카테고리별 차트</p>
-                    <canvas id="myChart" width="550px;"></canvas>
+                    <p id="chart_title">냉장실 재료 카테고리별 차트</p>
+                    <canvas id="myChart" width="550px;" height="600px;"></canvas>
+                    <button id="myFridge_go_btn" class="btn" onclick="location.href='/myFridge'">나의 냉장고 바로가기</button>
                 </div>
-                <div id="chart_2">
+                <div id="chart_2" class="chart_2">
                     <p>최근에 한 요리 카테고리별 차트(10개)</p>
-                    <canvas id="myChart2" width="650px;" height="599.99px;"></canvas>
+                    <canvas id="myChart2" class="myChart_2" width="650px;" height="599.99px;"></canvas>
+                    <button id="recipe_go_btn" class="btn" onclick="location.href='/recipe'">레시피 추천 바로가기</button>
                 </div>
             </div>
         </div>
-        <script>
-            if ("<%=fresh_category.length%>"=="0" && "<%=cook_tag.length%>"!=="0") { //냉장실 값: 無, 최근에 한 요리 값: 有
-                $("#myChart").addClass("blur");
-                $("#myChart2").removeClass("blur");
-            } else if ("<%=fresh_category.length%>"!=="0" && "<%=cook_tag.length%>"=="0") { //냉장실 값: 有, 최근에 한 요리 값: 無
-                $("#myChart").removeClass("blur");
-                $("#myChart2").addClass("blur");
-            } else if ("<%=fresh_category.length%>"!=="0" && "<%=cook_tag.length%>"!=="0") { //냉장실 값: 有, 최근에 한 요리 값: 有
-                $("#myChart").removeClass("blur");
-                $("#myChart2").removeClass("blur");
-            } else { //냉장실 값: 無, 최근에 한 요리 값: 無
-                $("#myChart").addClass("blur");
-                $("#myChart2").addClass("blur");
-            }
-         </script>
         <hr>
         <div id="recipe_box">
             <p id="box_title"><span>김새싹님</span>의 레시피</p>
@@ -55,7 +42,7 @@
                         <%switch (recipe_title.length) {                             
                             case 0: %>
                             <% for(var r=1; r<5 ; r++ ) {%>
-                                <div id="blank_box" class="card col-5"></div>
+                                <div id="blank_box" class="card col-5"><%=recipe_title.length+=1%></div>
                             <% } %>
                         <% break;
                             case 1: 1%>
@@ -64,7 +51,7 @@
                                 <a href="<%=recipe_url[0]%>" target="_blank" id="recipe_name" class="card-link card-img-overlay"><%=recipe_title[0]%></a>                                
                             </div>
                             <% for(var l=1; l<4 ; l++ ) {%>
-                                <div id="blank_box" class="card col-5"></div>
+                                <div id="blank_box" class="card col-5"><%=recipe_title.length+=1%></div>
                             <% } %>
                         <% break;
                             case 2: 2 %>
@@ -75,7 +62,7 @@
                                 </div>
                             <% } %>
                             <% for(var m=1; m<3 ; m++ ) { %>
-                                <div id="blank_box" class="card col-5"></div>
+                                <div id="blank_box" class="card col-5"><%=recipe_title.length+=1%></div>
                             <% } %>
                         <% break;
                             case 3: 3 %>
@@ -85,7 +72,7 @@
                                     <a href="<%=recipe_url[j]%>" target="_blank" id="recipe_name" class="card-link card-img-overlay"><%=recipe_title[j]%></a>                                
                                 </div>
                             <% } %>
-                            <div id="blank_box" class="card col-5"></div>
+                            <div id="blank_box" class="card col-5"><%=recipe_title.length+=1%></div>
                         <% break;
                             case 4: 4 %>
                             <% for (var k=0 ; k<4 ; k++ ) { %>
@@ -121,7 +108,7 @@
                                 <a href="<%=cook_url[0]%>" id="cook_name" class="card-link card-img-overlay" target="_blank"><%=cook_title[0]%></a>                                
                             </div>
                             <% for(var n=1 ; n<4 ; n++ ) { %>
-                                <div id="blank_box" class="card col-5"></div>
+                                <div id="blank_box" class="card col-5"><%=cook_title.length+=1%></div>
                             <% } %>
                         <% break;
                             case 2: 2 %>
@@ -132,7 +119,7 @@
                                 </div>
                             <% } %>
                             <% for(var p=1 ; p<3 ; p++ ) { %>
-                                <div id="blank_box" class="card col-5"></div>
+                                <div id="blank_box" class="card col-5"><%=cook_title.length+=1%></div>
                             <% } %>
                         <% break;
                             case 3: 3 %>
@@ -142,7 +129,7 @@
                                     <a href="<%=cook_url[q]%>" id="cook_name" class="card-link card-img-overlay" target="_blank"><%=cook_title[q]%></a>                                
                                 </div>
                             <% } %>
-                            <div id="blank_box" class="card col-5"></div>
+                            <div id="blank_box" class="card col-5"><%=cook_title.length+=1%></div>
                         <% break;
                             case 4: 4 %>
                             <% for (var i=0 ; i<4 ; i++ ) { %>

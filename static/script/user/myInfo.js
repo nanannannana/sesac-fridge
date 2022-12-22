@@ -1,7 +1,26 @@
 function phone_num_hyphen(target) {
+    if (target!=="") {
+        $("#phone_num").removeClass("is-invalid");
+    }
     target.value = target.value
      .replace(/[^0-9]/g, '')
      .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+}
+// input창 클릭 시 validate문구 없어지게 하는 함수
+function pw_click(target) {
+    if (target!=="") {
+        $("#user_pw").removeClass("is-invalid");
+    }
+}
+function pw_ck_click(target) {
+    if (target!=="") {
+        $("#user_pw_ck").removeClass("is-invalid");
+    }
+}
+function name_click(target) {
+    if (target!=="") {
+        $("#user_name").removeClass("is-invalid");
+    }
 }
 
 function info_update() {
@@ -9,54 +28,14 @@ function info_update() {
     var pw_check = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
     var name_check = /^[a-zA-Z가-힣]{2,10}$/;
     var phone_check = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
-    if(pw_check.test(form.user_pw.value)==false || form.user_pw.value=="") {
-        axios({
-            method: "post",
-            url: "/myPage/profile/myInfoCheck"
-        })
-        .then(function() {
-            Swal.fire({
-                icon: 'error',
-                title: '비밀번호를 정확히 입력해 주세요!',
-                text: '영문, 숫자, 특수문자 중 2가지 조합으로 작성해 주세요.',
-            });
-        })
-    } else if (name_check.test(form.user_name.value)==false || form.user_name.value=="") {
-        axios({
-            method: "post",
-            url: "/myPage/profile/myInfoCheck"
-        })
-        .then(function() {
-            Swal.fire({
-                icon: 'error',
-                title: '이름을 정확히 입력해 주세요!',
-                text: '빈칸 불가, 두 글자 이상으로 작성해 주세요.',
-            });
-        })
-    } else if(form.user_pw_new.value!==form.user_pw_check.value) {
-        axios({
-            method: "post",
-            url: "/myPage/profile/myInfoCheck"
-        })
-        .then(function() {
-            Swal.fire({
-                icon: 'warning',
-                title: '비밀번호가 일치하지 않습니다!',
-                text: '비밀번호를 다시 입력해 주세요.',
-            });
-        })
-    } else if (phone_check.test(form.user_phone.value)==false || form.user_phone.value=="") {
-        axios({
-            method: "post",
-            url: "/myPage/profile/myInfoCheck"
-        })
-        .then(function() {
-            Swal.fire({
-                icon: 'error',
-                title: '핸드폰 번호를 정확히 입력해 주세요!',
-                text: '10~11글자로 입력해 주세요.',
-            });
-        })
+    if (form.user_pw.value=="" || pw_check.test(form.user_pw.value)==false) {
+        $("#user_pw").addClass("is-invalid");
+    } else if(form.user_pw_check.value=="" || form.user_pw.value!==form.user_pw_check.value) {
+        $("#user_pw_ck").addClass("is-invalid");
+    } else if(form.user_name.value=="" || name_check.test(form.user_name.value)==false) {
+        $("#user_name").addClass("is-invalid");
+    } else if (form.user_phone.value=="" || phone_check.test(form.user_phone.value)==false) {
+        $("#phone_num").addClass("is-invalid");
     } else {
         axios({
             method: "patch",

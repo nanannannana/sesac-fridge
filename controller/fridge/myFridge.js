@@ -5,14 +5,15 @@ const { recipe } = require("../../model");
 
 // 나의 냉장고 페이지 렌더 - 영은
 exports.getMyFridge = async (req,res) => {
-    if(req.session.user){ //로그인 후 
+    if(req.session.user || req.cookies.user_id){ //로그인 후 
+        const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
         let fresh_result = await fresh.findAndCountAll({
-            where : {user_user_id : req.session.user},
+            where : {user_user_id : final_user_id},
             order : [["fresh_expire", "ASC"]]
         });
     
         let frozen_result = await frozen.findAndCountAll({
-            where : {user_user_id : req.session.user},
+            where : {user_user_id : final_user_id},
             order : [["frozen_date", "ASC"]]
         });
         // console.log("list :", fresh_result.count, frozen_result.count );

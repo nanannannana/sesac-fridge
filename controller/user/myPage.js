@@ -72,7 +72,6 @@ exports.postMyPage = async function(req,res) {
             recipe_url_list.push(recipe_result[m]['recipe.recipe_url']);
             recipe_img_list.push(recipe_result[m]['recipe.recipe_img']);
         }
-        console.log("co",fresh_category_list);
         res.render("user/myPage", {
             isLogin: true,
             fresh_category: fresh_category_list,
@@ -85,16 +84,8 @@ exports.postMyPage = async function(req,res) {
             recipe_img: recipe_img_list
         });
     } else { // 자동로그인 x, 로그인 x
-        res.render("user/myPage", {
-            isLogin: false,
-            fresh_category: fresh_category_list,
-            cook_tag: cook_tag_list,
-            cook_title: cook_title_list,
-            cook_url: cook_url_list,
-            cook_img: cook_img_list,
-            recipe_title: recipe_title_list,
-            recipe_url: recipe_url_list,
-            recipe_img: recipe_img_list
+        res.render("user/myPage404", {
+            isLogin: false
         })
     }
 }
@@ -203,26 +194,27 @@ exports.postPwConfirm = async function(req,res) {
 }
 // 회원정보 수정 페이지 렌더
 exports.postMyInfo = async function(req,res) {
-    if (req.session.user) {
-        let result = await user.findAll({where: {user_id: req.body.user_id}});
-        console.log(result[0]);
+    if (req.cookies.user_id || req.session.user) {
+        const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
+        let result = await user.findOne({where: {user_id: req.body.user_id}});
         res.render("user/myInfo", {
             isLogin: true,
-            user_id: result[0].user_id,
-            user_pw: result[0].user_pw,
-            user_name: result[0].user_name,
-            user_phone: result[0].user_phone
+            user_id: result.user_id,
+            user_pw: result.user_pw,
+            user_name: result.user_name,
+            user_phone: result.user_phone
         });
     } else {
         res.render("user/myInfo", {
             isLogin: false,
-            user_id: result[0].user_id,
-            user_pw: result[0].user_pw,
-            user_name: result[0].user_name,
-            user_phone: result[0].user_phone
+            user_id: result.user_id,
+            user_pw: result.user_pw,
+            user_name: result.user_name,
+            user_phone: result.user_phone
         });
     }
 }
+
 // 회원정보 수정
 exports.patchMyInfoUpdate = async function(req,res) {
     let data = {
@@ -234,15 +226,17 @@ exports.patchMyInfoUpdate = async function(req,res) {
     await user.update(data, {where: {user_id: req.body.user_id}});
     res.send(true);
 }
-// 회원정보 수정 확인
-exports.postMyInfoCheck = function(req,res) {
-    res.send(true);
-}
+
 // 회원탈퇴 렌더
 exports.postMyInfoDel = async function(req,res) {
-    if (req.session.user) {
-        let fresh_count = await fresh.findAndCountAll();
-        let frozen_count = await frozen.findAndCountAll();
+    if (req.cookies.user_id || req.session.user) {
+        const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
+        let fresh_count = await fresh.findAndCountAll({
+            where: {user_user_id: final_user_id}
+        });
+        let frozen_count = await frozen.findAndCountAll({
+            where: {user_user_id: final_user_id}
+        });
         res.render("user/myInfoDel", {
             isLogin: true,
             user_id: req.body.user_id,
