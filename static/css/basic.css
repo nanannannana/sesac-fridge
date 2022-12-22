@@ -90,7 +90,6 @@ a:visited {
 }
 
 #nav_fridge img:hover, #nav_recipe img:hover {
-    /* filter: opacity(0); */
     display: none;
 }
 #nav_fridge a, #nav_recipe a {
