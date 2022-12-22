@@ -3,7 +3,7 @@ const env = process.env;
 const development = {
     "host" : "localhost",
     "database" : env.DB,
-    "username" :  env.USER,
+    "username" : env.USER,
     "password" : env.PASSWORD, 
     "dialect" : "mysql"
 }
@@ -11,7 +11,7 @@ const development = {
 const production = {
         "host" : env.PUBLIC_IP,
         "database" : env.DB,
-        "username" :  env.USER,
+        "username" : env.USER,
         "password" : env.PASSWORD, 
         "dialect" : "mysql"
 }
