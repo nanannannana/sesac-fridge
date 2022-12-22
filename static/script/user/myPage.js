@@ -10,14 +10,15 @@ document.addEventListener("DOMContentLoaded", function () {
   })
   .then(function(res) {
     // chart1_labels 내용 넣기
-    const chart1_labels = (res.data[0].length>0) ? [...new Set(res.data[0])] : ["채소", "수산물", "육류", "유제품"];
+    // 냉장고 카테고리 값 無: 임의의 값 넣기, 有: 해당 카테고리 값 넣기
+    const chart1_labels = (res.data[0][0]!=="") ? [...new Set(res.data[0])] : ["채소", "수산물", "육류", "유제품"];
     //냉장고 속 재료 개수 확인
+    // 냉장고 카테고리 값 無: 임의의 값 넣기, 有: 중복되는 카테고리명을 합친 뒤 개수와 함께 딕셔너리 형태로 넣기
     let ingd_count = {};
-    if (res.data[0].length>0) {
+    if (res.data[0][0]!=="") {
       res.data[0].forEach(function(x) {
         ingd_count[x] = (ingd_count[x] || 0)+1;
       });
-      console.log(ingd_count);
     } else {
       ingd_count = {
         "채소": 3,
@@ -26,7 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
         "유제품": 9
       }
     }
-    console.log(ingd_count);
     //chart1 정리
     const chart1_data = {
       labels: chart1_labels,
@@ -46,23 +46,36 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById('myChart'),
       chart1_config
     );
+
     //chart2_labels에 내용 넣기
-    const chart2_labels = (res.data[1]==true) ? [...new Set(res.data[1])] : ["none"]; //문자열 중복 제거
+    // 최근에 한 요리에 관한 값 無: 임의의 값 넣기, 有: 최근에 한 요리에 관한 카테고리 값 넣기
+    const chart2_labels = (res.data[1][0]!=="") ? [...new Set(res.data[1])] : ["밥","반찬","국/탕","간편식"]; //문자열 중복 제거
     // Color 랜덤 지정
-    const Color = [];
-    for (var k=0 ; k<res.data[1].length;k++) {
-      var RGB_1 = Math.floor(Math.random() * (255 + 1));
-      var RGB_2 = Math.floor(Math.random() * (255 + 1));
-      var RGB_3 = Math.floor(Math.random() * (255 + 1));
-      var strRGBA = 'rgba(' + RGB_1 + ',' + RGB_2 + ',' + RGB_3 + ')';
-      Color.push(strRGBA);
+    let Color = [];
+    if (res.data[1][0]!=="") {
+      for (var k=0 ; k<res.data[1].length;k++) {
+        var RGB_1 = Math.floor(Math.random() * (255 + 1));
+        var RGB_2 = Math.floor(Math.random() * (255 + 1));
+        var RGB_3 = Math.floor(Math.random() * (255 + 1));
+        var strRGBA = 'rgba(' + RGB_1 + ',' + RGB_2 + ',' + RGB_3 + ')';
+        Color.push(strRGBA);
+      }
+    } else {
+      Color = ["#FFBB00","#FFB2D9","#BCE55C","#B5B2FF"];
     }
     //recipe_tag 개별 수
-    const recipe_tag_count = {};
-    if (res.data[1]==true) {
+    let recipe_tag_count = {};
+    if (res.data[1][0]!=="") {
       res.data[1].forEach(function(x) {
         recipe_tag_count[x] = (recipe_tag_count[x] || 0)+1;
       });
+    } else {
+      recipe_tag_count = {
+        "밥": 2,
+        "반찬": 2,
+        "국/탕": 5,
+        "간편식": 1
+      }
     }
     console.log(Object.values(recipe_tag_count));
     //chart2 정리

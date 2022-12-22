@@ -110,6 +110,6 @@
 #recent_recipe_card_box > div, #recent_cook_card_box > div {
     height: 300px;
 }
-/* .blur {
+.blur {
     filter: blur(3px);
-} */
+}
