@@ -6,7 +6,7 @@
 <main>
     <!-- 로그인시 임박상품 수 노출 -->
     <div class="d_none" id="welcome_user">
-      <div class="col-2.5"></div>
+      <div class="col-2.5 pt-5"></div>
     </div>
   <a href="/recipe">레시피</a>
   <a href="/signIn">로그인</a>
@@ -132,7 +132,7 @@
       //로그인 O
       if ( "<%=isLogin%>" == "true" ){ 
         $("#welcome_user").removeClass("d_none"); //user 환영 인사말 display
-        $("#welcome_user div").html(`${localStorage.getItem("username")}님🌱<br/>유통기한이 임박한 식재료 <mark><%=fresh_count%>개</mark>가 기다리고 있어요 !`);
+        $("#welcome_user div").html("<span>"+`${localStorage.getItem("username")}`+"님🌱</span></br>유통기한이 임박한 식재료 <mark><%=fresh_count%>개</mark>가 기다리고 있어요 !");
         console.log(`${localStorage.getItem("username")}`,"<%=exp_count%>");
 
         if( "<%=exp_count%>" > 0 ){ // 삭제할 식재료 존재 & 로그인 O
