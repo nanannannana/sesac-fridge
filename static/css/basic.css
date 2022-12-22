@@ -39,18 +39,6 @@ a:visited {
     display : none;
 }
 
-#header_box {
-    margin-left: 150px;
-    margin-right: 150px;
-}
-
-.header_top {
-    display:flex;
-    justify-content: end;
-    text-align: center;
-    padding-right: 5rem;
-}
-
 /* navbar */
 /* 임시 logo사이즈 및 굵기 지정 */
 #logo_text {
@@ -65,21 +53,55 @@ a:visited {
     width:30px;
 } */
 /* navbar 글씨 */
-.nav_text {
-    font-size:x-large; 
+.navbar {
+    /* font-size:x-large;  */
     font-family: 'NanumSquareAceb'; 
     font-weight: bolder;
+    min-height: 90%;
+}
+.navbar div {
+    align-content:space-between ;
+}
+.navbar>div>div {
+    display: flex;
+    justify-content: center;
+}
+
+#nav_fridge {
+    width : 30%;
 }
 
 /* search bar */
 #hd_search {
-    width:20rem;
+    width:30rem;
 }
 
-.form-control::placeholder {
+/* .form-control::placeholder {
     font-size: 0.95rem;
     color: #aaa;
     font-style: italic;
+} */
+
+#nav_recipe img {
+    height : 40px;
+}
+#nav_fridge img {
+    height : 40px;
+}
+
+#nav_fridge img:hover, #nav_recipe img:hover {
+    /* filter: opacity(0); */
+    opacity:0;
+}
+#nav_fridge a, #nav_recipe a {
+    font-size: xx-small;
+    position: absolute;
+    margin-top: -100;
+     opacity : 0;
+    transition : opacity 1s;
+}
+#nav_fridge a:hover, #nav_recipe a:hover {
+    opacity : 1;
 }
 
 /* header.css END */
