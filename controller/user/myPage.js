@@ -72,7 +72,6 @@ exports.postMyPage = async function(req,res) {
             recipe_url_list.push(recipe_result[m]['recipe.recipe_url']);
             recipe_img_list.push(recipe_result[m]['recipe.recipe_img']);
         }
-        console.log("co",fresh_category_list);
         res.render("user/myPage", {
             isLogin: true,
             fresh_category: fresh_category_list,
@@ -85,16 +84,8 @@ exports.postMyPage = async function(req,res) {
             recipe_img: recipe_img_list
         });
     } else { // 자동로그인 x, 로그인 x
-        res.render("user/myPage", {
-            isLogin: false,
-            fresh_category: fresh_category_list,
-            cook_tag: cook_tag_list,
-            cook_title: cook_title_list,
-            cook_url: cook_url_list,
-            cook_img: cook_img_list,
-            recipe_title: recipe_title_list,
-            recipe_url: recipe_url_list,
-            recipe_img: recipe_img_list
+        res.render("user/myPage404", {
+            isLogin: false
         })
     }
 }
