@@ -17,15 +17,11 @@ const { Op } = require("sequelize");
 // 메인 페이지 렌더 - 영은
 exports.getMain = async (req,res) => {
     // render시 필요한 key-value's
-    // [1] 로그인 여부 T/F - isLogin
-    // [2] 유통기한 임박(2일 이내) 식재료 수 - fresh_count
-    // [3] 유통기한 지난 식재료 수 - exp_count (식재료 목록도 필요)
-    // [4] username - user_name
-    // [5] 자동 로그인 여부 T/F - is_remember_me
+    // [1] 자동 로그인 여부 T/F - req.cookies.user_id
+    // [2] 로그인 여부 T/F - isLogin
+    // [3] 유통기한 임박(2일 이내) 식재료 수 - fresh_count
+    // [4] 유통기한 지난 식재료 수 - exp_count (식재료 목록도 필요)
 
-    // 1) 로그인 확인 ----------------------------- [1]
-    // 1-2) session user id의 fresh 식재료 확인----  [2].[3]
-    // 1-3) session user name 확인 ---------------- [4]
 
     // 로그인 여부로 if문을 나눔
     // 1) 로그인(+ 자동로그인)을 한 경우,
@@ -34,6 +30,7 @@ exports.getMain = async (req,res) => {
         // 자동로그인 설정X(쿠키 값 undefined): final_user_id는 req.session.user(세션에 넣어둔 user_id값이 아이디가 됨)
         // 자동로그인 설정O(쿠키 값 有): final_user_id는 req.cookies.user_id(쿠키에 넣어둔 user_id값이 아이디가 됨)
         const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
+
         // 임박 식재료 개수
         let fresh_count = await fresh.findAndCountAll({
             where: {
@@ -56,23 +53,16 @@ exports.getMain = async (req,res) => {
         exp_list_arr=exp_list.rows; //global 배열에 유통기한 지난 식재료 목록 담음 
 
         // user name
-        let user_name = await user.findOne({
-            attributes : ["user_name"],
-            where : {user_id : final_user_id}
-        });
-        // 2) 자동로그인 확인 ----------------------- [5]
         res.render("main/main", {
             isLogin : true, 
             fresh_count : fresh_count.count,
             exp_count : exp_list.count,
-            user_name : user_name.user_name,
         }); 
     } else { // 1) 로그인(+ 자동로그인)을 하지 않은 경우,
         res.render("main/main", {
             isLogin : false, 
             fresh_count : false,
             exp_count : false,
-            user_name : false,
         });  
     }
 }

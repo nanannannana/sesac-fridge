@@ -40,26 +40,39 @@
  /* 냉장고 내부 식재료 박스*/
 .fridge_ingd_box {
     background-color: white;
-    border-radius: 30px;
-    border : 3px dashed var(--point-coral);
+    border : 2px solid var(--point-coral);
     height : 50%;
     overflow-y: auto;
     text-align: center;
 }
+ /* 냉장고(냉장실/냉동실) 내부 식재료 박스 디자인*/
+#fresh_form {
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+}
+
+#frozen_form {
+    margin-top: 0.1rem;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
 
 .fridge_ingd_box::-webkit-scrollbar {
-    width: 8px;  /* 스크롤바의 너비 */
+    width: 10px;  /* 스크롤바의 너비 */
 }
 
 .fridge_ingd_box::-webkit-scrollbar-thumb {
     height: 30%; /* 스크롤바의 길이 */
-    background: #217af4; /* 스크롤바의 색상 */
+    background: #a79c8e86;  /* 스크롤바의 색상 */
     
     border-radius: 10px;
 }
 
 .fridge_ingd_box::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+    height : 30%;
+    background: #a79c8e30;  
+    /*스크롤바 뒷 배경 색상*/
+    border-radius: 10px;
 }
 
 /* 냉장고 내부 식재료 개별 요소 */
