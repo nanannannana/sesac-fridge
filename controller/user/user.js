@@ -41,17 +41,17 @@ exports.postIdFind = async function(req,res) {
     }
 }
 exports.postPwFind = async function(req,res) {
-    let result = await user.findAll({
+    let result = await user.findOne({
         where: {
             user_id: req.body.user_id,
             user_phone: req.body.user_phone
         }
     });
-    console.log(result[0]);
-    if (result[0]===undefined) {
+    console.log(result);
+    if (result===undefined) {
         res.send("undefined");
     } else {
-        res.send(result[0]);
+        res.send(result);
     }
 }
 
