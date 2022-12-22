@@ -21,7 +21,6 @@ exports.getMain = async (req,res) => {
     // [2] 로그인 여부 T/F - isLogin
     // [3] 유통기한 임박(2일 이내) 식재료 수 - fresh_count
     // [4] 유통기한 지난 식재료 수 - exp_count (식재료 목록도 필요)
-    // [5] username - user_name
 
 
     // 로그인 여부로 if문을 나눔
@@ -54,23 +53,16 @@ exports.getMain = async (req,res) => {
         exp_list_arr=exp_list.rows; //global 배열에 유통기한 지난 식재료 목록 담음 
 
         // user name
-        let user_name = await user.findOne({
-            attributes : ["user_name"],
-            where : {user_id : final_user_id}
-        });
-
         res.render("main/main", {
             isLogin : true, 
             fresh_count : fresh_count.count,
             exp_count : exp_list.count,
-            user_name : user_name.user_name,
         }); 
     } else { // 1) 로그인(+ 자동로그인)을 하지 않은 경우,
         res.render("main/main", {
             isLogin : false, 
             fresh_count : false,
             exp_count : false,
-            user_name : false,
         });  
     }
 }

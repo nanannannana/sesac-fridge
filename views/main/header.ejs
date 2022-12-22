@@ -2,16 +2,15 @@
 </head>
 <body>
 <header></header>
-
     <div class="container-fluid" style="height:100px;">
         <div class="row">
             <div id="header_top">
                 <div id="delete_box">
-                    <span>정새싹님 </span><span> | </span>
+                    <span id="user_name"></span>
                     <span id="heder_nav" type="button" onclick="mypage_go()"> 내정보 </span><span> | </span>
                     <span id="sign_in" type="button" onclick="location.href='/signIn'"> 로그인</span>
                     <span id="sign_out" type="button" onclick="signout_go();"> 로그아웃</span>
-                    <form id="mypage_go" action="/myPage" method="post"></form>
+                    <form id="mypage_go" action="/myPage" method="post"></form> 
                 </div>
             </div>
         </div> 
@@ -24,19 +23,19 @@
               </button>
               <a class="navbar-brand" href="/" id="logo_text">냉장고 집사<img src="static/img/sesac.gif"></a>
                 <div>
-                    <form class="d-flex" role="search" id="hd_search">
+                    <form class="d-flex pe-5" role="search" id="hd_search">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-light" type="submit">Search</button>
                     </form>
                     <!-- 확정 아니고 수정 전까지 실 사용용....링크 버튼 입니다! -->
                     <li class="nav-item me-2 ms-4 mt-2" id="nav_recipe">
-                        <img src="../../static/img/lightning.png">
+                        <a href="/recipe"><img src="../../static/img/lightning.png"></a>
                         <div>
                             <a class="nav-link active" aria-current="page" href="/recipe">레시피 추천</a>
                         </div>
                     </li>
                     <li class="nav-item me-2 ms-2 mt-2" id="nav_fridge">
-                        <img src="../../static/img/fridge6.png" class="ms-1">
+                        <a href="/myFridge"><img src="../../static/img/fridge6.png" class="ms-1"></a>
                         <div>
                             <a class="nav-link active" aria-current="page" href="/myFridge">나의 냉장고</a>
                         </div>
@@ -45,6 +44,14 @@
             </div>
         </nav>
     </div>
+
+    <script>
+        console.log( "username" );
+        console.log( localStorage.getItem("username"));
+        if ( localStorage.getItem("username") != null || localStorage.getItem("username") != undefined ) {
+            $("#user_name").text(`${localStorage.getItem("username")}님 |`);
+        }
+    </script>
     <script>
         if("<%=isLogin%>"=="true") {
             $("#sign_in").addClass("sign_in_none");
