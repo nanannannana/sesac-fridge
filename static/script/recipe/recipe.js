@@ -36,12 +36,14 @@ function insertLike(element, id) {
 let inputcnt = 0;  // 전역변수로 설정해서 input 태그 개수 가져오기(input radiobox가 여러개일 때)
 
 // 요리하기 버튼을 누르면 뜰 alert 창
-async function cooking(data, range, pk){
+// 식재료가 하나인 경우 [1]
+// 식재료가 여러개인 경우 [2]
+// 식재료가 없는 경우 [3]
+async function cooking(data, range){
     // 넘어온 문자열로 짜르고 ingArr에 넣기(여러개일 경우를 대비해)
     let ingArr = data.split(",");    // 식재료
     let rangeArr = range.split(","); // 식재료 비율
     let rangeData = rangeArr.map((i) => Number(i));
-    let pkData = pk.split(",").map((i) => Number(i));; // pk
 
     // 식재료가 하나인 경우
     if(ingArr.length === 1) { 
@@ -62,7 +64,7 @@ async function cooking(data, range, pk){
         async function backAndForth() {
             const values = [];
             let currentStep;
-            let resultData = [];
+            let resultData = [];      // 한 개의 식재료 보낼 배열
 
             for (currentStep = 0; currentStep < steps.length;) {
                 if (steps[currentStep] == 1) { 
@@ -105,7 +107,7 @@ async function cooking(data, range, pk){
                             var lastidx = resultData[1];
                             resultData.pop();
                             resultData.push(lastidx-50);
-                            console.log(resultData);
+                            console.log("resultData: ", resultData);
                         } 
                     }
                 } else  break; 
@@ -115,6 +117,8 @@ async function cooking(data, range, pk){
                     currentStep++
                 } else if (result.dismiss === 'cancel') {
                     currentStep--
+                    checkboxArr.splice(0) // 뒤로가기버튼 누르면 배열 요소 모두 삭제
+                    resultData.splice(0) 
                 } else break;
                
                 if (currentStep === steps.length) {
@@ -129,7 +133,7 @@ async function cooking(data, range, pk){
                                     \n 다른 레시피에서 사용할 수 없어요! :(`
                         })
                     }
-                    updateToFridge(resultData, pkData);
+                    updateToFridge(resultData);
                 }
             }
         }
@@ -143,31 +147,7 @@ async function cooking(data, range, pk){
                          value="${ingArr[i]}" onclick="checkIngd(this)"/>
                       <label for="${ingArr[i]}">&nbsp;${ingArr[i]}</label>&nbsp;&nbsp;&nbsp;`;
         }
-
-        // swal.fire({
-        //     title : "<span>이 레시피로 요리를 하고도 남을 재료가 있다면 적어주세요 :)</span>",
-        //     html : input,
-        //     confirmButtonText : "확인",
-        //     showCancelButton : true,
-        //     focusConfirm : false,
-        //     preConfirm: () => {
-        //         // 백쪽에 넘겨줄 재료와 비율
-        //         let multiple_ingd = [];
-        //         for(var i=0; i<ingArr.length; i++) {
-        //             multiple_ingd.push(Swal.getPopup().getElementsByTagName("input")[i].title);
-        //             multiple_ingd.push(Swal.getPopup().getElementsByTagName("input")[i].value);
-        //         }
-        //         console.log(multiple_ingd);
-                
-        //         //체크박스 체크 여부
-        //         const checkbox = document.querySelector("input[type=checkbox]");
-        //         if(!checkbox.checked) Swal.showValidationMessage("체크해주세요")
-        //         return {
-        //             name : ingd_name,
-        //             range : ingd_range,
-        //         }
-        //     }
-        // })
+        
         // sweet alert
         const steps = ['1', '2']
         const swalQueueStep = Swal.mixin({
@@ -185,7 +165,9 @@ async function cooking(data, range, pk){
         async function backAndForth() {
             const values = [];
             let currentStep;
-            let resultData = [];
+            let resultData = [];      // 첫 번째 단계에서 체크박스로 구분할 배열
+            let radioResultData = []; // 두 번째 단계에서 여러 식재료를 백엔드로 보낼 배열
+
             for (currentStep = 0; currentStep < steps.length;) {
                 if (steps[currentStep] == 1) { 
                     var result = await swalQueueStep.fire({
@@ -194,9 +176,12 @@ async function cooking(data, range, pk){
                         html : input,
                         showCancelButton: currentStep > 0,
                         currentProgressStep: currentStep,
+                        allowEnterKey : true,
+                        showCloseButton: true,
                         preConfirm: () => {
-                            //체크박스 체크 여부 
+                            //라디오 버튼 체크 여부 
                             let cnt = 0; // 체크박스 확인할 변수
+
                             // 배열안에서 모든 체크박스가 checked가 안됐을때(false일 때), cnt++
                             for(var i=0;i<ingArr.length;i++){
                                 if(!document.getElementById(`${ingArr[i]}`).checked){
@@ -211,7 +196,6 @@ async function cooking(data, range, pk){
                     // 확인 버튼을 누르면 체크된 값 가져와서 -50 하고 객체를 배열안에 넣기
                     if(result) {
                         let resultObj = {};
-
                         for(var i=0;i<=checkboxArr.length*2;i++) {
                             resultObj = {
                                 "name" :  checkboxArr[0],
@@ -220,7 +204,7 @@ async function cooking(data, range, pk){
                                 resultData.push(resultObj);
                                 checkboxArr.splice(0,2);
                         }
-                        console.log(resultData);
+                        console.log("백에 보내는 데이터: ", resultData); 
                     }
                 } else if (steps[currentStep] == 2) { 
                     let radio = "";
@@ -242,9 +226,11 @@ async function cooking(data, range, pk){
                         html : radio,
                         showCancelButton: currentStep > 0,
                         currentProgressStep: currentStep,
+                        allowEnterKey : true,
+                        showCloseButton: true,
                         preConfirm: () => {
-                            //체크박스 체크 여부 
-                            let falsechk = 0; // 체크박스 확인할 변수
+                            //라디오 버튼 체크 여부 
+                            let falsechk = 0;
                             let truechk = 0;
                             // 배열안에서 모든 라디오버튼이 checked가 안됐을때 alert창 띄우기
                             // 배열안에서 하나라도 라디오 버튼이 체크 안되면 alert창 띄우기
@@ -260,20 +246,19 @@ async function cooking(data, range, pk){
                             }
                         }
                     })
-
-                    if(result) {// 남으면 => rangeData가 50이면 그대로 유지, 0이면 +50 
-                        // if(result.value === 'true' && resultData[1] === 0) {
-                        //     var lastidx = resultData[1];
-                        //     resultData.pop();            
-                        //     resultData.push(lastidx+50);  
-                        // }else if(result.value === 'false'){  // 안남으면 => rangeData를 0으로
-                        //     var lastidx = resultData[1];
-                        //     resultData.pop();
-                        //     resultData.push(lastidx-50);
-                        //     console.log(resultData);
-                        // } 
-                        console.log(result);
                         
+                    if(result) { // 백으로 보내는 데이터 처리 (radioArr)
+                        let resultObj = {};   // 백으로 보낼 데이터를 객체로 변환
+                        
+                        for(var i=0;i<radioArr.length*2;i++) {
+                            resultObj = {
+                                "name" : radioArr[0],
+                                "range" : Number(radioArr[1]),
+                            }
+                            radioResultData.push(resultObj);
+                            radioArr.splice(0,2);
+                        }
+                        // console.log("백에 보내는 데이터: radioResultData ", radioResultData); 
                     }
                 } else  break; 
             
@@ -283,21 +268,45 @@ async function cooking(data, range, pk){
                 } else if (result.dismiss === 'cancel') {
                     currentStep--
                     checkboxArr.splice(0) // 뒤로가기버튼 누르면 배열 요소 모두 삭제
+                    radioArr.splice(0)
+                    resultData.splice(0)
                 } else break;
                 
                 if (currentStep === steps.length) {
-                    if(resultData[1] === 50) {
-                        var result = Swal.fire({
-                            title : `냉장고에 ${resultData[0]} 이/가 남았습니다 
-                                    \n 다른 레시피에도 사용할 수 있어요! :)` 
-                        })
-                    }else if(resultData[1] === 0) {
-                        var result = Swal.fire({
-                            title : `냉장고에서 ${resultData[0]} 이/가 없어집니다
-                                    \n 다른 레시피에서 사용할 수 없어요! :(`
-                        })
+                    let remain = "";  // 남는 식재료 이름 넣을 변수
+                    let left = "";    // 없어지는 식재료 이름 넣을 변수
+
+                    for(var i=0; i<radioResultData.length; i++) {
+                        if(radioResultData[i].range === 50) { // 
+                            remain += `${radioResultData[i].name}` + " ";
+                        }else if(radioResultData[i].range === 0) { 
+                            left += `${radioResultData[i].name}` + " ";
+                        }
                     }
-                    //updateToFridge(resultData);
+                    if(remain) { // 남는 재료가 있을 때
+                         var result = Swal.fire({
+                            title : `냉장고에 ${remain} 이/가 남았습니다.
+                                    \n 다른 레시피에도 사용할 수 있어요! :)`,
+                            showCloseButton: true,
+                            allowEnterKey : true,
+                        })                        
+                    }if(left) { // 남는 재료가 없을 때
+                        var result = Swal.fire({
+                            title : `냉장고에서 ${left} 이/가 없어집니다.
+                                    \n 다른 레시피에서 사용할 수 없어요! :( `,
+                            showCloseButton: true,
+                            allowEnterKey : true,
+                        }) 
+                    }if(remain && left) { // 남는 재료도 있고, 없어지는 재료도 있을 때
+                        var result = Swal.fire({
+                            title : `냉장고에서 ${left} 이/가 없어지고, 
+                                    \n ${remain} 이/가 남았습니다.
+                                    \n 냉장고에서 재료 현황을 볼 수 있어요!`,
+                            showCloseButton: true,
+                            allowEnterKey : true,
+                        }) 
+                    }
+                    updateToFridge(radioResultData);
                 }
             }
         }
@@ -308,13 +317,15 @@ async function cooking(data, range, pk){
             title : "냉장고에 있는 식품과 일치하는 재료가 없어 차감될 식재료가 없습니다. :)",
             confirmButtonText : "확인",
             showCancelButton : true,
+            showCloseButton: true,
+            allowEnterKey : true,
             focusConfirm : false,
         })
     }
 }
 
 // 요리하기 버튼을 클릭했을 때 checked 된 것의 재료이름과 수량 갖고오기
-const checkboxArr = []; // 전역변수로 설정해서 체크박스에 체크 했을 때 참고
+let checkboxArr = []; // 전역변수로 설정해서 체크박스에 체크 했을 때 참고
 function checkIngd(htmlTag) {
     if(htmlTag.checked == true) {
         checkboxArr.push(htmlTag.value);
@@ -354,7 +365,7 @@ function checkRadio(htmlTag, cnt) {
             }
         } 
     }
-    // console.log(radioArr);
+    // console.log("radioArr: ", radioArr);
 
     // name이 중복되면 삭제, 최초입력이면 무조건 length와 idx 2차이
     // 삭제 되는 경우는 length와 idx의 차이가 2보다 클 때 무조건 삭제
@@ -367,23 +378,25 @@ function checkRadio(htmlTag, cnt) {
 }
 
 // 수정을 위한 체크한 정보 fresh와 frozen DB로 전송
-function updateToFridge(result, pkData){
-    let pkResult = 0;
-
-    // 재료가 하나일 때만 number로
-    if(pkData[0]) pkResult = Number(pkData);
-    else pkResult = pkData;
-    let data = {
-        name : result[0],
-        range : result[1],
-        pk : pkResult,
+function updateToFridge(result){
+    let data = {}
+    // 재료가 한 개일 때 {name : , range : }
+    if(typeof result[0] === 'string') {
+        data = {
+            name : result[0],
+            range : result[1],
+            result : "one"
+        }
     }
+    // 재료가 여러 개일 때 ([{name : , range : },{}])
+    if(typeof result[0] === 'object') data = result
+
     axios({
         method : "patch",
         url : "/recipe/toFridge",
         data : data
     }).then((res)=>{
-        
+        console.log("res.data : ", res);
     })
 }
 
