@@ -132,12 +132,11 @@
       //로그인 O
       if ( "<%=isLogin%>" == "true" ){ 
         $("#welcome_user").removeClass("d_none"); //user 환영 인사말 display
-        $("#welcome_user div").html("<%=user_name%>님🌱<br/>유통기한이 임박한 식재료 <mark><%=fresh_count%>개</mark>가 기다리고 있어요 !");
-        console.log("<%=user_name%>","<%=exp_count%>");
+        $("#welcome_user div").html(`${localStorage.getItem("username")}님🌱<br/>유통기한이 임박한 식재료 <mark><%=fresh_count%>개</mark>가 기다리고 있어요 !`);
+        console.log(`${localStorage.getItem("username")}`,"<%=exp_count%>");
 
         if( "<%=exp_count%>" > 0 ){ // 삭제할 식재료 존재 & 로그인 O
-          deleteAlert("<%=user_name%>","<%=exp_count%>"); // 식재료 삭제 & 알림
-          
+          deleteAlert(`${localStorage.getItem("username")}`,"<%=exp_count%>"); // 식재료 삭제 & 알림
         }
       }
  
