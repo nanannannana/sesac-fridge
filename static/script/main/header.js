@@ -14,7 +14,7 @@ function signout_go() {
         url: "/signOut"
     })
     .then(function() {
-        localStorage.removeItem("username");
+        localStorage.clear();
         location.href="/";
     })
 }

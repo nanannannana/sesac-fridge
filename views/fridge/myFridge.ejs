@@ -23,17 +23,16 @@
     <div class="container-xl myFridgePage_main">
         <div class="cotainer-fluid myFridgePage_box">
             <div class="myFridge_title pt-3 pb-3">
-                나의 냉장고
             </div>
             <div class="row top_row">
                 <!-- 냉장고 내부 식재료 리스트 -->
-                <div class="fridge_box col-8">                   
+                <div class="fridge_box col-8"> 
+                    <!-- <mark>냉장실</mark>                   -->
                     <form class="fridge_ingd_box mt-1" id="fresh_form" name="fresh">
-                        <h3>냉장실</h3>
                             <%for(let i=0; i<fresh_list.length; i++){%>
                                 <div>
                                     <span class="d_none fresh_id"><%=fresh_list[i].fresh_id%></span>
-                                    <input type="checkbox" name="ingd" value="<%=fresh_list[i].fresh_name%>" id="<%=fresh_list[i].fresh_name%>" onclick="addToList(this);">
+                                    <input type="checkbox" name="ingd" value="<%=fresh_list[i].fresh_name%>" id="<%=fresh_list[i].fresh_name%>" onclick="addToList(this, '<%=fresh_list[i].fresh_range%>');">
                                     <label for="<%=fresh_list[i].fresh_name%>"><%=fresh_list[i].fresh_name%></label><br>
                                     <input type="range" value="<%=fresh_list[i].fresh_range%>" step="50" disabled><br>
                                     <p><%=fresh_list[i].fresh_expire%></p>
@@ -42,12 +41,12 @@
                                 </div>
                             <%}%>                                                   
                     </form>
+                    <!-- <mark>냉동실</mark> -->
                     <form class="fridge_ingd_box" id="frozen_form" name="frozen">
-                        <h3>냉동실</h3>
                             <%for(let j=0; j<frozen_list.length; j++){%>
                                 <div>
                                     <span class="d_none frozen_id"><%=frozen_list[j].frozen_id%></span>
-                                    <input type="checkbox" name="ingd" value="<%=frozen_list[j].frozen_name%>" id="<%=frozen_list[j].frozen_name%>" onclick="addToList(this);">
+                                    <input type="checkbox" name="ingd" value="<%=frozen_list[j].frozen_name%>" id="<%=frozen_list[j].frozen_name%>" onclick="addToList(this, '<%=frozen_list[j].frozen_range%>');">
                                     <label for="<%=frozen_list[j].frozen_name%>"><%=frozen_list[j].frozen_name%></label><br>
                                     <input type="range" value="<%=frozen_list[j].frozen_range%>" step="50" disabled><br>
                                     <p><%=frozen_list[j].frozen_date%></p>
@@ -71,6 +70,7 @@
                     </div>
                     <div id="basket_ingd_box">
                     </div>
+                    <i class="bi bi-chevron-double-down" id="basket_arrow"></i>
                 </div>
             </div>
         <!-- 하단 btn -->
@@ -105,5 +105,9 @@
         </div>
     </div>
 </main>
+<button type="button" onclick="deleteTest();">deleteTest</button>
+<script>
+    $(".myFridge_title").html(`<b>${localStorage.getItem("username")}님</b><span>의 냉장고</span>`);
+</script>
 
 <%-include('../main/footer.ejs') %>

@@ -22,4 +22,35 @@ function emptyAlertCookie(){
         url : "/myFridge/"
     })
 }
-    
+
+let deleteArr = ["크림치즈","쿠키","복숭아","치킨너겟"];
+
+function deleteTest(){
+  for(i=0; i<deleteArr.length; i++){
+    console.log( `${localStorage.getItem( deleteArr[i] + '_fridge')}`);
+
+    if( `${localStorage.getItem( deleteArr[i] + '_fridge')}`=="fresh" ){
+      deleteInFresh( deleteArr[i] );
+      console.log( "fresh: ", deleteArr[i]);
+    }else{ 
+      deleteInFrozen( deleteArr[i] ); 
+      console.log( "frozen :", deleteArr[i]);
+    }
+  }
+}
+
+function deleteInFresh( name ){ // fresh 테이블에서 삭제
+  console.log( "freshname", name )
+  axios({
+      method : "delete",
+      url : "/myFridge/deleteInFresh",
+      data : { name : name }
+  })
+}
+function deleteInFrozen( name ){ // frozen 테이블에서 삭제
+  axios({
+      method : "delete",
+      url : "/myFridge/deleteInFrozen",
+      data : { name : name }
+  })
+}  

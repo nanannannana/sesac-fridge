@@ -83,3 +83,15 @@ exports.deleteDeleteAlert = async (req,res) => {
     }
     res.send(true);
 }
+
+// localStorage에 저장할 현재 보관 중인 식재료
+exports.postFridgeList= async (req, res)=>{
+    let freshList = await fresh.findAll({
+        where : {user_user_id : req.session.user}
+    });
+    let frozenList = await frozen.findAll({
+        where : {user_user_id : req.session.user}
+    });
+
+    res.send({freshList : freshList , frozenList : frozenList});
+}
