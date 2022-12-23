@@ -13,13 +13,9 @@
   border-bottom : 2px dashed var(--sub-green);
   font-size: large;
 }
-
-#welcome_user mark {
+#welcome_user b {
   font-family: 'NanumSquareAceb';
-  font-weight: bolder;
-  background-color: white;
   color: var(--btn-warn);
-  border-radius: 100px;
 }
 
 /* main {background-color: var(--main-yellow);} */

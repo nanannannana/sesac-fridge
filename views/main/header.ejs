@@ -2,7 +2,7 @@
 </head>
 <body>
 <header></header>
-    <div class="container-fluid" style="height:100px;">
+    <div class="container-fluid" style="height:120px;">
         <div class="row">
             <div id="header_top">
                 <div id="delete_box">
@@ -18,24 +18,30 @@
         <nav class="row navbar navbar-expand-lg bg-white">
             <div class="container-fluid">
                 <!-- 반응형으로 창 작아지면 보이는 toggle button -->
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span> 
-              </button>
-              <a class="navbar-brand" href="/" id="logo_text">냉장고 집사<img src="static/img/sesac.gif"></a>
-                <div class="col-4">
-                    <form class="d-flex pe-5" role="search" id="hd_search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-light" type="submit">Search</button>
-                    </form>
-                    <!-- 확정 아니고 수정 전까지 실 사용용....링크 버튼 입니다! -->
-                    <li class="nav-item" id="nav_recipe">
-                        <a href="/recipe"><img src="../../static/img/lightning.png"></a>
-                        <a class="nav-link active" aria-current="page" href="/recipe">레시피추천</a> 
-                    </li>
-                    <li class="nav-item" id="nav_fridge">
-                        <a href="/myFridge"><img src="../../static/img/fridge6.png"></a>
-                        <a class="nav-link active" aria-current="page" href="/myFridge">나의 냉장고</a>
-                    </li>
+                <a class="navbar-brand" href="/" id="logo_text">냉장고 집사<img src="static/img/sesac.gif"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span> 
+                </button>
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <form class="d-flex" role="search" id="hd_search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-light" type="submit">Search</button>
+                        </form>
+                        <li class="nav-item" id="nav_recipe">
+                            <a href="/recipe" id="nr_1"><img src="../../static/img/navRecipe.png"></a>
+                            <a class="nav-link active hidden" id="nr_2" aria-current="page" href="/recipe">레시피 추천</a> 
+                        </li>
+                        <li class="nav-item" id="nav_wishlist">
+                            <a href="#" id="nw_1" onclick="wishlist_go();"><img src="../../static/img/navWishlist.png"></a>
+                            <a class="nav-link active hidden" id="nw_2" aria-current="page" href="#"  onclick="wishlist_go();">찜 리스트</a>
+                            <form id="wishlist_go" action="/myPage/wishList" method="post"></form>
+                        </li>
+                        <li class="nav-item" id="nav_fridge">
+                            <a href="/myFridge" id="nf_1"><img src="../../static/img/navFridge.png"></a>
+                            <a class="nav-link active hidden" id="nf_2" aria-current="page" href="/myFridge">나의 냉장고</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -57,35 +63,4 @@
             $("#sign_out").addClass("sign_out_none");
         }
     </script> 
-        <!-- <nav class="navbar bg-white">
-            <div class="container-fluid" id="header_box">
-                <a class="navbar-brand" href="/" id="logo_text">냉장고 집사<img src="static/img/sesac.gif"></a>
-                <img src="/static/img/color_logo.png" class="navbar-toggler p-0 border-0" style="border-radius:0;" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <div class="navbar-nav me-auto" >
-                        <ul class="nav nav_text justify-content-center">
-                            <li class="nav-item me-3 ms-5">
-                                <a class="nav-link active" aria-current="page" href="#">신선제품 관리</a>
-                            </li>
-                            <li class="nav-item me-3 ms-3">
-                                <a class="nav-link active" aria-current="page" href="/recipe">레시피 추천</a>
-                            </li>
-                            <li class="nav-item me-3 ms-3">
-                                <a class="nav-link active" aria-current="page" href="/myFridge">나의 냉장고</a>
-                            </li>
-                            <li class="nav-item me-3 ms-3">
-                            </li>
-                            <li class="nav-item ms-4">
-                                <div class="input-group border rounded-pill p-1" id="hd_search">
-                                    <div class="input-group-prepend border-0">
-                                      <button id="button-addon4" type="button" class="btn btn-link text-info"><i class="fa fa-search"></i></button>
-                                    </div>
-                                    <input type="search" placeholder="Search" aria-describedby="button-addon4" class="form-control bg-none border-0">
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </nav> -->
 </header>
