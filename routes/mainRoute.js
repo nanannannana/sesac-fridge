@@ -7,6 +7,8 @@ router.get("/", main.getMain);
 // 유통기한 지난 식재료 삭제 - 영은
 router.delete("/deleteAlert", main.deleteDeleteAlert);
 
+router.post("/fridgeList", main.postFridgeList);
+
 
 // 데이터 정규화
 router.get("/db", main.getDbRegex);

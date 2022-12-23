@@ -2,21 +2,35 @@
   display: none;
 }
 
+/*toast -  user 환영 msg */
 #welcome_user {
+  position: relative;
+  height: 200px;
   display: flex;
   justify-content: end;
   text-align: right;
   padding-right: 5rem;
   padding-top: 1rem;
 }
-#welcome_user div {
-  border-bottom : 2px dashed var(--sub-green);
-  font-size: large;
+.swal2-popup.swal2-toast .swal2-html-container {
+  font-size:large;
+}
+.swal2-popup.swal2-toast .swal2-html-container>p {
+  font-size:larger;
+  margin-bottom: 0.5rem;
 }
 #welcome_user b {
   font-family: 'NanumSquareAceb';
+  font-size :large;
   color: var(--btn-warn);
 }
+body.swal2-toast-shown .swal2-container {
+  width : auto;
+}
+.position-absolute {
+  position: absolute !important;
+}
+/*toast.css END*/
 
 /* main {background-color: var(--main-yellow);} */
 .mainPage_main {background-color: var(--main-yellow);}

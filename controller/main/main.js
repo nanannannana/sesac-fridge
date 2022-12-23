@@ -87,6 +87,20 @@ exports.deleteDeleteAlert = async (req,res) => {
     res.send(true);
 }
 
+
+
+// localStorage에 저장할 현재 보관 중인 식재료
+exports.postFridgeList= async (req, res)=>{
+    let freshList = await fresh.findAll({
+        where : {user_user_id : req.session.user}
+    });
+    let frozenList = await frozen.findAll({
+        where : {user_user_id : req.session.user}
+    });
+
+    res.send({freshList : freshList , frozenList : frozenList});
+}
+
 // 데이터 정규화
 const { QueryTypes } = require("sequelize"); 
 const { sequelize } = require("../../model"); 
@@ -105,4 +119,4 @@ exports.patchDbRegex = async (req,res) => {
     var sql = `UPDATE recipe SET recipe_ingd=REPLACE(recipe_ingd,',${req.body.b_ingd},' ,',${req.body.a_ingd},');`
     const result = await sequelize.query(sql, { type: QueryTypes.UPDATE });
     res.send({return: true, data: result});
-}
+  }
