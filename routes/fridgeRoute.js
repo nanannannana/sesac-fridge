@@ -26,4 +26,7 @@ router.delete("/deleteIngd", myFridge.deleteDeleteIngd);
 // 선택한 식재료 포함된 레시피 산출 - 영은
 router.post("/resultRecipe", myFridgeRecipe.postResultRecipe);
 
+router.delete("/deleteInFresh", myFridgeRecipe.deleteDeleteInFresh);
+router.delete("/deleteInFrozen", myFridgeRecipe.deleteDeleteInFrozen);
+
 module.exports = router;
