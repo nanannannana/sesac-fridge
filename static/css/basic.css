@@ -38,6 +38,9 @@ a:visited {
 .d_none {
     display : none;
 }
+.hidden {
+    visibility: hidden;
+}
 
 /* navbar */
 /* 임시 logo사이즈 및 굵기 지정 */
@@ -46,67 +49,54 @@ a:visited {
     font-size: 30px;
 }
 #logo_text>img {
-    width:50px;
+    width:60px;
 }
-/* navber open btn */
-/* .navbar-toggler {
-    width:30px;
-} */
+
 /* navbar 글씨 */
 .navbar {
     /* font-size:x-large;  */
     font-family: 'NanumSquareAceb'; 
     font-weight: bolder;
-    padding-bottom: 0;
     padding-top: 0;
+    padding-bottom: 0;
 }
-.navbar div {
-    align-content:space-between ;
+.navbar-collapse {
+    flex-grow: 0;
 }
-.navbar>div>div {
+
+.navbar img {
+    height: 50px;
+}
+#nav_wishlist img {
+    height: 45px;
+}
+
+.navbar ul {
     display: flex;
     align-items: center;
 }
 
-#nav_recipe, #nav_fridge{
+#nav_recipe, #nav_fridge, #nav_wishlist {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-right: 1rem;
+    margin-left: 1rem;
+}
+
+#nr_1, #nw_1, #nf_1 {
+    padding-top: 1rem;
+    padding-bottom: 0;
+}
+
+#nr_2, #nw_2, #nf_2 {
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 /* search bar */
 #hd_search {
-    width:30rem;
+    width: 30rem;
 }
-
-/* .form-control::placeholder {
-    font-size: 0.95rem;
-    color: #aaa;
-    font-style: italic;
-} */
-
-#nav_recipe img {
-    height : 40px;
-}
-#nav_fridge img {
-    height : 40px;
-    object-fit: cover;
-}
-
-/* #nav_fridge img:hover, #nav_recipe img:hover {
-    display: none;
-}
-#nav_fridge a, #nav_recipe a {
-    font-size: xx-small;
-    position: absolute;
-    margin-top: -100;
-    opacity : 0;
-    transition : opacity 1s;
-}
-#nav_fridge a:hover, #nav_recipe a:hover {
-    opacity : 1;
-} */
 
 /* header.css END */
 
