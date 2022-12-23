@@ -51,7 +51,6 @@ async function cooking(data, range){
                         value="${ingArr[i]}" onclick="checkIngd(this)"/>
                     <label for="${ingArr[i]}">&nbsp;${ingArr[i]}</label>&nbsp;&nbsp;&nbsp;`;
     }
-    
     // sweet alert
     const steps = ['1', '2']
     const swalQueueStep = Swal.mixin({
@@ -101,15 +100,16 @@ async function cooking(data, range){
                 // 확인 버튼을 누르면 체크된 값 가져와서 -50 하고 객체를 배열안에 넣기
                 if(result) {
                     let resultObj = {};
-                    for(var i=0;i<=checkboxArr.length*2;i++) {
+                    for(var i=0;i<=checkboxArr.length*6;i++) {
                         resultObj = {
                             "name" :  checkboxArr[0],
                             "range": Number(checkboxArr[1])-50
                         }
-                            resultData.push(resultObj);
-                            checkboxArr.splice(0,2);
+                        resultData.push(resultObj);
+                        checkboxArr.splice(0,2);
                     }
-                    console.log("백에 보내는 데이터: ", resultData); 
+                    console.log("checkboxArr.length", checkboxArr.length);
+                    console.log("첫 번째 단계에서 백에 보내는 데이터: ", resultData); 
                 }
             } else if (steps[currentStep] == 2) { // 두 번째 단계
                 let radio = "";
@@ -151,20 +151,6 @@ async function cooking(data, range){
                         }
                     }
                 })
-                // 두 번째 단계에서 백으로 보내는 데이터 
-                if(result) { // 백으로 보내는 데이터 처리 (radioArr)
-                    let resultObj = {};   // 백으로 보낼 데이터를 객체로 변환
-                    
-                    for(var i=0;i<radioArr.length*2;i++) {
-                        resultObj = {
-                            "name" : radioArr[0],
-                            "range" : Number(radioArr[1]),
-                        }
-                        radioResultData.push(resultObj);
-                        radioArr.splice(0,2);
-                    }
-                    // console.log("백에 보내는 데이터: radioResultData ", radioResultData); 
-                }
             } else  break; 
         
             // 방향키 설정
@@ -213,7 +199,7 @@ async function cooking(data, range){
                         allowEnterKey : true,
                     }) 
                 }
-                updateToFridge(radioResultData);
+                updateToFridge(radioArr);
             }
         }
     }
@@ -287,142 +273,35 @@ function checkRadio(htmlTag, cnt) {
 
 // 수정을 위한 체크한 정보 fresh와 frozen DB로 전송
 function updateToFridge(result){
-    let data = result;
+    // 1. 배열 result를 백단에 보낼 데이터를 객체 배열형태로
+    let resultArr = [];
+    for(var i=0; i<result.length*6; i++) {
+        let resultObj = {
+            "name" : result[0],
+            "range" : Number(result[1])
+        }
+        resultArr.push(resultObj);
+        result.splice(0,2);
+    }
+    // 2. 백단에 데이터를 보내기 전에 range가 0이면 delArr에 넣기
+    let delArr = resultArr.filter(item => {
+        return item.range === 0;
+    })
+    // 3. delArr 안에 delMust 요소를 추가해 range가 0일때를 구분
+    for(var i=0; i<delArr.length; i++){
+       delArr[i]['delMust'] = "1";
+    }
+    console.log("두 번째 단계에서 백에 보내는 데이터 : ", resultArr);
     axios({
         method : "patch",
         url : "/recipe/toFridge",
-        data : data
+        data : resultArr
     }).then((res)=>{
         console.log("res.data : ", res.data);
+        Swal.fire({
+            title : "냉장고에 변동사항이 저장되었습니다. ",
+            showConfirmButton : false
+        }) 
+        history.go(0);
     })
 }
-
-
-
-// for(var i=0;i<length;i++){
-//     $(".row").append(`
-//         <div class="card_parent col-md-3">
-//             <div class="card">
-//                 <div class="img_time">
-//                     <img src="${data[i].recipe_img}" class="recipe_img img-fluid rounded">
-//                     <div class="card-img-overlay d-flex justify-content-between">
-//                     <span class="time">
-//                         <i class="bi bi-alarm"></i>&nbsp;
-//                         "${data[i].recipe_time}"
-//                     </span>
-//                     <button type="button" class="btn btns">
-//                         ${data[i].recipe_pick == 0 ? 
-//                             `<h5><i class="bi bi-balloon-heart" 
-//                              onclick="insertLike(${this}, "${data[i].recipe_id}")">
-//                             </i></h5>`:
-//                             `<h5><i class="bi bi-balloon-heart-fill"></i></h5>`
-//                         }
-//                   </button>
-//                 </div>
-//             </div>
-//             <div class=name_ingd p-3">
-//                 <div class="d-flex justify-content-between align-items-center">
-//                     <h5>"${data[i].recipe_title}"</h5>
-//                 </div>
-//                 <div class="d-flex justify-content-between align-items-center pt-2">
-//                     <span>
-//                         <i class="fas fa-regular fa-bowl-food"></i>&nbsp;
-//                         "${data[i].recipe_ingd}"
-//                     </span>
-//                 </div>cd 
-//             </div>
-//             <div class="btn_outer mt-3 mb-3">
-//                 <div class="btn_inner text-center p-1">
-//                     <button type="button" class="btn show_recipe"
-//                     onclick="insertLog("${data[i].recipe_id}", "${data[i].recipe_url}")">레시피보기</button>
-//                     <button type="button" class="btn show_cook">요리하기</button>
-//                     <h5 onclick="func();">함수실행</h5>  
-//                 </div>
-//             </div>
-//         </div>
-//     `)
-// }
-
-
-// const $cardParent = get(".card-parent");
-// const $cards = getAll(".card");
-
-// const CREATE_CARD_COUNT = 4;
-// let cardImageNumber = 0;
-
-// const io = new IntersectionObserver(ioObserver, {
-//     threshold : 1,
-// });
-
-// function get(htmlElem) {
-//     return document.querySelector(htmlElem);
-// }
-
-// function getAll(htmlElem) {
-//     return document.querySelector(htmlElem)
-// }
-
-// function makeCard() {
-//     if (cardImageNumber >= 12) cardImageNumber = 0;
-//     for (let i = cardImageNumber; i < cardImageNumber + 4; i++) {
-//         $(".row").append(`
-//         <div class='col-md-3 card_parent'>
-//             <div class='card'>
-//                 <div class='img_time'>
-//                     <img src='${"<%=data[i].recipe_img%>"}'>
-//                     <div class='card-img-overlay d-flex justify-content-between">
-//                         <span class='time'>
-//                             <i class='bi bi-alarm'></i>&nbsp;
-//                             ${"<%=data[i].recipe_time%>"}
-//                         </span>
-//                         <button type='button' class='btn'>
-//                             <h5><i class='bi bi-balloon-heart'></i></h5>
-//                         </button>
-//                     </div>
-//                 </div>
-//                 <div class='name_imgd p-3'>
-//                     <div class='d-flex justify-content-between align-items-center'>
-//                         <h5>${"<%=data[i].recipe_title%>"}</h5>
-//                     </div>
-//                     <div class='d-flex justify-content-between align-items-center pt-2'>
-//                         <span>
-//                             <i class='fas fa-regular fa-bowl-food'></i>&nbsp;
-//                             ${"<%=data[i].recipe_ingd%>"}
-//                         </span>
-//                     </div>
-//                 </div>
-//             </div>
-//             <div class='btn_outer mt-3 mb-3'>
-//                 <div class='btn_inner text-center p-1'>
-//                     <input type='button' class='btn show_recipe' 
-//                     onclick='insertLog(${"<%data[i].recipe_id%>"}, ${"<%=data[i].recipe_url%>"})'
-//                     value='레시피보기'>
-//                     <input type='button' class='btn show_cook' value='요리하기'>
-//                 </div>
-//             </div>
-//         </div>`)
-//     }
-//     cardImageNumber += 4;
-// }
-
-// function ioObserver(entries) {
-//     entries.forEach((entry) => {
-//         const { target } = entry;
-
-//         if(entry.isInterescting) {
-//             io.unobserve(target);
-//             loading();
-//         }
-//     })
-// }
-
-// function observeLastCard(io, cards) {
-//     const lastItem = cards[cards.length-1];
-//     io.observe(lastItem);
-// }
-
-// function init() {
-//     observeLastCard(io, $cards);
-// }
-
-// init();

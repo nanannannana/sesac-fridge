@@ -8,6 +8,7 @@
       <button class="btn filter" type="button" onclick="selectFilter('국/탕')">국/탕</button>
       <button class="btn filter" type="button" onclick="selectFilter('건강/웰빙')">건강/웰빙</button>
       <button class="btn filter" type="button" onclick="selectFilter('야식')">야식</button>
+      <button class="btn filter" type="button" onclick="location.href='/recipe'">나의 식재료와 일치</button>
     </div>
 </div>
 <main>
@@ -21,8 +22,10 @@
                     <img src="<%=data[i].recipe_img%>" class="recipe_img img-fluid rounded"> 
                     <div class="card-img-overlay d-flex justify-content-between">
                       <span class="time">
-                        <i class="bi bi-alarm"></i>&nbsp;
-                        <%=data[i].recipe_time%>
+                        <span class="time_box" style="padding-bottom: 10px;">
+                          <i class="bi bi-alarm"></i>&nbsp;
+                          <%=data[i].recipe_time%>
+                        </span>
                       </span>
                       <button type="button" class="btn btns" title="<%=data[i].recipe_id%>">
                         <% if (data[i].recipe_pick == 0) { %>
@@ -48,7 +51,7 @@
                           <i class="fas fa-regular fa-bowl-food"></i>&nbsp;
                           <%=data[i].recipe_ingd.toString().replace(/,/g, " ")%>
                           </div>
-                          <div class="pt-2" style="color: red">나의 냉장고와 일치하는 재료 :
+                          <div class="pt-2 ingdArr">나의 냉장고와 일치하는 재료 :
                           <% let recp_ingd = ingdResult[i].toString().slice(1,-1).split(",")%>
                           <% let myingd = ingdName.toString().split(',')%>
                           <% let myingd_range = ingdRange.toString().split(',')%>

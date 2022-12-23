@@ -15,4 +15,5 @@ router.post("/insertToLog", recipe.postInsertToLog);
 // 좋아요 (recipe_like 테이블에 저장)
 router.post("/insertToLike", recipe.postInsertToLike);
 
+
 module.exports = router;
