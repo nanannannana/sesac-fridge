@@ -14,16 +14,23 @@
 #wishlist_box > nav {
     margin-top: 40px;
 }
+#card_text_box {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
 
 /* 찜리스트 hover 시 */
 #card_text {
+    overflow: hidden;
+    text-overflow: ellipsis;
     display: none;
     text-align: right;
     text-shadow: 0 0 3px #000;
     font-weight: bolder;
 }
 #card_text_box {
-    margin-top:65%;
+    margin-top:80%;
 }
 #card_hover:hover {
     background-color: rgba(0, 0, 0, 0.3);
