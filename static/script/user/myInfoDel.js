@@ -8,6 +8,7 @@ function info_del() {
         }
     })
     .then(async function() {
+        localStorage.clear();
         await Swal.fire({
             icon: "success",
             title: "회원 탈퇴가 완료되었습니다!"
