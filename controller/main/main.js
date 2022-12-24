@@ -15,7 +15,6 @@ const { Op } = require("sequelize");
     date.setDate( date.getDate()+2 ); 
 
     let exp_list_arr = new Array(); // 유통기한 지난 식재료 > getMain - exp_list에서 받을 예정
-
     
 // 메인 페이지 렌더 - 영은
 exports.getMain = async (req,res) => {
@@ -25,15 +24,15 @@ exports.getMain = async (req,res) => {
     // [3] 유통기한 임박(2일 이내) 식재료 수 - fresh_count
     // [4] 유통기한 지난 식재료 수 - exp_count (식재료 목록도 필요)
     console.log("session_id: ", req.session.user);
-
     // 로그인 여부로 if문을 나눔
+
+    const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
+    // 자동로그인 여부 확인
+    // 자동로그인 설정X(쿠키 값 undefined): final_user_id는 req.session.user(세션에 넣어둔 user_id값이 아이디가 됨)
+    // 자동로그인 설정O(쿠키 값 有): final_user_id는 req.cookies.user_id(쿠키에 넣어둔 user_id값이 아이디가 됨)
+
     // 1) 로그인(+ 자동로그인)을 한 경우,
     if (req.cookies.user_id || req.session.user) {
-        // 자동로그인 여부 확인
-        // 자동로그인 설정X(쿠키 값 undefined): final_user_id는 req.session.user(세션에 넣어둔 user_id값이 아이디가 됨)
-        // 자동로그인 설정O(쿠키 값 有): final_user_id는 req.cookies.user_id(쿠키에 넣어둔 user_id값이 아이디가 됨)
-        const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
-
         // 임박 식재료 개수
         let fresh_count = await fresh.findAndCountAll({
             where: {
@@ -72,25 +71,29 @@ exports.getMain = async (req,res) => {
 // getMain에서 담은 유통기한 지난 식재료 global 배열 exp_list_arr
 // 의 요소들 DB에서 차례로 삭제
 exports.deleteDeleteAlert = async (req,res) => {
-    console.log("exp_list_arr : ", exp_list_arr);
+    const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
+    let list = [];
 
     for(i=0; i<exp_list_arr.length; i++){
+        list.push( exp_list_arr[i].fresh_name );
+
         let result = await fresh.destroy({ 
             where : {
-                user_user_id : req.session.user,
+                user_user_id : final_user_id,
                 fresh_name : exp_list_arr[i].fresh_name
             }
         });
-        console.log('delete result : ', result); 
     }
-    res.send(true);
+    
+    console.log('delete list : ', list); 
+    res.send({ list : list});
 }
-
 
 
 // localStorage에 저장할 현재 보관 중인 식재료
 exports.postFridgeList= async (req, res)=>{
     const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
+
     let freshList = await fresh.findAll({
         where : {user_user_id : final_user_id}
     });

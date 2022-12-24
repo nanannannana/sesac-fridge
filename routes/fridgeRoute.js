@@ -1,7 +1,10 @@
 const express = require("express");
+const { post } = require("request");
 const myFridge = require("../controller/fridge/myFridge");
 const myFridgeRecipe = require("../controller/fridge/myFridgeRecipe");
 const router = express.Router();
+const app = express();
+
 
 // 나의 냉장고 페이지 렌더 - 영은
 router.get("/", myFridge.getMyFridge);
@@ -28,5 +31,6 @@ router.post("/resultRecipe", myFridgeRecipe.postResultRecipe);
 
 router.delete("/deleteInFresh", myFridgeRecipe.deleteDeleteInFresh);
 router.delete("/deleteInFrozen", myFridgeRecipe.deleteDeleteInFrozen);
+
 
 module.exports = router;

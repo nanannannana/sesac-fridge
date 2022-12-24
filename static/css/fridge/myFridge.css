@@ -3,10 +3,11 @@
 
 .myFridgePage_main { 
     background-color: var(--main-yellow);
+    height : 100vh;
 }
 
 .myFridgePage_box { 
-    height : 100vh;
+    min-height: 100%;
     display : flex;
     flex-direction: column;
     justify-content:space-around;
@@ -282,7 +283,7 @@
 
 /* DatePicker CSS */
 
-/* .ui-widget-header { border: none !important; background-color: transparent !important; }
+.ui-widget-header { border: none !important; background-color: transparent !important; }
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
     border: 1px solid #fff !important;
@@ -324,4 +325,4 @@
 
 .ui-datepicker-calendar tr td:nth-last-child(1) a {
 	color: #0d47a1 !important;
-} */
+}

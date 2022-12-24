@@ -7,12 +7,17 @@ function info_del() {
             user_id: form.user_id.value
         }
     })
-    .then(async function() {
+    .then( function() {
         localStorage.clear();
-        await Swal.fire({
+        Swal.fire({
             icon: "success",
-            title: "회원 탈퇴가 완료되었습니다!"
+            title: "회원 탈퇴가 완료되었습니다!",
+            showConfirmButtom : true,
+            confirmButtonText : '확인',
+            confirmButtonColor: '#7E998F',            
+            preConfirm : ()=>{
+                location.href="/"
+            }
         });
-        location.href="/";
     })
 }
