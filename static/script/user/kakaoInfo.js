@@ -17,6 +17,7 @@ function info() {
         }
     })
     .then(function() {
+        form.reset();
         location.href="/";
     })
 }

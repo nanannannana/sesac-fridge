@@ -14,7 +14,7 @@
         <h6 id="signup_side_title" class="mb-2 mb-5" style="font-size:20px">정보를 모두 입력하고 회원가입 버튼을 눌러주세요.</h6>
         <form id="form_signup" class="needs-validation" novalidate>
           <div class="input-group input-group-lg">
-            <input type="text" id="user_id" class="form-control rounded" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="user_id" placeholder="이메일('@'포함 입력)" oninput="id_click(this);" required>
+            <input type="text" id="user_id" class="form-control rounded" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="user_id" placeholder="이메일('@'포함 입력)" onkeyup="id_check_push()" oninput="id_click(this);" autofocus required>
             <div class="invalid-feedback">이메일을 정확히 입력하세요.</div>
           </div>
           <button type="button" id="btn_id_check" class="btn" onclick="id_check()">중복확인</button>
@@ -31,7 +31,7 @@
             <div class="invalid-feedback">이름을 정확히 입력하세요.</div>
           </div>
           <div class="input-group input-group-lg">
-            <input id="phone_num" type="text" class="form-control rounded" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" oninput="phone_num_hyphen(this)" name="user_phone" placeholder="휴대폰 번호(10~11글자, 숫자만 입력)" required>
+            <input id="phone_num" type="text" class="form-control rounded" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" onkeyup="signup_push()" oninput="phone_num_hyphen(this)" name="user_phone" placeholder="휴대폰 번호(10~11글자, 숫자만 입력)" required>
             <div class="invalid-feedback">휴대폰 번호를 정확히 입력하세요.</div>
           </div>
           <button type="button" id="button" class="btn mb-3" onclick="signup()">회원가입</button>

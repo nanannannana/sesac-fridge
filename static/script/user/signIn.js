@@ -44,17 +44,25 @@ function pw_click(target) {
         $("#user_pw").removeClass("is-invalid");
     }
 }
+
+//enter key 누르면 로그인 버튼 클릭되게 하는 함수
+function enter_push() {
+    if (window.event.keyCode == 13) {
+        document.getElementById("button").click();
+    }
+}
+
 // 로그인 버튼 클릭 시 동작하는 함수
 function signin() {
     var form = document.getElementById("form_signin");
-    // 자동로그인 관련 함수
+    // 자동로그인 선택 시,
     if ($('input:checkbox[id="remember_me_check"]').is(":checked")) {
         var data = {
             user_id: form.user_id.value,
             user_pw: form.user_pw.value,
             remember_me_check: form.remember_me_check.value
         };
-    } else {
+    } else { // 자동로그인 미선택
         var data = {
             user_id: form.user_id.value,
             user_pw: form.user_pw.value,
@@ -75,17 +83,26 @@ function signin() {
             form.reset();
             if (res.data.result) {
                 localStorage.setItem("username", res.data.username);
-                await Swal.fire({
+                Swal.fire({
                     icon: 'success',
                     title: '로그인에 성공하였습니다!',
-                    text: "버튼을 누르면 메인페이지로 이동합니다."
+                    text: "확인을 누르면 메인페이지로 이동합니다.",
+                    showConfirmButtom : true,
+                    confirmButtonText : '확인',
+                    confirmButtonColor: '#7E998F',            
+                    preConfirm : ()=>{
+                        location.href="/"
+                    }
                 });
-                location.href="/";
+                // location.href="/";
             } else {
                 Swal.fire({
                     icon: 'error',
                     title: '로그인에 실패하였습니다!',
-                    text: "이메일 또는 비밀번호를 다시 입력해주세요."
+                    text: "이메일 또는 비밀번호를 다시 입력해주세요.",
+                    showConfirmButtom : true,
+                    confirmButtonText : '확인',
+                    confirmButtonColor: "#ED6C67"
                 });
             }
 

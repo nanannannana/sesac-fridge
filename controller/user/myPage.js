@@ -5,6 +5,7 @@ const { recipe_like } = require("../../model/");
 const { recipe } = require("../../model/");
 const { log } = require("../../model/");
 const { cooklog } = require("../../model/");
+const env = process.env;
 
 // 마이 페이지 렌더 - 예지
 exports.postMyPage = async function(req,res) {
@@ -89,7 +90,10 @@ exports.postMyPage = async function(req,res) {
             recipe_img: recipe_img_list
         });
     } else { // 자동로그인 x, 로그인 x
-        res.render("main/404")
+        const kakao_auth_url = `https://kauth.kakao.com/oauth/authorize?client_id=${env.REST_API_KEY}&redirect_uri=${env.REDIRECT_URI}&response_type=code&scope=profile_nickname,account_email,talk_message`
+        res.render("user/signIn", {
+            kakao_auth_url: kakao_auth_url
+        });
     }
 }
 exports.postMyPageChart = function(req,res) {
@@ -219,14 +223,19 @@ exports.postMyInfo = async function(req,res) {
 
 // 회원정보 수정
 exports.patchMyInfoUpdate = async function(req,res) {
-    let data = {
-        user_id: req.body.user_id,
-        user_pw: req.body.user_pw,
-        user_name: req.body.user_name,
-        user_phone: req.body.user_phone
-    };
-    await user.update(data, {where: {user_id: req.body.user_id}});
-    res.send(true);
+    if (req.body.false) {
+        res.send(false);
+    } else {
+        let data = {
+            user_id: req.body.user_id,
+            user_pw: req.body.user_pw,
+            user_name: req.body.user_name,
+            user_phone: req.body.user_phone
+        };
+        await user.update(data, {where: {user_id: req.body.user_id}});
+        res.send(true);
+    }
+
 }
 
 // 회원탈퇴 렌더
