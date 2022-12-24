@@ -142,8 +142,7 @@ function pw_find() {
     })
     .then(function(res) {
         form.reset();
-        console.log(res.data);
-        if (res.data=="undefined") {
+        if (res.data==null) {
             $("#modal_body_text_2").remove();
             $("#modal_body_box_2").remove();
             $("#modal_body_2").append(`
@@ -157,9 +156,37 @@ function pw_find() {
             $("#modal_body_box_2").remove();
             $("#modal_body_2").append(`
             <div id="modal_body_box_2">
-                <p>비밀번호 문자로 보냄</p>
+                <p id="modal_body_box_text">비밀번호가 입력하신 번호로 문자 발송됐습니다!</p>
+                <p id="modal_body_box_text">문자를 확인해주시기 바랍니다.</p>
             </div>
             `)
         }
     })
 }
+
+// Kakao.init('5616297e86dc2afd5a71b0d8d5006554'); //javascript_key
+// console.log(Kakao.isInitialized()); // sdk초기화여부판단
+
+// function kakoLogin() {
+//     window.Kakao.Auth.login({
+//         scope: "profile_nickname,account_email,talk_message",
+//         success: function(authObj) { // login 성공
+//             console.log(authObj);
+//             window.Kakao.API.request({ // 유저 정보 가져오기
+//                 url: "/v2/user/me",
+//                 success: res => {
+//                     const kakao_account = res.kakao_account;
+//                     console.log(kakao_account);
+//                     axios({
+//                         method: "get",
+//                         url: "/kakao/info",
+//                         params: {
+//                             user_id: kakao_account.email,
+//                             user_name: kakao_account.profile.nickname
+//                         }
+//                     })
+//                 }
+//             }) 
+//         }
+//     });
+// }

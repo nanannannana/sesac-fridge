@@ -63,7 +63,7 @@ exports.getRecipe = async (req, res) => {
             if(req.query.tag) {
                 where["recipe_tag"] = req.query.tag;
             }
-        }else{ // 식재료랑 일치하는 레시피가 0개 (냉장고가 빈 사람포함)
+        } else { // 식재료랑 일치하는 레시피가 0개 (냉장고가 빈 사람포함)
             where["recipe_tag"] = null;
         }
         

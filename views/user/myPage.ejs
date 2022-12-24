@@ -13,7 +13,7 @@
     </form>
     <div class="container">
         <div id="chart_box" >
-            <p id="box_title"><span>김새싹님</span>의 통계차트</p>
+            <p id="box_title"><span><%=user_name%>님</span>의 통계차트</p>
             <div id="chart_box_child">
                 <div id="chart_1">
                     <p id="chart_title">냉장실 재료 카테고리별 차트</p>
@@ -29,7 +29,7 @@
         </div>
         <hr>
         <div id="recipe_box">
-            <p id="box_title"><span>김새싹님</span>의 레시피</p>
+            <p id="box_title"><span><%=user_name%>님</span>의 레시피</p>
             <div id="recent_recipe_box">
                 <div id="recent_recipe_title_img">
                     <div id="recent_recipe_title_text">
@@ -99,7 +99,7 @@
                         <%switch (cook_title.length) { 
                             case 0: %>
                             <% for(var r=1; r<5 ; r++ ) {%>
-                                <div id="blank_box" class="card col-5"></div>
+                                <div id="blank_box" class="card col-5"><%=cook_title.length+=1%></div>
                             <% } %>
                         <% break;
                             case 1: 1%>
