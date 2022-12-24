@@ -25,12 +25,36 @@
     color: #ffffff;
 }
 
-/* 최근 본 레시피 관련 */
+/* 최근 본 레시피 카드 */
+/* #recipe_card {
+    border: 1px solid #000;
+    height: 300px;
+    width: 100%;
+}
+#recipe_card_title {
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 20px;
+    margin-top: 10px;
+    font-weight: bolder;
+}
+#recipe_box_child > a {
+    padding: 0px;
+    display: inline-block;
+} */
+
+
+/* 최근 본 레시피 title 관련 */
 #recent_recipe_box {
     display: flex;
     justify-content: space-between;
 }
 #recent_recipe_title_img {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     height: 620px;
     width: 40%;
     background: url(/static/img/recipe.jpg) no-repeat center;
@@ -43,6 +67,8 @@
     border-radius: 5%;
 }
 #recent_recipe_title_text > span, #recent_cook_title_text > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
     display: block;
     text-align: center;
     font-size: 100px;
@@ -50,6 +76,8 @@
     color: white;
     text-shadow: 0px 0px 4px #000;
 }
+
+/* 최근 본 레시피 카드 관련 */
 #recent_recipe_card_box, #recent_cook_card_box {
     width: 70%;
 }
@@ -75,7 +103,7 @@
     margin-left: 4%;
 }
 
-/* 최근에 한 요리 관련 */
+/* 최근에 한 요리 title 관련 */
 #recent_cook_box {
     margin-top:100px;
     display: flex;
@@ -83,6 +111,9 @@
     flex-direction: row-reverse;
 }
 #recent_cook_title_img {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     height: 620px;
     width: 40%;
     background: url(/static/img/cooking.jpg) no-repeat center;
@@ -100,6 +131,8 @@
 
 /* 최근 본 레시피 카드 관련 */
 #recipe_name, #cook_name {
+    overflow: hidden;
+    text-overflow: ellipsis;
     text-decoration: none;
     font-family: 'NanumSquareAceb';
     font-size: 30px;
@@ -111,6 +144,8 @@
 #recipe_name:hover, #cook_name:hover {
     background-color:rgba(0, 0, 0, 0);
 }
+
+/* 카드에 내용이 없을 때 나올 숫자 */
 #blank_box {
     background-color: #ffffff;
     text-align: center;
