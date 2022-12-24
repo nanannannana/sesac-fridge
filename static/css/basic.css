@@ -181,3 +181,16 @@ display: none;
 display:none;
 }
   
+.error_box {
+    background-color: var(--main-yellow);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error_box img {
+    height : 80vh;
+    width: 80vh;
+    margin-left: 2rem;
+}
