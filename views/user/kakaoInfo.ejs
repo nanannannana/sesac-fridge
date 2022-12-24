@@ -1,5 +1,16 @@
 <%-include('../main/head.ejs') %>
 <script type="text/javascript" src="/static/script/user/kakaoInfo.js"></script>
+<style>
+    #button {
+        background-color: white;
+        border: 1px solid var(--btn-success);
+        color: var(--btn-success);
+    }
+    #button:hover {
+        background-color: var(--btn-success);
+        color: white;
+    }
+</style>
 </head>
 <body>
     <main>
@@ -15,12 +26,12 @@
                     <div class="modal-body">
                     <form id="form_info">
                         <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">전화번호:</label>
+                            <label for="recipient-name" class="col-form-label" style="font-weight: bolder; font-size: 20px;">전화번호(비밀번호 문자 발송용)</label>
                             <input type="text" class="form-control" id="user_phone" oninput="phone_num_hyphen(this)">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="info()">입력 완료</button>
+                        <button type="button" class="btn" id="button" onclick="info()">입력 완료</button>
                     </div>
                     </form>
                 </div>

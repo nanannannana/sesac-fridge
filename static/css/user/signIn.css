@@ -47,6 +47,9 @@
     margin: 5px 0px 10px 0px;
     float: left;
 }
+#kakao_img:hover {
+    transform: scale(1.01);
+}
 
 /* Modal 정리 */
 #icon {

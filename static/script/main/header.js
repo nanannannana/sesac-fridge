@@ -17,6 +17,7 @@ function signout_go() {
         localStorage.clear();
         location.href="/";
     })
+    
 }
 
 function wishlist_go(){

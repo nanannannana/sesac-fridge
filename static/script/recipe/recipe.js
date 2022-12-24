@@ -263,7 +263,7 @@ function updateToFridge(result, id){
     for(var i=0; i<delArr.length; i++){
        delArr[i]['delMust'] = "1";
     }
-    console.log("두 번째 단계에서 백에 보내는 데이터 : ", resultArr);
+    // console.log("두 번째 단계에서 백에 보내는 데이터 : ", resultArr);
     axios({
         method : "patch",
         url : "/recipe/toFridge",
@@ -275,22 +275,11 @@ function updateToFridge(result, id){
             title : "냉장고에 재료 변동사항이 \n 생겼습니다! :) ",
             showConfirmButton : false,
         }) 
+        insertCookLog(id);
         setTimeout(()=>{
             location.reload();
         },1500);
-        insertCookLog(id);
-    })
-}
-
-// 최근 본 레시피 클릭 시 log 테이블에 추가
-function insertLog(id, url) {
-    let recipe_id = id;
-    axios({
-        method : "post",
-        url : "/recipe/insertToLog",
-        data : { id : recipe_id },
-    }).then((res)=>{
-        location.href=url;
+        
     })
 }
 
