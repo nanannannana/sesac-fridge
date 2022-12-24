@@ -17,7 +17,7 @@ function showUpdateBtns(){
     $(".change_box2").css("width","50%");
     $(".change_box3").css("width","50%");
     $(".fridge_ingd_box input[type=checkbox]").addClass("d_none");
-    $("#basket_ingd_box").addClass("hidden");
+    $("#basket_ingd_box").text("");
     $(".basket_text").addClass("d_none");
     $("#basket_arrow").addClass("hidden");
     $("#result_recipe").html("");
