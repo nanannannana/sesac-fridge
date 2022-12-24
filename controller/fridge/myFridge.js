@@ -33,7 +33,7 @@ exports.getMyFridge = async (req,res) => {
             });
         }
     }else{ //로그인 X
-        // res.render("fridge/myFridge404", { isLogin : false });
+        // res.render("fridge/myFridge404", {isLogin : false});
         res.render("main/first_main", { isLogin : false });
     }  
 }
