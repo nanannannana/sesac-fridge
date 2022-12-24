@@ -11,8 +11,11 @@ router.patch("/toFridge", recipe.patchToFridge);
 
 // 최근 본 레시피 (log 테이블에 저장) 
 router.post("/insertToLog", recipe.postInsertToLog);
+// 최근 한 요리 (cooklog 테이블에 저장)
+router.post("/insertToCookLog", recipe.postInsertToCookLog)
 // 좋아요 (recipe_like 테이블에 저장)
 router.post("/insertToLike", recipe.postInsertToLike);
+
 
 
 module.exports = router;

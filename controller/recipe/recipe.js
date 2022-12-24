@@ -1,5 +1,6 @@
 const { recipe } = require("../../model");
 const { log } = require("../../model");
+const { cooklog } = require("../../model");
 const { recipe_like } = require("../../model");
 const { fresh } = require("../../model");
 const { frozen } = require("../../model");
@@ -9,11 +10,12 @@ const { Op } = require("sequelize");  // where 안에 조건절을 위해
 
 // 레시피 추천 페이지 유저 갖고 있는 재료 기준으로
 exports.getRecipe = async (req, res) => {
-    
+    console.log("검색어 : ", req.query);
     if(req.session.user || req.cookies.user_id) {
         const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
         console.log("유저 : ", final_user_id);
 
+        // [1] fresh 테이블과 frozen 테이블의 모든 재료를 findAll로 가져온다.
         let freRes = await fresh.findAll({
             raw : true,
             attributes : [['fresh_name', 'name'], ['fresh_range', 'range']],
@@ -24,35 +26,39 @@ exports.getRecipe = async (req, res) => {
             attributes : [['frozen_name', 'name'], ['frozen_range', 'range']],
             where : { user_user_id : final_user_id}
         })
-        let ingdRes = [];   // fresh와 frozen에 있는 모든 값
+
+        // fresh, frozen 테이블에서 검색한 결과를 합쳐서 ingdRes에 넣는다.
+        let ingdRes = [];  
+        freRes.forEach((item)=>{
+            ingdRes.push(item);
+        })
+        froRes.forEach((item)=>{
+            ingdRes.push(item);
+        })
+
         let ingdName = [];  // 식재료
         let ingdRange = []; // 수량
 
-        // 냉장, 냉동 테이블에서 select한 결과 합쳐서 ingdRes에 넣기
-        freRes.forEach((item)=>{
-            ingdRes.push(item)
-        })
-        froRes.forEach((item)=>{
-            ingdRes.push(item)
-        })
-
-        // 식재료 이름, 비율, pk를 각각 ingdName과 ingdRange에 집어넣기
+        // 식재료 이름, 수량을 각각 ingdName과 ingdRange에 집어넣기
         for(var i=0;i<ingdRes.length;i++){
             ingdName.push(ingdRes[i].name + "");
             ingdRange.push(ingdRes[i].range);
         }
         console.log("ingdName : ", ingdName);
         console.log("ingdRange : ", ingdRange);
-        let ingdNameStr = ingdName.join(",|,"); // 정확하게 일치하는 재료를 찾기 위해서 ingName을 문자열로
-        let bigIngdNameStr = ingdNameStr.replace(/,/g, ""); // 더 광범위한 재료 포함
+        
+        // 정확하게 일치하는 재료를 찾기 위해서 ingName을 문자열로
+        let ingdNameStr = ingdName.join(",|,"); 
+        // 더 광범위한 재료 포함 할 때 ex 파 검색 => 쪽파, 대파, 양파 같이
+        let bigIngdNameStr = ingdNameStr.replace(/,/g, ""); 
 
-        // 식재료가 있을 때 일치하는 식재료가 있으면 보여주고, 식재료가 없을 때는 recipe_tag가 null값인 것 을 보여준다.
-        let where = {};
+        // 식재료가 있을 때 일치하는 식재료가 있으면 보여준다. 식재료가 없을 때는 recipe_tag가 null값인 것을 보여준다.
+        let where = {}; // 레시피에서 검색할 때 사용할 where 절
 
         if(ingdRes.length > 0){ // 식재료랑 정확하게 일치하는 레시피가 있을 때,
             where["recipe_ingd"] = { [Op.regexp] : ingdNameStr};
             
-            // 빠른 한끼 태그일 때
+            // 빠른 한끼 태그가 있을 때
             if(req.query.tag == "빠름") {
                 let fastRes = await recipe.findAll({
                     raw : true,
@@ -222,9 +228,15 @@ exports.patchToFridge = async (req,res) => {
             })
             console.log(freIngdName);
 
+            // freRes과 같지 않은 것 ==> frozen에 있는 IngdName == frozen에서 수정할 때 필요한 이름
+            let froIngdName = ingdName.filter(item => {
+                return !freRes.some(other => other.name === item);
+            })
+            console.log("froIngdName", froIngdName);
+
             // fresh테이블에서 나온 결과가 있을 때 fresh테이블에서 바로 수정
             let freResult;
-            if(freRes.length > 0) {
+            if(freRes.length > 0 ) {
                 for(var i=0; i<freRes.length; i++){
                     let data = { fresh_range : 50 };
                     freResult = await fresh.update(data, {
@@ -235,13 +247,9 @@ exports.patchToFridge = async (req,res) => {
                     })
                     console.log("fresh 테이블에서 업데이트 결과: ", freResult);
                 }
-                
+                if (froIngdName.length<1) res.send(freResult); // frozen테이블에 없는 경우 send 
             }
-            // freRes과 같지 않은 것 ==> frozen에 있는 IngdName == frozen에서 수정할 때 필요한 이름
-            let froIngdName = ingdName.filter(item => {
-                return !freRes.some(other => other.name === item);
-            })
-            console.log("froIngdName", froIngdName);
+ 
 
             // fresh 테이블에서만 업데이트가 있는 경우에 res.send
             if(freResult && !froIngdName){
@@ -289,6 +297,21 @@ exports.postInsertToLog = async (req,res) => {
     });
     // find해서 create 하지 못해도 true넘기고, create해도 true
     if(create || find ) res.send(true);
+}
+
+// 최근에 한 요리
+exports.postInsertToCookLog = async (req,res) => {
+    const final_user_id = (req.cookies.user_id === undefined) ? req.session.user : req.cookies.user_id;
+    // 같은 레시피 id가 존재하면 log DB에 create 하지 않음
+    let [find, create] = await cooklog.findOrCreate({
+        where : { recipe_recipe_id : req.body.id },
+        defaults : {
+            recipe_recipe_id : req.body.id,
+            user_user_id : final_user_id,
+        }
+    });
+    // find해서 create 하지 못해도 true 넘기고, create해도 true
+    if( create || find ) res.send(true);
 }
 
 // 좋아요

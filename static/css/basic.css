@@ -98,6 +98,10 @@ a:visited {
     width: 30rem;
 }
 
+#search_btn {
+    background-color: var(--btn-success);
+}
+
 /* header.css END */
 
 
