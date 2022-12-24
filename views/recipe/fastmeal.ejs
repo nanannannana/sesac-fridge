@@ -9,7 +9,6 @@
       <button class="btn filter" type="button" onclick="selectFilter('건강/웰빙')">건강/웰빙</button>
       <button class="btn filter" type="button" onclick="selectFilter('야식')">야식</button>
       <button class="btn filter" type="button" onclick="location.href='/recipe'">나의 식재료와 일치</button>
-      <button class="btn filter" type="button" onclick="selectFilter('빠름')">빠른 한끼</button>
     </div>
 </div>
 <main>
@@ -51,22 +50,6 @@
                           <div>
                           <i class="fas fa-regular fa-bowl-food"></i>&nbsp;
                           <%=data[i].recipe_ingd.toString().replace(/,/g, " ")%>
-                          </div>
-                          <div class="pt-2 ingdArr">나의 냉장고와 일치하는 재료 :
-                          <% let recp_ingd = ingdResult[i].toString().slice(1,-1).split(",")%>
-                          <% let myingd = ingdName.toString().split(',')%>
-                          <% let myingd_range = ingdRange.toString().split(',')%>
-                          <% let ingred = [] %>
-                          <% let range = [] %>
-                          <% for(var j=0; j<recp_ingd.length; j++) { %>
-                              <% for(var k=0; k<myingd.length; k++) { %>
-                                   <% if(recp_ingd[j] == myingd[k]) { %>
-                                        <%= myingd[k]%>
-                                        <% ingred.push(myingd[k]) %>
-                                        <% range.push(myingd_range[k]) %>
-                                   <% } %>
-                              <% } %>
-                          <% } %>  
                           </div> 
                         </div>
                     </div>
@@ -75,11 +58,6 @@
             </div>
             <!--card-->
             <div class="btn_outer mt-3 mb-3">
-                <div class="btn_inner text-center p-1"> 
-                  <input type="button" class="btn show_recipe" 
-                  onclick="insertLog('<%=data[i].recipe_id%>', '<%=data[i].recipe_url%>')" value="레시피보기">
-                  <input type="button" class="btn show_cook" onclick="cooking('<%=ingred%>', '<%=range%>')" value="요리하기">
-                </div>
             </div>
             <!--btn_outer-->
         </div>

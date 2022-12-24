@@ -43,19 +43,29 @@ exports.getRecipe = async (req, res) => {
         }
         let ingdNameStr = ingdName.join(",|,"); // 일치하는 재료를 찾기 위해서 ingName을 문자열로
 
-        // 실제 되는 값
         // 식재료가 있을 때 일치하는 식재료가 있으면 보여주고, 식재료가 없을 때는 recipe_tag가 null값인 것 을 보여준다.
         let where = {};
         
         if(ingdRes.length > 0){ // 식재료랑 일치하는 레시피가 있을 때,
             where["recipe_ingd"] = { [Op.regexp] : ingdNameStr};
+            // 빠른 한끼 태그일 때
+            if(req.query.tag === "빠름") {
+                let result = await recipe.findAll({
+                    raw : true,
+                    order : [
+                        [ 'recipe_time', 'ASC']
+                    ],
+                    limit : 40 
+                })
+                res.render("recipe/fastmeal", {isLogin : true, data : result});
+            }
+            // 일반 태그일 때
             if(req.query.tag) {
                 where["recipe_tag"] = req.query.tag;
             }
         }else{ // 식재료랑 일치하는 레시피가 0개 (냉장고가 빈 사람포함)
             where["recipe_tag"] = null;
         }
-        console.log("태그값", req.query.tag);
         
         // recipe 테이블에 있는 데이터 가져오기
         let recipes = await recipe.findAll({

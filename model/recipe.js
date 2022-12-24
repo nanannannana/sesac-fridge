@@ -1,3 +1,5 @@
+const { INTEGER } = require("sequelize");
+
 const recipe = (Sequelize, DataTypes) => {
     return Sequelize.define(
         "recipe",
@@ -21,7 +23,7 @@ const recipe = (Sequelize, DataTypes) => {
                 allowNull : false,
             },
             recipe_time : {
-                type : DataTypes.STRING(10),
+                type : DataTypes.INTEGER,
                 allowNull : false,
             },
             recipe_img : {
