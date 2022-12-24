@@ -1,4 +1,3 @@
-
 // 필터 클릭시 페이지 이동
 function selectFilter(filter) {
     location.href="/recipe?tag=" + filter;
@@ -37,11 +36,10 @@ function insertLike(element, id) {
 let inputcnt = 0;  // 전역변수로 설정해서 input 태그 개수 가져오기(input radiobox가 여러개일 때)
 
 // 요리하기 버튼을 누르면 뜰 alert 창
-// 식재료가 하나인 경우 [1]
-// 식재료가 여러개인 경우 [2]
-// 식재료가 없는 경우 [3]
-async function cooking(data, range){
+// 
+async function cooking(data, range, id){
     // 넘어온 문자열로 짜르고 ingArr에 넣기(여러개일 경우를 대비해)
+    // id는 cooklog 테이블에 넣기 위해서 매개변수로 받는다. (나중에 업데이트 하고 실행할 함수에 변수로)
     let ingArr = data.split(",");    // 식재료
     let rangeArr = range.split(","); // 식재료 비율
     let rangeData = rangeArr.map((i) => Number(i));
@@ -167,7 +165,7 @@ async function cooking(data, range){
             
             // 두 번째 단계 완료 후 DB에 데이터 넘기기 위한 함수 실행
             if (currentStep === steps.length) {
-                updateToFridge(radioArr);
+                updateToFridge(radioArr, id);
             }
         }
     }
@@ -241,7 +239,7 @@ function checkRadio(htmlTag, cnt) {
 }
 
 // 수정을 위한 체크한 정보 fresh와 frozen DB로 전송
-function updateToFridge(result){
+function updateToFridge(result, id){
     // 1. 배열 result를 백단에 보낼 데이터를 객체 배열형태로
     let resultArr = [];
     for(var i=0; i<result.length*6; i++) {
@@ -275,6 +273,30 @@ function updateToFridge(result){
         setTimeout(()=>{
             location.reload();
         },1500);
-        
+        insertCookLog(id);
+    })
+}
+
+// 최근 본 레시피 클릭 시 log 테이블에 추가
+function insertLog(id, url) {
+    let recipe_id = id;
+    axios({
+        method : "post",
+        url : "/recipe/insertToLog",
+        data : { id : recipe_id },
+    }).then((res)=>{
+        location.href=url;
+    })
+}
+
+// 요리하기 버튼을 누르면 최근 한 요리 cooklog 테이블에 추가
+function insertCookLog(id){
+    let recipe_id = id;
+    axios({
+        method : "post",
+        url : "/recipe/insertToCookLog",
+        data : { id : recipe_id },
+    }).then((res)=>{
+        console.log("res.data", res.data);
     })
 }

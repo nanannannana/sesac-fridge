@@ -54,8 +54,3 @@ $(()=>{
         $("#nf_2").addClass("hidden");
     })
 })
-
-// 검색 기능
-function search() {
-    console.log()
-}

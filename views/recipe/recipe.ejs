@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="btn_inner text-center p-1"> 
                   <input type="button" class="btn show_recipe" 
                   onclick="insertLog('<%=data[i].recipe_id%>', '<%=data[i].recipe_url%>')" value="레시피보기">
-                  <input type="button" class="btn show_cook" onclick="cooking('<%=ingred%>', '<%=range%>')" value="요리하기">
+                  <input type="button" class="btn show_cook" onclick="cooking('<%=ingred%>', '<%=range%>','<%=data[i].recipe_id%>')" value="요리하기">
                 </div>
             </div>
             <!--btn_outer-->
