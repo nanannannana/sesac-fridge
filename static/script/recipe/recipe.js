@@ -16,8 +16,9 @@ function insertLog(id, url) {
 }
 
 // 빈 하트 클릭 시 recipe_like 테이블에 추가
-function insertLike(element, id, str) {
-    if(str === "non_login") {
+function insertLike(element, id, login) {
+    
+    if(login!=true) {
         $(".likeBtn").on("click", ()=>{
             alert("클릭이벤트 발생!");
         })
@@ -28,11 +29,14 @@ function insertLike(element, id, str) {
         url : "/recipe/insertToLike",
         data : { id : recipe_id },
     }).then((res)=>{
-        $(element).closest("h5").css('display', 'none');
-        $(element).closest("button").append(
-            ` <h5><i class="bi bi-balloon-heart-fill"></i>
-            </h5>`
-        )
+        // 검정색 하트
+        if(res.data === login) {
+            $(element).closest("h5").css('display', 'none');
+            $(element).closest("button").append(
+                ` <h5><i class="bi bi-balloon-heart-fill"></i>
+                </h5>`
+            )
+        }
     })
 }
 
@@ -41,7 +45,6 @@ function insertLike(element, id, str) {
 let inputcnt = 0;  // 전역변수로 설정해서 input 태그 개수 가져오기(input radiobox가 여러개일 때)
 
 // 요리하기 버튼을 누르면 뜰 alert 창
-// 
 async function cooking(data, range, id){
     // 넘어온 문자열로 짜르고 ingArr에 넣기(여러개일 경우를 대비해)
     // id는 cooklog 테이블에 넣기 위해서 매개변수로 받는다. (나중에 업데이트 하고 실행할 함수에 변수로)
