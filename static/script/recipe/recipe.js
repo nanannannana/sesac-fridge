@@ -165,41 +165,8 @@ async function cooking(data, range){
                 resultData.splice(0)
             } else break;
             
-            // 두 번째 단계 완료 후 DB에 데이터 넘기기 성공했을 시에 alert 창
+            // 두 번째 단계 완료 후 DB에 데이터 넘기기 위한 함수 실행
             if (currentStep === steps.length) {
-                let remain = "";  // 남는 식재료 이름 넣을 변수
-                let left = "";    // 없어지는 식재료 이름 넣을 변수
-
-                for(var i=0; i<radioResultData.length; i++) {
-                    if(radioResultData[i].range === 50) { // 
-                        remain += `${radioResultData[i].name}` + " ";
-                    }else if(radioResultData[i].range === 0) { 
-                        left += `${radioResultData[i].name}` + " ";
-                    }
-                }
-                if(remain) { // 남는 재료가 있을 때
-                        var result = Swal.fire({
-                        title : `냉장고에 ${remain} 이/가 남았습니다.
-                                \n 다른 레시피에도 사용할 수 있어요! :)`,
-                        showCloseButton: true,
-                        allowEnterKey : true,
-                    })                        
-                }if(left) { // 남는 재료가 없을 때
-                    var result = Swal.fire({
-                        title : `냉장고에서 ${left} 이/가 없어집니다.
-                                \n 다른 레시피에서 사용할 수 없어요! :( `,
-                        showCloseButton: true,
-                        allowEnterKey : true,
-                    }) 
-                }if(remain && left) { // 남는 재료도 있고, 없어지는 재료도 있을 때
-                    var result = Swal.fire({
-                        title : `냉장고에서 ${left} 이/가 없어지고, 
-                                \n ${remain} 이/가 남았습니다.
-                                \n 냉장고에서 재료 현황을 볼 수 있어요!`,
-                        showCloseButton: true,
-                        allowEnterKey : true,
-                    }) 
-                }
                 updateToFridge(radioArr);
             }
         }
@@ -238,6 +205,7 @@ function checkIngd(htmlTag) {
     }
 }
 
+// 남는 것 안남는 것 라디오 버튼 
 // 라디오버튼의 checked 된 것의 재료이름과 수량 갖고오기
 let radioArr = []; // 전역변수로 설정해서 라디오버튼에 체크했을 때 참고
 function checkRadio(htmlTag, cnt) {
@@ -300,9 +268,10 @@ function updateToFridge(result){
     }).then((res)=>{
         console.log("res.data : ", res.data);
         Swal.fire({
-            title : "냉장고에 변동사항이 저장되었습니다. ",
+            title : "냉장고에 재료 변동사항이 잘 들어갔습니다! :) ",
+            showCloseButton: true,
             showConfirmButton : false
         }) 
-        history.go(0);
+        location.reload();
     })
 }
