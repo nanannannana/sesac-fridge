@@ -1,6 +1,15 @@
 <%-include('../main/head.ejs') %>
 <link href="static/css/recipe/recipe.css" rel="stylesheet">
 <%-include('../main/header.ejs') %>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    new TypeIt("#tagIntro")
+        .pause(500) // 1초
+        .delete(5, { delay: 1000 })
+        .type("현재 뜨고 있는 인기 레시피!")
+        .go();
+  });
+</script>
 <div class="container-fluid" id="filter">
     <div class="container" id="filter_box">
       <button class="btn filter" type="button" onclick="selectFilter('반찬')">반찬</button>
@@ -12,6 +21,7 @@
     </div>
 </div>
 <main>
+  <h1 class="intro" id="tagIntro">인기레시피</h1>
   <div id="recipe_list" class="container mt-5 ">
     <div class="row row-cols-2 row-cols-sm-2 row-cols-1">
       <%for(var i=0; i<data.length;i++) { %>
@@ -57,7 +67,11 @@
                 <!--name_ingd-->
             </div>
             <!--card-->
-            <div class="btn_outer mt-3 mb-3">
+           <div class="btn_outer mt-3 mb-3">
+                <div class="btn_inner text-center p-1"> 
+                  <input type="button" class="btn show_recipe" 
+                  onclick="insertLog('<%=data[i].recipe_id%>', '<%=data[i].recipe_url%>')" value="레시피보기">
+                </div>
             </div>
             <!--btn_outer-->
         </div>

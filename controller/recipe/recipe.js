@@ -41,24 +41,42 @@ exports.getRecipe = async (req, res) => {
             ingdName.push(ingdRes[i].name + "");
             ingdRange.push(ingdRes[i].range);
         }
-        let ingdNameStr = ingdName.join(",|,"); // 일치하는 재료를 찾기 위해서 ingName을 문자열로
+        console.log("ingdName : ", ingdName);
+        console.log("ingdRange : ", ingdRange);
+        let ingdNameStr = ingdName.join(",|,"); // 정확하게 일치하는 재료를 찾기 위해서 ingName을 문자열로
+        let bigIngdNameStr = ingdNameStr.replace(/,/g, ""); // 더 광범위한 재료 포함
 
         // 식재료가 있을 때 일치하는 식재료가 있으면 보여주고, 식재료가 없을 때는 recipe_tag가 null값인 것 을 보여준다.
         let where = {};
-        
-        if(ingdRes.length > 0){ // 식재료랑 일치하는 레시피가 있을 때,
+
+        if(ingdRes.length > 0){ // 식재료랑 정확하게 일치하는 레시피가 있을 때,
             where["recipe_ingd"] = { [Op.regexp] : ingdNameStr};
+            
             // 빠른 한끼 태그일 때
-            if(req.query.tag === "빠름") {
-                let result = await recipe.findAll({
+            if(req.query.tag == "빠름") {
+                let fastRes = await recipe.findAll({
                     raw : true,
+                    where : { ["recipe_ingd"] : { [Op.regexp] : ingdNameStr} },
                     order : [
                         [ 'recipe_time', 'ASC']
                     ],
-                    limit : 40 
+                    limit : 45
                 })
-                res.render("recipe/fastmeal", {isLogin : true, data : result});
-            }
+                let result = { data : fastRes } 
+
+                if (ingdRes) {
+                    let ingdResult = []; 
+                    for(var i=0; i<fastRes.length;i++) {
+                        ingdResult.push(fastRes[i].recipe_ingd);
+                    }
+                    result["ingdName"] = ingdName;
+                    result["ingdRange"] = ingdRange;
+                    result["ingdResult"] = ingdResult;
+                    result["isLogin"] = true;
+                    result["tag"] = req.query.tag;
+                }
+                res.render("recipe/fastmeal", result);
+            } 
             // 일반 태그일 때
             if(req.query.tag) {
                 where["recipe_tag"] = req.query.tag;
@@ -67,25 +85,33 @@ exports.getRecipe = async (req, res) => {
             where["recipe_tag"] = null;
         }
         
-        // recipe 테이블에 있는 데이터 가져오기
-        let recipes = await recipe.findAll({
-            raw : true, // dataValues만 가져오기
-            where
-        });
-        let result = { data: recipes }; // 데이터 결과를 result안에 집어넣기.
-
-        // 식재료가 있을 때 프론트 단에서 사용할 나의 재료 이름과 수량
-        if ( ingdRes ) {
-            let ingdResult = []; 
-            for(var i=0; i<recipes.length;i++) {
-                ingdResult.push(recipes[i].recipe_ingd);
+        // recipe 테이블에 있는 데이터 가져오기(SELECT)
+        if(req.query.tag != "빠름") {
+            let recipes = await recipe.findAll({
+                raw : true, // dataValues만 가져오기
+                where
+            });
+            let result = { data: recipes }; // 데이터 결과를 result안에 집어넣기.
+    
+            // 식재료가 있을 때 프론트 단에서 사용할 나의 재료 이름과 수량
+            if ( ingdRes ) {
+                let ingdResult = []; 
+                for(var i=0; i<recipes.length;i++) {
+                    ingdResult.push(recipes[i].recipe_ingd);
+                }
+                result["ingdName"] = ingdName;
+                result["ingdRange"] = ingdRange;
+                result["ingdResult"] = ingdResult;
+                result["isLogin"] = true;
+                if(req.query.tag) {
+                    result["tag"] = [req.query.tag];
+                }
+                if(!req.query.tag) {
+                    result["tag"] = ["식재료 일치"];
+                }
             }
-            result["ingdName"] = ingdName;
-            result["ingdRange"] = ingdRange;
-            result["ingdResult"] = ingdResult;
-            result["isLogin"] = true;
+            res.render("recipe/recipe", result);
         }
-        res.render("recipe/recipe", result);
     }else { // 로그아웃 했을 때 
         let recipes = await recipe.findAll({
             raw : true, // dataValues만 가져오기
@@ -197,20 +223,19 @@ exports.patchToFridge = async (req,res) => {
             console.log(freIngdName);
 
             // fresh테이블에서 나온 결과가 있을 때 fresh테이블에서 바로 수정
+            let freResult;
             if(freRes.length > 0) {
-                let result;
                 for(var i=0; i<freRes.length; i++){
                     let data = { fresh_range : 50 };
-                    console.log("data", data);
-                    result = await fresh.update(data, {
+                    freResult = await fresh.update(data, {
                         where : {
                             user_user_id : final_user_id,
                             fresh_name : freIngdName[i]
                         }
                     })
-                    console.log("fresh 테이블에서 업데이트 결과: ", result);
+                    console.log("fresh 테이블에서 업데이트 결과: ", freResult);
                 }
-                res.send(result);
+                
             }
             // freRes과 같지 않은 것 ==> frozen에 있는 IngdName == frozen에서 수정할 때 필요한 이름
             let froIngdName = ingdName.filter(item => {
@@ -218,6 +243,10 @@ exports.patchToFridge = async (req,res) => {
             })
             console.log("froIngdName", froIngdName);
 
+            // fresh 테이블에서만 업데이트가 있는 경우에 res.send
+            if(freResult && !froIngdName){
+                res.send(freResult);
+            }
             // 아직 frozen에서 삭제해야 할 재료가 남아있다. 
             // frozen에서 select 한 후 업데이트
             if(freRes.length != updateArr.length) { 
@@ -239,23 +268,23 @@ exports.patchToFridge = async (req,res) => {
                     })
                     console.log("frozen 업데이트 결과: ", result);
                 }
-                res.sned(result);
+                res.send(result);
             }
         }
     }
 }
 
 
-
 // 최근에 본 레시피
 exports.postInsertToLog = async (req,res) => {
-    console.log(req.body.id);
+   
+    const final_user_id = (req.cookies.user_id === undefined) ? req.session.user : req.cookies.user_id;
     // 같은 레시피 id가 존재하면 log DB에 create 하지 않음
     let [find, create] = await log.findOrCreate({
         where : { recipe_recipe_id : req.body.id },
         defaults : {
             recipe_recipe_id : req.body.id,
-            user_user_id : "root@naver.com",
+            user_user_id : final_user_id,
         }
     });
     // find해서 create 하지 못해도 true넘기고, create해도 true
@@ -264,6 +293,8 @@ exports.postInsertToLog = async (req,res) => {
 
 // 좋아요
 exports.postInsertToLike = async (req,res) => {
+
+    const final_user_id = (req.cookies.user_id === undefined) ? req.session.user : req.cookies.user_id;
     // recipe tb에 컬럼 수정
     await recipe.update(
         {recipe_pick : 1},
@@ -274,7 +305,7 @@ exports.postInsertToLike = async (req,res) => {
         where : { recipe_recipe_id : req.body.id },
         defaults : {
             recipe_recipe_id : req.body.id,
-            user_user_id : "root@naver.com",
+            user_user_id : final_user_id,
         }
     })
     // find에서 create 하지 못해도 true 넘기고, create해도 true

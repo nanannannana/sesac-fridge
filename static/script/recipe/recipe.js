@@ -268,10 +268,13 @@ function updateToFridge(result){
     }).then((res)=>{
         console.log("res.data : ", res.data);
         Swal.fire({
-            title : "냉장고에 재료 변동사항이 잘 들어갔습니다! :) ",
-            showCloseButton: true,
-            showConfirmButton : false
+            icon: 'success',
+            title : "냉장고에 재료 변동사항이 \n 생겼습니다! :) ",
+            showConfirmButton : false,
         }) 
-        location.reload();
+        setTimeout(()=>{
+            location.reload();
+        },1500);
+        
     })
 }

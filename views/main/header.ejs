@@ -24,9 +24,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <form class="d-flex" role="search" id="hd_search">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-light" type="submit">Search</button>
+                        <form class="d-flex" role="search" id="hd_search" method="get" action="/recipe">
+                            <input class="form-control me-2" type="search" placeholder="식재료 이름을 검색해주세요" aria-label="Search">
+                            <button class="btn btn-light" type="button" onclick="search()">Search</button>
                         </form>
                         <li class="nav-item" id="nav_recipe">
                             <a href="/recipe" id="nr_1"><img src="../../static/img/navRecipe.png"></a>
