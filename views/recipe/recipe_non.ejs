@@ -1,24 +1,16 @@
 <%-include('../main/head.ejs') %>
 <link href="static/css/recipe/recipe.css" rel="stylesheet">
 <%-include('../main/header.ejs') %>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    new TypeIt("#tagIntro")
-        .pause(500) // 1초
-        .delete(5, { delay: 1000 })
-        .type("현재 뜨고 있는 인기 레시피!")
-        .go();
-  });
-</script>
 <div class="container-fluid" id="filter">
-    <div class="container" id="filter_box">
-      <button class="btn filter" type="button" onclick="selectFilter('반찬')">반찬</button>
-      <button class="btn filter" type="button" onclick="selectFilter('밥')">밥</button>
-      <button class="btn filter" type="button" onclick="selectFilter('국/탕')">국/탕</button>
-      <button class="btn filter" type="button" onclick="selectFilter('건강/웰빙')">건강/웰빙</button>
-      <button class="btn filter" type="button" onclick="selectFilter('야식')">야식</button>
-      <button class="btn filter" type="button" onclick="location.href='/recipe'">나의 식재료와 일치</button>
-    </div>
+  <div class="container" id="filter_box">
+    <button class="btn filter" type="button" onclick="selectFilter('반찬')">반찬</button>
+    <button class="btn filter" type="button" onclick="selectFilter('밥')">밥</button>
+    <button class="btn filter" type="button" onclick="selectFilter('국/탕')">국/탕</button>
+    <button class="btn filter" type="button" onclick="selectFilter('건강/웰빙')">건강/웰빙</button>
+    <button class="btn filter" type="button" onclick="selectFilter('야식')">야식</button>
+    <button class="btn filter" type="button" onclick="selectFilter('빠름')">빠른 한끼</button>
+    <button class="btn filter" type="button" onclick="location.href='/recipe'">식재료 일치 레시피</button>
+  </div>
 </div>
 <main>
   <h1 class="intro" id="tagIntro">인기레시피</h1>
@@ -39,11 +31,10 @@
                       </span>
                       <button type="button" class="btn btns" title="<%=data[i].recipe_id%>">
                         <% if (data[i].recipe_pick == 0) { %>
-                          <h5><i class="bi bi-balloon-heart" 
-                            onclick="insertLike(this, '<%=data[i].recipe_id%>')"></i>
+                          <h5><i class="bi bi-balloon-heart likeBtn" onclick="insertLike(this, '<%=data[i].recipe_id%>','non_login')"></i>
                           </h5>
                         <% } else { %>
-                          <h5><i class="bi bi-balloon-heart-fill"></i>
+                          <h5><i class="bi bi-balloon-heart-fill likeBtn"></i>
                           </h5>
                         <% } %>
                       </button>
