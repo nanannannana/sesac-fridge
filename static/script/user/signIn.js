@@ -74,7 +74,7 @@ function signin() {
         .then(async function(res) {
             form.reset();
             if (res.data.result) {
-                localStorage.setItem("username", res.data.username)
+                localStorage.setItem("username", res.data.username);
                 await Swal.fire({
                     icon: 'success',
                     title: '로그인에 성공하였습니다!',

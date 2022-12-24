@@ -18,6 +18,11 @@ const user = (Sequelize, DataTypes) => {
             user_phone : {
                 type : DataTypes.INTEGER,
                 allowNull : false
+            },
+            kakao_login : {
+                type : DataTypes.INTEGER,
+                allowNull: false,
+                defaultValue : 0
             }
         },
         {
