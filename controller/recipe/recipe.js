@@ -109,7 +109,7 @@ exports.patchToFridge = async (req,res) => {
     if(req.session.user || req.cookies.user_id) {
         const final_user_id = (req.cookies.user_id === undefined) ? req.session.user : req.cookies.user_id;
         
-        // 삭제할 배열이 있을 때
+        // [1] 삭제할 배열이 있을 때
         // 받은 데이터로 fresh와 frozen에서 일치하는 값을 찾아서 삭제
         if(delArr.length > 0) {
             let delName = [];  // 삭제할 이름
@@ -163,19 +163,20 @@ exports.patchToFridge = async (req,res) => {
             }
         }
 
-        // 업데이트 할 배열이 있을 때
+        // [2] 업데이트 할 배열이 있을 때
         // 업데이트할 배열
         let updateArr = req.body.filter(item => {
             return !item.delMust
         })
     
-        let ingdName = [];        // 업데이트 할 재료 이름
-        let ingdRange = [];       // 업데이트 할 재료 비율
+        let ingdName = [];    // 업데이트 할 재료 이름
+        let ingdRange = [];   // 업데이트 할 재료 비율
 
         updateArr.forEach((item) => {
             ingdName.push(item.name);
             ingdRange.push(item.range);
         })
+        
         if(updateArr.length > 0) {
             console.log("업데이트 해야 할 updateArr : ", updateArr);
 
@@ -197,6 +198,7 @@ exports.patchToFridge = async (req,res) => {
 
             // fresh테이블에서 나온 결과가 있을 때 fresh테이블에서 바로 수정
             if(freRes.length > 0) {
+                let result;
                 for(var i=0; i<freRes.length; i++){
                     let data = { fresh_range : 50 };
                     console.log("data", data);
@@ -206,14 +208,15 @@ exports.patchToFridge = async (req,res) => {
                             fresh_name : freIngdName[i]
                         }
                     })
-                    console.log("fresh 업데이트 결과: ", result);
+                    console.log("fresh 테이블에서 업데이트 결과: ", result);
                 }
+                res.send(result);
             }
             // freRes과 같지 않은 것 ==> frozen에 있는 IngdName == frozen에서 수정할 때 필요한 이름
             let froIngdName = ingdName.filter(item => {
                 return !freRes.some(other => other.name === item);
             })
-            console.log("froIngdName 동태와 바지락", froIngdName);
+            console.log("froIngdName", froIngdName);
 
             // 아직 frozen에서 삭제해야 할 재료가 남아있다. 
             // frozen에서 select 한 후 업데이트
@@ -225,6 +228,7 @@ exports.patchToFridge = async (req,res) => {
                 })
                 console.log("frozen테이블에서 삭제해야 할 froRes: ", froRes)
              
+                let result;
                 for(var i=0; i<froRes.length; i++) {
                     let data = { frozen_range : 50};
                     result = await frozen.update(data, {
@@ -235,6 +239,7 @@ exports.patchToFridge = async (req,res) => {
                     })
                     console.log("frozen 업데이트 결과: ", result);
                 }
+                res.sned(result);
             }
         }
     }
