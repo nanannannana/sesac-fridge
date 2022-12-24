@@ -16,7 +16,12 @@ function insertLog(id, url) {
 }
 
 // 빈 하트 클릭 시 recipe_like 테이블에 추가
-function insertLike(element, id) {
+function insertLike(element, id, str) {
+    if(str === "non_login") {
+        $(".likeBtn").on("click", ()=>{
+            alert("클릭이벤트 발생!");
+        })
+    }
     let recipe_id = id;
     axios({
         method : "post",
