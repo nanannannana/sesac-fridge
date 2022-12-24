@@ -23,6 +23,12 @@
     border : none;
 }
 
+/*태그 설명 텍스트*/
+.intro {
+    text-align: center;
+    font-family: NanumSquareAcb;
+}
+ 
 /*레시피 카드*/
 .card {
     background-color: #fff;
