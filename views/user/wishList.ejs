@@ -7,40 +7,23 @@
 <main>
     <%-include('myPageBasic.ejs')%>
     <div id="wishlist_box" class="container">
-            <p id="box_title"><span><%=user_name%>님</span>의 찜리스트</p>
-            <div id="wishlist_card_box">
-                <div id="wishlist_card_box_child">
-                    <% for (var i=0 ; i<recipe_id.length ; i++ ) { %>
-                        <div id="card_size" class="card mb-4 me-3">
-                            <img src="<%=recipe_img[i]%>" class="card-img" alt="...">
-                            <div id="card_hover" class="card-img-overlay">
-                                <i id="heart_icon" class="bi bi-heart-fill" type="button" onclick="wishlist_del('<%=recipe_id[i]%>',this)"></i>
-                                <div id="card_text_box">
-                                    <h3 id="card_text" class="card-title"><%=recipe_title[i]%></h3>
-                                    <h5 id="card_text" class="card-text" type="button" onclick="location.href='<%=recipe_url[i]%>'" target="_blank">레시피 보기</h5>
-                                </div>
+        <p id="box_title"><span><%=user_name%>님</span>의 찜리스트</p>
+        <div id="wishlist_card_box">
+            <div id="wishlist_card_box_child">
+                <% for (var i=0 ; i<recipe_id.length ; i++ ) { %>
+                    <div id="card_size" class="card mb-4 me-3">
+                        <img src="<%=recipe_img[i]%>" class="card-img" alt="...">
+                        <div id="card_hover" class="card-img-overlay">
+                            <i id="heart_icon" class="bi bi-heart-fill" type="button" onclick="wishlist_del('<%=recipe_id[i]%>',this)"></i>
+                            <div id="card_text_box">
+                                <h3 id="card_text" class="card-title"><%=recipe_title[i]%></h3>
+                                <h5 id="card_text" class="card-text" type="button" onclick="location.href='<%=recipe_url[i]%>'" target="_blank">레시피 보기</h5>
                             </div>
                         </div>
-                    <% } %>
-                </div>
+                    </div>
+                <% } %>
             </div>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                    </li>
-                    <li id="pagnation_text"class="page-item"><a class="page-link" href="#">1</a></li>
-                    <!-- <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-                    <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                    </li>
-                </ul>
-            </nav>
+        </div>
     </div>
     <div class="mt-5"></div>
 </main>

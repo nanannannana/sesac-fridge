@@ -7,7 +7,8 @@ function info_del() {
             user_id: form.user_id.value
         }
     })
-    .then(()=>{
+    .then( function() {
+        localStorage.clear();
         Swal.fire({
             icon: "success",
             title: "회원 탈퇴가 완료되었습니다!",
