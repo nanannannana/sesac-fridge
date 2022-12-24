@@ -2,14 +2,6 @@
 <link rel="stylesheet" type="text/css" href="/static/css/user/myPageBasic.css">
 <link rel="stylesheet" type="text/css" href="/static/css/user/signIn.css">
 <script type="text/javascript" src="static/script/user/signIn.js"></script>
-<script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
-</script>
-<script type="text/javascript">
-  (function() {
-      emailjs.init('YeQ35QOsyUyM1GKKQ');
-  })();
-</script>
 </head>
 
 <body>
@@ -33,8 +25,10 @@
           <input type="checkbox" value="1" id="remember_me_check" name="remember_me_check"><label for="remember_me_check" id="remember_me_check_test">자동로그인</label>
           <button type="button" id="button" class="btn mb-3" onclick="signin()">로그인</button>
         </form>
-
+        <a href="<%=kakao_auth_url%>"><img src="/static/img/kakao_logo.png"/></a>
         <a href="#ModalToggle" data-bs-toggle="modal" role="button">아이디 찾기</a>
+
+        <!-- 아이디 비밀번호 찾기 관련 modal -->
         <div class="modal fade animate__animated animate__fadeInDown" id="ModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -107,8 +101,7 @@
                   </div>
                   <div class="modal-footer px-0">
                     <button id="button3" type="button" class="btn" data-bs-dismiss="modal">닫기</button>
-                    <a class="btn" id="find_button_2" href="sms:010-7917-2246?body=비밀번호">비밀번호 찾기</a>
-                    <!-- <button  data-bs-target="#ModalToggl4" data-bs-toggle="modal" type="button" class="btn" onclick="pw_find()" disabled>확인</button> -->
+                    <button id="find_button_2" data-bs-target="#ModalToggl4" data-bs-toggle="modal" type="button" class="btn" onclick="pw_find()" disabled>확인</button>
                   </div>
                 </form>
               </div>
@@ -125,7 +118,8 @@
               </div>
               <div id="modal_body_2" class="modal-body">
                 <div id="modal_body_box_2">
-                  <p>비밀번호 문자로 보냄</p>
+                  <p id="modal_body_box_text">비밀번호가 문자로 발송됐습니다!</p>
+                  <p id="modal_body_box_text">문자를 확인해주시기 바랍니다.</p>
                 </div>
               </div>
               <div class="modal-footer">

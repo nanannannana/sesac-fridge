@@ -11,6 +11,10 @@ exports.postMyPage = async function(req,res) {
     // 자동로그인 했을 떄
     if (req.cookies.user_id || req.session.user) {
         const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
+        let user_result = await user.findOne({
+            raw: true,
+            where: {user_id : final_user_id}
+        });
         var fresh_result = await fresh.findAll({
             raw:true,
             where: {user_user_id: final_user_id}
@@ -74,6 +78,7 @@ exports.postMyPage = async function(req,res) {
         }
         res.render("user/myPage", {
             isLogin: true,
+            user_name: user_result.user_name,
             fresh_category: fresh_category_list,
             cook_tag: cook_tag_list,
             cook_title: cook_title_list,
@@ -84,9 +89,7 @@ exports.postMyPage = async function(req,res) {
             recipe_img: recipe_img_list
         });
     } else { // 자동로그인 x, 로그인 x
-        res.render("user/myPage404", {
-            isLogin: false
-        })
+        res.render("main/404")
     }
 }
 exports.postMyPageChart = function(req,res) {
@@ -99,6 +102,10 @@ exports.postMyPageChart = function(req,res) {
 exports.postWishList = async function(req,res) {
     if (req.cookies.user_id || req.session.user) {
         const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
+        let user_result = await user.findOne({
+            raw: true,
+            where: {user_id : final_user_id}
+        });
         let rec_like = await recipe_like.findAll({
             include: [
                 {
@@ -124,19 +131,14 @@ exports.postWishList = async function(req,res) {
         }
         res.render("user/wishList", {
             isLogin: true,
+            user_name: user_result.user_name,
             recipe_id: recipe_id,
             recipe_img: recipe_img,
             recipe_title: recipe_title,
             recipe_url: recipe_url
         });
     } else {
-        res.render("user/wishList", {
-            isLogin: false,
-            recipe_id: recipe_id,
-            recipe_img: recipe_img,
-            recipe_title: recipe_title,
-            recipe_url: recipe_url
-        });
+        res.render("main/404");
     }
 }
 // 찜리스트 정보 삭제
