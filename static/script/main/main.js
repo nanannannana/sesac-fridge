@@ -21,6 +21,7 @@ function fridgeList(){
   }).then((res)=>{
     let fresh_len = res.data.freshList.length;
     let frozen_len = res.data.frozenList.length;
+    localStorage.setItem("username", res.data.username);
 
     for(i=0; i< fresh_len; i++){
       localStorage.setItem( `${res.data.freshList[i].fresh_name}_fridge`, "fresh" );

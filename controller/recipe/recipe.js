@@ -26,7 +26,7 @@ exports.getRecipe = async (req, res) => {
             attributes : [['frozen_name', 'name'], ['frozen_range', 'range']],
             where : { user_user_id : final_user_id}
         })
-
+        
         // fresh, frozen 테이블에서 검색한 결과를 합쳐서 ingdRes에 넣는다.
         let ingdRes = [];  
         freRes.forEach((item)=>{
@@ -93,6 +93,7 @@ exports.getRecipe = async (req, res) => {
         
         // recipe 테이블에 있는 데이터 가져오기(SELECT)
         if(req.query.tag != "빠름") {
+            console.log("dbwjfwkj: ", final_user_id )
             let recipes = await recipe.findAll({
                 raw : true, // dataValues만 가져오기
                 where
@@ -285,7 +286,6 @@ exports.patchToFridge = async (req,res) => {
 
 // 최근에 본 레시피
 exports.postInsertToLog = async (req,res) => {
-   
     const final_user_id = (req.cookies.user_id === undefined) ? req.session.user : req.cookies.user_id;
     // 같은 레시피 id가 존재하면 log DB에 create 하지 않음
     let [find, create] = await log.findOrCreate({
@@ -310,6 +310,9 @@ exports.postInsertToCookLog = async (req,res) => {
             user_user_id : final_user_id,
         }
     });
+    console.log("최근에 한 요리 create: ", create)
+    console.log("최근에 한 요리 find: ", find)
+    
     // find해서 create 하지 못해도 true 넘기고, create해도 true
     if( create || find ) res.send(true);
 }

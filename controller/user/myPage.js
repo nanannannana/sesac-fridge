@@ -254,6 +254,16 @@ exports.postMyInfoDel = async function(req,res) {
 }
 // 회원탈퇴 완료
 exports.deleteMyInfoDel = async function(req,res) {
+    //쿠키 삭제
+    const option = {
+        httpOnly: true,
+        maxAge: 0,
+    }
+    res.cookie("user_id",null,option);
+    // 세션 삭제
+    req.session.destroy(function(err) {
+        if (err) throw err;
+    })
     await user.destroy({where: {user_id: req.body.user_id}});
     res.send(true);
 }
