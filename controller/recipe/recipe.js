@@ -25,7 +25,17 @@ exports.getRecipe = async (req, res) => {
             attributes : [['frozen_name', 'name'], ['frozen_range', 'range']],
             where : { user_user_id : final_user_id}
         })
-        // [1]-1 fresh, frozen 테이블에서 검색한 결과를 합쳐서 ingdRes에 넣는다.
+
+        // [1]-1 좋아요한 레시피를 구분하기 위해서
+        let likeUser = await recipe_like.findAll({
+            raw : true,
+            attributes : [['user_user_id', "userId"]],
+            where : { user_user_id : final_user_id}
+        })
+
+        console.log("likeUser", likeUser);
+
+        // [1]-2 fresh, frozen 테이블에서 검색한 결과를 합쳐서 ingdRes에 넣는다.
         let ingdRes = [];  
         freRes.forEach((item)=>{
             ingdRes.push(item);
@@ -37,7 +47,7 @@ exports.getRecipe = async (req, res) => {
         let ingdName = [];  // 식재료
         let ingdRange = []; // 수량
 
-        // [1]-2 식재료 이름, 수량을 각각 ingdName과 ingdRange에 집어넣기
+        // [1]-3 식재료 이름, 수량을 각각 ingdName과 ingdRange에 집어넣기
         for(var i=0;i<ingdRes.length;i++){
             ingdName.push(ingdRes[i].name + "");
             ingdRange.push(ingdRes[i].range);
@@ -45,9 +55,9 @@ exports.getRecipe = async (req, res) => {
         console.log("ingdName : ", ingdName);
         console.log("ingdRange : ", ingdRange);
         
-        // [1]-3 정확하게 일치하는 재료를 찾기 위해서 ingName을 문자열로
+        // [1]-4 정확하게 일치하는 재료를 찾기 위해서 ingName을 문자열로
         let ingdNameStr = ingdName.join(",|,"); 
-        // [1]-4 더 광범위한 재료 포함 할 때 ex 파 검색 => 쪽파, 대파, 양파 같이
+        // [1]-5 더 광범위한 재료 포함 할 때 ex 파 검색 => 쪽파, 대파, 양파 같이
         let bigIngdNameStr = ingdNameStr.replace(/,/g, ""); 
 
         // [2] 키워드가 있을 때(검색 버튼 클릭 시 키워드로 select)
@@ -107,6 +117,7 @@ exports.getRecipe = async (req, res) => {
                     result["ingdResult"] = ingdResult;
                     result["isLogin"] = true;
                     result["tag"] = req.query.tag;
+                    result["userId"] = final_user_id;
                 }
                 res.render("recipe/fastmeal", result);
             } 
@@ -118,9 +129,9 @@ exports.getRecipe = async (req, res) => {
             where["recipe_tag"] = null;
         }
         
-        // [4] recipe 테이블에 있는 데이터 가져오기(SELECT), 빠른 한끼 버튼이 아닐 때 기존 렌더링
+        // [4] recipe 테이블에 있는 데이터 가져오기(SELECT), 
+        // 빠른 한끼 버튼이 아닐 때 기존 렌더링
         if(req.query.tag != "빠름") {
-            console.log("dbwjfwkj: ", final_user_id )
             let recipes = await recipe.findAll({
                 raw : true, // dataValues만 가져오기
                 where
@@ -138,11 +149,20 @@ exports.getRecipe = async (req, res) => {
                 result["ingdRange"] = ingdRange;
                 result["ingdResult"] = ingdResult;
                 result["isLogin"] = true;
+                result["userId"] = final_user_id;
                 if(req.query.tag) {
                     result["tag"] = [req.query.tag];
                 }
                 if(!req.query.tag) {
                     result["tag"] = ["식재료 일치"];
+                }
+                // 유저가 좋아요를 했을 때
+                if(likeUser.length>0){
+                    result["likeUser"] = likeUser[0].userId;
+                }
+                // 유저가 좋아요를 하지 않았을 때
+                if(likeUser.length===0){
+                    result["likeUser"] = "noLike";
                 }
             }
             res.render("recipe/recipe", result);
@@ -191,8 +211,9 @@ exports.patchToFridge = async (req,res) => {
             // fresh테이블에서 나온 결과가 있을 때 fresh테이블에서 바로 삭제
             if(freRes.length > 0) { 
                 console.log("fresh 테이블에서 삭제해야해요!");
+                let result;
                 for(var i=0; i<freRes.length; i++) {
-                    let result = await fresh.destroy({
+                    result = await fresh.destroy({
                         where : {
                             user_user_id : final_user_id,
                             fresh_name : delName
@@ -200,7 +221,9 @@ exports.patchToFridge = async (req,res) => {
                     })
                     console.log("fresh 삭제 결과: ", result);
                 }
+                if (result) res.send(String(result)); 
             }
+           
             
             // 아직 frozen에서 삭제해야 할 재료가 남아있다. 
             // frozen에서 select 한 후 삭제
@@ -212,8 +235,9 @@ exports.patchToFridge = async (req,res) => {
                 })
                 console.log("froRes", froRes);
                 // 삭제
+                let result;
                 for(var i=0;i<froRes.length;i++) {
-                    let result = await frozen.destroy({
+                    result = await frozen.destroy({
                         where : {
                             user_user_id : final_user_id,
                             frozen_name : froRes[i].name
@@ -221,6 +245,7 @@ exports.patchToFridge = async (req,res) => {
                     })
                     console.log("frozen 삭제 결과: ", result);
                 }
+                if(result) res.send(String(result));
             }
         }
 
@@ -278,8 +303,6 @@ exports.patchToFridge = async (req,res) => {
                 }
                 if (froIngdName.length<1) res.send(freResult); // frozen테이블에 없는 경우 send 
             }
- 
-
             // fresh 테이블에서만 업데이트가 있는 경우에 res.send
             if(freResult && !froIngdName){
                 res.send(freResult);
@@ -346,6 +369,7 @@ exports.postInsertToCookLog = async (req,res) => {
 }
 
 // 좋아요
+let likeUser = "";
 exports.postInsertToLike = async (req,res) => {
 
     const final_user_id = (req.cookies.user_id === undefined) ? req.session.user : req.cookies.user_id;
@@ -362,7 +386,8 @@ exports.postInsertToLike = async (req,res) => {
             user_user_id : final_user_id,
         }
     })
+    likeUser = find.user_user_id;
     // find에서 create 하지 못해도 true 넘기고, create해도 true
-    res.send(true);
+    res.send(find.user_user_id);
 }
 

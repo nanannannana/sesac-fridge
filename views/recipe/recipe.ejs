@@ -4,7 +4,6 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   var tag = "<%= tag %>";
-  // console.log(tag);
 
   let recipeStr = "냉장고에 있는 재료와 일치하는 인기 레시피 뚝딱!";
   let sideDishStr = "냉장고에 있는 재료로 맛있는 반찬 뚝딱!";
@@ -40,8 +39,17 @@ document.addEventListener("DOMContentLoaded", () => {
         .type(str)
         .go();
   }
+
 });
 </script>
+<style>
+  .d-none {
+    display: none;
+  }
+  .d-show {
+    display: block;
+  }
+</style>
 <div class="container-fluid" id="filter">
     <div class="container" id="filter_box">
       <button class="btn filter" type="button" onclick="selectFilter('반찬')">반찬</button>
@@ -70,16 +78,19 @@ document.addEventListener("DOMContentLoaded", () => {
                           <%=data[i].recipe_time%>
                         </span>
                       </span>
+                      <% let user_id = userId %>
+                        <% let user_like = likeUser %>
+                      <%= user_id%>
+                      <%= user_like%>
                       <button type="button" class="btn btns" title="<%=data[i].recipe_id%>">
                         <% if (data[i].recipe_pick == 0) { %>
-                          <h5><i class="bi bi-balloon-heart" 
-                            onclick="insertLike(this, '<%=data[i].recipe_id%>')"></i>
+                          <h5><i class="bi bi-balloon-heart"
+                            onclick="insertLike(this, '<%=data[i].recipe_id%>', '<%=userId%>')"></i>
                           </h5>
-                        <% } else { %>
-                          <h5><i class="bi bi-balloon-heart-fill"></i>
-                          </h5>
-                        <% } %>
-                      </button>
+                        <% } else if(data[i].recipe_pick !=0 && user_id === user_like){%>
+                          <h5><i class="bi bi-balloon-heart-fill"></i></h5>
+                        <% } %>                      
+                        </button>
                     </div>
                 </div>
                 <!--img_time-->
