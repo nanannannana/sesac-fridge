@@ -27,6 +27,18 @@ function name_click(target) {
     }
 }
 
+//enter key 누르면 회원가입 버튼 클릭되게 하는 함수
+function id_check_push() {
+    if (window.event.keyCode == 13) {
+        document.getElementById("btn_id_check").click();
+    }
+}
+function signup_push() {
+    if (window.event.keyCode == 13) {
+        document.getElementById("button").click();
+    }
+}
+
 // 아이디 이메일 유효성 검사
 function id_check() {
     var user_id = document.getElementById("form_signup").user_id.value;
@@ -44,12 +56,18 @@ function id_check() {
                 Swal.fire({
                     icon: 'success',
                     title: '사용 가능한 이메일 입니다.',
+                    showConfirmButtom : true,
+                    confirmButtonText : '확인',
+                    confirmButtonColor: '#7E998F'
                 });
             } else {
                 Swal.fire({
                     icon: 'warning',
                     title: '중복된 이메일 입니다!',
                     text: "다른 이메일을 사용해 주세요.",
+                    showConfirmButtom : true,
+                    confirmButtonText : '확인',
+                    confirmButtonColor: "#ED6C67"
                 });
             }
         })
@@ -86,18 +104,27 @@ function signup() {
         })
         .then(async function(res) {
             if (res.data) {
-                await Swal.fire({
+                Swal.fire({
                     icon: 'success',
                     title: '회원가입을 완료했습니다!',
-                    text: '버튼을 누르면 메인페이지로 이동합니다.'
+                    text: '확인을 누르면 로그인 페이지로 이동합니다.',
+                    showConfirmButtom : true,
+                    confirmButtonText : '확인',
+                    confirmButtonColor: '#7E998F',
+                    preConfirm : ()=>{
+                        location.href="/signIn"
+                    }
                 });
                 form.reset();
-                location.href="/signIn";
+                // location.href="/signIn";
             } else {
                 Swal.fire({
                     icon: 'warning',
                     title: '중복된 이메일 입니다!',
-                    text: '다른 이메일을 사용해 주세요.'
+                    text: '다른 이메일을 사용해 주세요.',
+                    showConfirmButtom : true,
+                    confirmButtonText : '확인',
+                    confirmButtonColor: "#ED6C67",
                 });
             }
         })

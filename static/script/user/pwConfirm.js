@@ -5,6 +5,13 @@ function pw_click(target) {
     }
 }
 
+// enter key 작동하게 하는 함수
+function enter_push() {
+    if (window.event.keyCode == 13) {
+        document.getElementById("button").click();
+    }
+}
+
 function pw_confirm() {
     form = document.getElementById("form_pw_confirm");
     if(form.user_pw.value=="") {

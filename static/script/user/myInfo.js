@@ -19,7 +19,7 @@ function pw_ck_click(target) {
 }
 function name_click(target) {
     if (target!=="") {
-        $("#user_name").removeClass("is-invalid");
+        $("#user_name_ck").removeClass("is-invalid");
     }
 }
 
@@ -28,31 +28,91 @@ function info_update() {
     var pw_check = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
     var name_check = /^[a-zA-Z가-힣]{2,10}$/;
     var phone_check = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
-    if (form.user_pw.value=="" || pw_check.test(form.user_pw.value)==false) {
-        $("#user_pw").addClass("is-invalid");
-    } else if(form.user_pw_check.value=="" || form.user_pw.value!==form.user_pw_check.value) {
-        $("#user_pw_ck").addClass("is-invalid");
-    } else if(form.user_name.value=="" || name_check.test(form.user_name.value)==false) {
-        $("#user_name").addClass("is-invalid");
-    } else if (form.user_phone.value=="" || phone_check.test(form.user_phone.value)==false) {
-        $("#phone_num").addClass("is-invalid");
-    } else {
-        axios({
-            method: "patch",
-            url: "/myPage/profile/myInfo",
-            data: {
-                user_id: form.user_id.value,
-                user_pw: form.user_pw_new.value,
-                user_name: form.user_name.value,
-                user_phone: form.user_phone.value.replace(/-/g, '')
-            }
-        })
-        .then(function() {
-            Swal.fire({
-                icon: 'success',
-                title: '회원정보 수정이 완료됐습니다!'
-            });
-        })
+    // 비밀번호를 수정 안 하고 update를 하는 경우,
+    if (form.user_pw_new.value=="") {
+        if(form.user_name.value=="" || name_check.test(form.user_name.value)==false) {
+            $("#user_name_ck").addClass("is-invalid");
+        } else if (form.user_phone.value=="" || phone_check.test(form.user_phone.value)==false) {
+            $("#phone_num").addClass("is-invalid");
+        } else {
+            axios({
+                method: "patch",
+                url: "/myPage/profile/myInfo",
+                data: {
+                    user_id: form.user_id.value,
+                    user_pw: form.user_pw_now.value,
+                    user_name: form.user_name.value,
+                    user_phone: form.user_phone.value.replace(/-/g, '')
+                }
+            })
+            .then(function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: '회원정보 수정이 완료됐습니다!',
+                    showConfirmButtom : true,
+                    confirmButtonText : '확인',
+                    confirmButtonColor: '#7E998F',
+                });
+            })
+        }
+    } else if (form.user_pw_now.value==form.user_pw_new.value) { // 새 비밀번호와 현재 비밀번호가 일치하는 경우,
+        if (form.user_pw_new.value=="" || pw_check.test(form.user_pw_new.value)==false) {
+            $("#user_pw").addClass("is-invalid");
+        } else if(form.user_pw_check.value=="" || form.user_pw_new.value!==form.user_pw_check.value) {
+            $("#user_pw_ck").addClass("is-invalid");
+        } else if(form.user_name.value=="" || name_check.test(form.user_name.value)==false) {
+            $("#user_name_ck").addClass("is-invalid");
+        } else if (form.user_phone.value=="" || phone_check.test(form.user_phone.value)==false) {
+            $("#phone_num").addClass("is-invalid");
+        } else {
+            axios({
+                method: "patch",
+                url: "/myPage/profile/myInfo",
+                data: {
+                    false : "false"
+                }
+            })
+            .then(function() {
+                Swal.fire({
+                    icon: 'warning',
+                    title: "새 비밀번호를 수정해주세요!",
+                    text: '현재 비밀번호와 새 비밀번호가 일치합니다.',
+                    showConfirmButtom : true,
+                    confirmButtonText : '확인',
+                    confirmButtonColor: '#ED6C67',
+                });
+            })
+        }
+    } else { // 새 비밀번호로 수정하는 경우,
+        if (form.user_pw_new.value=="" || pw_check.test(form.user_pw_new.value)==false) {
+            $("#user_pw").addClass("is-invalid");
+        } else if(form.user_pw_check.value=="" || form.user_pw_new.value!==form.user_pw_check.value) {
+            $("#user_pw_ck").addClass("is-invalid");
+        } else if(form.user_name.value=="" || name_check.test(form.user_name.value)==false) {
+            $("#user_name_ck").addClass("is-invalid");
+        } else if (form.user_phone.value=="" || phone_check.test(form.user_phone.value)==false) {
+            $("#phone_num").addClass("is-invalid");
+        } else {
+            axios({
+                method: "patch",
+                url: "/myPage/profile/myInfo",
+                data: {
+                    user_id: form.user_id.value,
+                    user_pw: form.user_pw_new.value,
+                    user_name: form.user_name.value,
+                    user_phone: form.user_phone.value.replace(/-/g, '')
+                }
+            })
+            .then(function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: '회원정보 수정이 완료됐습니다!',
+                    showConfirmButtom : true,
+                    confirmButtonText : '확인',
+                    confirmButtonColor: '#7E998F',
+                });
+            })
+        }
     }
 }
 
