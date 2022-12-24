@@ -10,8 +10,9 @@ router.delete("/deleteAlert", main.deleteDeleteAlert);
 router.post("/fridgeList", main.postFridgeList);
 
 
-
-
+// 데이터 정규화
+router.get("/db", main.getDbRegex);
+router.patch("/dbRegex", main.patchDbRegex);
 
 
 

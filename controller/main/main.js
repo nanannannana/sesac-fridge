@@ -4,6 +4,9 @@ const { recipe } = require("../../model");
 const { user } = require("../../model");
 const { Op } = require("sequelize");
 
+
+
+
 //global variables
 //로그인 시각 기준으로 시간 set
     let today = new Date();  
@@ -84,6 +87,8 @@ exports.deleteDeleteAlert = async (req,res) => {
     res.send(true);
 }
 
+
+
 // localStorage에 저장할 현재 보관 중인 식재료
 exports.postFridgeList= async (req, res)=>{
     let freshList = await fresh.findAll({
@@ -95,3 +100,23 @@ exports.postFridgeList= async (req, res)=>{
 
     res.send({freshList : freshList , frozenList : frozenList});
 }
+
+// 데이터 정규화
+const { QueryTypes } = require("sequelize"); 
+const { sequelize } = require("../../model"); 
+
+exports.getDbRegex = async (req,res) => {
+    console.log( "path : /, method : get" );
+    // user 테이블에 존재하는 사용자들 가져와 index.ejs 로 전달하기
+    let recipes = await recipe.findAll();
+    await res.render("main/dbRegex", { result: recipes });    
+}
+
+exports.patchDbRegex = async (req,res) => {
+    console.log( "path : /, method : patch" );
+    console.log( "req.body : ", req.body );
+
+    var sql = `UPDATE recipe SET recipe_ingd=REPLACE(recipe_ingd,',${req.body.b_ingd},' ,',${req.body.a_ingd},');`
+    const result = await sequelize.query(sql, { type: QueryTypes.UPDATE });
+    res.send({return: true, data: result});
+  }
