@@ -29,11 +29,8 @@ exports.getRecipe = async (req, res) => {
         // [1]-1 좋아요한 레시피를 구분하기 위해서
         let likeUser = await recipe_like.findAll({
             raw : true,
-            attributes : [['user_user_id', "userId"]],
-            where : { user_user_id : final_user_id}
+            attributes : [['user_user_id', "userId"], ['recipe_recipe_id', 'recipeId']],
         })
-
-        console.log("likeUser", likeUser);
 
         // [1]-2 fresh, frozen 테이블에서 검색한 결과를 합쳐서 ingdRes에 넣는다.
         let ingdRes = [];  
@@ -117,7 +114,6 @@ exports.getRecipe = async (req, res) => {
                     result["ingdResult"] = ingdResult;
                     result["isLogin"] = true;
                     result["tag"] = req.query.tag;
-                    result["userId"] = final_user_id;
                 }
                 res.render("recipe/fastmeal", result);
             } 
@@ -138,7 +134,7 @@ exports.getRecipe = async (req, res) => {
             });
             // [4]-1 findAll해서 나온 데이터 결과를 result안에 집어넣기
             let result = { data: recipes }; 
-    
+                
             // [4]-2 식재료가 있을 때 프론트 단에서 사용할 나의 재료 이름과 수량
             if ( ingdRes ) {
                 let ingdResult = []; 
@@ -149,20 +145,11 @@ exports.getRecipe = async (req, res) => {
                 result["ingdRange"] = ingdRange;
                 result["ingdResult"] = ingdResult;
                 result["isLogin"] = true;
-                result["userId"] = final_user_id;
                 if(req.query.tag) {
                     result["tag"] = [req.query.tag];
                 }
                 if(!req.query.tag) {
                     result["tag"] = ["식재료 일치"];
-                }
-                // 유저가 좋아요를 했을 때
-                if(likeUser.length>0){
-                    result["likeUser"] = likeUser[0].userId;
-                }
-                // 유저가 좋아요를 하지 않았을 때
-                if(likeUser.length===0){
-                    result["likeUser"] = "noLike";
                 }
             }
             res.render("recipe/recipe", result);

@@ -17,26 +17,25 @@ function insertLog(id, url) {
 
 // 빈 하트 클릭 시 recipe_like 테이블에 추가
 function insertLike(element, id, login) {
-    
     if(login!=true) {
         $(".likeBtn").on("click", ()=>{
             alert("클릭이벤트 발생!");
         })
     }
+
     let recipe_id = id;
     axios({
         method : "post",
         url : "/recipe/insertToLike",
         data : { id : recipe_id },
     }).then((res)=>{
-        // 검정색 하트
-        if(res.data === login) {
-            $(element).closest("h5").css('display', 'none');
-            $(element).closest("button").append(
-                ` <h5><i class="bi bi-balloon-heart-fill"></i>
-                </h5>`
-            )
-        }
+        // 찜리스트에 담겼다고 alert창띄우기
+        Swal.fire({
+            icon: 'success',
+            title : "레시피가 찜리스트에 담겼습니다. :-) \n찜 리스트에 가서 확인해주세요. ",
+            showConfirmButton : true,
+            allowEnterKey : true,
+        }) 
     })
 }
 
