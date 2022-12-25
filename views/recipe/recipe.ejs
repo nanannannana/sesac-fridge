@@ -65,6 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
   <h1 class="intro" id="tagIntro"><%=tag%></h1>
   <div id="recipe_list" class="container mt-5 ">
     <div class="row row-cols-2 row-cols-sm-2 row-cols-1">
+   
       <%for(var i=0; i<data.length;i++) { %>
         <div class="card_parent col-md-3 ">
             <div class="card">
@@ -78,18 +79,10 @@ document.addEventListener("DOMContentLoaded", () => {
                           <%=data[i].recipe_time%>
                         </span>
                       </span>
-                      <% let user_id = userId %>
-                        <% let user_like = likeUser %>
-                      <%= user_id%>
-                      <%= user_like%>
                       <button type="button" class="btn btns" title="<%=data[i].recipe_id%>">
-                        <% if (data[i].recipe_pick == 0) { %>
                           <h5><i class="bi bi-balloon-heart"
-                            onclick="insertLike(this, '<%=data[i].recipe_id%>', '<%=userId%>')"></i>
+                            onclick="insertLike(this, '<%=data[i].recipe_id%>', '<%=isLogin%>')"></i>
                           </h5>
-                        <% } else if(data[i].recipe_pick !=0 && user_id === user_like){%>
-                          <h5><i class="bi bi-balloon-heart-fill"></i></h5>
-                        <% } %>                      
                         </button>
                     </div>
                 </div>

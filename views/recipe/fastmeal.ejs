@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
                       <button type="button" class="btn btns" title="<%=data[i].recipe_id%>">
                         <% if (data[i].recipe_pick == 0) { %>
                           <h5><i class="bi bi-balloon-heart" 
-                            onclick="insertLike(this, '<%=data[i].recipe_id%>')"></i>
+                            onclick="insertLike(this, '<%=data[i].recipe_id%>', '<%=isLogin%>')"></i>
                           </h5>
                         <% } else { %>
                           <h5><i class="bi bi-balloon-heart-fill"></i>
