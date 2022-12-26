@@ -3,26 +3,69 @@
 <%-include('../main/header.ejs') %>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  new TypeIt("#fastmeal")
-      .pause(500) // 1초
-      .delete(5, { delay: 1000 })
-      .type("냉장고에있는 재료로 빠르게 한끼 뚝딱!") 
-      .go();
+  var tag = "<%= tag %>";
+
+  let recipeStr = "냉장고에 있는 재료와 일치하는 인기 레시피 뚝딱!";
+  let sideDishStr = "냉장고에 있는 재료로 맛있는 반찬 뚝딱!";
+  let riceStr = "냉장고에 있는 재료로 맛있는 덮밥과 볶음밥 뚝딱!";
+  let soupStr = "냉장고에 있는 재료로 따끈한 국/탕 뚝딱!"
+  let healthyStr = "냉장고에 있는 재료로 몸에 좋은 건강한 음식 뚝딱!";
+  let nightSnackStr = "냉장고에 있는 재료로 쉽고 맛있는 야식을 뚝딱!"; 
+  let fastStr = "냉장고에있는 재료로 빠르게 한끼 뚝딱!";
+
+  switch(tag) {
+      case "식재료 일치":
+          typeIt(recipeStr);
+          break;
+      case "반찬":
+          typeIt(sideDishStr);
+          break;
+      case "밥":
+          typeIt(riceStr);
+          break;
+      case "국/탕":
+          typeIt(healthyStr);
+          break;
+      case "건강/웰빙":
+          typeIt(healthyStr);
+          break;
+      case "야식":
+          typeIt(nightSnackStr);
+          break;
+      case "빠름":
+          typeIt(fastStr)
+  }
+  function typeIt(str){
+    new TypeIt("#tagIntro")
+        .pause(500)  // 1초
+        .delete(6, { delay: 1000})
+        .type(str)
+        .go();
+  }
+
 });
 </script>
+<style>
+  .d-none {
+    display: none;
+  }
+  .d-show {
+    display: block;
+  }
+</style>
 <div class="container-fluid" id="filter">
     <div class="container" id="filter_box">
-      <button class="btn filter" type="button" onclick="selectFilter('반찬')">반찬</button>
-      <button class="btn filter" type="button" onclick="selectFilter('밥')">밥</button>
+      <button class="btn filter" type="button" onclick="selectFilter('반찬')">반찬류</button>
+      <button class="btn filter" type="button" onclick="selectFilter('밥')">밥류</button>
       <button class="btn filter" type="button" onclick="selectFilter('국/탕')">국/탕</button>
       <button class="btn filter" type="button" onclick="selectFilter('건강/웰빙')">건강/웰빙</button>
-      <button class="btn filter" type="button" onclick="selectFilter('야식')">야식</button>
+      <button class="btn filter" type="button" onclick="selectFilter('야식')">야식류</button>
       <button class="btn filter" type="button" onclick="selectFilter('빠름')">빠른 한끼</button>
-      <button class="btn filter" type="button" onclick="location.href='/recipe'">식재료 정확 일치 레시피</button>
+      <button class="btn filter" type="button" onclick="location.href='/recipe'">식재료 일치 레시피</button>
     </div>
 </div>
 <main>
-  <h1 class="intro" id="fastmeal">빠른 한끼</h1>
+  <h1 class="intro" id="tagIntro">빠른 한끼</h1>
   <div id="recipe_list" class="container mt-5 ">
     <div class="row row-cols-2 row-cols-sm-2 row-cols-1">
       <%for(var i=0; i<data.length;i++) { %>
@@ -39,15 +82,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         </span>
                       </span>
                       <button type="button" class="btn btns" title="<%=data[i].recipe_id%>">
-                        <% if (data[i].recipe_pick == 0) { %>
-                          <h5><i class="bi bi-balloon-heart" 
+                          <h5><i class="bi bi-balloon-heart"
                             onclick="insertLike(this, '<%=data[i].recipe_id%>', '<%=isLogin%>')"></i>
                           </h5>
-                        <% } else { %>
-                          <h5><i class="bi bi-balloon-heart-fill"></i>
-                          </h5>
-                        <% } %>
-                      </button>
+                        </button>
                     </div>
                 </div>
                 <!--img_time-->
@@ -85,11 +123,11 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             <!--card-->
             <div class="btn_outer mt-3 mb-3">
-              <div class="btn_inner text-center p-1"> 
-                <input type="button" class="btn show_recipe" 
-                onclick="insertLog('<%=data[i].recipe_id%>', '<%=data[i].recipe_url%>')" value="레시피보기">
-                <input type="button" class="btn show_cook" onclick="cooking('<%=ingred%>', '<%=range%>')" value="요리하기">
-              </div>
+                <div class="btn_inner text-center p-1"> 
+                  <input type="button" class="btn show_recipe" 
+                  onclick="insertLog('<%=data[i].recipe_id%>', '<%=data[i].recipe_url%>')" value="레시피보기">
+                  <input type="button" class="btn show_cook" onclick="cooking('<%=ingred%>', '<%=range%>','<%=data[i].recipe_id%>')" value="요리하기">
+                </div>
             </div>
             <!--btn_outer-->
         </div>
