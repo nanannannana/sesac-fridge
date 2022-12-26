@@ -8,10 +8,9 @@
     font-size: 30px;
     font-weight: bolder;
 }
-.chart_1, .chart_2 {
+/* .chart_1, .chart_2 {
     position: relative;
-}
-
+} */
 #chart_box {
     margin-bottom: 100px;
 }
@@ -163,4 +162,89 @@
 }
 #recent_recipe_card_box > div, #recent_cook_card_box > div {
     height: 300px;
+}
+
+@media (max-width: 1296px) {
+    #chart_box_child {
+        display: block;
+    }
+    #chart_1, #chart_2 {
+        text-align: center;
+    }
+    #myChart, #myChart2 {
+        display: inline-block !important;
+    }
+    #myFridge_go_btn, #recipe_go_btn {
+        display: block;
+        margin: auto;
+        margin-bottom: 30px;
+    }
+}
+@media (max-width: 992px) {
+    #recent_recipe_title_img, #recent_cook_title_img {
+        width: 250px;
+        height:400px;
+    }
+    #recent_recipe_title_text > span, #recent_cook_title_text > span {
+        font-size: 60px;
+    }
+    #recent_recipe_card, #recent_cook_card {
+        height: 190px;
+    }
+    #blank_box {
+        height:190px;
+        padding: 30px;
+    }
+    #recent_recipe_card > a, #recent_cook_card > a {
+        font-size: 20px;
+    }
+}
+@media (max-width: 768px) {
+    #myChart2 {
+        width:550px !important;
+        height: 500px !important;
+    }
+    #recent_recipe_title_img, #recent_cook_title_img {
+        width: 250px;
+        height:300px;
+    }
+    #recent_recipe_title_text > span, #recent_cook_title_text > span {
+        font-size: 50px;
+    }
+    #recent_recipe_card, #recent_cook_card {
+        height: 140px;
+    }
+    #blank_box {
+        height:140px;
+        font-size: 60px;
+    }
+    #recent_recipe_card > a, #recent_cook_card > a {
+        font-size: 20px;
+    }
+}
+@media (max-width: 600px) {
+    #myChart {
+        width:310px !important;
+        height: 310px !important;
+    }
+    #myChart2 {
+        width:350px !important;
+        height: 300px !important;
+    }
+    #chart_title {
+        font-size: 20px;
+    }
+}
+@media (max-width: 350px) {
+    #myChart {
+        width:300px !important;
+        height: 300px !important;
+    }
+    #myChart2 {
+        width:310px !important;
+        height: 260px !important;
+    }
+    #chart_title {
+        font-size: 15px;
+    }
 }

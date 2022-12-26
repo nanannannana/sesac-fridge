@@ -46,3 +46,29 @@
     font-size: 30px;
     color: red;
 }
+@media (max-width: 991px) {
+    #wishlist_card_box_child {
+        text-align: center;
+    }
+    #card_size {
+        display: inline-block;
+    }
+    #heart_icon {
+        float: left;
+    }
+}
+@media (max-width: 440px) {
+    #card_size {
+        width: 400px;
+    }
+}
+@media (max-width: 400px) {
+    #card_size {
+        width: 350px;
+    }
+}
+@media (max-width: 350px) {
+    #card_size {
+        width: 300px;
+    }
+}

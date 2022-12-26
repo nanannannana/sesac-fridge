@@ -6,7 +6,7 @@
 <%-include('../main/header.ejs')%>
 <main>
     <%-include('myPageBasic.ejs')%>
-    <div class="container">
+    <div id="pw_input_box" class="container">
         <p id="pw_input_box_title"><span style="font-weight:bold;">비밀번호</span>를 입력해주세요!</p>
         <form id="form_hidden" action="/myPage/profile/myInfo" method="post">
             <input type="hidden" name="user_id" value="<%=user_id%>">

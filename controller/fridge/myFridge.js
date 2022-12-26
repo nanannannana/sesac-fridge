@@ -35,7 +35,6 @@ exports.getMyFridge = async (req,res) => {
                 empty_alert : false
             });
         }
-    }else{ //로그인 X
         // res.render("fridge/myFridge404", {isLogin : false});
         res.render("fridge/myFridge404", { isLogin : false });
     }  
