@@ -248,14 +248,19 @@ exports.postMyInfoDel = async function(req,res) {
         let frozen_count = await frozen.findAndCountAll({
             where: {user_user_id: final_user_id}
         });
+        let user_result = await user.findOne({
+            where: {user_id: final_user_id}
+        })
         res.render("user/myInfoDel", {
             isLogin: true,
+            user_name: user_result.user_name,
             user_id: req.body.user_id,
             ingd_count: fresh_count.count+frozen_count.count
         });
     } else {
         res.render("user/myInfoDel", {
             isLogin: false,
+            user_name: user_result.user_name,
             user_id: req.body.user_id,
             ingd_count: fresh_count.count+frozen_count.count
         });

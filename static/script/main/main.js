@@ -1,5 +1,6 @@
 // 유통기한 지난 식재료 DB에서 삭제 & 알림
-function deleteAlert(username, exp_count){  
+let user_name = "<%=user_name%>"
+function deleteAlert(user_name, exp_count){  
   axios({
     method : "delete",
     url : "/deleteAlert",
@@ -9,7 +10,7 @@ function deleteAlert(username, exp_count){
     //알림창 생성
     Swal.fire({
       html: `
-      <h3 class="mb-2">${username}님,</h3>
+      <h3 class="mb-2">${user_name}님,</h3>
       <div class="mb-2"><mark>${res.data.list}</mark>의</div> 
       <div class="mb-2">유통기한이 지나 삭제되었습니다</div>
       <small>냉장고를 확인해주세요</small>
@@ -41,9 +42,9 @@ function deleteAlert(username, exp_count){
 //   })
 // }
 
-function welcomeToast( name, count ){
+function welcomeToast( user_name, count ){
   if( Number(count)>0 ){
-    let html = `<p>${name}님🌱</p>유통기한이 임박한 식재료<b style="color:var(--btn-warn);'"> ${count}개</b>가 기다리고 있어요 !`;
+    let html = `<p>${user_name}님🌱</p>유통기한이 임박한 식재료<b style="color:var(--btn-warn);'"> ${count}개</b>가 기다리고 있어요 !`;
     Swal.fire({
       html: html,
       target: '#custom-target',
