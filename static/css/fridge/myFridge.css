@@ -1,78 +1,49 @@
-.d_none {display: none;}
-.hidden {visibility: hidden;}
-
-.myFridgePage_main { 
+#myFridgePage_main {
+    min-height: 100%;
     background-color: var(--main-yellow);
-    min-height : 100%;
-    /* height:100vh; */
-}
-
-.myFridgePage_box { 
-    min-height: 100%;
-    display : flex;
-    flex-direction: column;
-    justify-content:space-around;
-    padding-bottom: 2rem;
-}
-
-/* 페이지 타이틀 */
-.myFridge_title { 
-    min-height: 10%;
-    text-align: center; 
-    margin-top: 5rem;
-    margin-bottom: 5rem;
-}
-.myFridge_title b{ 
-    font-family: 'NanumSquareAceb';
-    font-size: xx-large; 
-}
-.myFridge_title span{ 
-    font-weight:lighter;
-    font-size:xx-large;
-}
-
-/* 냉장고&장바구니 박스 */
-.top_row {
-    min-height: 70%;
-    margin-left:2rem; 
-    margin-right: 1rem;
-    margin-bottom: 15rem;
-}
-
-/* 냉장고 버튼 & 레시피 버튼 박스 */
-.bottom_row {
-    min-height: 20%;
-    margin:3rem;
-    margin-bottom: 5rem;
-}
-
- /* 냉장고 내부 전체*/
-.fridge_box {
-    min-height: 100%;
-    padding-left: 10px;
     text-align: center;
+    padding : 0 2em 0em 2em;
 }
-
-.fridge_box mark{
-    border-radius: 20px;
-    font-size:x-large;
+#myFridgePage_main > .row,
+#fridge_col > .row,
+#btn_col > .row {
+    justify-content: center;
+}
+#title_row {
+    font-size: xx-large;
+    padding : 4em 0 4em 0 ;
+}
+#title_row>p {
+    font-weight: lighter;
+}
+#title_row span {
+    font-weight: bolder;
     font-family: 'NanumSquareAceb';
+} 
+#fridge_info {
+    font-size:medium;
+    font-weight: bold;
+    text-align: left;
 }
 
- /* 냉장고 내부 식재료 박스*/
-.fridge_ingd_box {
-    display: inline-block;
-    min-height: 50%;
-    min-width: 100%;
+#top_row {
+    max-height : 80%;
+}
+
+#fresh_box, #frozen_box {
+    max-height: 40%;
+    overflow-y: auto;
     background-color: white;
     border : 2px solid var(--point-coral);
-    overflow-y: auto;
-    text-align: center;
 }
- /* 냉장고(냉장실/냉동실) 내부 식재료 박스 디자인*/
-#fresh_form {
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
+#fresh_box>div, #frozen_box>div {
+    display: block;
+    margin: 1em;
+}
+
+#fresh_box {
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
     /* background-image: url('data:image/svg+xml;utf8,<svg style="color:aliceblue; opacity:0.7;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-droplet" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M7.21.8C7.69.295 8 0 8 0c.109.363.234.708.371 1.038.812 1.946 2.073 3.35 3.197 4.6C12.878 7.096 14 8.345 14 10a6 6 0 0 1-12 0C2 6.668 5.58 2.517 7.21.8zm.413 1.021A31.25 31.25 0 0 0 5.794 3.99c-.726.95-1.436 2.008-1.96 3.07C3.304 8.133 3 9.138 3 10a5 5 0 0 0 10 0c0-1.201-.796-2.157-2.181-3.7l-.03-.032C9.75 5.11 8.5 3.72 7.623 1.82z"/><path fill-rule="evenodd" d="M4.553 7.776c.82-1.641 1.717-2.753 2.093-3.13l.708.708c-.29.29-1.128 1.311-1.907 2.87l-.894-.448z"/></svg>'); */
     background-image: url('data:image/svg+xml;utf8,<svg style="color:E2E8ED; opacity:0.6;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-droplet-fill" viewBox="0 0 16 16"><path d="M8 16a6 6 0 0 0 6-6c0-1.655-1.122-2.904-2.432-4.362C10.254 4.176 8.75 2.503 8 0c0 0-6 5.686-6 10a6 6 0 0 0 6 6ZM6.646 4.646l.708.708c-.29.29-1.128 1.311-1.907 2.87l-.894-.448c.82-1.641 1.717-2.753 2.093-3.13Z"/></svg>');
     background-repeat: no-repeat;
@@ -81,28 +52,27 @@
     background-attachment: scroll;
 }
 
-#frozen_form {
+#frozen_box {
     margin-top: 0.1rem;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
     background-image: url('data:image/svg+xml;utf8,<svg style="color:E2E8ED; opacity:0.6;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-snow2" viewBox="0 0 16 16"><path d="M8 16a.5.5 0 0 1-.5-.5v-1.293l-.646.647a.5.5 0 0 1-.707-.708L7.5 12.793v-1.086l-.646.647a.5.5 0 0 1-.707-.708L7.5 10.293V8.866l-1.236.713-.495 1.85a.5.5 0 1 1-.966-.26l.237-.882-.94.542-.496 1.85a.5.5 0 1 1-.966-.26l.237-.882-1.12.646a.5.5 0 0 1-.5-.866l1.12-.646-.884-.237a.5.5 0 1 1 .26-.966l1.848.495.94-.542-.882-.237a.5.5 0 1 1 .258-.966l1.85.495L7 8l-1.236-.713-1.849.495a.5.5 0 1 1-.258-.966l.883-.237-.94-.542-1.85.495a.5.5 0 0 1-.258-.966l.883-.237-1.12-.646a.5.5 0 1 1 .5-.866l1.12.646-.237-.883a.5.5 0 0 1 .966-.258l.495 1.849.94.542-.236-.883a.5.5 0 0 1 .966-.258l.495 1.849 1.236.713V5.707L6.147 4.354a.5.5 0 1 1 .707-.708l.646.647V3.207L6.147 1.854a.5.5 0 1 1 .707-.708l.646.647V.5a.5.5 0 0 1 1 0v1.293l.647-.647a.5.5 0 1 1 .707.708L8.5 3.207v1.086l.647-.647a.5.5 0 1 1 .707.708L8.5 5.707v1.427l1.236-.713.495-1.85a.5.5 0 1 1 .966.26l-.236.882.94-.542.495-1.85a.5.5 0 1 1 .966.26l-.236.882 1.12-.646a.5.5 0 0 1 .5.866l-1.12.646.883.237a.5.5 0 1 1-.26.966l-1.848-.495-.94.542.883.237a.5.5 0 1 1-.26.966l-1.848-.495L9 8l1.236.713 1.849-.495a.5.5 0 0 1 .259.966l-.883.237.94.542 1.849-.495a.5.5 0 0 1 .259.966l-.883.237 1.12.646a.5.5 0 0 1-.5.866l-1.12-.646.236.883a.5.5 0 1 1-.966.258l-.495-1.849-.94-.542.236.883a.5.5 0 0 1-.966.258L9.736 9.58 8.5 8.866v1.427l1.354 1.353a.5.5 0 0 1-.707.708l-.647-.647v1.086l1.354 1.353a.5.5 0 0 1-.707.708l-.647-.647V15.5a.5.5 0 0 1-.5.5z"/></svg>');
     background-repeat: no-repeat;
     background-position: center;
     background-size: 25%;
     background-attachment: scroll;
 }
-
-.fridge_ingd_box::-webkit-scrollbar {
+#fridge_col>div::-webkit-scrollbar {
     width: 10px;  /* 스크롤바의 너비 */
 }
 
-.fridge_ingd_box::-webkit-scrollbar-thumb {
+#fridge_col>div::-webkit-scrollbar-thumb {
     height: 30%; /* 스크롤바의 길이 */
     background: #a79c8e86;  /* 스크롤바의 색상 */
     border-radius: 10px;
 }
 
-.fridge_ingd_box::-webkit-scrollbar-track {
+#fridge_col>div::-webkit-scrollbar-track {
     height : 30%;
     background: #a79c8e30;  
     /*스크롤바 뒷 배경 색상*/
@@ -110,49 +80,47 @@
 }
 
 /* 냉장고 내부 식재료 개별 요소 */
-.fridge_ingd_box>div{
-    display: inline-block;
+#fridge_col>div>div{
     font-size : 20px;
     font-weight: bold;
-    width :20%;
     margin : 0.5em; padding: 0.5em;
 }
 
-.fridge_ingd_box label {
+#fridge_col label {
     margin: 10px;
     cursor: pointer;
 }
 
 /* 식재료 유통기한 */
-.fridge_ingd_box p {
+#fridge_col p {
     font-size : 10px;
 }
 
-.fridge_ingd_box input[type=checkbox] {
+#fridge_col input[type=checkbox] {
     transform : scale(1.5);
     cursor: pointer;
 }
 
 /* 식재료 수량 range bar*/
-.fridge_ingd_box input[type=range]::-webkit-slider-runnable-track {
+#fridge_col input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
     -webkit-appearance: none;
 	background: transparent;
 }
 /* 식재료 range bar color */
-.fridge_ingd_box input[type="range"]:disabled {
+#fridge_col input[type="range"]:disabled {
     background-color : var(--sub-green) !important;
     border-color : var(--sub-green) !important;
 }
 
 /* 식재료 수량 range thumb */
-.fridge_ingd_box input[type=range]::-webkit-slider-thumb {
+#fridge_col input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     background-color: var(--btn-success);
 }
 
 /* 식재료 정보 수정 btn */
-.fridge_ingd_box button {
+#fridge_col button {
     width: 60px; height: 30px;
     border-radius: 10px;
     margin: auto;
@@ -164,185 +132,87 @@
     font-weight: lighter;
     z-index: 1;
 }
-.fridge_ingd_box button:active {
-    box-shadow: 0 2px 4px darkslategrey;
-    transform: translateY(3px);
+#basket_img_box div {
+    font-size: x-large;
+    font-weight: bolder;
+    padding-top: 2em;
 }
-
-/* 장바구니  박스 */
-.basket_box{
-    text-align: center;
+#basket_arrow,#basket_warn, #smile_emoji {
+    font-size: xx-large;
+    font-weight: bold;
+    padding-bottom: 2em;
 }
-#basket_img_box {
-    display: inline-block;
-    padding-top: 10px;
-}
-#basket_ingd_box {
-    display: inline-block;
-    max-height : 60%;
+#basket_list {
+    max-height: 400px;
     overflow-y: auto;
 }
-
-#basket_ingd_box::-webkit-scrollbar {
+#basket_list > div {
+    display: inline-block;
+    width:100%;
+    font-size: larger;
+    font-weight: bold;
+    margin : 1em 0 1em 0;
+}
+#basket_list::-webkit-scrollbar {
     width: 10px;  /* 스크롤바의 너비 */
 }
 
-#basket_ingd_box::-webkit-scrollbar-thumb {
+#basket_list::-webkit-scrollbar-thumb {
     height: 50%; /* 스크롤바의 길이 */
     background: #a79c8e86;  /* 스크롤바의 색상 */
     border-radius: 10px;
 }
 
-#basket_ingd_box::-webkit-scrollbar-track {
+#basket_list::-webkit-scrollbar-track {
     height : 50%;
     background: #a79c8e30;  
     /*스크롤바 뒷 배경 색상*/
     border-radius: 10px;
 }
+#fridge_btns>button {
+    width: 110px; height: 110px;
+    border-radius: 70%;
+    margin: auto;
+    background-color: var(--btn-success);
+}
+#result_recipe_btn {
+    width : 260px; height : 100px;
+    border-radius: 20px;
+    background-color: var(--btn-warn);
+}
+#bottom_row {
+    min-height : 20%;
+    padding : 4em 0 4em 0;
+    vertical-align: middle;
+    white-space : normal;
 
-.basket_ingd {
-    display: inline-block;
-    width :100%;
-    height: fit-content;
-    padding-top:0.5em;
 }
 
-#basket_ingd_box span {
-    font-size: 20px;
-    font-weight: bolder;
-}
-
-.basket_text, .warn_text {
-    font-weight: bolder;
-    font-size: x-large;
-    padding-top: 0.5em;
-    /* padding-bottom: 0.5em; */
-}
-
-/* 부트스트랩 아이콘 사이즈*/
-#basket_arrow {
-    font-size: 3rem; 
-    display: block;
-}
-
-/* #warn_text {
-    background-image: url('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16"><path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 30%;
-    background-attachment: scroll;
-} */
-
-#smile_emoji {
-    font-size: 3rem; 
-    display: inline; 
-    z-index: 3; 
-    color: white;
-} 
-#check_icon {
-    font-size: 2rem;
-}
-
-/* 페이지 하단 btn 공통 적용 */
-.bottom_row button {
+#bottom_row button{
+    white-space: normal;
     box-shadow: 0 2px 4px darkslategrey;
     border : none;
     cursor: pointer;
     color: white; 
     font-size: 22px; 
     font-weight: bolder;
-    z-index: 1;
 }
-/* 페이지 하단 버튼 클릭시 motion */
-.bottom_row button:active {
+#bottom_row button:active {
     box-shadow: 0 0 3px darkslategray;
     transform: translateY(3px);
 }
 
-/* 냉장고 버튼 모양 */
-.fridge_btn_box button:nth-child(even) {
-    width: 110px; height: 110px;
-    border-radius: 70%;
-    margin: auto;
-    background-color: var(--btn-success);
-    white-space: normal;
+@media (max-width: 768px) {
+#bottom_row {
+    padding-top: 0;
 }
-/* 레시피 버튼 모양 */
-#result_recipe {
-    width : 260px; height : 100px;
-    border-radius: 20px;
-    background-color: var(--btn-warn);
-}
-
-/* 하단 버튼 전체 위치 정렬 */
-.bottom_row>div{ /*fridge & recipe_btn_box*/
-    display:flex; 
-    align-items: center;
-    justify-content: center;
-}
-
-/* 레시피 버튼 정렬 */
-.recipe_btn_box {
-    position: relative;
-}
-#result_recipe,#smile_emoji {
-    position: absolute;
-}
-
-/* 냉장고 버튼 bg 정렬 */
-.fridge_btn_box>div { 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative; 
-    width:33%;
-}
-.fridge_btn_box button {
-    position: absolute;
-}
-.fridge_btn_box button:nth-child(odd) { 
-    width: 120px; height: 120px; 
-    border-radius: 70%; 
-    background-color : var(--main-yellow);
-    margin: auto;
-}
-
-.swal2-shown .swal2-height-auto {
-    height : 100vh;
+#fresh_text, #frozen_text{
+    display: block;
 } 
-
-/* @media (max-width: 767px) {
-
-} */
-@media (max-width: 893px) {
-    input[type=range] {
-        display: none;
-    }
-    .top_row {margin-bottom: 10px; }
-    #frozen_form {margin-bottom: 180px;}
-    .fresh_box, .fresh_box > button {
-        position: static;
-    }
-    .fresh_box > button:nth-child(1), .frozen_box > button:nth-child(1), .change_box1 > button:nth-child(1), .change_box2 > button:nth-child(1), .change_box3 > button:nth-child(1) {
-        display: none;
-    }
-    .frozen_box, .frozen_box > button  {
-        position: static;
-    }
-    .change_box1, .change_box1 > button {
-        position: static;
-    }
-    .change_box2, .change_box2 > button {
-        position: static;
-    }
-    .change_box3, .change_box3 > button {
-        position: static;
-    }
-    .recipe_btn_box, .recipe_btn_box > button {
-        position: static;
-        margin-top: 50px;
-    }
-    #basket_img_box {
-        margin-top: 10px;
-    }
+#fresh_bar, #frozen_bar{
+    display: none;
+}
+#basket_btn{
+    padding-top: 2em;
+}
 }
