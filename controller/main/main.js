@@ -52,21 +52,27 @@ exports.getMain = async (req,res) => {
             }
         })
         exp_list_arr=exp_list.rows; //global 배열에 유통기한 지난 식재료 목록 담음 
+        let user_result = await user.findOne({
+            attributes : ["user_name"],
+            where : { user_id : final_user_id }
+        })
+        req.session.sql_name = user_result.user_name
+        const user_name = (req.session.kakao_name==true) ? req.session.kakao_name : req.session.sql_name;
+        req.session.isLogin = true;
+        req.session.fresh_count = fresh_count.count;
+        req.session.exp_count = exp_list.count;
+        
 
-        // let user_name = await user.findOne({
-        //     attributes : ["user_name"],
-        //     where : { user_id : final_user_id }
-        // })
         res.render("main/main", {
-            isLogin : true, 
-            // username : user_name.user_name,
-            fresh_count : fresh_count.count,
-            exp_count : exp_list.count,
+            isLogin : req.session.isLogin, 
+            user_name : user_name,
+            fresh_count : req.session.fresh_count,
+            exp_count : req.session.exp_count,
         }); 
     } else { // 1) 로그인(+ 자동로그인)을 하지 않은 경우,
         res.render("main/main", {
             isLogin : false, 
-            // username : false,
+            user_name : false,
             fresh_count : false,
             exp_count : false,
         });  

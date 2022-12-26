@@ -104,7 +104,7 @@
 </main>
 <!-- <button type="button" class="d_none" onclick="deleteTest();">deleteTest</button> -->
 <script>
-    $(".myFridge_title").html(`<b>${localStorage.getItem("username")}님</b><span>의 냉장고</span>`);
+    $(".myFridge_title").html("<b><%=user_name%>님</b><span>의 냉장고</span>");
 </script>
 
 <%-include('../main/footer.ejs') %>

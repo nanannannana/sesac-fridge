@@ -18,9 +18,10 @@ let exp_list_arr = new Array(); // 유통기한 지난 식재료 > getMain - exp
 
 // 로그인 페이지 렌더
 exports.getSignin = function(req,res) {
-    // const kakao_auth_url = `https://kauth.kakao.com/oauth/authorize?client_id=${env.REST_API_KEY}&redirect_uri=${env.REDIRECT_URI}&response_type=code&scope=profile_nickname,account_email,talk_message`
-    // kakao_auth_url: kakao_auth_url
-    res.render("user/signIn");
+    const kakao_auth_url = `https://kauth.kakao.com/oauth/authorize?client_id=${env.REST_API_KEY}&redirect_uri=${env.REDIRECT_URI}&response_type=code&scope=profile_nickname,account_email,talk_message`
+    res.render("user/signIn", {
+        kakao_auth_url: kakao_auth_url
+    });
 }
 
 // 간편로그인
@@ -48,7 +49,7 @@ exports.kakao_token = async function(req,res) {
             url:'https://kapi.kakao.com/v2/user/me',
             headers:{
                 Authorization: `Bearer ${token.data.access_token}`
-            } //헤더에 내용을 보고 보내주겠다.
+            }
         })
         // kakao 회원 정보 확인
         console.log("user: ",kakao_user.data);
@@ -86,13 +87,10 @@ exports.kakao_token = async function(req,res) {
                 }
             })
             exp_list_arr=exp_list.rows; //global 배열에 유통기한 지난 식재료 목록 담음 
-
-            res.render("main/main", {
-                isLogin : true,
-                username: req.session.kakao_name,
-                fresh_count : fresh_count.count,
-                exp_count : exp_list.count,
-            });
+            req.session.isLogin = true;
+            req.session.fresh_count = fresh_count.count;
+            req.session.exp_count = exp_list.count;
+            res.redirect("/");
         } else {
             res.redirect("/kakao/info"); //없으면 추가info창으로
         }

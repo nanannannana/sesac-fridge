@@ -7,6 +7,7 @@ const { recipe } = require("../../model");
 exports.getMyFridge = async (req,res) => {
     if(req.session.user || req.cookies.user_id){ //로그인 후 
         const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
+        const user_name = (req.session.kakao_name==true) ? req.session.kakao_name : req.session.sql_name;
         let fresh_result = await fresh.findAndCountAll({
             where : {user_user_id : final_user_id},
             order : [["fresh_expire", "ASC"]]
@@ -20,6 +21,7 @@ exports.getMyFridge = async (req,res) => {
         if(req.cookies.EMPTY_ALERT==1){  //로그인 O & 오늘안봄클릭 O
             res.render("fridge/myFridge", {
                 isLogin : true,
+                user_name: user_name,
                 fresh_list : fresh_result.rows, 
                 frozen_list : frozen_result.rows,
                 empty_alert : true
@@ -27,6 +29,7 @@ exports.getMyFridge = async (req,res) => {
         }else{
             res.render("fridge/myFridge", { //로그인 O & 오늘안봄클릭 X
                 isLogin : true,
+                user_name: user_name,
                 fresh_list : fresh_result.rows, 
                 frozen_list : frozen_result.rows,
                 empty_alert : false
