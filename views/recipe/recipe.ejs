@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let soupStr = "냉장고에 있는 재료로 따끈한 국/탕 뚝딱!"
   let healthyStr = "냉장고에 있는 재료로 몸에 좋은 건강한 음식 뚝딱!";
   let nightSnackStr = "냉장고에 있는 재료로 쉽고 맛있는 야식을 뚝딱!"; 
-
   switch(tag) {
       case "식재료 일치":
           typeIt(recipeStr);
@@ -52,11 +51,11 @@ document.addEventListener("DOMContentLoaded", () => {
 </style>
 <div class="container-fluid" id="filter">
     <div class="container" id="filter_box">
-      <button class="btn filter" type="button" onclick="selectFilter('반찬')">반찬</button>
-      <button class="btn filter" type="button" onclick="selectFilter('밥')">밥</button>
+      <button class="btn filter" type="button" onclick="selectFilter('반찬')">반찬류</button>
+      <button class="btn filter" type="button" onclick="selectFilter('밥')">밥류</button>
       <button class="btn filter" type="button" onclick="selectFilter('국/탕')">국/탕</button>
       <button class="btn filter" type="button" onclick="selectFilter('건강/웰빙')">건강/웰빙</button>
-      <button class="btn filter" type="button" onclick="selectFilter('야식')">야식</button>
+      <button class="btn filter" type="button" onclick="selectFilter('야식')">야식류</button>
       <button class="btn filter" type="button" onclick="selectFilter('빠름')">빠른 한끼</button>
       <button class="btn filter" type="button" onclick="location.href='/recipe'">식재료 일치 레시피</button>
     </div>
@@ -65,7 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
   <h1 class="intro" id="tagIntro"><%=tag%></h1>
   <div id="recipe_list" class="container mt-5 ">
     <div class="row row-cols-2 row-cols-sm-2 row-cols-1">
-   
       <%for(var i=0; i<data.length;i++) { %>
         <div class="card_parent col-md-3 ">
             <div class="card">

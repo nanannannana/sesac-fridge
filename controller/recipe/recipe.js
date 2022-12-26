@@ -155,11 +155,24 @@ exports.getRecipe = async (req, res) => {
             res.render("recipe/recipe", result);
         }
     }else { // [5] 비로그인 시 
+        let where ={};
+
+        if(req.query.tag) {
+            where["recipe_tag"] = req.query.tag;
+        }else {
+            where["recipe_tag"] = ["식재료 일치"];
+        }
+
         let recipes = await recipe.findAll({
             raw : true, // dataValues만 가져오기
-            where : {"recipe_tag" : null}
+            where
         });
-        res.render("recipe/recipe_non", {isLogin : false, data : recipes});
+        let result = { data: recipes }; 
+        result["isLogin"] = false;
+        result["tag"] = [req.query.tag];
+       
+        console.log("result.tag ", result.tag);
+        res.render("recipe/recipe_non", result);
     }
     
 }
