@@ -12,14 +12,22 @@ exports.postMyPage = async function(req,res) {
     // 자동로그인 했을 떄
     if (req.cookies.user_id || req.session.user) {
         const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
+        // user 이름 확인
         let user_result = await user.findOne({
             raw: true,
             where: {user_id : final_user_id}
         });
+        // 냉장고 재료 카테고리 가져오기
         var fresh_result = await fresh.findAll({
             raw:true,
             where: {user_user_id: final_user_id}
         });
+        // 냉장고 카테고리 배열
+        var fresh_category_list = [];
+        for (var i=0; i<fresh_result.length ; i++) {
+            fresh_category_list.push(fresh_result[i].fresh_category);
+        }
+        // 최근에 한 요리 최신순 4개 가쟈오기
         let cook_result = await cooklog.findAll({
             raw: true,
             include: [
@@ -33,6 +41,16 @@ exports.postMyPage = async function(req,res) {
             order: [['cooklog_id', 'DESC']],
             limit: 10
         });
+        // 최근에 한 요리 차트 관련 배열
+        var cook_tag_list = [];
+        for (var j = 0; j < cook_result.length ; j++) {
+            if (cook_result[j]['recipe.recipe_tag']==null) {
+                cook_tag_list.push("기타");
+            } else {
+                cook_tag_list.push(cook_result[j]['recipe.recipe_tag']);
+            }
+        }
+        // 최근에 본 레시피 최신순 10개 가져오기
         let recipe_result = await log.findAll({
             raw: true,
             include: [
@@ -45,49 +63,14 @@ exports.postMyPage = async function(req,res) {
             where: {user_user_id: final_user_id},
             order: [['log_id', 'DESC']],
             limit: 4
-        })
-        // 냉장고 카테고리 배열
-        var fresh_category_list = [];
-        for (var i=0; i<fresh_result.length ; i++) {
-            fresh_category_list.push(fresh_result[i].fresh_category);
-        }
-        // 최근에 한 요리 차트 관련 배열
-        var cook_tag_list = [];
-        for (var j = 0; j < cook_result.length ; j++) {
-            if (cook_result[j]['recipe.recipe_tag']==null) {
-                cook_tag_list.push("기타");
-            } else {
-                cook_tag_list.push(cook_result[j]['recipe.recipe_tag']);
-            }
-        }
-        //최근에 한 요리/최근 본 레시피 카드 관련 배열
-        var cook_title_list = [];
-        var cook_url_list = [];
-        var cook_img_list = [];
-        var recipe_title_list = [];
-        var recipe_url_list = [];
-        var recipe_img_list = [];
-        for (var l=0 ; l < cook_result.length ; l++) {
-            cook_title_list.push(cook_result[l]['recipe.recipe_title']);
-            cook_url_list.push(cook_result[l]['recipe.recipe_url']);
-            cook_img_list.push(cook_result[l]['recipe.recipe_img']);
-        }
-        for (var m=0 ; m <recipe_result.length ; m++) {
-            recipe_title_list.push(recipe_result[m]['recipe.recipe_title']);
-            recipe_url_list.push(recipe_result[m]['recipe.recipe_url']);
-            recipe_img_list.push(recipe_result[m]['recipe.recipe_img']);
-        }
+        });
         res.render("user/myPage", {
             isLogin: true,
             user_name: user_result.user_name,
             fresh_category: fresh_category_list,
             cook_tag: cook_tag_list,
-            cook_title: cook_title_list,
-            cook_url: cook_url_list,
-            cook_img: cook_img_list,
-            recipe_title: recipe_title_list,
-            recipe_url: recipe_url_list,
-            recipe_img: recipe_img_list
+            cook: cook_result,
+            recipe: recipe_result
         });
     } else { // 자동로그인 x, 로그인 x
         const kakao_auth_url = `https://kauth.kakao.com/oauth/authorize?client_id=${env.REST_API_KEY}&redirect_uri=${env.REDIRECT_URI}&response_type=code&scope=profile_nickname,account_email,talk_message`
@@ -106,6 +89,7 @@ exports.postMyPageChart = function(req,res) {
 exports.postWishList = async function(req,res) {
     if (req.cookies.user_id || req.session.user) {
         const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
+        // user 이름 확인
         let user_result = await user.findOne({
             raw: true,
             where: {user_id : final_user_id}
@@ -120,9 +104,6 @@ exports.postWishList = async function(req,res) {
             ],
             where: {user_user_id: final_user_id}
         });
-        // join문 결과 확인
-        // console.log(rec_like_count.count);
-        // console.log(rec_like[i].recipe);
         var recipe_id = [];
         var recipe_img = [];
         var recipe_url = [];

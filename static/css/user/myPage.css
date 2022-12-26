@@ -24,28 +24,11 @@
     color: #ffffff;
 }
 
-/* 최근 본 레시피 카드 */
-/* #recipe_card {
-    border: 1px solid #000;
-    height: 300px;
-    width: 100%;
-}
-#recipe_card_title {
-    text-align: center;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    font-size: 20px;
-    margin-top: 10px;
-    font-weight: bolder;
-}
-#recipe_box_child > a {
-    padding: 0px;
-    display: inline-block;
-} */
-
 
 /* 최근 본 레시피 title 관련 */
+#recipe_title_none, #cook_title_none {
+    display:none;
+}
 #recent_recipe_box {
     display: flex;
     justify-content: space-between;
@@ -156,15 +139,24 @@
     color:white;
     text-shadow: 0px 0px 3px #000000;
 }
-#blank_box:hover {
-    /* background-color: #ffffff; */
+/* #blank_box:hover {
+    /* background-color: #ffffff;
     height: 300px;
-}
+} */
 #recent_recipe_card_box > div, #recent_cook_card_box > div {
     height: 300px;
 }
 
 @media (max-width: 1296px) {
+    #chart_box_child {
+        justify-content: space-evenly;
+    }
+    #myChart, #myChart2 {
+        width: 450px !important;
+        height: 450px !important;
+    }
+}
+@media (max-width: 992px) {
     #chart_box_child {
         display: block;
     }
@@ -179,8 +171,6 @@
         margin: auto;
         margin-bottom: 30px;
     }
-}
-@media (max-width: 992px) {
     #recent_recipe_title_img, #recent_cook_title_img {
         width: 250px;
         height:400px;
@@ -188,11 +178,13 @@
     #recent_recipe_title_text > span, #recent_cook_title_text > span {
         font-size: 60px;
     }
-    #recent_recipe_card, #recent_cook_card {
+    #recent_recipe_card, #recent_cook_card, #blank_box {
         height: 190px;
     }
+    #recent_recipe_card > img, #recent_cook_card > img {
+        height: 100% !important;
+    }
     #blank_box {
-        height:190px;
         padding: 30px;
     }
     #recent_recipe_card > a, #recent_cook_card > a {
@@ -205,21 +197,24 @@
         height: 500px !important;
     }
     #recent_recipe_title_img, #recent_cook_title_img {
-        width: 250px;
-        height:300px;
+        width: 200px;
+        height:360px;
     }
     #recent_recipe_title_text > span, #recent_cook_title_text > span {
-        font-size: 50px;
+        font-size: 40px;
     }
-    #recent_recipe_card, #recent_cook_card {
-        height: 140px;
+    #recent_recipe_card, #recent_cook_card, #blank_box {
+        height: 170px;
     }
     #blank_box {
-        height:140px;
         font-size: 60px;
+        padding-top:45px;
     }
-    #recent_recipe_card > a, #recent_cook_card > a {
-        font-size: 20px;
+    #recent_recipe_card_box, #recent_cook_card_box {
+        width: 100%;
+    }
+    #recipe_name, #cook_name {
+        font-size: 15px !important;
     }
 }
 @media (max-width: 600px) {
@@ -233,6 +228,50 @@
     }
     #chart_title {
         font-size: 20px;
+    }
+
+}
+@media (max-width:540px) {
+    #recent_recipe_title_img, #recent_cook_title_img {
+        display: none;
+    }
+    #recent_recipe_box, #recent_cook_box {
+        height:950px;
+    }
+    #recent_recipe_card_box, #recent_cook_card_box {
+        width: auto !important;
+        margin: 0;
+    }
+    #recent_recipe_card, #recent_cook_card, #blank_box {
+        margin:10px 0 0 0 !important;
+        width: 100%;
+        height: 220px;
+    }
+    #blank_box {
+        padding-top: 65px;
+    }
+    #recipe_name, #cook_name {
+        font-size: 20px !important;
+    }
+    #box_title {
+        margin: 0 0 6px 0;
+    }
+    #recipe_title_none {
+        display: inline-block;
+        margin:0 0 5px 0;
+        font-size: 20px;
+        font-weight: bolder;
+        background-color: #fff3cd;
+    }
+    #cook_title_none {
+        display: inline-block;
+        margin:50px 0 5px 0;
+        font-size: 20px;
+        font-weight: bolder;
+        background-color: #fff3cd;
+    }
+    #recent_cook_box {
+        margin-top: 3px;
     }
 }
 @media (max-width: 350px) {
