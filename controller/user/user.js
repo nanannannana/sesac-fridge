@@ -18,11 +18,9 @@ let exp_list_arr = new Array(); // 유통기한 지난 식재료 > getMain - exp
 
 // 로그인 페이지 렌더
 exports.getSignin = function(req,res) {
-    const kakao_auth_url = `https://kauth.kakao.com/oauth/authorize?client_id=${env.REST_API_KEY}&redirect_uri=${env.REDIRECT_URI}&response_type=code&scope=profile_nickname,account_email,talk_message`
+    // const kakao_auth_url = `https://kauth.kakao.com/oauth/authorize?client_id=${env.REST_API_KEY}&redirect_uri=${env.REDIRECT_URI}&response_type=code&scope=profile_nickname,account_email,talk_message`
     // kakao_auth_url: kakao_auth_url
-    res.render("user/signIn", {
-        kakao_auth_url: kakao_auth_url
-    });
+    res.render("user/signIn");
 }
 
 // 간편로그인
