@@ -181,8 +181,28 @@ function pw_find() {
     })
 }
 
-// Kakao.init('5616297e86dc2afd5a71b0d8d5006554'); //javascript_key
-// console.log(Kakao.isInitialized()); // sdk초기화여부판단
+Kakao.init('5616297e86dc2afd5a71b0d8d5006554'); //javascript_key
+console.log(Kakao.isInitialized()); // sdk초기화여부판단
+
+function kakao_login() {
+    Kakao.Auth.authorize({
+        redirectUri: "http://localhost:8080/kakao/oauth"
+    })
+}
+// function requestUserInfo() {
+//     Kakao.API.request({
+//         url: "/v2/user/me",
+//     })
+//     .then(function(res) {
+//         alert(JSON.stringify(res));
+//     })
+//     .catch(function(err) {
+//         alert("failed"+JSON.stringify(err));
+//     })
+// }
+
+
+
 
 // function kakoLogin() {
 //     window.Kakao.Auth.login({
