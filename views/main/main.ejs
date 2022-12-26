@@ -2,7 +2,6 @@
 <link href="/static/css/main/main.css" rel="stylesheet" type="text/css">
 <script src="static/script/main/main.js" type="text/javascript"></script>
 <%-include('header.ejs') %>
-
 <main>
     <!-- 로그인시 임박상품 수 노출 -->
     <div class="d_none" id="welcome_user">
@@ -128,14 +127,12 @@
       // 4. 만약 당일 첫 로그인인데 유통기한 지난 식재료 없으면(exp_count<1) DB에서 삭제X 알림X
       //로그인 O
       if ( "<%=isLogin%>" == "true" ){ 
-        fridgeList();
-
+        // fridgeList();
         $("#welcome_user").removeClass("d_none"); //user 환영 인사말 display
         // $("#welcome_user div").html("<span>"+`${localStorage.getItem("username")}`+"님🌱</span><br>유통기한이 임박한 식재료 <b><%=fresh_count%>개</b>가 기다리고 있어요 !");
-        console.log(`${localStorage.getItem("username")}`,"<%=exp_count%>");
-        welcomeToast(`${localStorage.getItem("username")}`,"<%=exp_count%>");
-
         
+        console.log(`${localStorage.getItem("username")}`,"<%=exp_count%>");
+        welcomeToast(`${localStorage.getItem("username")}`,"<%=fresh_count%>");
         if( "<%=exp_count%>" > 0 ){ // 삭제할 식재료 존재 & 로그인 O
           deleteAlert(`${localStorage.getItem("username")}`,"<%=exp_count%>"); // 식재료 삭제 & 알림
         }

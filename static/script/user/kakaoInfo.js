@@ -16,7 +16,7 @@ function info() {
             user_phone: form.user_phone.value.replace(/[^0-9]/g, '')
         }
     })
-    .then(function() {
+    .then((res)=>{
         form.reset();
         location.href="/";
     })

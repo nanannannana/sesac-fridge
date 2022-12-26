@@ -21,25 +21,25 @@ function deleteAlert(username, exp_count){
   })
 }
 
-function fridgeList(){
-  axios({
-    method : "post",
-    url : "/fridgeList"
-  }).then((res)=>{
-    let fresh_len = res.data.freshList.length;
-    let frozen_len = res.data.frozenList.length;
-    localStorage.setItem("username", res.data.username);
+// function fridgeList(){
+//   axios({
+//     method : "post",
+//     url : "/fridgeList"
+//   }).then((res)=>{
+//     let fresh_len = res.data.freshList.length;
+//     let frozen_len = res.data.frozenList.length;
+//     localStorage.setItem("username", res.data.username);
 
-    for(i=0; i< fresh_len; i++){
-      localStorage.setItem( `${res.data.freshList[i].fresh_name}_fridge`, "fresh" );
-      localStorage.setItem( `${res.data.freshList[i].fresh_name}_range`, `${res.data.freshList[i].fresh_range}` );
-    }
-    for(j=0; j< frozen_len; j++){
-      localStorage.setItem( `${res.data.frozenList[j].frozen_name}_fridge`, "frozen" );
-      localStorage.setItem( `${res.data.frozenList[j].frozen_name}_range`, `${res.data.frozenList[j].frozen_range}` );
-    }
-  })
-}
+//     for(i=0; i< fresh_len; i++){
+//       localStorage.setItem( `${res.data.freshList[i].fresh_name}_fridge`, "fresh" );
+//       localStorage.setItem( `${res.data.freshList[i].fresh_name}_range`, `${res.data.freshList[i].fresh_range}` );
+//     }
+//     for(j=0; j< frozen_len; j++){
+//       localStorage.setItem( `${res.data.frozenList[j].frozen_name}_fridge`, "frozen" );
+//       localStorage.setItem( `${res.data.frozenList[j].frozen_name}_range`, `${res.data.frozenList[j].frozen_range}` );
+//     }
+//   })
+// }
 
 function welcomeToast( name, count ){
   if( Number(count)>0 ){

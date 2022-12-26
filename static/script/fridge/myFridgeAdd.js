@@ -44,7 +44,7 @@ const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
     }
  }
  //식재료 정보 입력 받기 
- let datepicker;
+//  let datepicker;
  async function freshModal(freshName){
     Swal.fire({
         title: '냉장실에 보관할 재료를 알려주세요',
@@ -65,20 +65,20 @@ const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
                 class="swal2-range" id="freshRange_inp" value=100 step=50
                 oninput="window.changeRange(this.value);"><br>
             <span>유통기한 : </span>
-            <input type="text" class="swal2-input" style="width:60%;" id="freshExpire_inp">`,
-            // <input type="date" style="width:60%;" class="swal2-input" id="freshExpire_inp" min=${today}>`,
+            <input type="date" style="width:60%;" class="swal2-input" id="freshExpire_inp" min=${today}>`,
+            // <input type="text" class="swal2-input" style="width:60%;" id="freshExpire_inp">`,
         confirmButtonText: '확인',
         confirmButtonColor: '#7E998F',
         showCancelButton: true,
         focusConfirm: false,
-        didOpen : ()=>{
-            $(()=>{$("#freshExpire_inp").datepicker({
-                showOn: "both",
-                dateFormat : "yy-mm-dd",
-                minDate : "0"
-            });})
-            $('#datepicker').datepicker('setDate', 'today');
-        },
+        // didOpen : ()=>{
+        //     $(()=>{$("#freshExpire_inp").datepicker({
+        //         showOn: "both",
+        //         dateFormat : "yy-mm-dd",
+        //         minDate : "0"
+        //     });})
+        //     $('#datepicker').datepicker('setDate', 'today');
+        // },
         preConfirm: () => {
           const freshRange = Swal.getPopup().querySelector('#freshRange_inp').value;
           const freshExpire = Swal.getPopup().querySelector('#freshExpire_inp').value;
@@ -87,7 +87,7 @@ const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
         //   datepicker = new Pikaday( {field: Swal.getInput() });
 
           console.log("fresh_ct :", freshCategory); 
-          $("#freshExpire_inp").datepicker();
+        //   $("#freshExpire_inp").datepicker();
 
         // input 미입력 시 알림 
         if( !freshName || freshRange==0 || !freshExpire || freshCategory=="NOT") { 
