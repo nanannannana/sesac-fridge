@@ -31,6 +31,12 @@ exports.getMain = async (req,res) => {
 
     // 로그인 여부로 if문을 나눔
     // 1) 로그인(+ 자동로그인)을 한 경우,
+    let recipe_result = await recipe.findAll({
+        raw:true,
+        order: [["recipe_pick", "desc"]],
+        limit: 4
+    })
+    console.log(recipe_result);
     if (req.cookies.user_id || req.session.user) {
         // 임박 식재료 개수
         let fresh_count = await fresh.findAndCountAll({
@@ -68,6 +74,7 @@ exports.getMain = async (req,res) => {
             user_name : user_name,
             fresh_count : req.session.fresh_count,
             exp_count : req.session.exp_count,
+            recipe: recipe_result
         }); 
     } else { // 1) 로그인(+ 자동로그인)을 하지 않은 경우,
         res.render("main/main", {
@@ -75,6 +82,7 @@ exports.getMain = async (req,res) => {
             user_name : false,
             fresh_count : false,
             exp_count : false,
+            recipe: recipe_result
         });  
     }
 }
