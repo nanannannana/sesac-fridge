@@ -19,18 +19,22 @@ exports.postResultRecipe = async (req,res) => {
 }
 
 exports.deleteDeleteInFresh = async (req,res)=>{ // fresh 테이블에서 삭제
+    const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
+
     let result = await fresh.destroy({ 
         where : {
-            user_user_id : req.session.user,
+            user_user_id : final_user_id,
             fresh_name : req.body.name
         }
     });
     res.send(true);
 }
 exports.deleteDeleteInFrozen = async (req,res)=>{ // frozen 테이블에서 삭제
+    const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
+
 let result = await frozen.destroy({ 
     where : {
-        user_user_id : req.session.user,
+        user_user_id : final_user_id,
         frozen_name : req.body.name
     }
 });

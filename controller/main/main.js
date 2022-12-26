@@ -23,14 +23,13 @@ exports.getMain = async (req,res) => {
     // [2] 로그인 여부 T/F - isLogin
     // [3] 유통기한 임박(2일 이내) 식재료 수 - fresh_count
     // [4] 유통기한 지난 식재료 수 - exp_count (식재료 목록도 필요)
-    console.log("session_id: ", req.session.user);
-    // 로그인 여부로 if문을 나눔
-
     const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
+    console.log("final_user_id: ", final_user_id);
     // 자동로그인 여부 확인
     // 자동로그인 설정X(쿠키 값 undefined): final_user_id는 req.session.user(세션에 넣어둔 user_id값이 아이디가 됨)
     // 자동로그인 설정O(쿠키 값 有): final_user_id는 req.cookies.user_id(쿠키에 넣어둔 user_id값이 아이디가 됨)
 
+    // 로그인 여부로 if문을 나눔
     // 1) 로그인(+ 자동로그인)을 한 경우,
     if (req.cookies.user_id || req.session.user) {
         // 임박 식재료 개수
@@ -54,14 +53,20 @@ exports.getMain = async (req,res) => {
         })
         exp_list_arr=exp_list.rows; //global 배열에 유통기한 지난 식재료 목록 담음 
 
+        // let user_name = await user.findOne({
+        //     attributes : ["user_name"],
+        //     where : { user_id : final_user_id }
+        // })
         res.render("main/main", {
             isLogin : true, 
+            // username : user_name.user_name,
             fresh_count : fresh_count.count,
             exp_count : exp_list.count,
         }); 
     } else { // 1) 로그인(+ 자동로그인)을 하지 않은 경우,
         res.render("main/main", {
             isLogin : false, 
+            // username : false,
             fresh_count : false,
             exp_count : false,
         });  
@@ -91,20 +96,20 @@ exports.deleteDeleteAlert = async (req,res) => {
 
 
 // localStorage에 저장할 현재 보관 중인 식재료
-exports.postFridgeList= async (req, res)=>{
-    const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
+// exports.postFridgeList= async (req, res)=>{
+//     const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
 
-    let freshList = await fresh.findAll({
-        where : {user_user_id : final_user_id}
-    });
-    let frozenList = await frozen.findAll({
-        where : {user_user_id : final_user_id}
-    });
-    let user_result = await user.findOne({
-        where: {user_id: final_user_id}
-    })
-    res.send({freshList : freshList , frozenList : frozenList, username: user_result.user_name});
-}
+//     let freshList = await fresh.findAll({
+//         where : {user_user_id : final_user_id}
+//     });
+//     let frozenList = await frozen.findAll({
+//         where : {user_user_id : final_user_id}
+//     });
+//     let user_result = await user.findOne({
+//         where: {user_id: final_user_id}
+//     })
+//     res.send({freshList : freshList , frozenList : frozenList, username: user_result.user_name});
+// }
 
 // 데이터 정규화
 const { QueryTypes } = require("sequelize"); 

@@ -59,13 +59,10 @@
 
                 <!-- 선택한 장바구니 식재료 리스트 -->
                 <div class="basket_box col-4">
-                    <div class="basket_img_box">
-                        <div>
-                            <img src="/static/img/basket.png" class="w-50" alt="This is a cart image">
-                            <div class="basket_text">먼저, 식재료를 클릭해서 담아주세요</div>
-                            <i class="bi bi-chevron-double-down" id="basket_arrow"></i>
-
-                        </div>
+                    <div id="basket_img_box">
+                        <img src="/static/img/basket.png" class="w-50" alt="This is a cart image">
+                        <div class="basket_text">먼저, 식재료를 클릭해서 담아주세요</div>
+                        <i class="bi bi-chevron-double-down" id="basket_arrow"></i>
                     </div>
                     <div id="basket_ingd_box">
                     </div>
@@ -105,7 +102,7 @@
         </div>
     </div>
 </main>
-<button type="button" class="d_none" onclick="deleteTest();">deleteTest</button>
+<!-- <button type="button" class="d_none" onclick="deleteTest();">deleteTest</button> -->
 <script>
     $(".myFridge_title").html(`<b>${localStorage.getItem("username")}님</b><span>의 냉장고</span>`);
 </script>

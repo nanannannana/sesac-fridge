@@ -1,7 +1,7 @@
 <script type="text/javascript" src="/static/script/main/header.js"></script>
 </head>
 <body>
-<header></header>
+<header>
     <div class="container-fluid" style="height:120px;">
         <div class="row">
             <div id="header_top">
@@ -48,7 +48,6 @@
     </div>
 
     <script>
-        console.log( "username" );
         console.log( localStorage.getItem("username"));
         if ( localStorage.getItem("username") != null || localStorage.getItem("username") != undefined ) {
             $("#user_name").text(`${localStorage.getItem("username")}님 |`);
