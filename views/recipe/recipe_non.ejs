@@ -3,19 +3,18 @@
 <%-include('../main/header.ejs') %>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  var tag = "<%= tag %>";
-
-  let recipeStr = "냉장고에 있는 재료와 일치하는 인기 레시피 뚝딱!";
+  if("<%=tag%>" != null)  {
+    var tag = "<%= tag %>";
+  }
+  let basicStr = "추천 레시피라서 일치하는 식재료를 냉장고에 넣어주세요!";
   let sideDishStr = "냉장고에 있는 재료로 맛있는 반찬 뚝딱!";
   let riceStr = "냉장고에 있는 재료로 맛있는 덮밥과 볶음밥 뚝딱!";
   let soupStr = "냉장고에 있는 재료로 따끈한 국/탕 뚝딱!"
   let healthyStr = "냉장고에 있는 재료로 몸에 좋은 건강한 음식 뚝딱!";
   let nightSnackStr = "냉장고에 있는 재료로 쉽고 맛있는 야식을 뚝딱!"; 
+  let fastStr = "냉장고에있는 재료로 빠르게 한끼 뚝딱!";
 
   switch(tag) {
-      case "식재료 일치":
-          typeIt(recipeStr);
-          break;
       case "반찬":
           typeIt(sideDishStr);
           break;
@@ -31,11 +30,17 @@ document.addEventListener("DOMContentLoaded", () => {
       case "야식":
           typeIt(nightSnackStr);
           break;
+      case "빠른한끼":
+          typeIt(fastStr);
+          break;
+      default:
+          typeIt(basicStr);
+          break;
   }
   function typeIt(str){
     new TypeIt("#tagIntro")
         .pause(500)  // 1초
-        .delete(6, { delay: 1000})
+        .delete(9, { delay: 1000})
         .type(str)
         .go();
   }
@@ -57,8 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
       <button class="btn filter" type="button" onclick="selectFilter('국/탕')">국/탕</button>
       <button class="btn filter" type="button" onclick="selectFilter('건강/웰빙')">건강/웰빙</button>
       <button class="btn filter" type="button" onclick="selectFilter('야식')">야식류</button>
-      <button class="btn filter" type="button" onclick="selectFilter('빠름')">빠른 한끼</button>
-      <button class="btn filter" type="button" onclick="location.href='/recipe'">식재료 일치 레시피</button>
+      <button class="btn filter" type="button" onclick="selectFilter('빠른한끼')">빠른 한끼</button>
+      <button class="btn filter" type="button" onclick="warnAlert('<%=isLogin%>')">식재료 정확 일치 레시피</button>
+      <button class="btn filter" type="button" onclick="warnAlert('<%=isLogin%>')">식재료 유사 검색 레시피</button>
     </div>
 </div>
 <main>
@@ -97,9 +103,15 @@ document.addEventListener("DOMContentLoaded", () => {
                           <i class="fas fa-regular fa-bowl-food"></i>&nbsp;
                           <%=data[i].recipe_ingd.toString().replace(/,/g, " ")%>
                           </div>
+                          <% if(isLogin != true) { %>
                           <div class="pt-2 ingdArr">나의 냉장고와 일치하는 재료 :
                             로그인을 하면 이용하실 수 있어요 :)
-                          </div> 
+                          </div>
+                          <% } else { %>
+                            <div class="pt-2 ingdArr">나의 냉장고와 일치하는 재료 :
+                              냉장고에 재료를 추가하면 이용하실 수 있어요 :)
+                            </div>
+                          <% } %>
                         </div>
                     </div>
                 </div>
@@ -109,8 +121,8 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="btn_outer mt-3 mb-3">
               <div class="btn_inner text-center p-1"> 
                 <input type="button" class="btn show_recipe" 
-                onclick="loginAlert()" value="레시피보기">
-                <input type="button" class="btn show_cook" onclick="loginAlert()" value="요리하기">
+                onclick="insertLog('<%=data[i].recipe_id%>', '<%=data[i].recipe_url%>', '<%=isLogin%>')" value="레시피보기">
+                <input type="button" class="btn show_cook" onclick="warnAlert('<%=isLogin%>')" value="요리하기">
               </div>
             </div>
             <!--btn_outer-->

@@ -124,15 +124,18 @@ exports.patchUpdateFresh = async (req,res)=>{
     const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
 
     console.log("patchUpdateFresh req.body : ", req.body);
+    console.log("req.name", req.body.name)
     let data = {
         fresh_range : req.body.range,
         fresh_expire : req.body.expire    
     }
+    
     let result = await fresh.update(data, {
         where : {
             user_user_id : final_user_id,
             fresh_name : req.body.name}
     })
+
     console.log( 'update result : ', result );
     res.send(result);
 }
