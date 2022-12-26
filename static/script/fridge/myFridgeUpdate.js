@@ -69,7 +69,7 @@ async function clickUpdate(ingd){
 
                 return { 
                     id : freshId,
-                    newName : freshName,
+                    name : freshName,
                     range : freshRange,
                     expire : freshExpire 
                 }}

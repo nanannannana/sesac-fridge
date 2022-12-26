@@ -3,16 +3,40 @@ function selectFilter(filter) {
     location.href="/recipe?tag=" + filter;
 }
 
+// 로그아웃 시 식재료 일치 레시피나 요리하기 버튼 클릭 시
+// 또는 냉장고에 식재료가 없을 시 레시피나 요리하기 버튼 클릭 시
+function warnAlert(isLogin) {
+    if(isLogin === "true") {
+        Swal.fire({
+            icon: 'warning',
+            title : "나의 냉장고에 재료를\n 추가하고 사용할 수 있습니다 :)",
+            showConfirmButton : true,
+            allowEnterKey : true,
+        })    
+    }else {
+        Swal.fire({
+            icon: 'warning',
+            title : "로그인 후 나의 냉장고에 재료를\n 추가하고 사용할 수 있습니다 :)",
+            showConfirmButton : true,
+            allowEnterKey : true,
+        })    
+    }
+
+}
 // 최근 본 레시피 클릭 시 log 테이블에 추가
-function insertLog(id, url) {
-    let recipe_id = id;
-    axios({
-        method : "post",
-        url : "/recipe/insertToLog",
-        data : { id : recipe_id },
-    }).then((res)=>{
+function insertLog(id, url, login) {
+    if(login === "false") { // 비로그인 시
         location.href=url;
-    })
+    }else { // 로그인 시
+        let recipe_id = id;
+        axios({
+            method : "post",
+            url : "/recipe/insertToLog",
+            data : { id : recipe_id },
+        }).then((res)=>{
+            location.href=url;
+        })
+    }
 }
 
 // 빈 하트 클릭 시 recipe_like 테이블에 추가
@@ -38,7 +62,6 @@ function insertLike(element, id, login) {
         }) 
     })
 }
-
 
 // 전역변수 let inputcnt, const checkbox
 let inputcnt = 0;  // 전역변수로 설정해서 input 태그 개수 가져오기(input radiobox가 여러개일 때)
