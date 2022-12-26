@@ -35,9 +35,10 @@ exports.getMyFridge = async (req,res) => {
                 empty_alert : false
             });
         }
+    }else{
         // res.render("fridge/myFridge404", {isLogin : false});
         res.render("fridge/myFridge404", { isLogin : false });
-    }  
+    }
 }
 
 // 빈 냉장고 알림 Cookie
