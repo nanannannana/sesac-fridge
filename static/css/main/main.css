@@ -5,12 +5,14 @@
 /*toast -  user 환영 msg */
 #welcome_user {
   position: relative;
+  width : 20%;
   height: 200px;
-  display: flex;
-  justify-content: end;
+  /* display: flex;
+  justify-content:end;
   text-align: right;
   padding-right: 5rem;
-  padding-top: 1rem;
+  padding-top: 1rem; */
+  float:right;
 }
 .swal2-popup.swal2-toast .swal2-html-container {
   font-size:large;
@@ -33,22 +35,33 @@ body.swal2-toast-shown .swal2-container {
 /*toast.css END*/
 
 /* main {background-color: var(--main-yellow);} */
-.mainPage_main {background-color: var(--main-yellow);}
-.mainPage_box { 
-  min-height: 1440px; 
-  text-align: center; 
-  display: flex; 
-  flex-direction: column; 
-  justify-content: space-around;
+/* .mainPage_main {
+  height: 100%;
+  background-color: var(--main-yellow);   
+  padding :0;
 }
+.mainPage_box { 
+  min-height: 1440px;
+  min-height: 100%;
+  text-align: center; 
+  padding : 0;
+  margin: 0;
+}
+.first_row_main {
+  margin: 0 !important;
+}
+#carouselExampleControls {
+  padding: 0;
+} */
 
+/* 
 .mainPage_box>div>p {
   font-size: 30px; 
   font-weight: bolder; 
   margin-bottom: 0;
-}
+} */
 
-.first_row_main, .second_row_main, .third_row_main {
+/* .first_row_main, .second_row_main, .third_row_main {
     display: flex; 
     justify-content: center;
 }
@@ -59,9 +72,9 @@ body.swal2-toast-shown .swal2-container {
     justify-content: space-around; 
     margin: 3rem; 
     margin-top: 1rem; 
-    max-height: 30vh;}
+    max-height: 30vh;} */
 
-.mainPage_box card {
+/* .mainPage_box card {
   max-width: 18rem; 
   max-height: 30%;
 }
@@ -74,8 +87,10 @@ body.swal2-toast-shown .swal2-container {
   margin:2rem; 
   margin-top: 3rem; 
   margin-bottom: 3rem;
+  overflow: hidden;
 } 
 .br_img {
   width:18rem;
-}
+  overflow: hidden;
+} */
 
