@@ -1,3 +1,6 @@
+.d_none {
+    display: none;
+}
 #myFridgePage_main {
     min-height: 100%;
     background-color: var(--main-yellow);
@@ -6,7 +9,7 @@
 }
 #myFridgePage_main > .row,
 #fridge_col > .row,
-#btn_col > .row {
+#basket_col > .row {
     justify-content: center;
 }
 #title_row {
@@ -28,6 +31,7 @@
 
 #top_row {
     max-height : 80%;
+    align-items: center;
 }
 
 #fresh_box, #frozen_box {
@@ -35,6 +39,7 @@
     overflow-y: auto;
     background-color: white;
     border : 2px solid var(--point-coral);
+    height : 40vh;
 }
 #fresh_box>div, #frozen_box>div {
     display: block;
@@ -97,7 +102,7 @@
 }
 
 #fridge_col input[type=checkbox] {
-    transform : scale(1.5);
+    transform: scale(1.5);
     cursor: pointer;
 }
 
@@ -137,7 +142,10 @@
     font-weight: bolder;
     padding-top: 2em;
 }
-#basket_arrow,#basket_warn, #smile_emoji {
+#basket_img {
+    width: 50%;
+}
+#basket_arrow,#basket_warn {
     font-size: xx-large;
     font-weight: bold;
     padding-bottom: 2em;
@@ -185,7 +193,6 @@
     padding : 4em 0 4em 0;
     vertical-align: middle;
     white-space : normal;
-
 }
 
 #bottom_row button{
@@ -203,16 +210,96 @@
 }
 
 @media (max-width: 768px) {
-#bottom_row {
-    padding-top: 0;
+    #bottom_row {
+        padding-top: 0;
+    }
+    #fresh_text, #frozen_text{
+        display: block;
+        max-height: 30%;
+    } 
+    #fresh_bar, #frozen_bar{
+        display: none;
+    }
+    #basket_btn{
+        padding-top: 2em;
+    }
+    #basket_img{
+        width : 30%;
+        height : 30%;
+    }
+    /* #fridge_col {
+        margin-bottom: -40em;
+    } */
+    #basket_warn {
+        display: none;
+    }
+    #basket_img_box div {
+        font-size: medium;
+        font-weight: bold;
+        padding-top: 0.5em;
+    }
+    #basket_arrow,#basket_warn {
+        font-size: medium;
+        font-weight: bold;
+        padding-bottom: 1em;
+    }
+    #bottom_row button{
+        font-size: 18px; 
+    }
+    #fridge_btns>button {
+        width: 85px; height: 85px;
+    }
+    #result_recipe_btn {
+        width : 180px; height : 70px;
+    }
+    
+    /* 냉장고 내부 식재료 개별 요소 */
+    #fridge_col>div>div {
+        font-size: 15px;
+        /* margin: 2em;
+        padding: 2em; */
+    }
+    #fridge_col label {
+        margin: 3px;
+        width: 40vw;
+    }
+    /* 식재료 유통기한 */
+    #fridge_col p {
+        font-size : 5px;
+    }
+
+    #fridge_col input[type=checkbox] {
+        transform: scale(1);
+    }
+    #basket_box {
+        margin-bottom: 0.5em;
+    }
+    #basket_list > div {
+        width:50%;
+        font-size: medium;
+        font-weight: bold;
+        margin: 0.5em 0 0.5em 0;
+    }
 }
-#fresh_text, #frozen_text{
-    display: block;
-} 
-#fresh_bar, #frozen_bar{
-    display: none;
+@media (max-width: 577px) {
+    #fridge_col {
+        margin-bottom: -100em;
+    }
 }
-#basket_btn{
-    padding-top: 2em;
+@media (max-width: 576px) {
+    #fridge_col {
+        margin-bottom: 0em;
+    }
 }
+@media (max-width : 425px){
+    #bottom_row button{
+        font-size: 12px; 
+    }
+    #fridge_btns>button {
+        width: 60px; height: 60px;
+    }
+    #result_recipe_btn {
+        width : 130px; height : 50px;
+    }
 }
+

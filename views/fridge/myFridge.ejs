@@ -31,40 +31,40 @@
 
         <div class="row" id="top_row">
         <!-- 냉장고 column -->
-            <div class="col-sm-8"  id="fridge_col">
+            <div class="col-md-8 col-sm-12"  id="fridge_col">
                 <div class="row row-cols-sm-2 row-cols-md-4" id="fresh_box" name="fresh">
                     <%for(let i=0; i<fresh_list.length; i++){%>
                         <div class="col">
-                            <span class="d_none fresh_id"><%=fresh_list[i].fresh_id%></span>
+                            <!-- <span class="d_none fresh_id"><%=fresh_list[i].fresh_id%></span> -->
                             <input type="checkbox" name="ingd" value="<%=fresh_list[i].fresh_name%>" id="<%=fresh_list[i].fresh_name%>" onclick="addToList(this, '<%=fresh_list[i].fresh_range%>');">
                             <label for="<%=fresh_list[i].fresh_name%>"><%=fresh_list[i].fresh_name%></label><br>
                             <input type="range" id="fresh_bar" value="<%=fresh_list[i].fresh_range%>" step="50" disabled><br>
                             <span id="fresh_text" class="d_none"><%=fresh_list[i].fresh_range%></span>
                             <p><%=fresh_list[i].fresh_expire%></p>
-                            <button type="button" class="d_none updateIngd_btn" value="<%=fresh_list[i].fresh_name%>" onclick="clickUpdate(this);">수정</button>
-                            <button type="button" class="d_none deleteIngd_btn" value="<%=fresh_list[i].fresh_name%>" onclick="clickDelete(this);">삭제</button>
+                            <button type="button" class="d_none updateIngd_btn" value="<%=fresh_list[i].fresh_name%>" onclick="clickUpdate(this, 'fresh');">수정</button>
+                            <button type="button" class="d_none deleteIngd_btn" value="<%=fresh_list[i].fresh_name%>" onclick="clickDelete(this, 'fresh');">삭제</button>
                         </div>
                     <%}%>                                                   
                 </div>
                 <div class="row row-cols-sm-2 row-cols-md-4" id="frozen_box" name="frozen">
                     <%for(let j=0; j<frozen_list.length; j++){%>
                         <div class="col">
-                            <span class="d_none frozen_id"><%=frozen_list[j].frozen_id%></span>
+                            <!-- <span class="d_none frozen_id"><%=frozen_list[j].frozen_id%></span> -->
                             <input type="checkbox" name="ingd" value="<%=frozen_list[j].frozen_name%>" id="<%=frozen_list[j].frozen_name%>" onclick="addToList(this, '<%=frozen_list[j].frozen_range%>');">
                             <label for="<%=frozen_list[j].frozen_name%>"><%=frozen_list[j].frozen_name%></label><br>
                             <input type="range" id="frozen_bar" value="<%=frozen_list[j].frozen_range%>" step="50" disabled><br>
                             <span id="frozen_text" class="d_none"><%=frozen_list[j].frozen_range%></span>
                             <p><%=frozen_list[j].frozen_date%></p>
-                            <button type="button" class="d_none updateIngd_btn" value="<%=frozen_list[j].frozen_name%>" onclick="clickUpdate(this);">수정</button>
-                            <button type="button" class="d_none deleteIngd_btn" value="<%=frozen_list[j].frozen_name%>" onclick="clickDelete(this);">삭제</button>
+                            <button type="button" class="d_none updateIngd_btn" value="<%=frozen_list[j].frozen_name%>" onclick="clickUpdate(this, 'frozen');">수정</button>
+                            <button type="button" class="d_none deleteIngd_btn" value="<%=frozen_list[j].frozen_name%>" onclick="clickDelete(this, 'frozen');">삭제</button>
                         </div>
                     <%}%>                                                   
                 </div>
             </div>
         <!-- 장바구니 column -->
-            <div class="col-sm-4" id="btn_col">
+            <div class="col-md-4 col-sm-12" id="basket_col">
                 <div class="row" id="basket_img_box">
-                    <img src="/static/img/basket.png" class="w-50" alt="This is a cart image">
+                    <img src="/static/img/basket.png" id="basket_img" alt="This is a cart image">
                     <div id="basket_text">먼저, 식재료를 클릭해서 담아주세요</div>
                     <i class="bi bi-chevron-double-down" id="basket_arrow"></i>
                     <div id="warn_text" class="d_none">식재료 이름을 잘못 입력한 경우,<br>삭제 후 다시 보관해주세요</div>
@@ -83,8 +83,8 @@
                     <button type="button" class="addIngd_btn me-5" id="fresh" onclick="checkFresh();">냉장실에<br>보관하기</button>
                     <button type="button" class="addIngd_btn" id="frozen" onclick="checkFrozen();">냉동실에<br>보관하기</button>
                     <button type="button" class="showUpdate_btn ms-5" id="showUpdateBtns" onclick="showUpdateBtns();">변경/삭제</button>
-                    <button type="button" class="updateIngd_btn d_none" id="cancelUpdate" onclick="cancelUpdate();">변경 취소</button>
-                    <button type="button" class="updateIngd_btn d_none" id="updateFinish" onclick="finishUpdate();">변경 완료</button>
+                    <button type="button" class="updateIngd_btn me-5 d_none" id="cancelUpdate" onclick="cancelUpdate();">변경 취소</button>
+                    <button type="button" class="updateIngd_btn ms-5 d_none" id="updateFinish" onclick="finishUpdate();">변경 완료</button>
                 </div>
                 <div id="basket_btn" class="col-md-4 col-sm-12">
                     <button type="button" id="result_recipe_btn" onclick="resultRecipe();">레시피 확인하기</button>

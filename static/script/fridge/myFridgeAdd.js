@@ -66,28 +66,17 @@ const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
                 oninput="window.changeRange(this.value);"><br>
             <span>유통기한 : </span>
             <input type="date" style="width:60%;" class="swal2-input" id="freshExpire_inp" min=${today}>`,
-            // <input type="text" class="swal2-input" style="width:60%;" id="freshExpire_inp">`,
         confirmButtonText: '확인',
         confirmButtonColor: '#7E998F',
         showCancelButton: true,
         focusConfirm: false,
-        // didOpen : ()=>{
-        //     $(()=>{$("#freshExpire_inp").datepicker({
-        //         showOn: "both",
-        //         dateFormat : "yy-mm-dd",
-        //         minDate : "0"
-        //     });})
-        //     $('#datepicker').datepicker('setDate', 'today');
-        // },
+
         preConfirm: () => {
           const freshRange = Swal.getPopup().querySelector('#freshRange_inp').value;
           const freshExpire = Swal.getPopup().querySelector('#freshExpire_inp').value;
-        //   const freshExpire = datepicker.getDate();
           const freshCategory = Swal.getPopup().querySelector('#freshCategory_inp').value;
-        //   datepicker = new Pikaday( {field: Swal.getInput() });
 
           console.log("fresh_ct :", freshCategory); 
-        //   $("#freshExpire_inp").datepicker();
 
         // input 미입력 시 알림 
         if( !freshName || freshRange==0 || !freshExpire || freshCategory=="NOT") { 
@@ -243,3 +232,4 @@ function addToFrozen(result){
         tfIngdRange.innerHTML="<span style='color:#ED6C67;'>보관할 것이 없어요</span>";
     } 
  }
+
