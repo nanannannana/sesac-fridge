@@ -52,8 +52,7 @@ body.swal2-toast-shown .swal2-container {
 }
 .second_box_title, .third_box_title {
   font-size:xx-large;
-  margin: 250px 0 20px 0;
-  font-family: 'NanumSquareAceb';
+  margin: 200px 0 20px 0;
   font-weight: bolder;
 }
 .second_box_content {
@@ -102,6 +101,10 @@ body.swal2-toast-shown .swal2-container {
 .display_none {
   display: none;
 }
+.user_guide_sm {
+  width:100%;
+  height: 300px;
+}
 
 /* 반응형 정리 */
 @media (max-width: 1793px) {
@@ -141,6 +144,9 @@ body.swal2-toast-shown .swal2-container {
   .card_box > img {
     width: 180px;
     height: 260px;
+  }
+  .card_title {
+    font-size: medium;
   }
   #welcome_user {
     width:300px;
@@ -221,6 +227,15 @@ body.swal2-toast-shown .swal2-container {
   .second_box_title, .third_box_title {
     /* font-size:x-large; */
     margin: 100px 0 20px 0;
+  }
+  .user_guide_sm {
+    display: block;
+  }
+  .user_guide {
+    display: none;
+  }
+  .third_main {
+    padding-bottom: 30px;
   }
 }
 
