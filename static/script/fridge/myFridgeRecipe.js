@@ -32,37 +32,47 @@ function addToList( box1, thisRange ){
 
  // 선택한 식재료 포함된 레시피 SELECT
  function checkRecipe(){
-    // const checkedName = JSON.stringify(checkedIngdName);
-    // const checkedRange = JSON.stringify(checkedIngdRange);
 
-    const fridgeData = checkedIngdName.join(",|,");
-    const fridgeRange = checkedIngdRange.join(",|,");
-    console.log( fridgeData );
-    console.log( fridgeRange );
+    const checkedName = JSON.stringify(checkedIngdName);
+    const checkedRange = JSON.stringify(checkedIngdRange);
+
+    localStorage.setItem("fridgeData", checkedName );
+    localStorage.setItem("fridgeRange", checkedRange );
+
+    // const fridgeData = checkedIngdName.join(",|,");
+    // const fridgeRange = checkedIngdRange.join(",|,");
+    // console.log( fridgeData );
+    // console.log( fridgeRange );
 
     // localStorage.setItem("fridgeData", fridgeData );
     // localStorage.setItem("fridgeRange", fridgeRange );
 
-    // setTimeout(()=>{
+    setTimeout(()=>{
+        const fridgeName = localStorage.getItem("fridgeData");
+        const fridgeRange = localStorage.getItem("fridgeRange");
+        console.log( "fD :", JSON.parse(fridgeName) );
+        console.log( "fR :", JSON.parse(fridgeRange) );
+        console.log( "fD 2 :", JSON.parse(localStorage.getItem("fridgeData")) );
+        console.log( "fR 2 :", JSON.parse(localStorage.getItem("fridgeRange")) );
     //     console.log( typeof localStorage.getItem("fridgeData") );
     //     console.log( typeof localStorage.getItem("fridgeRange") );
 
     //     console.log( "fD :", localStorage.getItem("fridgeData") );
     //     console.log( "fR :", localStorage.getItem("fridgeRange") );
-    // }, 3000)
+    }, 3000)
 
-    fromFridge( checkedIngdName, checkedIngdRange );
+    // fromFridge( checkedIngdName, checkedIngdRange );
  }
 
- function fromFridge( checkedIngdName, checkedIngdRange ){
-    axios({
-        method : "get",
-        url : "/recipe",
-        params : {
-            resultData : checkedIngdName,
-            resultRange : checkedIngdRange
-        }
-    }).then((res)=>{
-        console.log("res :", res);
-    })
- }
+//  function fromFridge( checkedIngdName, checkedIngdRange ){
+//     axios({
+//         method : "get",
+//         url : "/recipe",
+//         params : {
+//             resultData : checkedIngdName,
+//             resultRange : checkedIngdRange
+//         }
+//     }).then((res)=>{
+//         console.log("res :", res);
+//     })
+//  }
