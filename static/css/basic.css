@@ -191,3 +191,19 @@ font-weight: bold;
     width: 80vh;
     margin-left: 2rem;
 }
+
+@media (max-width: 1000px) {
+    #navvv {
+      z-index: 1000;
+    }
+    #nf_1, #nr_1, #nw_1 {
+        display: none;
+    }
+    #nf_2, #nr_2, #nw_2 {
+        visibility: visible;
+        font-size: 20px;
+    }
+    #hd_search, #navvv li {
+        margin: 20px 0 20px 0;
+    }
+}

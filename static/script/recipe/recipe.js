@@ -9,7 +9,7 @@ function warnAlert(isLogin) {
     if(isLogin === "true") {
         Swal.fire({
             icon: 'warning',
-            title : "나의 냉장고에 재료를\n 추가하고 사용할 수 있습니다 :)",
+            title : "나의 냉장고에 여러 재료를 좀 더\n 추가하고 사용할 수 있습니다 :)",
             showConfirmButton : true,
             allowEnterKey : true,
         })    

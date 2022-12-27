@@ -44,7 +44,7 @@ function deleteAlert(user_name, exp_count){
 
 function welcomeToast( user_name, count ){
   if( Number(count)>0 ){
-    let html = `<p>${user_name}님🌱</p>유통기한이 임박한 식재료<b style="color:var(--btn-warn);'"> ${count}개</b>가 기다리고 있어요 !`;
+    let html = `<p id="p1">${user_name}님🌱</p><p id="p2" style="display: inline-block; margin:0 0 5px 0;">유통기한이 임박한 식재료</p><b style="color:var(--btn-warn);'"> ${count}개</b><p style="display: inline-block; margin:0;">가 기다리고 있어요 !</p>`;
     Swal.fire({
       html: html,
       target: '#custom-target',
