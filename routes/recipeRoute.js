@@ -19,5 +19,6 @@ router.post("/insertToLike", recipe.postInsertToLike);
 router.delete("/deleteFromLike", recipe.deleteFromLike)
 
 
+// router.get("/fromFridge", recipe.getFromFridge);
 
 module.exports = router;
