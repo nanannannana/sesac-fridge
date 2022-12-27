@@ -3,25 +3,15 @@
 
 // 변경삭제 Btn 클릭시 Btn 변화
 function showUpdateBtns(){
-    $(".updateIngd_btn").removeClass("d_none");
-    $(".deleteIngd_btn").removeClass("d_none");
-    $(".warn_text").removeClass("d_none");
-    $("#basket_warn").removeClass("hidden");
-    $("#smile_emoji").removeClass("hidden");
+    $(".updateIngd_btn, .deleteIngd_btn").removeClass("d_none");
+    $("#warn_text").removeClass("d_none");
+    $("#basket_warn, #smile_emoji").removeClass("hidden");
 
-
-    $("#showUpdateBtns").addClass("d_none");
-    $(".fresh_box").remove();
-    $(".frozen_box").remove();
-    $(".change_box1").remove();
-    $(".change_box2").css("width","50%");
-    $(".change_box3").css("width","50%");
-    $(".fridge_ingd_box input[type=checkbox]").addClass("d_none");
-    $("#basket_ingd_box").text("");
-    $(".basket_text").addClass("d_none");
+    $("#result_recipe_btn, #basket_text").addClass("d_none")
+    $(".addIngd_btn, .showUpdate_btn, #showUpdateBtns").remove();
+    $("#fridge_col input[type=checkbox]").addClass("d_none");
+    $("#basket_list").text("");
     $("#basket_arrow").addClass("hidden");
-    $("#result_recipe").html("");
-    $("#result_recipe").attr("disabled",true);
 }
 // 변경-취소 Btn 클릭시,
 function cancelUpdate(){
