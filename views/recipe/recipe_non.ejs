@@ -76,13 +76,26 @@ document.addEventListener("DOMContentLoaded", () => {
                           <%=data[i].recipe_time%>
                         </span>
                       </span>
+                      <% let likeObj = {}%>
+                      <% let likeArr = []%>
+                      <% for(var t=0; t<dataLike.length; t++) {%>
+                        <% likeObj = { "userId" : dataLike[t].userId, "recipeId" : dataLike[t].recipeId} %>
+                        <% likeArr.push(likeObj)%>
+                      <% } %>
                       <button type="button" class="btn btns" title="<%=data[i].recipe_id%>">
                           <% if(isLogin != true) { %>
                           <h5><i class="bi bi-balloon-heart" onclick="warnAlert('<%isLogin%>')"></i></h5>
                           <% } else { %>
-                          <h5><i class="bi bi-balloon-heart" 
-                            onclick="insertLike(this,'<%=data[i].recipe_id%>')"></i></h5>
-                          <% } %>
+                            <% for(var x=0; x<dataLike.length; x++) { %>
+                              <% if(user_id == likeArr[x].userId && data[i].recipe_id == likeArr[x].recipeId) { %>
+                                <h5><i class="bi bi-balloon-heart-fill"
+                                  onclick="deleteLike(this, '<%=data[i].recipe_id%>')"></i>
+                                </h5>
+                              <% } %>
+                            <% } %>
+                            <h5><i class="bi bi-balloon-heart" 
+                              onclick="insertLike(this,'<%=data[i].recipe_id%>')"></i></h5>
+                            <% } %>
                         </button>
                     </div>
                 </div>
