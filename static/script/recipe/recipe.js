@@ -16,7 +16,7 @@ function warnAlert(isLogin) {
     }else {
         Swal.fire({
             icon: 'warning',
-            title : "로그인 후 나의 냉장고에 재료를\n 추가하고 사용할 수 있습니다 :)",
+            title : "로그인 후 이용하실 수 있습니다 :)",
             showConfirmButton : true,
             allowEnterKey : true,
         })    
@@ -26,7 +26,7 @@ function warnAlert(isLogin) {
 // 최근 본 레시피 클릭 시 log 테이블에 추가
 function insertLog(id, url, login) {
     if(login === "false") { // 비로그인 시
-        location.href=url;
+        window.open('about:blank').location.href=url;
     }else { // 로그인 시
         let recipe_id = id;
         axios({
@@ -34,19 +34,13 @@ function insertLog(id, url, login) {
             url : "/recipe/insertToLog",
             data : { id : recipe_id },
         }).then((res)=>{
-            location.href=url;
+            window.open('about:blank').location.href=url;
         })
     }
 }
 
 // 빈 하트 클릭 시 recipe_like 테이블에 추가
-function insertLike(element, id, login) {
-    if(login!=true) {
-        $(".likeBtn").on("click", ()=>{
-            alert("클릭이벤트 발생!");
-        })
-    }
-
+function insertLike(element, id) {
     let recipe_id = id;
     axios({
         method : "post",
@@ -54,14 +48,30 @@ function insertLike(element, id, login) {
         data : { id : recipe_id },
     }).then((res)=>{
         // 찜리스트에 담겼다고 alert창띄우기
-        Swal.fire({
-            icon: 'success',
-            title : "레시피가 찜리스트에 담겼습니다. :-) \n찜 리스트에 가서 확인해주세요. ",
-            showConfirmButton : true,
-            allowEnterKey : true,
-        }) 
+        if(res.data == true) {
+            $(element).closest("h5").css('display', 'none');
+            $(element).closest("button").append(
+                ` <h5><i class="bi bi-balloon-heart-fill"></i>
+                </h5>`
+            )
+            Swal.fire({
+                icon: 'success',
+                title : "레시피가 찜리스트에 담겼습니다. :-)\n찜 리스트에 가서 확인해주세요. ",
+                showConfirmButton : true,
+                allowEnterKey : true,
+            }) 
+        }else {
+            Swal.fire({
+                icon: 'warning',
+                title : "레시피가 이미 찜리스트에 있습니다.\n찜 리스트에 가서 확인해주세요. ",
+                showConfirmButton : true,
+                allowEnterKey : true,
+            }) 
+        }
     })
 }
+
+function deleteLike()
 
 // 전역변수 let inputcnt, const checkbox
 let inputcnt = 0;  // 전역변수로 설정해서 input 태그 개수 가져오기(input radiobox가 여러개일 때)

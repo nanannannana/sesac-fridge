@@ -47,14 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 </script>
-<style>
-  .d-none {
-    display: none;
-  }
-  .d-show {
-    display: block;
-  }
-</style>
 <div class="container-fluid" id="filter">
     <div class="container" id="filter_box">
       <button class="btn filter" type="button" onclick="selectFilter('반찬')">반찬류</button>
@@ -85,9 +77,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         </span>
                       </span>
                       <button type="button" class="btn btns" title="<%=data[i].recipe_id%>">
-                          <h5><i class="bi bi-balloon-heart"
-                            onclick="loginAlert()"></i>
-                          </h5>
+                          <% if(isLogin != true) { %>
+                          <h5><i class="bi bi-balloon-heart" onclick="warnAlert('<%isLogin%>')"></i></h5>
+                          <% } else { %>
+                          <h5><i class="bi bi-balloon-heart" 
+                            onclick="insertLike(this,'<%=data[i].recipe_id%>')"></i></h5>
+                          <% } %>
                         </button>
                     </div>
                 </div>
@@ -120,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <!--card-->
             <div class="btn_outer mt-3 mb-3">
               <div class="btn_inner text-center p-1"> 
-                <input type="button" class="btn show_recipe" 
+                <input type="button" class="btn show_recipe"
                 onclick="insertLog('<%=data[i].recipe_id%>', '<%=data[i].recipe_url%>', '<%=isLogin%>')" value="레시피보기">
                 <input type="button" class="btn show_cook" onclick="warnAlert('<%=isLogin%>')" value="요리하기">
               </div>
