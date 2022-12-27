@@ -174,11 +174,8 @@ font-size: 18px;
 #heder_nav:hover, #sign_in:hover, #sign_out:hover {
 font-weight: bold;
 }
-.sign_out_none {
-display: none;
-}
-.sign_in_none {
-display:none;
+.d_none {
+    display: none;
 }
   
 .error_box {

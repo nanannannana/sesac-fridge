@@ -6,8 +6,8 @@
 
 <body>
     <div id="background_img"></div>
-    <header>
-        <a href="http://localhost:8080/"><img src="/static/img/color_logo.png" id="logo_img" class="mt-2 ms-4" style="width:30px; float: left;"></a>
+    <header id="logo_box">
+        <a href="http://localhost:8080/"><img src="/static/img/color_logo.png" id="logo_img" class="mt-2 ms-4" style="width:30px; height:55px; float: left;"></a>
     </header>
     <div id="signin_box">
       <div id="signin_box_child"class="text-center">
@@ -26,7 +26,7 @@
           <button type="button" id="button" class="btn mb-3" onclick="signin()">로그인</button>
         </form>
         <a href="<%=kakao_auth_url%>"><img id="kakao_img" src="/static/img/kakao_logo.png"/></a>
-        <a href="#ModalToggle" data-bs-toggle="modal" role="button" style="margin-top:5px;">아이디 찾기</a>
+        <a href="#ModalToggle" id="a_href_id" data-bs-toggle="modal" role="button" style="margin-top:5px;">아이디 찾기</a>
 
         <!-- 아이디 비밀번호 찾기 관련 modal -->
         <div class="modal fade animate__animated animate__fadeInDown" id="ModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
@@ -128,7 +128,7 @@
             </div>
           </div>
         </div>
-        <a href="http://localhost:8080/signUp">회원가입</a>
+        <a href="http://localhost:8080/signUp" id="a_href_signup">회원가입</a>
         
       </div>
     </div>

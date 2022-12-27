@@ -72,11 +72,8 @@ exports.postMyPage = async function(req,res) {
             cook: cook_result,
             recipe: recipe_result
         });
-    } else { // 자동로그인 x, 로그인 x
-        const kakao_auth_url = `https://kauth.kakao.com/oauth/authorize?client_id=${env.REST_API_KEY}&redirect_uri=${env.REDIRECT_URI}&response_type=code&scope=profile_nickname,account_email,talk_message`
-        res.render("user/signIn", {
-            kakao_auth_url: kakao_auth_url
-        });
+    } else {
+        res.render("main/404");
     }
 }
 exports.postMyPageChart = function(req,res) {
@@ -167,11 +164,7 @@ exports.postPwInput = function(req,res) {
         });
         console.log(final_user_id);
     } else {
-        res.render("user/pwConfirm", {
-            isLogin: false,
-            user_id: final_user_id
-        });
-        console.log(final_user_id);
+        res.render("main/404");
     }
 }
 exports.postPwConfirm = async function(req,res) {
@@ -182,7 +175,6 @@ exports.postPwConfirm = async function(req,res) {
 // 회원정보 수정 페이지 렌더
 exports.postMyInfo = async function(req,res) {
     if (req.cookies.user_id || req.session.user) {
-        const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
         let result = await user.findOne({where: {user_id: req.body.user_id}});
         res.render("user/myInfo", {
             isLogin: true,
@@ -192,13 +184,7 @@ exports.postMyInfo = async function(req,res) {
             user_phone: result.user_phone
         });
     } else {
-        res.render("user/myInfo", {
-            isLogin: false,
-            user_id: result.user_id,
-            user_pw: result.user_pw,
-            user_name: result.user_name,
-            user_phone: result.user_phone
-        });
+        res.render("main/404");
     }
 }
 
@@ -239,12 +225,7 @@ exports.postMyInfoDel = async function(req,res) {
             ingd_count: fresh_count.count+frozen_count.count
         });
     } else {
-        res.render("user/myInfoDel", {
-            isLogin: false,
-            user_name: user_result.user_name,
-            user_id: req.body.user_id,
-            ingd_count: fresh_count.count+frozen_count.count
-        });
+        res.render("main/404");
     }
 }
 // 회원탈퇴 완료

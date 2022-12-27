@@ -1,6 +1,6 @@
 #background_img {
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     background: no-repeat url("/static/img/fridge3.jpg") 0 / cover;
     position: absolute;
     z-index:-1;
@@ -125,4 +125,93 @@
 }
 #modal_footer {
     justify-content: space-between;
+}
+
+@media (max-width:1920px) {
+    #background_img {
+        height: 100%;
+        width: 100%;
+        background: no-repeat url("/static/img/fridge3.jpg");
+        background-size: 100% cover;
+        background-position: center;
+        position: absolute;
+        z-index:-1;
+        filter: blur(2px);
+    }
+}
+@media (max-width: 768px) {
+    #logo_box {
+        display: inline-block;
+    }
+    #signin_box {
+        margin-top: -55px;
+    }
+} 
+@media (max-width:700px) {
+    #signin_title {
+        font-size: 35px !important;
+    }
+    #signin_side_title {
+        font-size: 17px !important;
+    }
+    #form_signin {
+        width: 350px;
+        display: inline-block;
+    }
+    #kakao_img {
+        width: 350px;
+    }
+    #signin_box_child > a {
+        width: 350px;
+        display: inline-block !important;
+    }
+}
+@media (max-width:600px) {
+    #signin_box_child {
+        display: inline-block;
+        position: relative;
+        margin: auto;
+    }
+}
+@media (max-width:500px) {
+    #signin_title {
+        font-size: 30px !important;
+    }
+    #signin_side_title {
+        font-size: 14px !important;
+    }
+    #form_signin {
+        width: 300px;
+        display: inline-block;
+    }
+    #kakao_img {
+        width: 300px;
+    }
+    #signin_box_child > a {
+        width: 300px;
+        display: inline-block !important;
+    }
+    #a_href_id {
+        margin-top: 15px !important;
+        font-size: 13px !important;
+    }
+    #a_href_signup {
+        font-size: 13px !important;
+    }
+}
+@media (max-width: 400px) {
+    #signin_box_child {
+        width:250px;
+    }
+    #form_signin {
+        width: 250px;
+        display: inline-block;
+    }
+    #kakao_img {
+        width: 250px;
+    }
+    #signin_box_child > a {
+        width: 250px;
+        display: inline-block !important;
+    }
 }
