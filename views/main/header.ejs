@@ -7,7 +7,7 @@
             <div id="header_top">
                 <div id="delete_box">
                     <span id="user_name"></span>
-                    <span id="heder_nav" type="button" onclick="mypage_go()"> 내정보 </span><span> | </span>
+                    <span id="header_nav" type="button" onclick="mypage_go()"> 내정보 </span><span id="stick"> | </span>
                     <span id="sign_in" type="button" onclick="location.href='/signIn'"> 로그인</span>
                     <span id="sign_out" type="button" onclick="signout_go();"> 로그아웃</span>
                     <form id="mypage_go" action="/myPage" method="post"></form> 
@@ -55,11 +55,15 @@
     </script>
     <script>
         if("<%=isLogin%>"=="true") {
-            $("#sign_in").addClass("sign_in_none");
-            $("#sign_out").removeClass("sign_out_none");
+            $("#sign_in").addClass("d_none");
+            $("#sign_out").removeClass("d_none");
+            $("#header_nav").removeClass("d_none");
+            $("#stick").removeClass("d_none");
         } else {
-            $("#sign_in").removeClass("sign_in_none");
-            $("#sign_out").addClass("sign_out_none");
+            $("#sign_in").removeClass("d_none");
+            $("#sign_out").addClass("d_none");
+            $("#stick").addClass("d_none");
+            $("#header_nav").addClass("d_none");
             $("#nav_wishlist").addClass("d_none");
             $("#nav_wishlist").children().addClass("d_none");
             $("#nav_fridge, #nav_wishlist").css("margin-left","0");
