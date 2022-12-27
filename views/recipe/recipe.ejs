@@ -4,7 +4,7 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   var tag = "<%= tag %>";
-
+  console.log(tag);
   let basicStr = "냉장고에 있는 재료와 비슷한 재료 모두 나오는 기본 레시피!"
   let recipeStr = "냉장고에 있는 재료와 일치하는 인기 레시피 뚝딱!";
   let sideDishStr = "냉장고에 있는 재료로 맛있는 반찬 뚝딱!";
@@ -64,6 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 <main>
   <h1 class="intro" id="tagIntro"><%=tag%></h1>
+  <% if(tag === "유사 재료 레시피") { %>
+    <h2>완벽히 일치하는 식재료가 아닌 재료들도 나옵니다.</h2>
+  <% } %>
   <div id="recipe_list" class="container mt-5 ">
     <div class="row row-cols-2 row-cols-sm-2 row-cols-1" id="pagination">
       <%for(var i=0; i<data.length;i++) { %>
@@ -111,22 +114,25 @@ document.addEventListener("DOMContentLoaded", () => {
                           <i class="fas fa-regular fa-bowl-food"></i>&nbsp;
                           <%=data[i].recipe_ingd.toString().replace(/,/g, " ")%>
                           </div>
-                            <div class="pt-2 ingdArr">나의 냉장고와 일치하는 재료 :
-                              <% let recp_ingd = ingdResult[i].toString().slice(1,-1).split(",")%>
-                              <% let myingd = ingdName.toString().split(',')%>
-                              <% let myingd_range = ingdRange.toString().split(',')%>
-                              <% let ingred = [] %>
-                              <% let range = [] %>
-                              <% for(var j=0; j<recp_ingd.length; j++) { %>
-                                  <% for(var k=0; k<myingd.length; k++) { %>
-                                       <% if(recp_ingd[j] == myingd[k]) { %>
-                                            <%= myingd[k]%>
-                                            <% ingred.push(myingd[k]) %>
-                                            <% range.push(myingd_range[k]) %>
-                                       <% } %>
-                                  <% } %>
-                              <% } %>  
-                            </div>
+                          <% if (keyword) { %>
+                            <%let ingds = data[i].recipe_ingd.toString().replace(/,/g, " ")%>
+                          <% } %>
+                          <div class="pt-2 ingdArr">나의 냉장고와 일치하는 재료 :
+                            <% let recp_ingd = ingdResult[i].toString().slice(1,-1).split(",")%>
+                            <% let myingd = ingdName.toString().split(',')%>
+                            <% let myingd_range = ingdRange.toString().split(',')%>
+                            <% let ingred = [] %>
+                            <% let range = [] %>
+                            <% for(var j=0; j<recp_ingd.length; j++) { %>
+                                <% for(var k=0; k<myingd.length; k++) { %>
+                                      <% if(recp_ingd[j] == myingd[k]) { %>
+                                          <%= myingd[k]%>
+                                          <% ingred.push(myingd[k]) %>
+                                          <% range.push(myingd_range[k]) %>
+                                      <% } %>
+                                <% } %>
+                            <% } %>  
+                          </div>
                         </div>
                     </div>
                 </div>
