@@ -36,13 +36,29 @@ function addToList( box1, thisRange ){
 
     const checkedName = JSON.stringify(checkedIngdName);
     const checkedRange = JSON.stringify(checkedIngdRange);
-    // checkType();
 
     localStorage.setItem("fridgeData", checkedName );
     localStorage.setItem("fridgeRange", checkedRange );
 
+
     setTimeout(()=>{
         console.log( typeof localStorage.getItem("fridgeData") );
         console.log( typeof localStorage.getItem("fridgeRange") );
-    }, 5000)
+        checkType();
+        
+    }, 3000)
+ }
+
+ function checkType(){
+    const resultData = JSON.parse( localStorage.getItem("fridgeData") );
+    const resultRange = JSON.parse( localStorage.getItem("fridgeRange") );
+
+    setTimeout(()=>{
+        console.log( resultData);
+        console.log( resultRange);
+        console.log( typeof resultData);
+        console.log( typeof resultRange);
+        console.log( typeof JSON.parse( localStorage.getItem("fridgeData") ));
+        console.log( typeof JSON.parse( localStorage.getItem("fridgeRange")));
+    }, 3000)
  }
