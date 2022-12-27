@@ -6,6 +6,12 @@
     z-index:-1;
     filter: blur(2px);
 }
+#logo_box {
+    display: inline-block;
+}
+#signin_box {
+    margin-top: -70px;
+}
 #signin_box {
     height: 100vh;
     display: flex;
@@ -23,6 +29,12 @@
     color: white;
     text-shadow:0px 0px 3px #000;
 }
+#form_signin > div:nth-child(1) {
+    margin-bottom: 15px;
+}
+#form_signin > div:nth-child(2) {
+    margin-bottom: 5px;
+}
 #signin_box > div > a, #signin_box > div > a:active:visited, #remember_me_check_test {
     display: block;
     font-size: 15px;
@@ -36,9 +48,7 @@
 #signin_box_child {
     width:400px;
 }
-#form_signin > div:nth-child(1) {
-    margin-bottom: 20px;
-}
+
 #remember_me_check {
     margin: 10px 3px 10px 0px;
     float: left;
@@ -139,79 +149,82 @@
         filter: blur(2px);
     }
 }
-@media (max-width: 768px) {
-    #logo_box {
-        display: inline-block;
+@media (max-width:1441px) {
+    #signin_title {
+        font-size: 30px !important;
+        margin-bottom: 7px !important;
     }
-    #signin_box {
-        margin-top: -55px;
+    #signin_side_title {
+        font-size: 20px !important;
+        margin-bottom: 20px !important;
     }
-} 
+    #form_signin {
+        width: 350px;
+        display: inline-block !important;
+    }
+    #user_id, #user_pw {
+        height: 40px;
+    }
+    #kakao_img {
+        width: 350px;
+        height: 35px;
+    }
+    #button {
+        height: 35px;
+        font-size: 13px;
+    }
+    #signin_box_child > a {
+        width: 350px;
+        display: inline-block !important;
+    }
+}
+@media (max-width: 1441px) {
+    #form_signin input {
+        font-size: 17px;
+    }
+}
 @media (max-width:700px) {
     #signin_title {
-        font-size: 35px !important;
+        font-size: 27px !important;
+        margin-bottom: 7px !important;
     }
     #signin_side_title {
         font-size: 17px !important;
+        margin-bottom: 20px !important;
     }
     #form_signin {
-        width: 350px;
-        display: inline-block;
-    }
-    #kakao_img {
-        width: 350px;
-    }
-    #signin_box_child > a {
-        width: 350px;
+        width: 300px;
         display: inline-block !important;
     }
-}
-@media (max-width:600px) {
-    #signin_box_child {
-        display: inline-block;
-        position: relative;
-        margin: auto;
-    }
-}
-@media (max-width:500px) {
-    #signin_title {
-        font-size: 30px !important;
-    }
-    #signin_side_title {
-        font-size: 14px !important;
-    }
-    #form_signin {
-        width: 300px;
-        display: inline-block;
+    #user_id, #user_pw {
+        height: 35px;
+        font-size:12px;
     }
     #kakao_img {
         width: 300px;
+    }
+    #button {
+        height: 30px;
+        font-size: 13px;
     }
     #signin_box_child > a {
         width: 300px;
         display: inline-block !important;
     }
-    #a_href_id {
-        margin-top: 15px !important;
-        font-size: 13px !important;
-    }
-    #a_href_signup {
-        font-size: 13px !important;
-    }
 }
-@media (max-width: 400px) {
+@media (max-width: 435px) {
     #signin_box_child {
         width:250px;
     }
-    #form_signin {
+    #form_signin, #signin_box_child > a {
         width: 250px;
-        display: inline-block;
+        display: inline-block !important;
     }
     #kakao_img {
         width: 250px;
     }
-    #signin_box_child > a {
-        width: 250px;
-        display: inline-block !important;
+    #button {
+        height: 25px;
+        font-size: 11px;
     }
 }

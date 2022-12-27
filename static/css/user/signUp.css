@@ -6,6 +6,12 @@
     z-index:-1;
     filter: blur(2px);
 }
+#logo_box {
+    display: inline-block;
+}
+#signup_box {
+    margin-top: -70px;
+}
 #signup_box {
     height: 100vh;
     display: flex;
@@ -62,35 +68,65 @@
         filter: blur(2px);
     }
 }
-@media (max-width: 1024px) {
-    #logo_box {
-        display: inline-block;
+@media (max-width: 1441px) {
+    #signup_title {
+        font-size: 25px !important;
+        margin-bottom: 7px !important;
     }
-    #signup_box {
-        margin-top: -55px;
+    #signup_side_title {
+        font-size: 15px !important;
+        margin-bottom: 20px !important;
     }
-    #signup_box_child {
-        display: inline-block;
-        position: relative;
-        margin: auto;
+    #form_signup, #back_main {
+        width: 340px;
+        display: inline-block !important;
+    }
+    #form_signup input, #form_signup button {
+        height: 35px;
+        font-size: 15px;
+    }
+    #form_signup > div, #form_signup button {
+        margin-bottom: 15px !important;
     }
 }
 @media (max-width: 768px) {
     #signup_box_child {
-        text-align: center;
-    }
-    #form_signup, #back_main {
-        width:450px;
-        display: inline-block !important;
+        width: 280px;
     }
     #signup_title {
-        font-size: 40px !important;
+        font-size: 22px !important;
+        margin-bottom: 7px !important;
     }
     #signup_side_title {
-        font-size: 18px !important;
+        font-size: 12px !important;
+        margin-bottom: 20px !important;
+    }
+    #form_signup, #back_main {
+        width: 280px;
+        display: inline-block !important;
+    }
+    #form_signup input, #form_signup button {
+        height: 35px;
+        font-size: 12px;
+    }
+    #form_signup > div, #form_signup button:not(#form_signup button:last-child) {
+        margin-bottom: 15px !important;
+    }
+    #form_signup button:last-child {
+        margin-bottom: 7px !important;
     }
 }
-@media (max-width: 600px) {
+@media (max-width: 426px) {
+    #logo_box img {
+        width: 20px !important;
+        height: 35px !important;
+        margin-left: 10px !important;
+    }
+    #signup_box {
+        margin-top: -50px;
+    }
+}
+/* @media (max-width: 600px) {
     #signup_box_child, #form_signup, #back_main {
         width:400px;
     }
@@ -111,4 +147,4 @@
     #signup_side_title {
         font-size: 12px !important;
     }
-}
+} */
