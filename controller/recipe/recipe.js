@@ -1,7 +1,4 @@
-const { recipe } = require("../../model");
-const { log } = require("../../model");
-const { cooklog } = require("../../model");
-const { recipe_like } = require("../../model");
+const { recipe,log,cooklog,recipe_like } = require("../../model");
 const { fresh } = require("../../model");
 const { frozen } = require("../../model");
 
@@ -75,7 +72,7 @@ const { Op } = require("sequelize");  // where 안에 조건절을 위해
 
 // 레시피 추천 페이지 유저 갖고 있는 재료 기준으로
 exports.getRecipe = async (req, res) => {
-  
+
     // [1]-1 좋아요한 레시피를 구분하기 위해서(로그인시, 비로그인시 둘다 필요)
     // 로그인 했을 때, 냉장고 재
     let likeUser = await recipe_like.findAll({
@@ -176,6 +173,24 @@ exports.getRecipe = async (req, res) => {
                     where : {["recipe_ingd"] : {[Op.regexp] : ingdNameStr }},
                 })
             }
+            // [2]-1-4 페이지네이션 있을 때
+            if(req.query.page) {
+                let pageNum = req.query.page; // 요청 페이지 넘버
+                let offset = 0;
+                where["recipe_ingd"] = { [Op.regexp] : bigIngdNameStr}; 
+                if(req.query.tag) {
+                    where["recipe_tag"] = req.query.tag;
+                }
+                if(pageNum > 1) {
+                    offset = 20 * (pageNum -1); 
+                }
+                let result = await recipe.findAndCountAll({
+                    raw : true, 
+                    offset : offset,
+                    limit : 20
+                })
+                console.log("페이지 렌더 결과", result);
+            }
             // [2]-1-4 기본 렌더
             if(req.query.tag != "빠른한끼" && req.query.tag != "식재료일치" && !req.query.keyword ) { 
                 console.log("기본렌더입니다.")
@@ -186,16 +201,18 @@ exports.getRecipe = async (req, res) => {
                 }
                 recipes = await recipe.findAll({
                     raw : true, // dataValues만 가져오기
-                    where
+                    where,
+                    limit : 20
                 });
-                
             }
+            
             result = { data: recipes, dataLike : likeUser }; 
             // [2]-1-5 식재료가 있을 때 프론트 단에서 사용할 나의 재료 이름과 수량
             let ingdResult = []; 
             for(var i=0; i<recipes.length;i++) {
                 ingdResult.push(recipes[i].recipe_ingd);
             }
+            
             result["ingdName"] = ingdName;
             result["ingdRange"] = ingdRange;
             result["ingdResult"] = ingdResult;
@@ -206,7 +223,9 @@ exports.getRecipe = async (req, res) => {
             }else { 
                 result["tag"] = "유사 재료 레시피";
             }
+
             console.log("식재료 냉장고 결과", result.ingdName)
+
             res.render("recipe/recipe", result);
         } else { // [2]-2 로그인 했는데 식재료가 없을 때(냉장고 빈 것 포함)
             let result;
@@ -298,7 +317,6 @@ exports.getRecipe = async (req, res) => {
         }
         res.render("recipe/recipe_non", result);
     }
-    
 }
 
 // 요리하기 버튼 눌렀을 때 fresh와 frozen DB에 해당 식재료 range 수정
