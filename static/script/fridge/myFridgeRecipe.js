@@ -1,4 +1,3 @@
-
  $("#fridge_col input[type=range]").attr({ step:50 });
  $("#fridge_col input[type=range]").addClass("form-range"); 
  $("#basket_arrow").addClass("animate__animated animate__fadeInDown");
@@ -32,33 +31,38 @@ function addToList( box1, thisRange ){
 }
 
  // 선택한 식재료 포함된 레시피 SELECT
- function resultRecipe(){
+ function checkRecipe(){
+    // const checkedName = JSON.stringify(checkedIngdName);
+    // const checkedRange = JSON.stringify(checkedIngdRange);
 
-    const checkedName = JSON.stringify(checkedIngdName);
-    const checkedRange = JSON.stringify(checkedIngdRange);
+    const fridgeData = checkedIngdName.join(",|,");
+    const fridgeRange = checkedIngdRange.join(",|,");
+    console.log( fridgeData );
+    console.log( fridgeRange );
 
-    localStorage.setItem("fridgeData", checkedName );
-    localStorage.setItem("fridgeRange", checkedRange );
+    // localStorage.setItem("fridgeData", fridgeData );
+    // localStorage.setItem("fridgeRange", fridgeRange );
 
+    // setTimeout(()=>{
+    //     console.log( typeof localStorage.getItem("fridgeData") );
+    //     console.log( typeof localStorage.getItem("fridgeRange") );
 
-    setTimeout(()=>{
-        console.log( typeof localStorage.getItem("fridgeData") );
-        console.log( typeof localStorage.getItem("fridgeRange") );
-        checkType();
-        
-    }, 3000)
+    //     console.log( "fD :", localStorage.getItem("fridgeData") );
+    //     console.log( "fR :", localStorage.getItem("fridgeRange") );
+    // }, 3000)
+
+    fromFridge( checkedIngdName, checkedIngdRange );
  }
 
- function checkType(){
-    const resultData = JSON.parse( localStorage.getItem("fridgeData") );
-    const resultRange = JSON.parse( localStorage.getItem("fridgeRange") );
-
-    setTimeout(()=>{
-        console.log( resultData);
-        console.log( resultRange);
-        console.log( typeof resultData);
-        console.log( typeof resultRange);
-        console.log( typeof JSON.parse( localStorage.getItem("fridgeData") ));
-        console.log( typeof JSON.parse( localStorage.getItem("fridgeRange")));
-    }, 3000)
+ function fromFridge( checkedIngdName, checkedIngdRange ){
+    axios({
+        method : "get",
+        url : "/recipe",
+        params : {
+            resultData : checkedIngdName,
+            resultRange : checkedIngdRange
+        }
+    }).then((res)=>{
+        console.log("res :", res);
+    })
  }

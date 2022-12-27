@@ -7,6 +7,72 @@ const { frozen } = require("../../model");
 
 const { Op } = require("sequelize");  // where 안에 조건절을 위해
 
+ 
+
+// exports.getFromFridge = async (req,res) => {
+//     console.log("getFromFridge :", req.query);
+//     fridgeName = req.query.resultData;
+//     fridgeRange = req.query.resultRange;
+//     console.log("fridgeName :",fridgeName);
+//     console.log("fridgeRange :",fridgeRange);
+//     // res.send(true);
+
+//     const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
+//     console.log("유저 : ", final_user_id);
+
+//     let likeUser = await recipe_like.findAll({
+//         raw : true,
+//         attributes : [['user_user_id', "userId"], ['recipe_recipe_id', 'recipeId'], ['like_id', 'likeId']],
+//     })
+
+//     let ingdName = fridgeName;  // 식재료
+//     let ingdRange = fridgeRange; // 수량
+
+//     console.log("ingdName : ", ingdName);
+//     console.log("ingdRange : ", ingdRange);
+
+//     // [1]-4 정확하게 일치하는 재료를 찾기 위해서 ingName을 문자열로    
+//     let ingdNameStr = ingdName.join(",|,"); 
+//     // [1]-5 더 광범위한 재료 포함 할 때 ex 파 검색 => 쪽파, 대파, 양파 같이
+//     let bigIngdNameStr = ingdNameStr.replace(/,/g, ""); 
+//     // 식재료가 있을 때 일치하는 식재료가 있으면 보여준다.
+//     let where = {}; // 레시피에서 검색할 때 사용할 where 절
+
+//     // [2]-1 식재료가 있을 때
+//     let result;
+
+//     // [2]-1-4 기본 렌더
+//     console.log("기본렌더입니다.")
+//     // 식재료랑 비슷하게 일치하는 레시피가 있을 때,
+//     where["recipe_ingd"] = { [Op.regexp] : bigIngdNameStr}; 
+
+//     let recipes = await recipe.findAll({
+//         raw : true, // dataValues만 가져오기
+//         where
+//     });
+                
+//     result = { data: recipes, dataLike : likeUser }; 
+//     console.log("dataLike: ",result.dataLike);
+    
+//     // [2]-1-5 식재료가 있을 때 프론트 단에서 사용할 나의 재료 이름과 수량
+
+//     let ingdResult = []; 
+//         for(var i=0; i<recipes.length;i++) {
+//             ingdResult.push(recipes[i].recipe_ingd);
+//         }
+
+//         result["ingdName"] = ingdName;
+//         result["ingdRange"] = ingdRange;
+//         result["ingdResult"] = ingdResult;
+//         result["isLogin"] = true;
+//         result["user_id"] = final_user_id;
+//         result["tag"] = "유사 재료 레시피";
+
+//         res.render("recipe/recipe", result);
+// }
+
+
+
 // 레시피 추천 페이지 유저 갖고 있는 재료 기준으로
 exports.getRecipe = async (req, res) => {
   
@@ -34,27 +100,43 @@ exports.getRecipe = async (req, res) => {
         })
 
         // [1]-2 fresh, frozen 테이블에서 검색한 결과를 합쳐서 ingdRes에 넣는다.
-        let ingdRes = [];  
+        let ingdRes = [];
+   
         freRes.forEach((item)=>{
             ingdRes.push(item);
         })
         froRes.forEach((item)=>{
             ingdRes.push(item);
-        })
+        }) 
+
+        let fridgeName = req.query.resultData;
+        let fridgeRange = req.query.resultRange;
+        console.log("fridgeName :",fridgeName);
+        console.log("fridgeRange :",fridgeRange);
 
         let ingdName = [];  // 식재료
         let ingdRange = []; // 수량
 
-        // [1]-3 식재료 이름, 수량을 각각 ingdName과 ingdRange에 집어넣기
-        for(var i=0;i<ingdRes.length;i++){
-            ingdName.push(ingdRes[i].name + "");
-            ingdRange.push(ingdRes[i].range);
+        // 나의 냉장고에서 넘어온 레시피가 있으면 이름과 수량을 각각 ingdName과 ingdRange에 집어넣기
+        if(fridgeName && fridgeRange) {
+            ingdName=fridgeName;
+            ingdRange=fridgeRange;
+        }else {
+             // [1]-3 식재료 이름, 수량을 각각 ingdName과 ingdRange에 집어넣기
+            for(var i=0;i<ingdRes.length;i++){
+                ingdName.push(ingdRes[i].name + "");
+                ingdRange.push(ingdRes[i].range);
+            }
+
+            console.log("ingdName : ", ingdName);
+            console.log("ingdRange : ", ingdRange);
         }
-        console.log("ingdName : ", ingdName);
-        console.log("ingdRange : ", ingdRange);
+        console.log("나의 냉장고 결과", ingdName);
+        console.log("나의 냉장고 결과", ingdRange);
         
         // [1]-4 정확하게 일치하는 재료를 찾기 위해서 ingName을 문자열로
         let ingdNameStr = ingdName.join(",|,"); 
+ 
         // [1]-5 더 광범위한 재료 포함 할 때 ex 파 검색 => 쪽파, 대파, 양파 같이
         let bigIngdNameStr = ingdNameStr.replace(/,/g, ""); 
 
@@ -124,6 +206,7 @@ exports.getRecipe = async (req, res) => {
             }else { 
                 result["tag"] = "유사 재료 레시피";
             }
+            console.log("식재료 냉장고 결과", result.ingdName)
             res.render("recipe/recipe", result);
         } else { // [2]-2 로그인 했는데 식재료가 없을 때(냉장고 빈 것 포함)
             let result;
