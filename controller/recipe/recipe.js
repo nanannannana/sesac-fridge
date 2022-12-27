@@ -10,6 +10,13 @@ const { Op } = require("sequelize");  // where 안에 조건절을 위해
 // 레시피 추천 페이지 유저 갖고 있는 재료 기준으로
 exports.getRecipe = async (req, res) => {
   
+    // [1]-1 좋아요한 레시피를 구분하기 위해서(로그인시, 비로그인시 둘다 필요)
+    // 로그인 했을 때, 냉장고 재
+    let likeUser = await recipe_like.findAll({
+        raw : true,
+        attributes : [['user_user_id', "userId"], ['recipe_recipe_id', 'recipeId'], ['like_id', 'likeId']],
+    })
+
     if(req.session.user || req.cookies.user_id) {
         const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
         console.log("유저 : ", final_user_id);
@@ -25,22 +32,6 @@ exports.getRecipe = async (req, res) => {
             attributes : [['frozen_name', 'name'], ['frozen_range', 'range']],
             where : { user_user_id : final_user_id}
         })
-
-        // [1]-1 좋아요한 레시피를 구분하기 위해서
-        let likeUser = await recipe_like.findAll({
-            raw : true,
-            attributes : [['user_user_id', "userId"], ['recipe_recipe_id', 'recipeId'], ['like_id', 'likeId']],
-        })
-        // console.log("likeUser", likeUser);
-        // console.log("likeUser userId", likeUser[0].userId);
-        // likeUser [
-        //     { userId: 'jsesac@naver.com', recipeId: 1248, likeId: 136 },
-        //     { userId: 'jsesac@naver.com', recipeId: 1352, likeId: 137 },
-        //     { userId: 'jsesac@naver.com', recipeId: 1235, likeId: 138 },
-        //     { userId: 'rhaehfdl0320@naver.com', recipeId: 1237, likeId: 140 },
-        //     { userId: 'rhaehfdl0320@naver.com', recipeId: 1238, likeId: 141 },
-        //     { userId: 'hello12@naver.com', recipeId: 1233, likeId: 146 }
-        // ]
 
         // [1]-2 fresh, frozen 테이블에서 검색한 결과를 합쳐서 ingdRes에 넣는다.
         let ingdRes = [];  
@@ -118,13 +109,11 @@ exports.getRecipe = async (req, res) => {
                 
             }
             result = { data: recipes, dataLike : likeUser }; 
-            console.log("dataLike: ",result.dataLike);
             // [2]-1-5 식재료가 있을 때 프론트 단에서 사용할 나의 재료 이름과 수량
             let ingdResult = []; 
             for(var i=0; i<recipes.length;i++) {
                 ingdResult.push(recipes[i].recipe_ingd);
             }
-
             result["ingdName"] = ingdName;
             result["ingdRange"] = ingdRange;
             result["ingdResult"] = ingdResult;
@@ -143,13 +132,11 @@ exports.getRecipe = async (req, res) => {
             if(req.query.tag != "빠른한끼" && !req.query.keyword) { 
                 console.log("로그인, 식재료 없는 기본 렌더");
                 let where ={};
-    
                 if(req.query.tag) {
                     where["recipe_tag"] = req.query.tag;
                 }else {
                     where["recipe_tag"] = null;
                 }
-    
                 recipes = await recipe.findAll({
                     raw : true, // dataValues만 가져오기
                     where
@@ -172,8 +159,9 @@ exports.getRecipe = async (req, res) => {
                     where : { ["recipe_ingd"] : {[Op.regexp] : req.query.keyword}}
                 })
             }
-            result = { data : recipes };
-            result["isLogin"] = true ;
+            result = { data: recipes, dataLike : likeUser }; 
+            result["isLogin"] = true;
+            result["user_id"] = final_user_id;
             if(req.query.tag) {
                 result["tag"] = req.query.tag;
             }else {
@@ -218,7 +206,7 @@ exports.getRecipe = async (req, res) => {
                 where : { ["recipe_ingd"] : {[Op.regexp] : req.query.keyword}}
             })
         }
-        result = { data : recipes };
+        result = { data: recipes, dataLike : likeUser }; 
         result["isLogin"] = false;
         if(req.query.tag) {
             result["tag"] = req.query.tag;
@@ -387,7 +375,6 @@ exports.patchToFridge = async (req,res) => {
     }
 }
 
-
 // 최근에 본 레시피
 exports.postInsertToLog = async (req,res) => {
     const final_user_id = (req.cookies.user_id === undefined) ? req.session.user : req.cookies.user_id;
@@ -421,7 +408,7 @@ exports.postInsertToCookLog = async (req,res) => {
     if( create || find ) res.send(true);
 }
 
-// 좋아요
+// 좋아요 추가
 let likeUser = "";
 exports.postInsertToLike = async (req,res) => {
 
@@ -447,3 +434,18 @@ exports.postInsertToLike = async (req,res) => {
     }
 }
 
+// 좋아요 삭제
+exports.deleteFromLike = async (req,res) => {
+    
+    const final_user_id = (req.cookies.user_id === undefined) ? req.session.user : req.cookies.user_id;
+
+    let result = await recipe_like.destroy({
+        where : { 
+            recipe_recipe_id : req.body.id, 
+            user_user_id : final_user_id 
+        }
+    })
+
+    console.log("좋아요 삭제 결과: ", result);
+    res.send(String(result));
+}

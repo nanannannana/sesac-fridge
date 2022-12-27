@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <main>
   <h1 class="intro" id="tagIntro"><%=tag%></h1>
   <div id="recipe_list" class="container mt-5 ">
-    <div class="row row-cols-2 row-cols-sm-2 row-cols-1">
+    <div class="row row-cols-2 row-cols-sm-2 row-cols-1" id="pagination">
       <%for(var i=0; i<data.length;i++) { %>
         <div class="card_parent col-md-3 ">
             <div class="card">
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
                       <% let likeObj = {}%>
                       <% let likeArr = []%>
                       <% for(var t=0; t<dataLike.length; t++) {%>
-                        <% likeObj = { "userId" : dataLike[t].userId, "recipeId" : dataLike[t].recipeId, "likeId" : dataLike[t].likeId } %>
+                        <% likeObj = { "userId" : dataLike[t].userId, "recipeId" : dataLike[t].recipeId} %>
                         <% likeArr.push(likeObj)%>
                       <% } %>
                       <button type="button" class="btn btns" title="<%=data[i].recipe_id%>">
@@ -148,23 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
     <!--row-->
   </div>
-  <nav aria-label="Page navigation example">
-    <ul class="pagination">
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
+  <%-include('./page.ejs')%>
 </main>
 
 <script src="static/script/recipe/recipe.js"></script>

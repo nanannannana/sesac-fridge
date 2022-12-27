@@ -34,6 +34,7 @@
             <tr>
                 <td>recipe_id</td>
                 <td>recipe_ingd</td>
+                <td>recipe_url</td>
                 <td>수정전</td>
                 <td>수정후</td>
                 <td></td>
@@ -44,6 +45,7 @@
                 <tr id="tr_<%=result[i].recipe_id%>">
                     <td><%=result[i].recipe_id%></td>
                     <td><%=result[i].recipe_ingd%></td>
+                    <td><%=result[i].recipe_url%></td>
                     <td><input type="text" placeholder="수정 전 재료명" id="b_ingd"></td>
                     <td><input type="text" placeholder="수정 후 재료명" id="a_ingd"></td>
                     <td><button type="button" onclick="changeIngd('<%=result[i].recipe_id%>');">수정</button></td>

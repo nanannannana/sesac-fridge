@@ -60,6 +60,9 @@ function insertLike(element, id) {
                 showConfirmButton : true,
                 allowEnterKey : true,
             }) 
+            setTimeout(()=>{
+                location.reload();
+            },1000);
         }else {
             Swal.fire({
                 icon: 'warning',
@@ -71,7 +74,28 @@ function insertLike(element, id) {
     })
 }
 
-function deleteLike()
+// 좋아요 삭제 버튼
+function deleteLike(element, id) {
+
+    let recipe_id = id;
+    axios({
+        method : "delete",
+        url : "/recipe/deleteFromLike",
+        data : { id : recipe_id },
+    }).then((res)=>{
+        if(res.data === 1) {
+            Swal.fire({
+                icon: 'success',
+                title : "찜하기가 삭제되었습니다 :-)",
+                showConfirmButton : true,
+                allowEnterKey : true,
+            }) 
+            setTimeout(()=>{
+                location.reload();
+            },1000);
+        }
+    })
+}
 
 // 전역변수 let inputcnt, const checkbox
 let inputcnt = 0;  // 전역변수로 설정해서 input 태그 개수 가져오기(input radiobox가 여러개일 때)
