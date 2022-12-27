@@ -48,19 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .go();
   }
 
-  $('#pagination').twbsPagination({
-      totalPages: 35,  // 전체 page 수
-      visiblePages: 5,  // 출력될 page 수
-      prev: "<",
-      next: ">",
-      first: '«',
-      last: '»',
-      onPageClick: function (event, page) {
-      $('#page-content').text('Page ' + page);
-      paging(page);
-      }
-  });
-
 });
 </script>
 <style>
@@ -87,9 +74,8 @@ document.addEventListener("DOMContentLoaded", () => {
   <h1 class="intro" id="tagIntro"><%=tag%></h1>
   <div id="recipe_list" class="container mt-5 ">
     <div class="row row-cols-2 row-cols-sm-2 row-cols-1">
-      <ul id="pagination-demo" class="pagination-sm">
       <%for(var i=0; i<data.length;i++) { %>
-        <li class="card_parent col-md-3 ">
+        <div class="card_parent col-md-3 ">
             <div class="card">
                 <div class="img_time">
                     <!--이미지, 시간, 좋아요 버튼-->
@@ -150,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
             </div>
             <!--btn_outer-->
-          </li>
+          </div>
         <!--card_parent-->
       <% } %>
       </ul>
