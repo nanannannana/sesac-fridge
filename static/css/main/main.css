@@ -5,13 +5,10 @@
 /*toast -  user 환영 msg */
 #welcome_user {
   position: relative;
+  right: 0px;
+  z-index: 1;
   width : 20%;
   height: 200px;
-  /* display: flex;
-  justify-content:end;
-  text-align: right;
-  padding-right: 5rem;
-  padding-top: 1rem; */
   float:right;
 }
 .swal2-popup.swal2-toast .swal2-html-container {
@@ -32,6 +29,203 @@ body.swal2-toast-shown .swal2-container {
 .position-absolute {
   position: absolute !important;
 }
+
+
+
+.first_main {
+  height: auto;
+}
+.carousel_box {
+  height: 400px;
+}
+.carousel_box_inner > div {
+  text-align: center;
+}
+.carousel_box_inner img {
+  display: inline-block !important;
+}
+.carousel_box_inner {
+  overflow: visible;
+}
+.mainPage_main, .mainPage_box {
+  padding:0;
+}
+.second_box_title, .third_box_title {
+  font-size:xx-large;
+  margin: 250px 0 20px 0;
+  font-family: 'NanumSquareAceb';
+  font-weight: bolder;
+}
+.second_box_content {
+  max-width: 100%;
+  margin: 0;
+  justify-content: space-between;
+}
+
+/* 인기 레시피 카드 안 이미지 여백 없이 꽉차게 */
+.card_box {
+  padding:0;
+  display: inline-block;
+  border: white;
+  width:auto;
+  height: auto;
+}
+.card_box > img {
+  width:300px;
+  height: 450px;
+  object-fit: cover;
+  border: 1px solid #d9d9d9;
+}
+/* 인기 레시피 카드 타이틀 정리 */
+.card_title {
+  margin-top:10px;
+  white-space: nowrap;
+  overflow:hidden;
+  text-overflow: ellipsis;
+  color: #474747;
+  font-size: 18px;
+}
+
+/* 사용가이드 크기에 맞게 */
+.third_main {
+  background-color: var(--main-yellow);
+  padding-bottom: 70px;
+}
+.third_box_title {
+  background-color: white;
+  padding-bottom: 30px;
+}
+.user_guide {
+  height: 100%;
+  width: 100%;
+}
+.display_none {
+  display: none;
+}
+
+/* 반응형 정리 */
+@media (max-width: 1793px) {
+  .carousel_box {
+    height:auto;
+  }
+  #carousel_img {
+    width: 1440px !important;
+  }
+  .mainPage_main {
+    width: 1160px;
+  }
+  .second_box_content {
+    justify-content: space-evenly;
+  }
+  .card_box > img {
+    width: 250px;
+    height: 350px;
+  }
+}
+@media (max-width: 1534px) {
+  #welcome_user p, #welcome_user b {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 1440px) {
+  #carousel_img {
+    width: 1000px !important;
+  }
+  .mainPage_main {
+    width: 820px;
+  }
+  .second_box_content {
+    justify-content: space-around;
+  }
+  .card_box > img {
+    width: 180px;
+    height: 260px;
+  }
+  #welcome_user {
+    width:300px;
+    height:150px;
+  }
+}
+
+@media (max-width: 1000px) {
+  #carousel_img {
+    width: 768px !important;
+  }
+  .mainPage_main {
+    width: 600px;
+  }
+  .second_box_content {
+    justify-content: space-around;
+  }
+  .card_box > img {
+    width: 140px;
+    height: 200px;
+  }
+  .second_box_title, .third_box_title {
+    font-size:x-large;
+  }
+  /* alert 크기 정리 */
+  #welcome_user {
+    width:200px;
+    height:100px;
+  }
+  #welcome_user p, #welcome_user b {
+    font-size: 12px;
+  }
+  .swal2-html-container {
+    margin: 0 !important;
+  }
+  #p1 {
+    margin: 0 0 1px 0;
+  }
+  #p2 {
+    margin: 0 !important;;
+  }
+}
+
+@media (max-width: 768px) {
+  #carousel_img {
+    width: 100% !important;
+  }
+  .mainPage_main {
+    width: 100%;
+  }
+  .second_box_content {
+    display: block;
+  }
+  .card_box {
+    width: 100%;
+  }
+  .card_box > img {
+    width: 70%;
+    height:200px;
+  }
+  .card_title {
+    display: none;
+  }
+  .card_title_sm {
+    display: inline-block;
+    width:70%;
+    margin: 3px 0 7px 0;
+    white-space: nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+  }
+  #welcome_user {
+    display: none;
+  }
+}
+
+@media (max-width:500px) {
+  .second_box_title, .third_box_title {
+    /* font-size:x-large; */
+    margin: 100px 0 20px 0;
+  }
+}
+
+
+
 /*toast.css END*/
 
 /* main {background-color: var(--main-yellow);} */

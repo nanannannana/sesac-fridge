@@ -115,10 +115,12 @@ document.addEventListener("DOMContentLoaded", () => {
                           <div class="pt-2 ingdArr">나의 냉장고와 일치하는 재료 :
                             로그인을 하면 이용하실 수 있어요 :)
                           </div>
-                          <% } else { %>
-                            <div class="pt-2 ingdArr">나의 냉장고와 일치하는 재료 :
-                              냉장고에 재료를 추가하면 이용하실 수 있어요 :)
-                            </div>
+                          <% } else if(isLogin === true) { %>
+                            <%# if (party_tag != true) { %> 
+                              <div class="pt-2 ingdArr">나의 냉장고와 일치하는 재료 :
+                                냉장고에 재료를 추가하면 이용하실 수 있어요 :)
+                              </div>
+                            <%# } %>
                           <% } %>
                         </div>
                     </div>
@@ -130,7 +132,9 @@ document.addEventListener("DOMContentLoaded", () => {
               <div class="btn_inner text-center p-1"> 
                 <input type="button" class="btn show_recipe"
                 onclick="insertLog('<%=data[i].recipe_id%>', '<%=data[i].recipe_url%>', '<%=isLogin%>')" value="레시피보기">
+                <%# if(party_tag != true) { %>
                 <input type="button" class="btn show_cook" onclick="warnAlert('<%=isLogin%>')" value="요리하기">
+                <%# } %>
               </div>
             </div>
             <!--btn_outer-->
