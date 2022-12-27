@@ -60,6 +60,7 @@
 .btns {
     height:30px;
     background-color: var(--btn-warn);
+    overflow:hidden;
 }
 /*좋아요 버튼 클릭 시*/
 .btns:hover {
