@@ -86,6 +86,16 @@ body.swal2-toast-shown .swal2-container {
   font-size: 18px;
 }
 
+/* 인기레시피 호버 시 */
+.card_box {
+  overflow: hidden;
+}
+.card_box img:hover {
+  transform: scale(1.02);
+  /* transition: 0.2s ease-in-out; */
+  transition: 0.5s linear;
+}
+
 /* 사용가이드 크기에 맞게 */
 .third_main {
   background-color: var(--main-yellow);

@@ -171,7 +171,7 @@ a:visited {
 #header_top > div > span {
 font-size: 18px;
 }
-#heder_nav:hover, #sign_in:hover, #sign_out:hover {
+#header_nav:hover, #sign_in:hover, #sign_out:hover {
 font-weight: bold;
 }
 .d_none {
