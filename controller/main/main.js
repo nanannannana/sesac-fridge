@@ -144,3 +144,10 @@ exports.patchDbRegex = async (req,res) => {
     const result = await sequelize.query(sql, { type: QueryTypes.UPDATE });
     res.send({return: true, data: result});
 }
+
+exports.deletedb = async (req,res) => {
+    console.log(req.body.id);
+    var sql = `DELETE FROM recipe WHERE recipe_id=${req.body.id};`
+    const delResult = await sequelize.query(sql, { type: QueryTypes.DELETE});
+    res.send(true);
+}

@@ -11,6 +11,7 @@ function warnAlert(isLogin) {
             icon: 'warning',
             title : "나의 냉장고에 여러 재료를 좀 더\n 추가하고 사용할 수 있습니다 :)",
             showConfirmButton : true,
+            confirmButtonColor: '#7E998F',
             allowEnterKey : true,
         })    
     }else {
@@ -18,6 +19,7 @@ function warnAlert(isLogin) {
             icon: 'warning',
             title : "로그인 후 이용하실 수 있습니다 :)",
             showConfirmButton : true,
+            confirmButtonColor: '#7E998F',
             allowEnterKey : true,
         })    
     }
@@ -58,6 +60,7 @@ function insertLike(element, id) {
                 icon: 'success',
                 title : "레시피가 찜리스트에 담겼습니다. :-)\n찜 리스트에 가서 확인해주세요. ",
                 showConfirmButton : true,
+                confirmButtonColor: '#7E998F',
                 allowEnterKey : true,
             }) 
             setTimeout(()=>{
@@ -68,6 +71,7 @@ function insertLike(element, id) {
                 icon: 'warning',
                 title : "레시피가 이미 찜리스트에 있습니다.\n찜 리스트에 가서 확인해주세요. ",
                 showConfirmButton : true,
+                confirmButtonColor: '#7E998F',
                 allowEnterKey : true,
             }) 
         }
@@ -88,6 +92,7 @@ function deleteLike(element, id) {
                 icon: 'success',
                 title : "찜하기가 삭제되었습니다 :-)",
                 showConfirmButton : true,
+                confirmButtonColor: '#7E998F',
                 allowEnterKey : true,
             }) 
             setTimeout(()=>{
@@ -118,6 +123,7 @@ async function cooking(data, range, id){
     const steps = ['1', '2']
     const swalQueueStep = Swal.mixin({
         confirmButtonText: '확인',
+        confirmButtonColor: '#7E998F',
         cancelButtonText: '뒤로',
         showCancelButton: true,
         progressSteps: steps,
@@ -127,6 +133,7 @@ async function cooking(data, range, id){
         reverseButtons: true,
         showCloseButton: true,
         allowEnterKey : true,
+        
     })
     async function backAndForth() {
         const values = [];
@@ -240,6 +247,7 @@ async function cooking(data, range, id){
         swal.fire({
             title : "냉장고에 있는 식품과 일치하는 재료가 없어 차감될 식재료가 없습니다. :)",
             confirmButtonText : "확인",
+            confirmButtonColor: '#7E998F',
             showCancelButton : true,
             showCloseButton: true,
             allowEnterKey : true,
@@ -271,7 +279,7 @@ function checkIngd(htmlTag) {
 // 라디오버튼의 checked 된 것의 재료이름과 수량 갖고오기
 let radioArr = []; // 전역변수로 설정해서 라디오버튼에 체크했을 때 참고
 function checkRadio(htmlTag, cnt) {
-    // inputcnt 초기화 하는거 잊지말기!!
+    // inputcnt 초기화는 새로고침 할때마다!
 
     for(var i=1;i<=inputcnt;i++){      // for문으로 input 개수 만큼 for문 돌리기 
         if(cnt == i) {                 // input 순서대로 (첫 번째 input => cnt 1)
@@ -338,7 +346,6 @@ function updateToFridge(result, id){
         setTimeout(()=>{
             location.reload();
         },1500);
-        
     })
 }
 
