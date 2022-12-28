@@ -137,7 +137,7 @@
     font-weight: lighter;
     z-index: 1;
 }
-#basket_img_box div {
+#basket_text, #warn_text {
     font-size: x-large;
     font-weight: bolder;
     padding-top: 2em;
@@ -208,8 +208,14 @@
     box-shadow: 0 0 3px darkslategray;
     transform: translateY(3px);
 }
+#fresh, #cancelUpdate {
+    margin-right : 3rem;
+}
+#showUpdateBtns, #updateFinish {
+    margin-left : 3rem;
+}
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     #bottom_row {
         padding-top: 0;
     }
@@ -226,14 +232,15 @@
     #basket_img{
         width : 30%;
         height : 30%;
+        margin-top: 2em;
     }
     /* #fridge_col {
         margin-bottom: -40em;
     } */
-    #basket_warn {
+    /* #basket_warn {
         display: none;
-    }
-    #basket_img_box div {
+    } */
+    #basket_text, #warn_text {
         font-size: medium;
         font-weight: bold;
         padding-top: 0.5em;
@@ -242,6 +249,9 @@
         font-size: medium;
         font-weight: bold;
         padding-bottom: 1em;
+    }
+    #basket_text, #warn_text {
+        font-size: medium;
     }
     #bottom_row button{
         font-size: 18px; 
@@ -280,15 +290,28 @@
         font-weight: bold;
         margin: 0.5em 0 0.5em 0;
     }
+    #fresh, #cancelUpdate {
+        margin-right : 2rem !important;
+    }
+    #showUpdateBtns, #updateFinish {
+        margin-left : 2rem  !important;
+    }
 }
-@media (max-width: 577px) {
+/* @media (max-width: 577px) {
     #fridge_col {
         margin-bottom: -100em;
     }
-}
+
+} */
 @media (max-width: 576px) {
     #fridge_col {
         margin-bottom: 0em;
+    }
+    #fridge_info {
+        font-size:small;
+    }
+    #basket_img {
+        margin-top: 3em;
     }
 }
 @media (max-width : 425px){
@@ -300,6 +323,24 @@
     }
     #result_recipe_btn {
         width : 130px; height : 50px;
+    }
+    #basket_text, #warn_text {
+        font-size: small;
+    }
+}
+
+@media (max-width : 315px){
+    #bottom_row button{
+        font-size: 10px; 
+    }
+    #basket_text, #warn_text {
+        font-size:x-small;
+    }
+    #fresh, #cancelUpdate {
+        margin-right : 1rem !important;
+    }
+    #showUpdateBtns, #updateFinish {
+        margin-left : 1rem  !important;
     }
 }
 

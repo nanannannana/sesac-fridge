@@ -47,6 +47,7 @@ a:visited {
 #logo_text {
     font-family: 'NanumSquareAceb';
     font-size: 30px;
+    margin-left: 2rem;
 }
 #logo_text>img {
     width:60px;
@@ -223,7 +224,7 @@ font-weight: bold;
     margin-left: 2rem;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 991px) {
     #navvv {
       z-index: 1000;
     }
@@ -238,6 +239,17 @@ font-weight: bold;
         margin: 20px 0 20px 0;
     }
 }
+
+@media (max-width: 991px) {
+    #logo_text {
+        font-size: 20px;
+        margin-left: 1rem;
+    }
+    #logo_text>img {
+        width:40px;
+    }
+
+
 @media (max-width: 900px) {
     .ft_left {
         width: 400px;
