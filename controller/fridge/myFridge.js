@@ -19,6 +19,7 @@ exports.getMyFridge = async (req,res) => {
         });
         // console.log("list :", fresh_result.count, frozen_result.count );
         if(req.cookies.EMPTY_ALERT==1){  //로그인 O & 오늘안봄클릭 O
+            console.log("fr username : ", user_name );
             res.render("fridge/myFridge", {
                 isLogin : true,
                 user_name: user_name,
@@ -27,6 +28,7 @@ exports.getMyFridge = async (req,res) => {
                 empty_alert : true
             });
         }else{
+            console.log("fr username : ", user_name );
             res.render("fridge/myFridge", { //로그인 O & 오늘안봄클릭 X
                 isLogin : true,
                 user_name: user_name,

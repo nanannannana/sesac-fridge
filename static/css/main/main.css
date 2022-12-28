@@ -20,7 +20,8 @@
 }
 #welcome_user b {
   font-family: 'NanumSquareAceb';
-  font-size :large;
+  font-size :larger;
+  background-color: white;
   color: var(--btn-warn);
 }
 body.swal2-toast-shown .swal2-container {

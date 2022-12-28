@@ -87,7 +87,10 @@
                     <button type="button" class="updateIngd_btn ms-5 d_none" id="updateFinish" onclick="finishUpdate();">변경 완료</button>
                 </div>
                 <div id="basket_btn" class="col-md-4 col-sm-12">
-                    <button type="button" id="result_recipe_btn" onclick="checkRecipe();">레시피 확인하기</button>
+                    <form method="get" action="/recipe">
+                        <input class="d_none" name="fridge" value="selectedRecipe">
+                        <button type="submit" id="result_recipe_btn" onclick="fromFridge()">레시피 확인하기</button>
+                    </form>
                     <!-- <i class="bi bi-emoji-smile hidden" id="smile_emoji"></i> -->
                 </div>                    
         </div>   
@@ -96,7 +99,14 @@
 </main>
 <!-- <button type="button" class="d_none" onclick="deleteTest();">deleteTest</button> -->
 <script>
-    $("#title_row").html("<p><span><%=user_name%>님</span>의 냉장고</p>");
+    // const loginName = ( '<%=user_name%>' == localStorage.getItem("username") )? '<%=user_name%>' : localStorage.getItem("username");
+    console.log('"<%=user_name%>"', "<%=user_name%>");
+    console.log('localStorage.getItem("username")', localStorage.getItem("username") );
+    // console.log("name3", loginName );
+
+    // $("#title_row").html(`<p><span>${loginName}님</span>의 냉장고</p>`);
+    $("#title_row").html(`<p><span><%=user_name%>님</span>의 냉장고</p>`);
+
 </script>
 
 <%-include('../main/footer.ejs') %>

@@ -25,7 +25,7 @@ function wishlist_go(){
     wishlist_go.submit();
 }
 
-//navbar mouseover 
+//navbar mouseover, 영은
 $(()=>{
     //recipe tab 
     $("#nav_recipe").mouseover(()=>{
