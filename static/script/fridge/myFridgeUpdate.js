@@ -24,7 +24,6 @@ function finishUpdate(){
 
 // 변경- 각 식재료 하단 수정 Btn 클릭시
 async function clickUpdate(ingd, fridge_name ){
-    // const thisId = $(ingd).parent().children("span").text();
     const thisName = $(ingd).parent().children("input:first").val();
     const thisRange = $(ingd).parent().children("input:last").val();
     const thisExpire = $(ingd).parent().children("p").text();
@@ -48,7 +47,6 @@ async function clickUpdate(ingd, fridge_name ){
                 showCancelButton: true,
                 focusConfirm: false,
                 preConfirm : ()=>{
-                // const freshId = thisId;
                 const freshName = thisName;
                 const freshRange = Swal.getPopup().querySelector('#freshRange_inp').value;
                 const freshExpire = Swal.getPopup().querySelector('#freshExpire_inp').value;
@@ -58,7 +56,6 @@ async function clickUpdate(ingd, fridge_name ){
                 }
 
                 return { 
-                    // id : freshId,
                     name : freshName,
                     range : freshRange,
                     expire : freshExpire 
@@ -90,7 +87,6 @@ async function clickUpdate(ingd, fridge_name ){
             showCancelButton: true,
             focusConfirm: false,
             preConfirm: () => {
-                // const frozenId = thisId;
                 const frozenName = thisName;
                 const frozenRange = Swal.getPopup().querySelector('#frozenRange_inp').value;
                 const frozenDate = Swal.getPopup().querySelector('#frozenDate_inp').value;

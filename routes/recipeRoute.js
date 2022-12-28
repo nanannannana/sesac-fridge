@@ -17,8 +17,7 @@ router.post("/insertToCookLog", recipe.postInsertToCookLog)
 router.post("/insertToLike", recipe.postInsertToLike);
 // 좋아요 삭제 
 router.delete("/deleteFromLike", recipe.deleteFromLike)
-
-
-// router.get("/fromFridge", recipe.getFromFridge);
+// 나의 냉장고에서 선택한 재료 fridgeList -영은
+router.get("/fromFridge", recipe.getFromFridge);
 
 module.exports = router;

@@ -1,4 +1,4 @@
-//빈 냉장고 알림 처음 한번만 보여지게 - EMPTYcookie
+//빈 냉장고 알림 처음 한번만 보여지게 - EMPTYcookie ,영은
 function emptyAlert(fridgeName){
     Swal.fire({
         title: `${fridgeName}이 비었어요`,
@@ -16,6 +16,7 @@ function emptyAlert(fridgeName){
     })
 }
 
+// 빈 냉장고 알림 Cookie
 function emptyAlertCookie(){
     axios({
         method : "post",

@@ -44,7 +44,6 @@ const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
     }
  }
  //식재료 정보 입력 받기 
-//  let datepicker;
  async function freshModal(freshName){
     Swal.fire({
         title: '냉장실에 보관할 재료를 알려주세요',
