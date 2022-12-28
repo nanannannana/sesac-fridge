@@ -80,11 +80,11 @@
         <!-- 하단 btn -->
         <div class="row row-cols-auto" id="bottom_row">
                 <div id="fridge_btns" class="col-md-8 col-sm-12 d-flex">
-                    <button type="button" class="addIngd_btn me-5" id="fresh" onclick="checkFresh();">냉장실에<br>보관하기</button>
+                    <button type="button" class="addIngd_btn" id="fresh" onclick="checkFresh();">냉장실에<br>보관하기</button>
                     <button type="button" class="addIngd_btn" id="frozen" onclick="checkFrozen();">냉동실에<br>보관하기</button>
-                    <button type="button" class="showUpdate_btn ms-5" id="showUpdateBtns" onclick="showUpdateBtns();">변경/삭제</button>
-                    <button type="button" class="updateIngd_btn me-5 d_none" id="cancelUpdate" onclick="cancelUpdate();">변경 취소</button>
-                    <button type="button" class="updateIngd_btn ms-5 d_none" id="updateFinish" onclick="finishUpdate();">변경 완료</button>
+                    <button type="button" class="showUpdate_btn" id="showUpdateBtns" onclick="showUpdateBtns();">변경/삭제</button>
+                    <button type="button" class="updateIngd_btn d_none" id="cancelUpdate" onclick="cancelUpdate();">변경 취소</button>
+                    <button type="button" class="updateIngd_btn d_none" id="updateFinish" onclick="finishUpdate();">변경 완료</button>
                 </div>
                 <div id="basket_btn" class="col-md-4 col-sm-12">
                     <form method="get" action="/recipe">
