@@ -110,25 +110,56 @@ a:visited {
 /* footer.css */
 .footer {
     background-color: var(--footer-brown);  
-    min-height: 250px;
+    min-height: 200px;
+    padding-top: 15px;
+    padding-bottom: 10px;
 }
 .footer>a {display: none;}
 
 .footer>.row {
     justify-content:space-between;
 }
-.ft_left, .ft_right { 
+.ft_left {
+    width:600px;
+}
+.ft_right { 
     width:300px; 
+}
+.footer > div {
+    height: 200px;
 }
 
 /* footer 좌측 */
+.ft_left {
+    margin-left: 10px;
+}
 #sesac_logo {
     width: 100px;
+    margin: 0 !important;
+}
+.ft_left_child {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.ft_left_child  p {
+    margin: 0 !important;
 }
 
 /* footer 우측 */
 .ft_right {
     justify-content: end;
+    margin-right: 10px;
+}
+.ft_right_child {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.ft_contact, .ft_contact_img, .ft_right_child select {
+    margin: 0 !important;
 }
 
 /* family site select 정렬*/
@@ -205,5 +236,42 @@ font-weight: bold;
     }
     #hd_search, #navvv li {
         margin: 20px 0 20px 0;
+    }
+}
+@media (max-width: 900px) {
+    .ft_left {
+        width: 400px;
+    }
+    .ft_left p {
+        font-size: 13px;
+    }
+    .ft_right {
+        float: right;
+    }
+}
+@media (max-width:720px) {
+    .ft_left {
+        width: 300px;
+        padding: 0;
+    }
+    .ft_right {
+        width:200px;
+        padding: 0;
+    }
+}
+@media (max-width:521px) {
+    .ft_left {
+        width: 200px;
+    }
+    .ft_right {
+        width:150px;
+    }
+}
+@media (max-width:370px) {
+    .ft_left {
+        width: 150px;
+    }
+    .ft_right {
+        width:150px;
     }
 }
