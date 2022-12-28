@@ -19,6 +19,9 @@
     overflow: hidden;
     white-space: nowrap;
 }
+#wishlist_box {
+    padding-bottom: 50px;
+}
 
 /* 찜리스트 hover 시 */
 #card_text {

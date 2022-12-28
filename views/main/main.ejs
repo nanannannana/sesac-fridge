@@ -14,7 +14,7 @@
         </div>
 
         <!-- 캐러셀 -->
-        <div id="carouselExampleCaptions" class="carousel slide carousel_box" data-bs-ride="carousel" data-bs-interval="3000">
+        <div id="carouselExampleCaptions" class="carousel slide carousel_box">
           <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -59,6 +59,16 @@
     </div>
 
     <div class="container-xl mainPage_main" style="text-align:center;">
+        <!-- 냉장고 관리 방법 -->
+        <div class="fridge_main">
+          <img src="/static/img/fridge2.png">
+          <div class="fridge_text_box">
+            <p class="fridge_title">바른 냉장고 사용방법을 알려드려요!</p>
+            <p class="fridge_content">✔ 냉장고는 꽉 채우지 말고 70%이하를 유지해 주세요.</p> 
+            <p class="fridge_content">✔ 장기 보존식품과 온도에 민감한 식품은 냉동고 안쪽 깊숙이 보관합니다.</p>
+            <p class="fridge_content">✔ 생선, 육류는 고기 종류와 부위, 구입일자를 적는 것을 추천드려요.</p>
+          </div>
+        </div>
         <!-- 베스트 레시피 -->
         <div class="second_main">
             <p class="second_box_title">12월의 BEST 레시피</p>
@@ -76,11 +86,21 @@
               <% } %>
             </div>
         </div>
+        <div class="fresh_food_main">
+          <div class="fresh_food_box">
+            <p class="fresh_food_title">식재료 관리방법을 알려드려요!</p>
+            <p class="fresh_food_content">✔ 고기는 공기를 제거하고 밀봉상태로 냉동보관해요.</p> 
+            <p class="fresh_food_content">✔ 두부는 끓는 물에 살짝 데쳐서 깨끗한 물에 넣으면 좀 더 오래 보관 할 수 있어요.</p> 
+            <p class="fresh_food_content">✔ 양배추는 수분이 많으므로 삶아서 냉동보관해요.</p>
+            <p class="fresh_food_content">✔ 손질한 감자는 식초물에 담가 두고, 사과를 함께 두면 더 오래 보관할 수 있어요.</p>
+          </div>
+          <img src="/static/img/fresh_food.png">
+        </div>
         <!-- 이용가이드 -->
         <div class="third_main">
           <div class="third_box_title">냉장고 집사 이용 가이드</div>
           <img class="user_guide" src="/static/img/user_guide2.png">
-          <img class="user_guide_sm display_none" src="/static/img/wishlist_none.png">
+          <img class="user_guide_sm display_none" src="/static/img/user_guide_sm.png">
         </div>
         <%-include('guide_img.ejs') %>
     </div>
