@@ -18,7 +18,10 @@ let exp_list_arr = new Array(); // 유통기한 지난 식재료 > getMain - exp
 
 // 로그인 페이지 렌더
 exports.getSignin = function(req,res) {
-    const kakao_auth_url = `https://kauth.kakao.com/oauth/authorize?client_id=${env.REST_API_KEY}&redirect_uri=${env.REDIRECT_URI}&response_type=code&scope=profile_nickname,account_email,talk_message`
+    // localhost용
+    // const kakao_auth_url = `https://kauth.kakao.com/oauth/authorize?client_id=${env.REST_API_KEY}&redirect_uri=${env.REDIRECT_URI}&response_type=code&scope=profile_nickname,account_email,talk_message`
+    // server용
+    const kakao_auth_url = `https://kauth.kakao.com/oauth/authorize?client_id=${env.REST_API_KEY}&redirect_uri=${env.REDIRECT_URI_SERVER}&response_type=code&scope=profile_nickname,account_email,talk_message`
     res.render("user/signIn", {
         kakao_auth_url: kakao_auth_url
     });
@@ -37,7 +40,7 @@ exports.kakao_token = async function(req,res) {
             grant_type: 'authorization_code', // 고정값
             client_id: env.REST_API_KEY,
             client_secret: env.CLINET_SECRET_KEY,
-            redirect_uri: env.REDIRECT_URI,
+            redirect_uri: env.REDIRECT_URI_SERVER,
             code: req.query.code,
         }) //객체를 string 으로 변환
     })
