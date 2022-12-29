@@ -91,7 +91,8 @@ body.swal2-toast-shown .swal2-container {
   overflow:hidden;
   text-overflow: ellipsis;
   color: #474747;
-  font-size: 18px;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 /* 인기레시피 호버 시 */
@@ -183,11 +184,19 @@ body.swal2-toast-shown .swal2-container {
     width: 250px;
     height: 350px;
   }
-  .fridge_title, .fresh_food_title {
+  /* .fridge_title, .fresh_food_title {
     font-size: 33px;
   }
   .fridge_content, .fresh_food_content {
     font-size: 26px;
+  } */
+  .fridge_content_none {
+    color: #4d4d4d;
+    font-size: 20px;
+    display: block;
+  }
+  .fridge_content:nth-child(3), .fridge_content:nth-child(4) {
+    display: none;
   }
   .fridge_main img, .fresh_food_main img {
     width: 650px;
@@ -227,8 +236,11 @@ body.swal2-toast-shown .swal2-container {
   .fresh_food_box {
     margin-right: 25px;
   }
-  .fridge_content, .fresh_food_content {
+  /* .fridge_content, .fresh_food_content {
     font-size: 18px;
+  } */
+  .fresh_food_content {
+    margin-bottom: 5px;
   }
   .fridge_title, .fresh_food_title {
     font-weight: bolder;
@@ -270,7 +282,7 @@ body.swal2-toast-shown .swal2-container {
   .fridge_title, .fresh_food_title {
     font-size: 17px !important;
   }
-  .fridge_content, .fresh_food_content {
+  .fridge_content, .fresh_food_content, .fridge_content_none {
     font-size: 14px !important;
   }
   .fridge_text_box p
@@ -317,6 +329,7 @@ body.swal2-toast-shown .swal2-container {
     white-space: nowrap;
     overflow:hidden;
     text-overflow: ellipsis;
+    font-weight: bold;
   }
   .fridge_main, .fresh_food_main {
     justify-content: space-evenly;
@@ -354,7 +367,7 @@ body.swal2-toast-shown .swal2-container {
   .fridge_title, .fresh_food_title {
     font-size: 14px !important;
   }
-  .fridge_content, .fresh_food_content {
+  .fridge_content, .fresh_food_content, .fridge_content_none {
     font-size: 12px !important;
   }
 }
@@ -397,7 +410,7 @@ body.swal2-toast-shown .swal2-container {
   .fresh_food_box {
     position: relative;
     z-index: 2;
-    top:250px;
+    top:270px;
     width:100%;
     text-align: center;
     padding: 10px;
@@ -407,7 +420,7 @@ body.swal2-toast-shown .swal2-container {
     font-size: 20px !important;
     text-shadow: 0px 0px 3px #ffffff;
   }
-  .fridge_content, .fresh_food_content {
+  .fridge_content, .fresh_food_content, .fridge_content_none {
     text-shadow: 0px 0px 3px #ffffff;
     font-size: 15px !important;
     color: #000000 !important;
@@ -438,7 +451,7 @@ body.swal2-toast-shown .swal2-container {
   .fridge_title, .fresh_food_title {
     font-size: 17px !important;
   }
-  .fridge_content, .fresh_food_content {
+  .fridge_content, .fresh_food_content, .fridge_content_none {
     font-size: 13px !important;
   }
 }
