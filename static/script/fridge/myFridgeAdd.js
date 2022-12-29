@@ -9,19 +9,21 @@ const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
 // 냉장실에 추가 btn 클릭시,
 // 중복 여부 검사
  async function checkFresh(){
-
+    let splitFreshName;
     const { value: freshName } = await Swal.fire({
         title: '어떤 식재료를 보관하실건가요?',
         input: 'text',
-        inputLabel: '띄어쓰기 없이 입력해주세요',
+        inputLabel: '이름을 정확하게 입력해주세요',
         confirmButtonColor: '#7E998F',
         showCancelButton:true,
         inputValidator: (value) => {
             return new Promise((resolve) => {
+                splitFreshName = value.split(' ').join('');
+                console.log( "splitFreshName",splitFreshName );
                 axios({
                     method : "post",
                     url : "/myFridge/checkFresh",
-                    data : { name : value }, 
+                    data : { name : splitFreshName }, 
                 }).then((response)=>{
                     console.log("checkFresh res.data", response.data)
                     if(response.data){
@@ -34,22 +36,22 @@ const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
     if(freshName){ //입력한 식재료 명 바르게 썼는지 확인
         Swal.fire({
             icon: 'info',
-            title : freshName,
+            title : splitFreshName,
             text: '입력하신 이름이 맞나요?',
             confirmButtonText: '확인',
             confirmButtonColor: '#7E998F',
             showCancelButton:true,
-            preConfirm:()=>{freshModal(freshName);} //확인 클릭 - 나머지 정보 입력창으로
+            preConfirm:()=>{freshModal(splitFreshName);} //확인 클릭 - 나머지 정보 입력창으로
           })
     }
  }
  //식재료 정보 입력 받기 
- async function freshModal(freshName){
+ async function freshModal(splitFreshName){
     Swal.fire({
         title: '냉장실에 보관할 재료를 알려주세요',
         html: `
             <span>식재료 이름 : </span>
-            <input type="text" class="swal2-input" id="freshName_inp" value="${freshName}" disabled><br>
+            <input type="text" class="swal2-input" id="freshName_inp" value="${splitFreshName}" disabled><br>
             <select id="freshCategory_inp" class="swal2-select" style="width:16rem; height:3rem;">
                 <option value="NOT" selected>카테고리를 선택해주세요</option>
                 <option value="과일">과일</option>
@@ -78,11 +80,11 @@ const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
           console.log("fresh_ct :", freshCategory); 
 
         // input 미입력 시 알림 
-        if( !freshName || freshRange==0 || !freshExpire || freshCategory=="NOT") { 
+        if( !splitFreshName || freshRange==0 || !freshExpire || freshCategory=="NOT") { 
             Swal.showValidationMessage(`바르게 입력해주세요`)
         }
           return { 
-            name : freshName, // 이미 중복check한 식재료명 그대로 
+            name : splitFreshName, // 이미 중복check한 식재료명 그대로 
             range : freshRange,
             expire : freshExpire,
             category : freshCategory
@@ -126,18 +128,21 @@ const today = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
 // 냉동실에 추가 btn 클릭시,
 // 중복 여부 검사
 async function checkFrozen(){
+    let splitFrozenName;
     const { value: frozenName } = await Swal.fire({
         title: '어떤 식재료를 보관하실건가요?',
         input: 'text',
-        inputLabel: '띄어쓰기 없이 입력해주세요',
+        inputLabel: '이름을 정확하게 입력해주세요',
         confirmButtonColor: '#7E998F',
         showCancelButton:true,
         inputValidator: (value) => {
+            splitFrozenName=value.split(' ').join('');
             return new Promise((resolve) => {
+                console.log( "splitFrozenName",splitFrozenName );
                 axios({
                     method : "post",
                     url : "/myFridge/checkFrozen",
-                    data : { name : value }, 
+                    data : { name : splitFrozenName }, 
                 }).then((response)=>{
                     console.log("checkFrozen res.data", response.data)
                     if(response.data){
@@ -150,22 +155,21 @@ async function checkFrozen(){
     if(frozenName){ //입력한 식재료 명 바르게 썼는지 확인
         Swal.fire({
             icon: 'info',
-            title : frozenName,
+            title : splitFrozenName,
             text: '입력하신 이름이 맞나요?',
             confirmButtonText: '확인',
             confirmButtonColor: '#7E998F',
             showCancelButton:true,
-            preConfirm:()=>{frozenModal(frozenName);}  //확인 클릭 - 나머지 정보 입력창으로
+            preConfirm:()=>{frozenModal(splitFrozenName);}  //확인 클릭 - 나머지 정보 입력창으로
           })
-        frozenModal(frozenName);
     }
  }
-function frozenModal(frozenName){
+function frozenModal(splitFrozenName){
     Swal.fire({
         title: '냉동실에 보관할 재료를 알려주세요',
         html: `
             <span>식재료 이름 : </span>
-            <input type="text" style="margin-bottom:1em;" class="swal2-input" id="frozenName_inp" value="${frozenName}" disabled><br>
+            <input type="text" style="margin-bottom:1em;" class="swal2-input" id="frozenName_inp" value="${splitFrozenName}" disabled><br>
             <div id="tfIngdRange" style="margin:1em;">아직 사용하거나 먹지 않았어요</div>
             <input type="range" style="width:70%; margin-top:0; cursor: pointer;" 
                 class="swal2-range" id="frozenRange_inp" value=100 step=50
@@ -181,11 +185,11 @@ function frozenModal(frozenName){
           const frozenDate = Swal.getPopup().querySelector('#frozenDate_inp').value;
           
             // input 미입력 시 알림 
-          if (!frozenName || frozenRange==0 || !frozenDate) {
+          if (!splitFrozenName || frozenRange==0 || !frozenDate) {
             Swal.showValidationMessage(`바르게 입력했는지 확인해주세요`)
           }
           return { 
-            name : frozenName, // 이미 중복check한 식재료명 그대로
+            name : splitFrozenName, // 이미 중복check한 식재료명 그대로
             range : frozenRange,
             date : frozenDate }
         }

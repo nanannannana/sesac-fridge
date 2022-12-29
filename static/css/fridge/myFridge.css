@@ -140,7 +140,7 @@
 #basket_text, #warn_text {
     font-size: x-large;
     font-weight: bolder;
-    padding-top: 2em;
+    /* padding-top: 2em; */
 }
 #basket_img {
     width: 50%;
@@ -148,10 +148,13 @@
 #basket_arrow,#basket_warn {
     font-size: xx-large;
     font-weight: bold;
-    padding-bottom: 2em;
+    /* padding-bottom: 2em; */
+}
+#basket_box {
+    margin-bottom: 0.5em;
 }
 #basket_list {
-    max-height: 400px;
+    height: 40vh;
     overflow-y: auto;
 }
 #basket_list > div {
@@ -327,14 +330,20 @@
     #basket_text, #warn_text {
         font-size: small;
     }
+    #basket_list > div {
+        font-size: small;
+    }
 }
 
 @media (max-width : 315px){
     #bottom_row button{
-        font-size: 10px; 
+        font-size : 10px; 
     }
     #basket_text, #warn_text {
-        font-size:x-small;
+        font-size : x-small;
+    }
+    #basket_list > div {
+        font-size: x-small;
     }
     #fresh, #cancelUpdate {
         margin-right : 1rem !important;

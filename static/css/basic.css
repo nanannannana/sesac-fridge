@@ -235,12 +235,12 @@ font-weight: bold;
         visibility: visible;
         font-size: 20px;
     }
+    #hd_search {
+        width: auto;
+    }
     #hd_search, #navvv li {
         margin: 20px 0 20px 0;
     }
-}
-
-@media (max-width: 991px) {
     #logo_text {
         font-size: 20px;
         margin-left: 1rem;
@@ -248,6 +248,7 @@ font-weight: bold;
     #logo_text>img {
         width:40px;
     }
+}
 
 
 @media (max-width: 900px) {

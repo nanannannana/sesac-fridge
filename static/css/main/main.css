@@ -106,13 +106,12 @@ body.swal2-toast-shown .swal2-container {
 
 /* 사용가이드 크기에 맞게 */
 .third_main {
-  background-color: var(--main-yellow);
-  padding-bottom: 70px;
+  margin-bottom: 100px;
 }
-.third_box_title {
+/* .third_box_title {
   background-color: white;
-  padding-bottom: 30px;
-}
+  padding-bottom: 10px;
+} */
 .user_guide {
   height: 100%;
   width: 100%;
