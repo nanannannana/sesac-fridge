@@ -235,6 +235,9 @@ font-weight: bold;
         visibility: visible;
         font-size: 20px;
     }
+    #hd_search {
+        width: auto;
+    }
     #hd_search, #navvv li {
         margin: 20px 0 20px 0;
     }
@@ -246,6 +249,7 @@ font-weight: bold;
         width:40px;
     }
 }
+
 @media (max-width: 900px) {
     .ft_left {
         width: 400px;
