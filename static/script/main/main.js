@@ -1,5 +1,4 @@
 // 유통기한 지난 식재료 DB에서 삭제 & 알림, 영은
-let user_name = "<%=user_name%>"
 function deleteAlert(user_name, exp_count){  
   axios({
     method : "delete",
