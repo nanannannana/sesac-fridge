@@ -6,6 +6,7 @@ const { recipe } = require("../../model/");
 const { log } = require("../../model/");
 const { cooklog } = require("../../model/");
 const env = process.env;
+var sequelize = require('sequelize');
 
 // 마이 페이지 렌더 - 예지
 exports.postMyPage = async function(req,res) {
@@ -91,6 +92,8 @@ exports.postWishList = async function(req,res) {
             raw: true,
             where: {user_id : final_user_id}
         });
+
+        // 좋아요 게시글 조회
         let rec_like = await recipe_like.findAll({
             include: [
                 {
@@ -101,23 +104,11 @@ exports.postWishList = async function(req,res) {
             ],
             where: {user_user_id: final_user_id}
         });
-        var recipe_id = [];
-        var recipe_img = [];
-        var recipe_url = [];
-        var recipe_title = [];
-        for (var i=0 ; i < rec_like.length ; i++) {
-            recipe_id.push(rec_like[i].recipe.recipe_id);
-            recipe_img.push(rec_like[i].recipe.recipe_img);
-            recipe_url.push(rec_like[i].recipe.recipe_url);
-            recipe_title.push(rec_like[i].recipe.recipe_title);
-        }
+
         res.render("user/wishList", {
             isLogin: true,
             user_name: user_result.user_name,
-            recipe_id: recipe_id,
-            recipe_img: recipe_img,
-            recipe_title: recipe_title,
-            recipe_url: recipe_url
+            rec_like: rec_like
         });
     } else {
         res.render("main/404");
@@ -126,10 +117,30 @@ exports.postWishList = async function(req,res) {
 // 찜리스트 정보 삭제
 exports.deleteWishListDel = async function(req,res) {
     const final_user_id = (req.cookies.user_id===undefined) ? req.session.user : req.cookies.user_id;
-    let result = await recipe_like.findAll({where: {recipe_recipe_id: req.body.recipe_id}});
-    let like_id = result[0].like_id;
-    await recipe.update({recipe_pick : 0},{ where : { recipe_id : req.body.recipe_id}});
-    await recipe_like.destroy({where:{like_id: like_id}});
+    console.log("del:",req.body.num);
+
+    // recipe_pick 수 조회
+    let recipe_result = await recipe.findOne({where: {recipe_id: req.body.recipe_id}});
+    console.log("recipe pick 조회: ", recipe_result.recipe_pick);
+    
+    // recipe_pick이 = 1이면 0, > 1 이면 recipe_pick-1
+    switch (Number(recipe_result.recipe_pick)) {
+        case 1:
+            console.log("case1 입니다.");
+            await recipe.update({recipe_pick : 0}, {where: {recipe_id: req.body.recipe_id}});
+            break;
+        default:
+            console.log("default 입니다.");
+            await recipe.update({recipe_pick : sequelize.literal('recipe.recipe_pick-1')},{ where : { recipe_id : req.body.recipe_id}});
+            break;
+    }
+
+    // DB에서 삭제할 좋아요 레시피 id 조회 및 삭제
+    let like_id_result = await recipe_like.findOne({where: {recipe_recipe_id: req.body.recipe_id}});
+    console.log("찜리스트 ID 조회: ",like_id_result.like_id);
+    await recipe_like.destroy({where:{ like_id: like_id_result.like_id }});
+
+    // recipe와 recipe_like table join 후, 필요한 데이터 조회
     let rec_like = await recipe_like.findAll({
         include: [
             {
@@ -140,17 +151,7 @@ exports.deleteWishListDel = async function(req,res) {
         ],
         where: {user_user_id: final_user_id}
     });
-    var recipe_id = [];
-    var recipe_img = [];
-    var recipe_url = [];
-    var recipe_title = [];
-    for (var i=0 ; i < rec_like.length ; i++) {
-        recipe_id.push(rec_like[i].recipe.recipe_id);
-        recipe_img.push(rec_like[i].recipe.recipe_img);
-        recipe_url.push(rec_like[i].recipe.recipe_url);
-        recipe_title.push(rec_like[i].recipe.recipe_title);
-    }
-    res.send({recipe_id, recipe_img, recipe_url, recipe_title});
+    res.send(rec_like);
 }
 
 
