@@ -364,15 +364,22 @@ function updateToFridge(result, id) {
     data: resultArr,
   }).then((res) => {
     console.log("res.data : ", res.data);
-    Swal.fire({
-      icon: "success",
-      title: "냉장고에 재료 변동사항이 \n 생겼습니다! :) ",
-      showConfirmButton: false,
-    });
-    insertCookLog(id);
-    setTimeout(() => {
-      window.location.reload();
-    }, 1500);
+    if (res.data || res.data == 0 || res.data == 1) {
+      Swal.fire({
+        icon: "success",
+        title: "냉장고에 재료 변동사항이 \n 생겼습니다! :) ",
+        showConfirmButton: false,
+      });
+      insertCookLog(id);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "이상한 오류",
+      });
+    }
   });
 }
 
