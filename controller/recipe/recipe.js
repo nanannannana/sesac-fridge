@@ -163,7 +163,7 @@ exports.getRecipe = async (req, res) => {
       }
       result = { data: recipes, dataLike: likeUser };
 
-      // [1]-7 식재료가 있을 때 프론트 단에서 사용할 나의 재료 이름과 수량
+      // [1]-7 식재료 있을 때 프론트 단에서 사용할 나의 재료 이름과 수량
       let ingdResult = [];
       for (var i = 0; i < recipes.length; i++) {
         ingdResult.push(recipes[i].recipe_ingd);
@@ -293,14 +293,13 @@ exports.getRecipe = async (req, res) => {
   }
 };
 
-// 요리하기 버튼 눌렀을 때 fresh와 frozen DB에 해당 식재료 range 수정
+// 요리하기 버튼 눌렀을 때 fresh DB와 frozen DB에 해당 식재료 range 수정 및 삭제
 exports.patchToFridge = async (req, res) => {
   // 삭제할 배열이 있을 때 삭제를 먼저 하고 나서 업데이트
-  // 삭제할 배열
+  // delArr : 삭제할 배열
   let delArr = req.body.filter((item) => {
     return item.delMust === "1";
   });
-  console.log("delArr: ", delArr);
 
   // final_user_id를 사용하기 위해서(로그인 했을 때)
   if (req.session.user || req.cookies.user_id) {
@@ -309,8 +308,13 @@ exports.patchToFridge = async (req, res) => {
         ? req.session.user
         : req.cookies.user_id;
 
+    let delValFromFresh; // fresh 테이블에서 삭제한 결과 값
+    let delValFromFrozen; // frozen 테이블에서 삭제한 결과 값
+    let updateValFromFresh; // fresh 테이블에서 수정한 결과 값
+    let updateValFromFrozen; // frozen 테이블에서 수정한 결과 값
+
     // [1] 삭제할 배열이 있을 때
-    // 받은 데이터로 fresh와 frozen에서 일치하는 값을 찾아서 삭제
+    // 받은 데이터로 fresh table과 frozen table에서 일치하는 값을 찾아서 삭제
     if (delArr.length > 0) {
       let delName = []; // 삭제할 이름
 
@@ -318,57 +322,45 @@ exports.patchToFridge = async (req, res) => {
         delName.push(item.name);
       });
 
+      // freRes : fresh table에서 삭제해야 할 것
       let freRes = await fresh.findAll({
         raw: true,
         attributes: [["fresh_name", "name"]],
         where: { user_user_id: final_user_id, fresh_name: delName },
       });
 
-      console.log("삭제해야 할 freRes: ", freRes);
-      console.log("delArr: ", delArr);
-
-      // fresh테이블에서 나온 결과가 있을 때 fresh테이블에서 바로 삭제
+      // fresh테이블에서 나온 결과만 있을 때 fresh테이블에서 삭제
       if (freRes.length > 0) {
-        console.log("fresh 테이블에서 삭제해야해요!");
-        let result;
         for (var i = 0; i < freRes.length; i++) {
-          result = await fresh.destroy({
+          delValFromFresh = await fresh.destroy({
             where: {
               user_user_id: final_user_id,
               fresh_name: delName,
             },
           });
-          console.log("fresh 삭제 결과: ", result);
         }
-        if (result >= 0) res.send(String(result));
       }
 
-      // 아직 frozen에서 삭제해야 할 재료가 남아있다.
-      // frozen에서 select 한 후 삭제
+      // frozen테이블에서 나온 결과도 있을 때 frozen 테이블에서 삭제
       if (freRes.length != delArr.length) {
         let froRes = await frozen.findAll({
           raw: true,
           attributes: [["frozen_name", "name"]],
           where: { user_user_id: final_user_id, frozen_name: delName },
         });
-        console.log("froRes", froRes);
-        // 삭제
-        let result;
         for (var i = 0; i < froRes.length; i++) {
-          result = await frozen.destroy({
+          delValFromFrozen = await frozen.destroy({
             where: {
               user_user_id: final_user_id,
               frozen_name: froRes[i].name,
             },
           });
-          console.log("frozen 삭제 결과: ", result);
         }
-        if (result >= 0) res.send(String(result));
       }
     }
 
     // [2] 업데이트 할 배열이 있을 때
-    // 업데이트할 배열
+    // updateArr : 업데이트할 배열
     let updateArr = req.body.filter((item) => {
       return !item.delMust;
     });
@@ -382,8 +374,6 @@ exports.patchToFridge = async (req, res) => {
     });
 
     if (updateArr.length > 0) {
-      console.log("업데이트 해야 할 updateArr : ", updateArr);
-
       let freRes = await fresh.findAll({
         raw: true,
         attributes: [
@@ -393,43 +383,30 @@ exports.patchToFridge = async (req, res) => {
         where: { user_user_id: final_user_id, fresh_name: ingdName },
       });
 
-      console.log("수정해야할 freRes: ", freRes);
-      console.log("ingdName : ", ingdName);
-      console.log("ingdRange : ", ingdRange);
-
-      // freRes에 있는 ingdName과 같은 것 == fresh에서 수정할 때 필요한 이름
+      // freRes에 있는 ingdName과 같은 것 == fresh tb에서 수정할 때 필요한 이름
       let freIngdName = ingdName.filter((item) => {
         return freRes.some((other) => other.name === item);
       });
-      console.log(freIngdName);
 
       // freRes과 같지 않은 것 ==> frozen에 있는 IngdName == frozen에서 수정할 때 필요한 이름
+      // froIngdName이 없다면 frozen tb에서 삭제할 것이 xx
       let froIngdName = ingdName.filter((item) => {
         return !freRes.some((other) => other.name === item);
       });
-      console.log("froIngdName", froIngdName);
 
       // fresh테이블에서 나온 결과가 있을 때 fresh테이블에서 바로 수정
-      let freResult;
       if (freRes.length > 0) {
         for (var i = 0; i < freRes.length; i++) {
           let data = { fresh_range: 50 };
-          freResult = await fresh.update(data, {
+          updateValFromFresh = await fresh.update(data, {
             where: {
               user_user_id: final_user_id,
               fresh_name: freIngdName[i],
             },
           });
-          console.log("fresh 테이블에서 업데이트 결과: ", freResult);
         }
-        if (froIngdName.length < 1) res.send(freResult); // frozen테이블에 없는 경우 send
       }
-      // fresh 테이블에서만 업데이트가 있는 경우에 res.send
-      if (freResult && !froIngdName) {
-        res.send(freResult);
-      }
-      // 아직 frozen에서 삭제해야 할 재료가 남아있다.
-      // frozen에서 select 한 후 업데이트
+      // frozen table에서 삭제해야 할 게 남아있을 때 frozen에서 select 한 후 업데이트
       if (freRes.length != updateArr.length) {
         let froRes = await frozen.findAll({
           raw: true,
@@ -439,21 +416,30 @@ exports.patchToFridge = async (req, res) => {
           ],
           where: { user_user_id: final_user_id, frozen_name: ingdName },
         });
-        console.log("frozen테이블에서 삭제해야 할 froRes: ", froRes);
 
-        let result;
+        // frozen table에서 수정
         for (var i = 0; i < froRes.length; i++) {
           let data = { frozen_range: 50 };
-          result = await frozen.update(data, {
+          updateValFromFrozen = await frozen.update(data, {
             where: {
               user_user_id: final_user_id,
               frozen_name: froIngdName[i],
             },
           });
-          console.log("frozen 업데이트 결과: ", result);
         }
-        res.send(result);
       }
+    }
+
+    // 모든 결과 값들
+    if (
+      updateValFromFresh ||
+      updateValFromFrozen ||
+      delValFromFresh === 0 ||
+      delValFromFresh === 1 ||
+      delValFromFrozen === 0 ||
+      delValFromFrozen === 1
+    ) {
+      res.send(true);
     }
   }
 };
