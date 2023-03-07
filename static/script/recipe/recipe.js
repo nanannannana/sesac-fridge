@@ -301,8 +301,6 @@ function checkIngd(htmlTag) {
 // 라디오버튼의 checked 된 것의 재료이름과 수량 갖고오기
 let radioArr = []; // 전역변수로 설정해서 라디오버튼에 체크했을 때 참고
 function checkRadio(htmlTag, cnt) {
-  // inputcnt 초기화는 새로고침 할때마다!
-
   for (var i = 1; i <= inputcnt; i++) {
     // for문으로 input 개수 만큼 for문 돌리기
     if (cnt == i) {
@@ -325,7 +323,6 @@ function checkRadio(htmlTag, cnt) {
       }
     }
   }
-  // console.log("radioArr: ", radioArr);
 
   // name이 중복되면 삭제, 최초입력이면 무조건 length와 idx 2차이
   // 삭제 되는 경우는 length와 idx의 차이가 2보다 클 때 무조건 삭제
@@ -337,7 +334,7 @@ function checkRadio(htmlTag, cnt) {
   }
 }
 
-// 수정을 위한 체크한 정보 fresh와 frozen DB로 전송
+// 수정을 위한 체크한 정보를 fresh와 frozen DB로 전송
 function updateToFridge(result, id) {
   // 1. 배열 result를 백단에 보낼 데이터를 객체 배열형태로
   let resultArr = [];
@@ -357,13 +354,12 @@ function updateToFridge(result, id) {
   for (var i = 0; i < delArr.length; i++) {
     delArr[i]["delMust"] = "1";
   }
-  // console.log("두 번째 단계에서 백에 보내는 데이터 : ", resultArr);
+
   axios({
     method: "patch",
     url: "/recipe/toFridge",
     data: resultArr,
   }).then((res) => {
-    console.log("res.data : ", res.data);
     if (res.data || res.data == 0 || res.data == 1) {
       Swal.fire({
         icon: "success",
