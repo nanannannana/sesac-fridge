@@ -35,10 +35,6 @@ app.use("/recipe", recipeRouter);
 app.use("/myPage", myPageRouter);
 app.use("/", userRouter);
 
-// swagger
-const { swaggerUi, specs } = require("./swagger");
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
-
 app.get("*", (req, res) => {
   res.render("./main/404");
 });
