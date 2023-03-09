@@ -1,8 +1,8 @@
-const { fresh } = require("../../model");
-const { frozen } = require("../../model");
-const { recipe } = require("../../model");
-const { user } = require("../../model");
-const { Op } = require("sequelize");
+const { fresh } = require('../../model');
+const { frozen } = require('../../model');
+const { recipe } = require('../../model');
+const { user } = require('../../model');
+const { Op } = require('sequelize');
 
 //global variables
 //로그인 시각 기준으로 시간 set
@@ -22,7 +22,7 @@ exports.getMain = async (req, res) => {
   // [4] 유통기한 지난 식재료 수 - exp_count (식재료 목록도 필요)
   const final_user_id =
     req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
-  console.log("final_user_id: ", final_user_id);
+  console.log('final_user_id: ', final_user_id);
   // 자동로그인 여부 확인
   // 자동로그인 설정X(쿠키 값 undefined): final_user_id는 req.session.user(세션에 넣어둔 user_id값이 아이디가 됨)
   // 자동로그인 설정O(쿠키 값 有): final_user_id는 req.cookies.user_id(쿠키에 넣어둔 user_id값이 아이디가 됨)
@@ -31,7 +31,7 @@ exports.getMain = async (req, res) => {
   // 1) 로그인(+ 자동로그인)을 한 경우,
   let recipe_result = await recipe.findAll({
     raw: true,
-    order: [["recipe_pick", "desc"]],
+    order: [['recipe_pick', 'desc']],
     limit: 4,
   });
   console.log(recipe_result);
@@ -57,7 +57,7 @@ exports.getMain = async (req, res) => {
     });
     exp_list_arr = exp_list.rows; //global 배열에 유통기한 지난 식재료 목록 담음
     let user_result = await user.findOne({
-      attributes: ["user_name"],
+      attributes: ['user_name'],
       where: { user_id: final_user_id },
     });
     req.session.sql_name = user_result.user_name;
@@ -69,7 +69,7 @@ exports.getMain = async (req, res) => {
     req.session.fresh_count = fresh_count.count;
     req.session.exp_count = exp_list.count;
 
-    res.render("main/main", {
+    res.render('main/main', {
       isLogin: req.session.isLogin,
       user_name: user_name,
       fresh_count: req.session.fresh_count,
@@ -78,7 +78,7 @@ exports.getMain = async (req, res) => {
     });
   } else {
     // 1) 로그인(+ 자동로그인)을 하지 않은 경우,
-    res.render("main/main", {
+    res.render('main/main', {
       isLogin: false,
       user_name: false,
       fresh_count: false,
@@ -95,29 +95,30 @@ exports.deleteDeleteAlert = async (req, res) => {
     req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
   let list = [];
 
-  for (i = 0; i < exp_list_arr.length; i++) {
-    list.push(exp_list_arr[i].fresh_name);
+  // for (i = 0; i < exp_list_arr.length; i++) {
+  for (el of exp_list_arr) {
+    list.push(el.fresh_name);
 
     let result = await fresh.destroy({
       where: {
         user_user_id: final_user_id,
-        fresh_name: exp_list_arr[i].fresh_name,
+        fresh_name: el.fresh_name,
       },
     });
   }
 
-  console.log("delete list : ", list);
+  console.log('delete list : ', list);
   res.send({ list: list });
 };
 
 // 데이터 정규화
-const { QueryTypes } = require("sequelize");
-const { sequelize } = require("../../model");
+const { QueryTypes } = require('sequelize');
+const { sequelize } = require('../../model');
 
 exports.getDbRegex = async (req, res) => {
   // user 테이블에 존재하는 사용자들 가져와 index.ejs 로 전달하기
   let recipes = await recipe.findAll();
-  await res.render("main/dbRegex", { result: recipes });
+  await res.render('main/dbRegex', { result: recipes });
 };
 
 exports.patchDbRegex = async (req, res) => {

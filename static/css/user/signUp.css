@@ -1,130 +1,141 @@
 #background_img {
-    height: 100%;
-    width: 100%;
-    background: no-repeat url("/static/img/fridge3.jpg") 0 / cover;
-    position: absolute;
-    z-index:-1;
-    filter: blur(2px);
+  height: 100%;
+  width: 100%;
+  background: no-repeat url('/static/img/fridge3.jpg') 0 / cover;
+  position: absolute;
+  z-index: -1;
+  filter: blur(2px);
 }
 #logo_box {
-    display: inline-block;
+  display: inline-block;
 }
 #signup_box {
-    margin-top: -70px;
+  margin-top: -70px;
 }
 #signup_box {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 #signup_box_child {
-    width: 500px;
+  width: 500px;
 }
-#btn_id_check, #button {
-    display: block;
-    width:100%;
+#btn_id_check,
+#button {
+  display: block;
+  width: 100%;
 }
-#signup_title, #signup_side_title {
-    font-family: 'NanumSquareAceb';
-    color: white;
-    text-shadow:0px 0px 3px #000;
+#signup_title,
+#signup_side_title {
+  font-family: 'NanumSquareAceb';
+  color: white;
+  text-shadow: 0px 0px 3px #000;
 }
-#back_main, #back_main:active:visited {
-    display: block;
-    font-size: 15px;
-    font-family: 'NanumSquareAceb';
-    text-align: right;
-    color: white;
-    text-shadow:0px 0px 3px #000;
-    text-decoration: none;
-    /* margin: 30px 30px 0px 0px; */
+#back_main,
+#back_main:active:visited {
+  display: block;
+  font-size: 15px;
+  font-family: 'NanumSquareAceb';
+  text-align: right;
+  color: white;
+  text-shadow: 0px 0px 3px #000;
+  text-decoration: none;
+  /* margin: 30px 30px 0px 0px; */
 }
 
 #btn_id_check {
-    background-color: #b9b9b9;
-    color: white;
-    border: 1px solid #b9b9b9;
+  background-color: #b9b9b9;
+  color: white;
+  border: 1px solid #b9b9b9;
 }
 #btn_id_check:hover {
-    background-color: #b9b9b9;
-    color: #ffffff;
-    transform: scale(1.01);
+  background-color: #b9b9b9;
+  color: #ffffff;
+  transform: scale(1.01);
 }
-#form_signup > div, #btn_id_check, #btn_id_check:hover {
-    margin-bottom: 20px;
+#form_signup > div,
+#btn_id_check,
+#btn_id_check:hover {
+  margin-bottom: 20px;
 }
 
-@media (max-width:1920px) {
-    #background_img {
-        height: 100%;
-        width: 100%;
-        background: no-repeat url("/static/img/fridge3.jpg");
-        background-size: 100% cover;
-        background-position: center;
-        position: absolute;
-        z-index:-1;
-        filter: blur(2px);
-    }
+@media (max-width: 1920px) {
+  #background_img {
+    height: 100%;
+    width: 100%;
+    background: no-repeat url('/static/img/fridge3.jpg');
+    background-size: 100% cover;
+    background-position: center;
+    position: absolute;
+    z-index: -1;
+    filter: blur(2px);
+  }
 }
 @media (max-width: 1441px) {
-    #signup_title {
-        font-size: 25px !important;
-        margin-bottom: 7px !important;
-    }
-    #signup_side_title {
-        font-size: 15px !important;
-        margin-bottom: 20px !important;
-    }
-    #form_signup, #back_main {
-        width: 340px;
-        display: inline-block !important;
-    }
-    #form_signup input, #form_signup button {
-        height: 35px;
-        font-size: 15px;
-    }
-    #form_signup > div, #form_signup button {
-        margin-bottom: 15px !important;
-    }
+  #signup_title {
+    font-size: 25px !important;
+    margin-bottom: 7px !important;
+  }
+  #signup_side_title {
+    font-size: 15px !important;
+    margin-bottom: 20px !important;
+  }
+  #form_signup,
+  #back_main {
+    width: 340px;
+    display: inline-block !important;
+  }
+  #form_signup input,
+  #form_signup button {
+    height: 35px;
+    font-size: 15px;
+  }
+  #form_signup > div,
+  #form_signup button {
+    margin-bottom: 15px !important;
+  }
 }
 @media (max-width: 768px) {
-    #signup_box_child {
-        width: 280px;
-    }
-    #signup_title {
-        font-size: 22px !important;
-        margin-bottom: 7px !important;
-    }
-    #signup_side_title {
-        font-size: 12px !important;
-        margin-bottom: 20px !important;
-    }
-    #form_signup, #back_main {
-        width: 280px;
-        display: inline-block !important;
-    }
-    #form_signup input, #form_signup button {
-        height: 35px;
-        font-size: 12px;
-    }
-    #form_signup > div, #form_signup button:not(#form_signup button:last-child) {
-        margin-bottom: 15px !important;
-    }
-    #form_signup button:last-child {
-        margin-bottom: 7px !important;
-    }
+  #signup_box_child {
+    width: 280px;
+  }
+  #signup_title {
+    font-size: 22px !important;
+    margin-bottom: 7px !important;
+  }
+  #signup_side_title {
+    font-size: 12px !important;
+    margin-bottom: 20px !important;
+  }
+  #form_signup,
+  #back_main {
+    width: 280px;
+    display: inline-block !important;
+  }
+  #form_signup input,
+  #form_signup button {
+    height: 35px;
+    font-size: 12px;
+  }
+  #form_signup > div,
+  #form_signup button:not(#form_signup button:last-child) {
+    margin-bottom: 15px !important;
+  }
+  #form_signup button:last-child {
+    margin-bottom: 7px !important;
+  }
 }
 @media (max-width: 426px) {
-    #logo_box img {
-        width: 20px !important;
-        height: 35px !important;
-        margin-left: 10px !important;
-    }
-    #signup_box {
-        margin-top: -50px;
-    }
+  #logo_box img {
+    width: 20px !important;
+    height: 35px !important;
+    margin-left: 10px !important;
+  }
+  #signup_box {
+    margin-top: -50px;
+  }
 }
 /* @media (max-width: 600px) {
     #signup_box_child, #form_signup, #back_main {

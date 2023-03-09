@@ -1,289 +1,304 @@
 /*공통으로 쓰이는 style*/
 * {
-    /* 얇기 순서, 기본: Acr */
-    /* font-family: 'NanumSquareAcl'; */
-    font-family: 'NanumSquareAcr';
-    /* font-family: 'NanumSquareAcb'; */
-    /* font-family: 'NanumSquareAceb'; */
-    --main-yellow : #fffbee;
-    --sub-green : #a9bfb7;
-    --point-coral : #FFEEE4;
-    --btn-warn : #ED6C67; 
-    --btn-success : #7E998F;
-    --footer-brown : #a79c8e;
-    margin:0;
-    padding:0;
-    list-style-type: none;
+  /* 얇기 순서, 기본: Acr */
+  /* font-family: 'NanumSquareAcl'; */
+  font-family: 'NanumSquareAcr';
+  /* font-family: 'NanumSquareAcb'; */
+  /* font-family: 'NanumSquareAceb'; */
+  --main-yellow: #fffbee;
+  --sub-green: #a9bfb7;
+  --point-coral: #ffeee4;
+  --btn-warn: #ed6c67;
+  --btn-success: #7e998f;
+  --footer-brown: #a79c8e;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
 
 /*바텀 안넘어오게*/
-html, body {
-    height: 100%;
-} 
+html,
+body {
+  height: 100%;
+}
 main {
-    min-height: 100%;
+  min-height: 100%;
 }
 
 /*기본 버튼 설정*/
 button {
-    border : none;
+  border: none;
 }
 
 /*a태그 기본 지정*/
 a:visited {
-    color : black;
+  color: black;
 }
 
 /* header.css */
 .d_none {
-    display : none;
+  display: none;
 }
 .hidden {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 /* navbar */
 /* 임시 logo사이즈 및 굵기 지정 */
 #logo_text {
-    font-family: 'NanumSquareAceb';
-    font-size: 30px;
-    margin-left: 2rem;
+  font-family: 'NanumSquareAceb';
+  font-size: 30px;
+  margin-left: 2rem;
 }
-#logo_text>img {
-    width:60px;
+#logo_text > img {
+  width: 60px;
 }
 
 /* navbar 글씨 */
 .navbar {
-    /* font-size:x-large;  */
-    font-family: 'NanumSquareAceb'; 
-    font-weight: bolder;
-    padding-top: 0;
-    padding-bottom: 0;
+  /* font-size:x-large;  */
+  font-family: 'NanumSquareAceb';
+  font-weight: bolder;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 .navbar-collapse {
-    flex-grow: 0;
+  flex-grow: 0;
 }
 
 .navbar img {
-    height: 50px;
+  height: 50px;
 }
 #nav_wishlist img {
-    height: 45px;
+  height: 45px;
 }
 
 .navbar ul {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
-#nav_recipe, #nav_fridge, #nav_wishlist {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: 1rem;
+#nav_recipe,
+#nav_fridge,
+#nav_wishlist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 1rem;
 }
 
-#nr_1, #nw_1, #nf_1 {
-    padding-top: 1rem;
-    padding-bottom: 0;
+#nr_1,
+#nw_1,
+#nf_1 {
+  padding-top: 1rem;
+  padding-bottom: 0;
 }
 
-#nr_2, #nw_2, #nf_2 {
-    padding-top: 0;
-    padding-bottom: 0;
+#nr_2,
+#nw_2,
+#nf_2 {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 /* search bar */
 #hd_search {
-    width: 30rem;
+  width: 30rem;
 }
 
 #search_btn {
-    background-color: var(--btn-success);
+  background-color: var(--btn-success);
 }
 
 /* header.css END */
 
-
-
-
 /* footer.css */
 .footer {
-    background-color: var(--footer-brown);  
-    min-height: 200px;
-    padding-top: 15px;
-    padding-bottom: 10px;
+  background-color: var(--footer-brown);
+  min-height: 200px;
+  padding-top: 15px;
+  padding-bottom: 10px;
 }
-.footer>a {display: none;}
+.footer > a {
+  display: none;
+}
 
-.footer>.row {
-    justify-content:space-between;
+.footer > .row {
+  justify-content: space-between;
 }
 .ft_left {
-    width:600px;
+  width: 600px;
 }
-.ft_right { 
-    width:300px; 
+.ft_right {
+  width: 300px;
 }
 .footer > div {
-    height: 200px;
+  height: 200px;
 }
 
 /* footer 좌측 */
 .ft_left {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 #sesac_logo {
-    width: 100px;
-    margin: 0 !important;
+  width: 100px;
+  margin: 0 !important;
 }
 .ft_left_child {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-.ft_left_child  p {
-    margin: 0 !important;
+.ft_left_child p {
+  margin: 0 !important;
 }
 
 /* footer 우측 */
 .ft_right {
-    justify-content: end;
-    margin-right: 10px;
+  justify-content: end;
+  margin-right: 10px;
 }
 .ft_right_child {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-.ft_contact, .ft_contact_img, .ft_right_child select {
-    margin: 0 !important;
+.ft_contact,
+.ft_contact_img,
+.ft_right_child select {
+  margin: 0 !important;
 }
 
 /* family site select 정렬*/
 .ft_right select {
-    padding:0.4; 
-    background-color: transparent;
+  padding: 0.4;
+  background-color: transparent;
 }
-.ft_right option { 
-    padding : 0.5px; 
+.ft_right option {
+  padding: 0.5px;
 }
 /* contact us 정렬*/
 .ft_contact {
-    flex-direction:column; 
-    align-items:flex-end;
+  flex-direction: column;
+  align-items: flex-end;
 }
-.ft_contact>p {
-    font-size:24px; 
-    font-family: 'NanumSquareAcr'; 
-    font-weight: lighter;
+.ft_contact > p {
+  font-size: 24px;
+  font-family: 'NanumSquareAcr';
+  font-weight: lighter;
 }
 .ft_contact i {
-    font-size:2.2rem; 
-    vertical-align: middle; 
-    color: black;
+  font-size: 2.2rem;
+  vertical-align: middle;
+  color: black;
 }
 #notion_logo {
-    width:3rem; 
-    padding-bottom:0.3rem;
+  width: 3rem;
+  padding-bottom: 0.3rem;
 }
 #figma_logo {
-    width:1.6rem;
+  width: 1.6rem;
 }
 /* footer.css END */
 
 /* 내정보, 로그인 부분 */
 #header_top {
-    text-align: right;
-    margin: 5px 20px 0px 0px;
+  text-align: right;
+  margin: 5px 20px 0px 0px;
 }
 #header_top > div > span {
-font-size: 18px;
+  font-size: 18px;
 }
-#header_nav:hover, #sign_in:hover, #sign_out:hover {
-font-weight: bold;
+#header_nav:hover,
+#sign_in:hover,
+#sign_out:hover {
+  font-weight: bold;
 }
 .d_none {
-    display: none;
+  display: none;
 }
-  
+
 .error_box {
-    background-color: var(--main-yellow);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background-color: var(--main-yellow);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .error_box img {
-    height : 80vh;
-    width: 80vh;
-    margin-left: 2rem;
+  height: 80vh;
+  width: 80vh;
+  margin-left: 2rem;
 }
 
 @media (max-width: 991px) {
-    #navvv {
-      z-index: 1000;
-    }
-    #nf_1, #nr_1, #nw_1 {
-        display: none;
-    }
-    #nf_2, #nr_2, #nw_2 {
-        visibility: visible;
-        font-size: 20px;
-    }
-    #hd_search {
-        width: auto;
-    }
-    #hd_search, #navvv li {
-        margin: 20px 0 20px 0;
-    }
-    #logo_text {
-        font-size: 20px;
-        margin-left: 1rem;
-    }
-    #logo_text>img {
-        width:40px;
-    }
+  #navvv {
+    z-index: 1000;
+  }
+  #nf_1,
+  #nr_1,
+  #nw_1 {
+    display: none;
+  }
+  #nf_2,
+  #nr_2,
+  #nw_2 {
+    visibility: visible;
+    font-size: 20px;
+  }
+  #hd_search {
+    width: auto;
+  }
+  #hd_search,
+  #navvv li {
+    margin: 20px 0 20px 0;
+  }
+  #logo_text {
+    font-size: 20px;
+    margin-left: 1rem;
+  }
+  #logo_text > img {
+    width: 40px;
+  }
 }
 
 @media (max-width: 900px) {
-    .ft_left {
-        width: 400px;
-    }
-    .ft_left p {
-        font-size: 13px;
-    }
-    .ft_right {
-        float: right;
-    }
+  .ft_left {
+    width: 400px;
+  }
+  .ft_left p {
+    font-size: 13px;
+  }
+  .ft_right {
+    float: right;
+  }
 }
-@media (max-width:720px) {
-    .ft_left {
-        width: 300px;
-        padding: 0;
-    }
-    .ft_right {
-        width:200px;
-        padding: 0;
-    }
+@media (max-width: 720px) {
+  .ft_left {
+    width: 300px;
+    padding: 0;
+  }
+  .ft_right {
+    width: 200px;
+    padding: 0;
+  }
 }
-@media (max-width:521px) {
-    .ft_left {
-        width: 200px;
-    }
-    .ft_right {
-        width:150px;
-    }
+@media (max-width: 521px) {
+  .ft_left {
+    width: 200px;
+  }
+  .ft_right {
+    width: 150px;
+  }
 }
-@media (max-width:370px) {
-    .ft_left {
-        width: 150px;
-    }
-    .ft_right {
-        width:150px;
-    }
+@media (max-width: 370px) {
+  .ft_left {
+    width: 150px;
+  }
+  .ft_right {
+    width: 150px;
+  }
 }

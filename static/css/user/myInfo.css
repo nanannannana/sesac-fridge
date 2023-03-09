@@ -1,69 +1,69 @@
 /* 김새싹님의 회원정보 관련 */
 #inform_box {
-    margin-bottom: 15%;
+  margin-bottom: 15%;
 }
 #inform_box > p {
-    font-size: 30px;
-    text-align: center;
-    margin-bottom: 5%;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 5%;
 }
 #inform_box > p > span {
-    font-weight: bold;
+  font-weight: bold;
 }
 /* 회원정보 폼 관련 */
 #form_info {
-    margin: 0% 30% 0% 30%;
+  margin: 0% 30% 0% 30%;
 }
 #form_info > div {
-    flex-direction: column;
+  flex-direction: column;
 }
 #form_info > div > input {
-    width:100%;
+  width: 100%;
 }
 #form_info > p {
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 40px;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 40px;
 }
 #form_info > button {
-    margin-top:20px;
-    float: right;
+  margin-top: 20px;
+  float: right;
 }
 #button_del {
-    background-color: white;
-    color: #b9b9b9;
-    border: 1px solid #b9b9b9;
+  background-color: white;
+  color: #b9b9b9;
+  border: 1px solid #b9b9b9;
 }
 #button_del:hover {
-    background-color: #b9b9b9;
-    color: white;
+  background-color: #b9b9b9;
+  color: white;
 }
 @media (max-width: 992px) {
-    #form_info {
-        margin:0 20% 0 20%;
-    }
+  #form_info {
+    margin: 0 20% 0 20%;
+  }
 }
 @media (max-width: 768px) {
-    #form_info {
-        margin:0 15% 0 15%;
-    }
+  #form_info {
+    margin: 0 15% 0 15%;
+  }
 }
 @media (max-width: 500px) {
-    #form_info {
-        margin:0 5% 0 5%;
-    }
-    #inform_box > p {
-        font-size: 25px;
-    }
-    #form_info > p {
-        font-size: 18px;
-    }
+  #form_info {
+    margin: 0 5% 0 5%;
+  }
+  #inform_box > p {
+    font-size: 25px;
+  }
+  #form_info > p {
+    font-size: 18px;
+  }
 }
 @media (max-width: 400px) {
-    #form_info {
-        margin:0;
-    }
-    #form_info > p {
-        font-size: 15px;
-    }
+  #form_info {
+    margin: 0;
+  }
+  #form_info > p {
+    font-size: 15px;
+  }
 }

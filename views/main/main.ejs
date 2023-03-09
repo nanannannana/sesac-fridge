@@ -1,138 +1,258 @@
 <%-include('head.ejs') %>
-<link href="/static/css/main/main.css" rel="stylesheet" type="text/css">
+<link href="/static/css/main/main.css" rel="stylesheet" type="text/css" />
 <script src="static/script/main/main.js" type="text/javascript"></script>
 <script src="/static/script/recipe/recipe.js" type="text/javascript"></script>
 <script>
-  $(".carousel-inner").css("overflow","");
+  $('.carousel-inner').css('overflow', '');
 </script>
 <%-include('header.ejs') %>
 <main>
-    <div class="first_main">
-        <!-- 로그인시 임박상품 수 노출 -->
-        <div class="d_none" id="welcome_user">
-          <div id="custom-target"></div>
-        </div>
+  <div class="first_main">
+    <!-- 로그인시 임박상품 수 노출 -->
+    <div class="d_none" id="welcome_user">
+      <div id="custom-target"></div>
+    </div>
 
-        <!-- 캐러셀 -->
-        <div id="carouselExampleCaptions" class="carousel slide carousel_box" data-bs-ride="carousel" data-bs-interval="4000">
-          <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4" aria-label="Slide 5"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="5" aria-label="Slide 6"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="6" aria-label="Slide 7"></button>
-          </div>
-          <div class="carousel-inner carousel_box_inner">
-            <div class="carousel-item active">
-              <img src="/static/img/main.png" id="carousel_img" class="d-block" alt="냉장고 집사">
-            </div>
-            <div class="carousel-item">
-              <img src="/static/img/cook_soup.png" id="carousel_img" class="d-block" alt="뜨끈한 국물요리" onclick="selectFilter('국/탕');">
-            </div>
-            <div class="carousel-item">
-              <img src="/static/img/christmas.png" id="carousel_img" class="d-block" alt="연말 음식" onclick="selectFilter('파티');">
-            </div>
-            <div class="carousel-item">
-              <img src="/static/img/tangerine.png" id="carousel_img" class="d-block" alt="귤 요리" onclick="selectFilter('귤');">
-            </div>
-            <div class="carousel-item">
-              <img src="/static/img/winter_snack.png" id="carousel_img" class="d-block" alt="겨울 간식" onclick="selectFilter('겨울간식');">
-            </div>
-            <div class="carousel-item">
-              <img src="/static/img/well_being.png" id="carousel_img" class="d-block" alt="건강/웰빙 요리" onclick="selectFilter('건강/웰빙');">
-            </div>
-            <div class="carousel-item">
-              <img src="/static/img/speed.png" id="carousel_img" class="d-block" alt="초스피드 한끼" onclick="selectFilter('빠른한끼');">
-            </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+    <!-- 캐러셀 -->
+    <div
+      id="carouselExampleCaptions"
+      class="carousel slide carousel_box"
+      data-bs-ride="carousel"
+      data-bs-interval="4000"
+    >
+      <div class="carousel-indicators">
+        <button
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide-to="0"
+          class="active"
+          aria-current="true"
+          aria-label="Slide 1"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide-to="1"
+          aria-label="Slide 2"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide-to="2"
+          aria-label="Slide 3"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide-to="3"
+          aria-label="Slide 4"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide-to="4"
+          aria-label="Slide 5"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide-to="5"
+          aria-label="Slide 6"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide-to="6"
+          aria-label="Slide 7"
+        ></button>
+      </div>
+      <div class="carousel-inner carousel_box_inner">
+        <div class="carousel-item active">
+          <img
+            src="/static/img/main.png"
+            id="carousel_img"
+            class="d-block"
+            alt="냉장고 집사"
+          />
         </div>
+        <div class="carousel-item">
+          <img
+            src="/static/img/cook_soup.png"
+            id="carousel_img"
+            class="d-block"
+            alt="뜨끈한 국물요리"
+            onclick="selectFilter('국/탕');"
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            src="/static/img/christmas.png"
+            id="carousel_img"
+            class="d-block"
+            alt="연말 음식"
+            onclick="selectFilter('파티');"
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            src="/static/img/tangerine.png"
+            id="carousel_img"
+            class="d-block"
+            alt="귤 요리"
+            onclick="selectFilter('귤');"
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            src="/static/img/winter_snack.png"
+            id="carousel_img"
+            class="d-block"
+            alt="겨울 간식"
+            onclick="selectFilter('겨울간식');"
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            src="/static/img/well_being.png"
+            id="carousel_img"
+            class="d-block"
+            alt="건강/웰빙 요리"
+            onclick="selectFilter('건강/웰빙');"
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            src="/static/img/speed.png"
+            id="carousel_img"
+            class="d-block"
+            alt="초스피드 한끼"
+            onclick="selectFilter('빠른한끼');"
+          />
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
     </div>
+  </div>
 
-    <div class="container-xl mainPage_main" style="text-align:center;">
-        <!-- 냉장고 관리 방법 -->
-        <div class="fridge_main">
-          <img src="/static/img/fridge2.png">
-          <div class="fridge_text_box">
-            <p class="fridge_title">바른 냉장고 사용방법을 알려드려요!</p>
-            <p class="fridge_content">✔ 냉장고는 꽉 채우지 말고 70%이하를 유지해 주세요.</p> 
-            <p class="fridge_content">✔ 장기 보존식품과 온도에 민감한 식품은 온도 변화가 가장 적은</p>
-            <p class="fridge_content"> 냉동고 안쪽 깊숙이 보관합니다.</p>
-            <p class="fridge_content_none display_none">✔ 장기 보존식품과 온도에 민감한 식품은 온도 변화가 가장 적은 냉동고 안쪽 깊숙이 보관합니다.</p>
-            <p class="fridge_content">✔ 생선, 육류는 고기 종류와 부위, 구입일자를 적는 것을 추천드려요.</p>
-          </div>
-        </div>
-        <!-- 베스트 레시피 -->
-        <div class="second_main">
-            <p class="second_box_title">BEST 레시피</p>
-            <div class="row second_box_content">
-              <% for (var i=0 ; i < recipe.length ; i++) { %>
-                <div class="card rounded-0 card_box">
-                  <img src="<%=recipe[i].recipe_img%>" class="card-img rounded-0" alt="..." onclick="location.href='<%=recipe[i].recipe_url%>'" target="_blank">
-                  <div class="col-3 card_title_sm display_none"><%=recipe[i].recipe_title%></div>
-                </div>
-              <% } %>
-            </div>
-            <div class="row">
-              <% for (var l=0 ; l < recipe.length ; l++) { %>
-                <div class="col-3 card_title"><%=recipe[l].recipe_title%></div>
-              <% } %>
-            </div>
-        </div>
-        <div class="fresh_food_main">
-          <div class="fresh_food_box">
-            <p class="fresh_food_title">식재료 관리방법을 알려드려요!</p>
-            <p class="fresh_food_content">✔ 고기는 공기를 제거하고 밀봉상태로 냉동보관해요.</p> 
-            <p class="fresh_food_content">✔ 두부는 끓는 물에 살짝 데쳐서 깨끗한 물에 넣으면 좀 더 오래 보관 할 수 있어요.</p> 
-            <p class="fresh_food_content">✔ 양배추는 수분이 많으므로 삶아서 냉동보관해요.</p>
-            <p class="fresh_food_content">✔ 손질한 감자는 식초물에 담가 두고, 사과를 함께 두면 더 오래 보관할 수 있어요.</p>
-          </div>
-          <img src="/static/img/fresh_food.png">
-        </div>
-        <!-- 이용가이드 -->
-        <div class="third_main">
-          <div class="third_box_title">냉장고 집사 이용 가이드</div>
-          <img class="user_guide" src="/static/img/user_guide2.png">
-          <img class="user_guide_sm display_none" src="/static/img/user_guide_sm.png">
-        </div>
+  <div class="container-xl mainPage_main" style="text-align: center">
+    <!-- 냉장고 관리 방법 -->
+    <div class="fridge_main">
+      <img src="/static/img/fridge2.png" />
+      <div class="fridge_text_box">
+        <p class="fridge_title">바른 냉장고 사용방법을 알려드려요!</p>
+        <p class="fridge_content">
+          ✔ 냉장고는 꽉 채우지 말고 70%이하를 유지해 주세요.
+        </p>
+        <p class="fridge_content">
+          ✔ 장기 보존식품과 온도에 민감한 식품은 온도 변화가 가장 적은
+        </p>
+        <p class="fridge_content">냉동고 안쪽 깊숙이 보관합니다.</p>
+        <p class="fridge_content_none display_none">
+          ✔ 장기 보존식품과 온도에 민감한 식품은 온도 변화가 가장 적은 냉동고
+          안쪽 깊숙이 보관합니다.
+        </p>
+        <p class="fridge_content">
+          ✔ 생선, 육류는 고기 종류와 부위, 구입일자를 적는 것을 추천드려요.
+        </p>
+      </div>
     </div>
+    <!-- 베스트 레시피 -->
+    <div class="second_main">
+      <p class="second_box_title">BEST 레시피</p>
+      <div class="row second_box_content">
+        <% for (var i=0 ; i < recipe.length ; i++) { %>
+        <div class="card rounded-0 card_box">
+          <img
+            src="<%=recipe[i].recipe_img%>"
+            class="card-img rounded-0"
+            alt="..."
+            onclick="location.href='<%=recipe[i].recipe_url%>'"
+            target="_blank"
+          />
+          <div class="col-3 card_title_sm display_none">
+            <%=recipe[i].recipe_title%>
+          </div>
+        </div>
+        <% } %>
+      </div>
+      <div class="row">
+        <% for (var l=0 ; l < recipe.length ; l++) { %>
+        <div class="col-3 card_title"><%=recipe[l].recipe_title%></div>
+        <% } %>
+      </div>
+    </div>
+    <div class="fresh_food_main">
+      <div class="fresh_food_box">
+        <p class="fresh_food_title">식재료 관리방법을 알려드려요!</p>
+        <p class="fresh_food_content">
+          ✔ 고기는 공기를 제거하고 밀봉상태로 냉동보관해요.
+        </p>
+        <p class="fresh_food_content">
+          ✔ 두부는 끓는 물에 살짝 데쳐서 깨끗한 물에 넣으면 좀 더 오래 보관 할
+          수 있어요.
+        </p>
+        <p class="fresh_food_content">
+          ✔ 양배추는 수분이 많으므로 삶아서 냉동보관해요.
+        </p>
+        <p class="fresh_food_content">
+          ✔ 손질한 감자는 식초물에 담가 두고, 사과를 함께 두면 더 오래 보관할 수
+          있어요.
+        </p>
+      </div>
+      <img src="/static/img/fresh_food.png" />
+    </div>
+    <!-- 이용가이드 -->
+    <div class="third_main">
+      <div class="third_box_title">냉장고 집사 이용 가이드</div>
+      <img class="user_guide" src="/static/img/user_guide2.png" />
+      <img
+        class="user_guide_sm display_none"
+        src="/static/img/user_guide_sm.png"
+      />
+    </div>
+  </div>
 
+  <script>
+    // 1. 오늘 첫 로그인 시 - 오늘을 기준으로 유통기한 지난 식재료 존재하면 DB에서 삭제 & 삭제 알림
+    // 2. 당일 재로그인 시 - 알림 안 뜸 (유통기한 지난 식재료는 첫 로그인때 삭제되었기 때문에 삭제할 필요X 알림 필요X)
+    // 3. 다음날 첫 로그인 시 - 유통기한 지난 식재료 존재하면 DB에서 삭제 & 알림 ... 1~2 반복
+    // 4. 만약 당일 첫 로그인인데 유통기한 지난 식재료 없으면(exp_count<1) DB에서 삭제X 알림X
+    //로그인 O
+    if ('<%=isLogin%>' == 'true') {
+      // fridgeList();
+      $('#welcome_user').removeClass('d_none'); //user 환영 인사말 display
+      // $("#welcome_user div").html("<span>"+`${localStorage.getItem("username")}`+"님🌱</span><br>유통기한이 임박한 식재료 <b><%=fresh_count%>개</b>가 기다리고 있어요 !");
 
-    <script>
-      // 1. 오늘 첫 로그인 시 - 오늘을 기준으로 유통기한 지난 식재료 존재하면 DB에서 삭제 & 삭제 알림 
-      // 2. 당일 재로그인 시 - 알림 안 뜸 (유통기한 지난 식재료는 첫 로그인때 삭제되었기 때문에 삭제할 필요X 알림 필요X)
-      // 3. 다음날 첫 로그인 시 - 유통기한 지난 식재료 존재하면 DB에서 삭제 & 알림 ... 1~2 반복
-      // 4. 만약 당일 첫 로그인인데 유통기한 지난 식재료 없으면(exp_count<1) DB에서 삭제X 알림X
-      //로그인 O
-      if ( "<%=isLogin%>" == "true" ){ 
-        // fridgeList();
-        $("#welcome_user").removeClass("d_none"); //user 환영 인사말 display
-        // $("#welcome_user div").html("<span>"+`${localStorage.getItem("username")}`+"님🌱</span><br>유통기한이 임박한 식재료 <b><%=fresh_count%>개</b>가 기다리고 있어요 !");
-        
-        console.log("<%=user_name%>","<%=exp_count%>");
-        welcomeToast("<%=user_name%>","<%=fresh_count%>");
-        if( "<%=exp_count%>" > 0 ){ // 삭제할 식재료 존재 & 로그인 O
-          deleteAlert("<%=user_name%>","<%=exp_count%>"); // 식재료 삭제 & 알림
-        }
+      console.log('<%=user_name%>', '<%=exp_count%>');
+      welcomeToast('<%=user_name%>', '<%=fresh_count%>');
+      if ('<%=exp_count%>' > 0) {
+        // 삭제할 식재료 존재 & 로그인 O
+        deleteAlert('<%=user_name%>', '<%=exp_count%>'); // 식재료 삭제 & 알림
+      }
       //   console.log(`${localStorage.getItem("username")}`,"<%=exp_count%>");
       //   welcomeToast(`${localStorage.getItem("username")}`,"<%=fresh_count%>");
       //   if( "<%=exp_count%>" > 0 ){ // 삭제할 식재료 존재 & 로그인 O
       //     deleteAlert(`${localStorage.getItem("username")}`,"<%=exp_count%>"); // 식재료 삭제 & 알림
       //   }
-      }
- 
-    </script>
-
-
+    }
+  </script>
 </main>
 
 <%-include('footer.ejs') %>

@@ -7,31 +7,29 @@
   position: relative;
   right: 0px;
   z-index: 1;
-  width : 20%;
+  width: 20%;
   height: 200px;
-  float:right;
+  float: right;
 }
 .swal2-popup.swal2-toast .swal2-html-container {
-  font-size:large;
+  font-size: large;
 }
-.swal2-popup.swal2-toast .swal2-html-container>p {
-  font-size:larger;
+.swal2-popup.swal2-toast .swal2-html-container > p {
+  font-size: larger;
   margin-bottom: 0.5rem;
 }
 #welcome_user b {
   font-family: 'NanumSquareAceb';
-  font-size :larger;
+  font-size: larger;
   background-color: white;
   color: var(--btn-warn);
 }
 body.swal2-toast-shown .swal2-container {
-  width : auto;
+  width: auto;
 }
 .position-absolute {
   position: absolute !important;
 }
-
-
 
 .first_main {
   margin-top: 50px;
@@ -48,11 +46,13 @@ body.swal2-toast-shown .swal2-container {
 .carousel_box_inner {
   overflow: visible;
 }
-.mainPage_main, .mainPage_box {
-  padding:0;
+.mainPage_main,
+.mainPage_box {
+  padding: 0;
 }
-.second_box_title, .third_box_title {
-  font-size:xx-large;
+.second_box_title,
+.third_box_title {
+  font-size: xx-large;
   margin: 200px 0 20px 0;
   font-weight: bolder;
 }
@@ -64,31 +64,30 @@ body.swal2-toast-shown .swal2-container {
 
 /* 캐러셀 이미지 */
 #carousel_img {
-  width:100%;
-  height:400px;
+  width: 100%;
+  height: 400px;
   object-fit: cover;
 }
 
-
 /* 인기 레시피 카드 안 이미지 여백 없이 꽉차게 */
 .card_box {
-  padding:0;
+  padding: 0;
   display: inline-block;
   border: white;
-  width:auto;
+  width: auto;
   height: auto;
 }
 .card_box > img {
-  width:300px;
+  width: 300px;
   height: 450px;
   object-fit: cover;
   border: 1px solid #d9d9d9;
 }
 /* 인기 레시피 카드 타이틀 정리 */
 .card_title {
-  margin-top:10px;
+  margin-top: 10px;
   white-space: nowrap;
-  overflow:hidden;
+  overflow: hidden;
   text-overflow: ellipsis;
   color: #474747;
   font-size: 20px;
@@ -117,7 +116,7 @@ body.swal2-toast-shown .swal2-container {
   display: none;
 }
 .user_guide_sm {
-  width:100%;
+  width: 100%;
   height: 300px;
 }
 
@@ -140,20 +139,24 @@ body.swal2-toast-shown .swal2-container {
   margin-right: 25px;
   text-align: left;
 }
-.fridge_title, .fresh_food_title {
+.fridge_title,
+.fresh_food_title {
   font-weight: bolder;
   font-size: 30px;
 }
-.fridge_content, .fresh_food_content {
+.fridge_content,
+.fresh_food_content {
   font-size: 20px;
   margin-bottom: 15px;
   color: #4d4d4d;
 }
-.fridge_main img, .fresh_food_main img {
+.fridge_main img,
+.fresh_food_main img {
   width: 700px;
   height: 400px;
 }
-.fridge_text_box, .fresh_food_box {
+.fridge_text_box,
+.fresh_food_box {
   width: 540px;
   display: flex;
   flex-direction: column;
@@ -169,7 +172,7 @@ body.swal2-toast-shown .swal2-container {
 /* 반응형 정리 */
 @media (max-width: 1793px) {
   .carousel_box {
-    height:auto;
+    height: auto;
   }
   #carousel_img {
     object-fit: fill;
@@ -195,19 +198,23 @@ body.swal2-toast-shown .swal2-container {
     font-size: 20px;
     display: block;
   }
-  .fridge_content:nth-child(3), .fridge_content:nth-child(4) {
+  .fridge_content:nth-child(3),
+  .fridge_content:nth-child(4) {
     display: none;
   }
-  .fridge_main img, .fresh_food_main img {
+  .fridge_main img,
+  .fresh_food_main img {
     width: 650px;
     height: 420px;
   }
-  .fridge_text_box, .fresh_food_box {
+  .fridge_text_box,
+  .fresh_food_box {
     width: 470px;
   }
 }
 @media (max-width: 1534px) {
-  #welcome_user p, #welcome_user b {
+  #welcome_user p,
+  #welcome_user b {
     font-size: 18px;
   }
 }
@@ -217,8 +224,8 @@ body.swal2-toast-shown .swal2-container {
     width: 820px;
   }
   #carousel_img {
-    width:100%;
-    height:300px;
+    width: 100%;
+    height: 300px;
   }
   .second_box_content {
     justify-content: space-around;
@@ -242,20 +249,22 @@ body.swal2-toast-shown .swal2-container {
   .fresh_food_content {
     margin-bottom: 5px;
   }
-  .fridge_title, .fresh_food_title {
+  .fridge_title,
+  .fresh_food_title {
     font-weight: bolder;
     font-size: 23px;
   }
   #welcome_user {
-    width:300px;
-    height:150px;
+    width: 300px;
+    height: 150px;
   }
-  .fridge_main img, .fresh_food_main img {
+  .fridge_main img,
+  .fresh_food_main img {
     width: 500px;
     height: 300px;
   }
 }
-@media (max-width:1262px) {
+@media (max-width: 1262px) {
   #carousel_img {
     height: auto;
   }
@@ -272,26 +281,32 @@ body.swal2-toast-shown .swal2-container {
     width: 140px;
     height: 200px;
   }
-  .second_box_title, .third_box_title {
-    font-size:x-large;
+  .second_box_title,
+  .third_box_title {
+    font-size: x-large;
   }
-  .fridge_main img, .fresh_food_main img {
+  .fridge_main img,
+  .fresh_food_main img {
     width: 370px;
     height: 220px;
   }
-  .fridge_title, .fresh_food_title {
+  .fridge_title,
+  .fresh_food_title {
     font-size: 17px !important;
   }
-  .fridge_content, .fresh_food_content, .fridge_content_none {
+  .fridge_content,
+  .fresh_food_content,
+  .fridge_content_none {
     font-size: 14px !important;
   }
   .fridge_text_box p
   /* alert 크기 정리 */
   #welcome_user {
-    width:200px;
-    height:100px;
+    width: 200px;
+    height: 100px;
   }
-  #welcome_user p, #welcome_user b {
+  #welcome_user p,
+  #welcome_user b {
     font-size: 12px;
   }
   .swal2-html-container {
@@ -301,7 +316,7 @@ body.swal2-toast-shown .swal2-container {
     margin: 0 0 1px 0;
   }
   #p2 {
-    margin: 0 !important;;
+    margin: 0 !important;
   }
 }
 
@@ -317,65 +332,77 @@ body.swal2-toast-shown .swal2-container {
   }
   .card_box > img {
     width: 70%;
-    height:200px;
+    height: 200px;
   }
   .card_title {
     display: none;
   }
   .card_title_sm {
     display: inline-block;
-    width:70%;
+    width: 70%;
     margin: 3px 0 7px 0;
     white-space: nowrap;
-    overflow:hidden;
+    overflow: hidden;
     text-overflow: ellipsis;
     font-weight: bold;
   }
-  .fridge_main, .fresh_food_main {
+  .fridge_main,
+  .fresh_food_main {
     justify-content: space-evenly;
   }
-  .fridge_main img, .fresh_food_main img {
+  .fridge_main img,
+  .fresh_food_main img {
     width: 300px;
     height: 200px;
   }
-  .fridge_text_box, .fresh_food_box {
-    width:300px;
-    margin:0;
+  .fridge_text_box,
+  .fresh_food_box {
+    width: 300px;
+    margin: 0;
   }
   #welcome_user {
     display: none;
   }
 }
-@media (max-width:638px) {
-  .fridge_main img, .fresh_food_main img {
+@media (max-width: 638px) {
+  .fridge_main img,
+  .fresh_food_main img {
     width: 250px;
     height: 250px;
   }
-  .fridge_text_box, .fresh_food_box {
-    width:250px;
+  .fridge_text_box,
+  .fresh_food_box {
+    width: 250px;
   }
 }
 
 @media (max-width: 550px) {
-  .fridge_main img, .fresh_food_main img {
+  .fridge_main img,
+  .fresh_food_main img {
     width: 200px;
     height: 200px;
   }
-  .fridge_text_box, .fresh_food_box {
-    width:200px;
+  .fridge_text_box,
+  .fresh_food_box {
+    width: 200px;
   }
-  .fridge_title, .fresh_food_title {
+  .fridge_title,
+  .fresh_food_title {
     font-size: 14px !important;
   }
-  .fridge_content, .fresh_food_content, .fridge_content_none {
+  .fridge_content,
+  .fresh_food_content,
+  .fridge_content_none {
     font-size: 12px !important;
   }
 }
-@media (max-width:500px) {
-  .second_box_title, .third_box_title {
+@media (max-width: 500px) {
+  .second_box_title,
+  .third_box_title {
     margin: 150px 0 20px 0;
   }
-  .fresh_food_main , .fridge_main {
+  .fresh_food_main,
+  .fridge_main {
     margin-top: 150px;
   }
   .user_guide_sm {
@@ -389,12 +416,14 @@ body.swal2-toast-shown .swal2-container {
   }
 }
 @media (max-width: 435px) {
-  .fridge_main, .fresh_food_main {
+  .fridge_main,
+  .fresh_food_main {
     display: block;
   }
-  .fridge_main img, .fresh_food_main img {
-    width:100%;
-    height:300px;
+  .fridge_main img,
+  .fresh_food_main img {
+    width: 100%;
+    height: 300px;
     opacity: 0.7;
     position: relative;
     z-index: 1;
@@ -403,24 +432,27 @@ body.swal2-toast-shown .swal2-container {
     text-align: center;
     position: relative;
     z-index: 2;
-    bottom:230px;
-    width:100%;
+    bottom: 230px;
+    width: 100%;
     padding: 10px;
   }
   .fresh_food_box {
     position: relative;
     z-index: 2;
-    top:270px;
-    width:100%;
+    top: 270px;
+    width: 100%;
     text-align: center;
     padding: 10px;
   }
-  .fridge_title, .fresh_food_title {
+  .fridge_title,
+  .fresh_food_title {
     font-weight: bolder;
     font-size: 20px !important;
     text-shadow: 0px 0px 3px #ffffff;
   }
-  .fridge_content, .fresh_food_content, .fridge_content_none {
+  .fridge_content,
+  .fresh_food_content,
+  .fridge_content_none {
     text-shadow: 0px 0px 3px #ffffff;
     font-size: 15px !important;
     color: #000000 !important;
@@ -436,7 +468,7 @@ body.swal2-toast-shown .swal2-container {
     margin-top: 20px;
   }
   .third_box_title {
-    margin-top:220px;
+    margin-top: 220px;
   }
   .user_guide_sm {
     height: 250px;
@@ -448,10 +480,13 @@ body.swal2-toast-shown .swal2-container {
   }
 }
 @media (max-width: 326px) {
-  .fridge_title, .fresh_food_title {
+  .fridge_title,
+  .fresh_food_title {
     font-size: 17px !important;
   }
-  .fridge_content, .fresh_food_content, .fridge_content_none {
+  .fridge_content,
+  .fresh_food_content,
+  .fridge_content_none {
     font-size: 13px !important;
   }
 }

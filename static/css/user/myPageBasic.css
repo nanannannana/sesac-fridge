@@ -1,24 +1,26 @@
 #mypage_nav {
-    background-color: var(--main-yellow);
-    height:70px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 100px;
+  background-color: var(--main-yellow);
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 100px;
 }
 #mypage_nav_textbox > span {
-    font-size: 20px;
+  font-size: 20px;
 }
-#mypage_nav_textbox > span:nth-child(1):hover, #mypage_nav_textbox > span:nth-child(3):hover, #mypage_nav_textbox > span:nth-child(5):hover {
-    font-weight:  bold;
+#mypage_nav_textbox > span:nth-child(1):hover,
+#mypage_nav_textbox > span:nth-child(3):hover,
+#mypage_nav_textbox > span:nth-child(5):hover {
+  font-weight: bold;
 }
 /* 마이페이지 공통 title 관련 */
 #box_title {
-    font-size: 30px;
+  font-size: 30px;
 }
 #box_title > span {
-    font-family: 'NanumSquareAceb';
+  font-family: 'NanumSquareAceb';
 }
 
 /* button */
@@ -32,21 +34,21 @@
     color: #ffffff;
 } */
 #button {
-    background-color: var(--btn-success);
-    color: #ffffff;
-    border: 1px solid var(--btn-success);
+  background-color: var(--btn-success);
+  color: #ffffff;
+  border: 1px solid var(--btn-success);
 }
 #button:hover {
-    background-color: var(--btn-success);
-    color: #ffffff;
-    transform: scale(1.01);
+  background-color: var(--btn-success);
+  color: #ffffff;
+  transform: scale(1.01);
 }
 #button2 {
-    background-color: white;
-    color: var(--btn-success);
-    border: 1px solid var(--btn-success);
+  background-color: white;
+  color: var(--btn-success);
+  border: 1px solid var(--btn-success);
 }
 #button2:hover {
-    background-color: var(--btn-success);
-    color: white;
+  background-color: var(--btn-success);
+  color: white;
 }
