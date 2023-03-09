@@ -1,74 +1,91 @@
 <html>
-    <head>
-        <title> DB 정규화 페이지</title>
+  <head>
+    <title>DB 정규화 페이지</title>
 
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-        <script>
-            function changeIngd(id){
-                var tr = document.getElementById("tr_" + id);
-                axios({
-                    method: 'patch',
-                    url: '/dbRegex',
-                    data: {
-                        id : id,
-                        b_ingd : $(`#tr_${id} #b_ingd`).val(),
-                        a_ingd : $(`#tr_${id} #a_ingd`).val()
-                    }
-                }).then((rep) => { return rep.data; })
-                .then((data) => {
-                    // data에 서버의 응답이 전달이 되었고, 이때 return이 true냐 false냐에 따라 달라진다.
-                    if ( data.return ) {
-                        alert( "수정 성공" );
-                        location.reload();
-                    } else {
-                        alert( data.msg );
-                    }
-                });
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function changeIngd(id) {
+        var tr = document.getElementById('tr_' + id);
+        axios({
+          method: 'patch',
+          url: '/dbRegex',
+          data: {
+            id: id,
+            b_ingd: $(`#tr_${id} #b_ingd`).val(),
+            a_ingd: $(`#tr_${id} #a_ingd`).val(),
+          },
+        })
+          .then((rep) => {
+            return rep.data;
+          })
+          .then((data) => {
+            // data에 서버의 응답이 전달이 되었고, 이때 return이 true냐 false냐에 따라 달라진다.
+            if (data.return) {
+              alert('수정 성공');
+              location.reload();
+            } else {
+              alert(data.msg);
             }
-            function deleteIngd(id) {
-                let pkId = id;
-                axios({
-                    method: 'delete',
-                    url : '/dbDel',
-                    data : { id : pkId}
-                }).then((res)=>{
-                    if(res.data){
-                        alert("삭제 성공");
-                        location.reload();
-                    }
-                })
-            }
-        </script>
-    </head>
-    
-    <body>
-        <table border="1" style="margin-top: 10px;">
-            <tr>
-                <td>recipe_id</td>
-                <td>recipe_ingd</td>
-                <td>recipe_url</td>
-                <td>recipe_title</td>
-                <td>수정전</td>
-                <td>수정후</td>
-                <td></td>
-            </tr>
-            <%
-                for ( let i = 0; i < result.length; i++ ) {
-            %>
-                <tr id="tr_<%=result[i].recipe_id%>">
-                    <td><%=result[i].recipe_id%></td>
-                    <td><%=result[i].recipe_ingd%></td>
-                    <td><%=result[i].recipe_url%></td>
-                    <td><%=result[i].recipe_title%></td>
-                    <td><input type="text" placeholder="수정 전 재료명" id="b_ingd"></td>
-                    <td><input type="text" placeholder="수정 후 재료명" id="a_ingd"></td>
-                    <td><button type="button" onclick="changeIngd('<%=result[i].recipe_id%>');">수정</button></td>
-                    <td><button type="button" onclick="deleteIngd('<%=result[i].recipe_id%>');">삭제</button></td>
-                </tr>
-            <%
-                }
-            %>
-        </table>
-    </body>
+          });
+      }
+      function deleteIngd(id) {
+        let pkId = id;
+        axios({
+          method: 'delete',
+          url: '/dbDel',
+          data: { id: pkId },
+        }).then((res) => {
+          if (res.data) {
+            alert('삭제 성공');
+            location.reload();
+          }
+        });
+      }
+    </script>
+  </head>
+
+  <body>
+    <table border="1" style="margin-top: 10px">
+      <tr>
+        <td>recipe_id</td>
+        <td>recipe_ingd</td>
+        <td>recipe_url</td>
+        <td>recipe_title</td>
+        <td>수정전</td>
+        <td>수정후</td>
+        <td></td>
+      </tr>
+      <% for ( let i = 0; i < result.length; i++ ) { %>
+      <tr id="tr_<%=result[i].recipe_id%>">
+        <td><%=result[i].recipe_id%></td>
+        <td><%=result[i].recipe_ingd%></td>
+        <td><%=result[i].recipe_url%></td>
+        <td><%=result[i].recipe_title%></td>
+        <td><input type="text" placeholder="수정 전 재료명" id="b_ingd" /></td>
+        <td><input type="text" placeholder="수정 후 재료명" id="a_ingd" /></td>
+        <td>
+          <button
+            type="button"
+            onclick="changeIngd('<%=result[i].recipe_id%>');"
+          >
+            수정
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            onclick="deleteIngd('<%=result[i].recipe_id%>');"
+          >
+            삭제
+          </button>
+        </td>
+      </tr>
+      <% } %>
+    </table>
+  </body>
 </html>

@@ -1,113 +1,114 @@
 /*필터 컨테이너*/
 #filter {
-    background-color: var(--main-yellow);
-    margin-bottom: 50px;
-    /*안의 컨텐츠에 따라 달라지는 height*/
-    overflow: hidden;
-    height: auto;
+  background-color: var(--main-yellow);
+  margin-bottom: 50px;
+  /*안의 컨텐츠에 따라 달라지는 height*/
+  overflow: hidden;
+  height: auto;
 }
 
 /*필터 버튼*/
 #filter_box > .btn {
-    margin:10px;
-    background-color: white;
-    border : 2px solid var(--btn-success);
-    border-radius: 30px;
-    font-size:1.2rem;
+  margin: 10px;
+  background-color: white;
+  border: 2px solid var(--btn-success);
+  border-radius: 30px;
+  font-size: 1.2rem;
 }
 
 /*필터 버튼 클릭 시*/
 #filter_box :focus {
-    font-weight: bold;
-    background-color: var(--btn-success);
-    border : none;
+  font-weight: bold;
+  background-color: var(--btn-success);
+  border: none;
 }
 
 /*태그 설명 텍스트*/
 .intro {
-    text-align: center;
-    font-family: NanumSquareAcb;
+  text-align: center;
+  font-family: NanumSquareAcb;
 }
- 
+
 /*레시피 카드*/
 .card {
-    background-color: #fff;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: #fff;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 /*카드 이미지 고정*/
-.img_time > img{
-    height:15rem;
-    width:100%;
+.img_time > img {
+  height: 15rem;
+  width: 100%;
 }
 
 /*레시피 시간*/
 .time {
-    height:30px;
+  height: 30px;
 }
 .time_box {
-    padding: 8px;
-    background-color: var(--footer-brown);
-    border-radius: 10px;
-    text-align: center;
-    font-family: NanumSquareAcb;
+  padding: 8px;
+  background-color: var(--footer-brown);
+  border-radius: 10px;
+  text-align: center;
+  font-family: NanumSquareAcb;
 }
-
 
 /*좋아요 버튼*/
 .btns {
-    height:30px;
-    background-color: var(--btn-warn);
-    overflow:hidden;
+  height: 30px;
+  background-color: var(--btn-warn);
+  overflow: hidden;
 }
 /*좋아요 버튼 클릭 시*/
 .btns:hover {
-    background-color : red;
-    scale:0.9;
-    font-weight:bold;
+  background-color: red;
+  scale: 0.9;
+  font-weight: bold;
 }
 
 /*레시피 이름*/
 .name_ingd > div > h5 {
-    font-size : 1.1rem;
-    font-family: 'NanumSquareAcb';
+  font-size: 1.1rem;
+  font-family: 'NanumSquareAcb';
 }
 
 .ingdArr {
-    margin:10px;
-    padding: 5px;
-    background-color: var(--main-yellow);
+  margin: 10px;
+  padding: 5px;
+  background-color: var(--main-yellow);
 }
 
 /*일치하는 식재료*/
 .ingdArr {
-    color : red;
+  color: red;
 }
 
 /*레시피 재료*/
 .name_ingd div > span {
-    font-size : 1.1rem;
+  font-size: 1.1rem;
 }
 
 /*레시피 보기, 요리 하기 버튼*/
-.show_recipe, .show_cook {
-    background-color: var(--btn-success);
-    color:  #ffffff;
-    border: 1px solid var(--btn-success);
-    margin: 5px;
-    width:130px;
-    height:50px;
-    font-size:1.2rem;
-    font-family: 'NanumSquareAcb';
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+.show_recipe,
+.show_cook {
+  background-color: var(--btn-success);
+  color: #ffffff;
+  border: 1px solid var(--btn-success);
+  margin: 5px;
+  width: 130px;
+  height: 50px;
+  font-size: 1.2rem;
+  font-family: 'NanumSquareAcb';
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 /*레시피 보기, 요리 하기 버튼 클릭 시*/
-.show_recipe:hover , .show_cook:hover {
-    background-color: var(--btn-success);
-    color: #ffffff;
+.show_recipe:hover,
+.show_cook:hover {
+  background-color: var(--btn-success);
+  color: #ffffff;
 }
 
 /* overflow : hidden

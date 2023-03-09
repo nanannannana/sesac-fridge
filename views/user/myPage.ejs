@@ -1,161 +1,255 @@
 <%-include('../main/head.ejs') %>
-<link rel="stylesheet" type="text/css" href="/static/css/user/myPageBasic.css">
-<link rel="stylesheet" type="text/css" href="/static/css/user/myPage.css">
-<link rel="stylesheet" type="text/css" href="path/to/chartjs/dist/Chart.min.css">
-<script type="text/javascript" src="/static/script/user/myPagebasic.js"></script>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="/static/css/user/myPageBasic.css"
+/>
+<link rel="stylesheet" type="text/css" href="/static/css/user/myPage.css" />
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="path/to/chartjs/dist/Chart.min.css"
+/>
+<script
+  type="text/javascript"
+  src="/static/script/user/myPagebasic.js"
+></script>
 <script type="text/javascript" src="/static/script/user/myPage.js"></script>
 <%-include('../main/header.ejs') %>
 <main>
-    <%-include('myPageBasic.ejs')%>
-    <form id="form_hidden">
-        <input type="hidden" name="fresh_category" value="<%=fresh_category%>">
-        <input type="hidden" name="cook_tag" value="<%=cook_tag%>">
-    </form>
-    <div class="container">
-        <div id="chart_box" >
-            <p id="box_title"><span><%=user_name%>님</span>의 통계차트</p>
-            <div id="chart_box_child">
-                <div id="chart_1">
-                    <p id="chart_title">냉장실 재료 카테고리별 차트</p>
-                    <canvas id="myChart" width="550px;" height="600px;"></canvas>
-                    <button id="myFridge_go_btn" class="btn" onclick="location.href='/myFridge'">나의 냉장고 바로가기</button>
-                </div>
-                <div id="chart_2" class="chart_2">
-                    <p id="chart_title">최근에 한 요리 카테고리별 차트(10개)</p>
-                    <canvas id="myChart2" class="myChart_2" width="650px;" height="599.99px;"></canvas>
-                    <button id="recipe_go_btn" class="btn" onclick="location.href='/recipe'">레시피 추천 바로가기</button>
-                </div>
-            </div>
+  <%-include('myPageBasic.ejs')%>
+  <form id="form_hidden">
+    <input type="hidden" name="fresh_category" value="<%=fresh_category%>" />
+    <input type="hidden" name="cook_tag" value="<%=cook_tag%>" />
+  </form>
+  <div class="container">
+    <div id="chart_box">
+      <p id="box_title"><span><%=user_name%>님</span>의 통계차트</p>
+      <div id="chart_box_child">
+        <div id="chart_1">
+          <p id="chart_title">냉장실 재료 카테고리별 차트</p>
+          <canvas id="myChart" width="550px;" height="600px;"></canvas>
+          <button
+            id="myFridge_go_btn"
+            class="btn"
+            onclick="location.href='/myFridge'"
+          >
+            나의 냉장고 바로가기
+          </button>
         </div>
-        <hr>
-
-
-        <div id="recipe_box">
-            <p id="box_title"><span><%=user_name%>님</span>의 레시피</p>
-            <p id="recipe_title_none">최근 본 레시피</p>
-            <div id="recent_recipe_box">
-                <div id="recent_recipe_title_img">
-                    <div id="recent_recipe_title_text">
-                        <span>최근 본</span>
-                        <span>레시피</span>
-                    </div>
-                </div>
-                <div class="container" id="recent_recipe_card_box">
-                    <div class="row">
-                        <%switch (recipe.length) {                             
-                            case 0: %>
-                            <% for(var r=1; r<5 ; r++ ) {%>
-                                <div id="blank_box" class="card col-5"><%=recipe.length+=1%></div>
-                            <% } %>
-                        <% break;
-                            case 1: 1%>
-                            <div id="recent_recipe_card" class="card col-5" style="padding:0px;">
-                                <img src="<%=recipe[0]['recipe.recipe_img']%>" class="card-img" style="width:100%; height: 300px;"alt="...">
-                                <a href="<%=recipe[0]['recipe.recipe_url']%>" target="_blank" id="recipe_name" class="card-link card-img-overlay"><%=recipe[0]['recipe.recipe_title']%></a>                                
-                            </div>
-                            <% for(var l=1; l<4 ; l++ ) {%>
-                                <div id="blank_box" class="card col-5"><%=recipe.length+=1%></div>
-                            <% } %>
-                        <% break;
-                            case 2: 2 %>
-                            <% for (var i=0 ; i<2 ; i++ ) { %>
-                                <div id="recent_recipe_card" class="card col-5" style="padding:0px;">
-                                    <img src="<%=recipe[i]['recipe.recipe_img']%>" class="card-img" style="width:100%; height: 100%;"alt="...">
-                                    <a href="<%=recipe[i]['recipe.recipe_url']%>" target="_blank" id="recipe_name" class="card-link card-img-overlay"><%=recipe[i]['recipe.recipe_title']%></a>                                
-                                </div>
-                            <% } %>
-                            <% for(var m=1; m<3 ; m++ ) { %>
-                                <div id="blank_box" class="card col-5"><%=recipe.length+=1%></div>
-                            <% } %>
-                        <% break;
-                            case 3: 3 %>
-                            <% for (var j=0 ; j<3 ; j++ ) { %>
-                                <div id="recent_recipe_card" class="card col-5" style="padding:0px;">
-                                    <img src="<%=recipe[j]['recipe.recipe_img']%>" class="card-img" style="width:100%; height: 100%;"alt="...">
-                                    <a href="<%=recipe[j]['recipe.recipe_url']%>" target="_blank" id="recipe_name" class="card-link card-img-overlay"><%=recipe[j]['recipe.recipe_title']%></a>                                
-                                </div>
-                            <% } %>
-                            <div id="blank_box" class="card col-5"><%=recipe.length+=1%></div>
-                        <% break;
-                            case 4: 4 %>
-                            <% for (var k=0 ; k<4 ; k++ ) { %>
-                                <div id="recent_recipe_card" class="card col-5" style="padding:0px;">
-                                    <img src="<%=recipe[k]['recipe.recipe_img']%>" class="card-img" style="width:100%; height: 100%;"alt="...">
-                                    <a href="<%=recipe[k]['recipe.recipe_url']%>" target="_blank" id="recipe_name" class="card-link card-img-overlay"><%=recipe[k]['recipe.recipe_title']%></a>                                
-                                </div>
-                            <% } %>
-                        <% break;
-                            default : break;
-                        } %>
-                    </div>
-                </div>
-            </div>
-            <p id="cook_title_none">최근한 요리</p>
-            <div id="recent_cook_box">
-                <div id="recent_cook_title_img">
-                    <div id="recent_cook_title_text">
-                        <span>최근에</span>
-                        <span>한 요리</span>
-                    </div>
-                </div>
-                <div class="container" id="recent_cook_card_box">
-                    <div class="row">
-                        <%switch (cook.length) { 
-                            case 0: %>
-                            <% for(var r=1; r<5 ; r++ ) {%>
-                                <div id="blank_box" class="card col-5"><%=cook.length+=1%></div>
-                            <% } %>
-                        <% break;
-                            case 1: 1%>
-                            <div id="recent_cook_card" class="card col-5" style="padding:0px;">
-                                <img src="<%=cook[0]['recipe.recipe_img']%>" class="card-img" style="width:100%; height: 100%;"alt="...">
-                                <a href="<%=cook[0]['recipe.recipe_url']%>" id="cook_name" class="card-link card-img-overlay" target="_blank"><%=cook[0]['recipe.recipe_title']%></a>                                
-                            </div>
-                            <% for(var n=1 ; n<4 ; n++ ) { %>
-                                <div id="blank_box" class="card col-5"><%=cook.length+=1%></div>
-                            <% } %>
-                        <% break;
-                            case 2: 2 %>
-                            <% for (var o=0 ; o <2 ; o++ ) { %>
-                                <div id="recent_cook_card" class="card col-5" style="padding:0px;">
-                                    <img src="<%=cook[o]['recipe.recipe_img']%>" class="card-img" style="width:100%; height: 100%;"alt="...">
-                                    <a href="<%=cook[o]['recipe.recipe_url']%>" id="cook_name" class="card-link card-img-overlay" target="_blank"><%=cook[o]['recipe.recipe_title']%></a>                                
-                                </div>
-                            <% } %>
-                            <% for(var p=1 ; p<3 ; p++ ) { %>
-                                <div id="blank_box" class="card col-5"><%=cook.length+=1%></div>
-                            <% } %>
-                        <% break;
-                            case 3: 3 %>
-                            <% for (var q=0 ; q <3 ; q++ ) { %>
-                                <div id="recent_cook_card" class="card col-5" style="padding:0px;">
-                                    <img src="<%=cook[q]['recipe.recipe_img']%>" class="card-img" style="width:100%; height: 100%;"alt="...">
-                                    <a href="<%=cook[q]['recipe.recipe_url']%>" id="cook_name" class="card-link card-img-overlay" target="_blank"><%=cook[q]['recipe.recipe_title']%></a>                                
-                                </div>
-                            <% } %>
-                            <div id="blank_box" class="card col-5"><%=cook.length+=1%></div>
-                        <% break;
-                            case 4: 
-                            case 5: 
-                            case 6: 
-                            case 7:
-                            case 8:
-                            case 9:
-                            case 10: 
-                                answer = 4 %>
-                            <% for (var i=0 ; i<4 ; i++ ) { %>
-                                <div id="recent_cook_card" class="card col-5" style="padding:0px;">
-                                    <img src="<%=cook[i]['recipe.recipe_img']%>" class="card-img" style="width:100%; height: 100%;"alt="...">
-                                    <a href="<%=cook[i]['recipe.recipe_url']%>" id="cook_name" class="card-link card-img-overlay" target="_blank"><%=cook[i]['recipe.recipe_title']%></a>                                
-                                </div>
-                            <% } %>
-                        <% break;
-                            default : break;
-                        } %>
-                    </div>
-                </div>
-            </div>
+        <div id="chart_2" class="chart_2">
+          <p id="chart_title">최근에 한 요리 카테고리별 차트(10개)</p>
+          <canvas
+            id="myChart2"
+            class="myChart_2"
+            width="650px;"
+            height="599.99px;"
+          ></canvas>
+          <button
+            id="recipe_go_btn"
+            class="btn"
+            onclick="location.href='/recipe'"
+          >
+            레시피 추천 바로가기
+          </button>
         </div>
+      </div>
     </div>
+    <hr />
+
+    <div id="recipe_box">
+      <p id="box_title"><span><%=user_name%>님</span>의 레시피</p>
+      <p id="recipe_title_none">최근 본 레시피</p>
+      <div id="recent_recipe_box">
+        <div id="recent_recipe_title_img">
+          <div id="recent_recipe_title_text">
+            <span>최근 본</span>
+            <span>레시피</span>
+          </div>
+        </div>
+        <div class="container" id="recent_recipe_card_box">
+          <div class="row">
+            <%switch (recipe.length) { case 0: %> <% for(var r=1; r<5 ; r++ )
+            {%>
+            <div id="blank_box" class="card col-5"><%=recipe.length+=1%></div>
+            <% } %> <% break; case 1: 1%>
+            <div
+              id="recent_recipe_card"
+              class="card col-5"
+              style="padding: 0px"
+            >
+              <img
+                src="<%=recipe[0]['recipe.recipe_img']%>"
+                class="card-img"
+                style="width: 100%; height: 300px"
+                alt="..."
+              />
+              <a
+                href="<%=recipe[0]['recipe.recipe_url']%>"
+                target="_blank"
+                id="recipe_name"
+                class="card-link card-img-overlay"
+                ><%=recipe[0]['recipe.recipe_title']%></a
+              >
+            </div>
+            <% for(var l=1; l<4 ; l++ ) {%>
+            <div id="blank_box" class="card col-5"><%=recipe.length+=1%></div>
+            <% } %> <% break; case 2: 2 %> <% for (var i=0 ; i<2 ; i++ ) { %>
+            <div
+              id="recent_recipe_card"
+              class="card col-5"
+              style="padding: 0px"
+            >
+              <img
+                src="<%=recipe[i]['recipe.recipe_img']%>"
+                class="card-img"
+                style="width: 100%; height: 100%"
+                alt="..."
+              />
+              <a
+                href="<%=recipe[i]['recipe.recipe_url']%>"
+                target="_blank"
+                id="recipe_name"
+                class="card-link card-img-overlay"
+                ><%=recipe[i]['recipe.recipe_title']%></a
+              >
+            </div>
+            <% } %> <% for(var m=1; m<3 ; m++ ) { %>
+            <div id="blank_box" class="card col-5"><%=recipe.length+=1%></div>
+            <% } %> <% break; case 3: 3 %> <% for (var j=0 ; j<3 ; j++ ) { %>
+            <div
+              id="recent_recipe_card"
+              class="card col-5"
+              style="padding: 0px"
+            >
+              <img
+                src="<%=recipe[j]['recipe.recipe_img']%>"
+                class="card-img"
+                style="width: 100%; height: 100%"
+                alt="..."
+              />
+              <a
+                href="<%=recipe[j]['recipe.recipe_url']%>"
+                target="_blank"
+                id="recipe_name"
+                class="card-link card-img-overlay"
+                ><%=recipe[j]['recipe.recipe_title']%></a
+              >
+            </div>
+            <% } %>
+            <div id="blank_box" class="card col-5"><%=recipe.length+=1%></div>
+            <% break; case 4: 4 %> <% for (var k=0 ; k<4 ; k++ ) { %>
+            <div
+              id="recent_recipe_card"
+              class="card col-5"
+              style="padding: 0px"
+            >
+              <img
+                src="<%=recipe[k]['recipe.recipe_img']%>"
+                class="card-img"
+                style="width: 100%; height: 100%"
+                alt="..."
+              />
+              <a
+                href="<%=recipe[k]['recipe.recipe_url']%>"
+                target="_blank"
+                id="recipe_name"
+                class="card-link card-img-overlay"
+                ><%=recipe[k]['recipe.recipe_title']%></a
+              >
+            </div>
+            <% } %> <% break; default : break; } %>
+          </div>
+        </div>
+      </div>
+      <p id="cook_title_none">최근한 요리</p>
+      <div id="recent_cook_box">
+        <div id="recent_cook_title_img">
+          <div id="recent_cook_title_text">
+            <span>최근에</span>
+            <span>한 요리</span>
+          </div>
+        </div>
+        <div class="container" id="recent_cook_card_box">
+          <div class="row">
+            <%switch (cook.length) { case 0: %> <% for(var r=1; r<5 ; r++ ) {%>
+            <div id="blank_box" class="card col-5"><%=cook.length+=1%></div>
+            <% } %> <% break; case 1: 1%>
+            <div id="recent_cook_card" class="card col-5" style="padding: 0px">
+              <img
+                src="<%=cook[0]['recipe.recipe_img']%>"
+                class="card-img"
+                style="width: 100%; height: 100%"
+                alt="..."
+              />
+              <a
+                href="<%=cook[0]['recipe.recipe_url']%>"
+                id="cook_name"
+                class="card-link card-img-overlay"
+                target="_blank"
+                ><%=cook[0]['recipe.recipe_title']%></a
+              >
+            </div>
+            <% for(var n=1 ; n<4 ; n++ ) { %>
+            <div id="blank_box" class="card col-5"><%=cook.length+=1%></div>
+            <% } %> <% break; case 2: 2 %> <% for (var o=0 ; o <2 ; o++ ) { %>
+            <div id="recent_cook_card" class="card col-5" style="padding: 0px">
+              <img
+                src="<%=cook[o]['recipe.recipe_img']%>"
+                class="card-img"
+                style="width: 100%; height: 100%"
+                alt="..."
+              />
+              <a
+                href="<%=cook[o]['recipe.recipe_url']%>"
+                id="cook_name"
+                class="card-link card-img-overlay"
+                target="_blank"
+                ><%=cook[o]['recipe.recipe_title']%></a
+              >
+            </div>
+            <% } %> <% for(var p=1 ; p<3 ; p++ ) { %>
+            <div id="blank_box" class="card col-5"><%=cook.length+=1%></div>
+            <% } %> <% break; case 3: 3 %> <% for (var q=0 ; q <3 ; q++ ) { %>
+            <div id="recent_cook_card" class="card col-5" style="padding: 0px">
+              <img
+                src="<%=cook[q]['recipe.recipe_img']%>"
+                class="card-img"
+                style="width: 100%; height: 100%"
+                alt="..."
+              />
+              <a
+                href="<%=cook[q]['recipe.recipe_url']%>"
+                id="cook_name"
+                class="card-link card-img-overlay"
+                target="_blank"
+                ><%=cook[q]['recipe.recipe_title']%></a
+              >
+            </div>
+            <% } %>
+            <div id="blank_box" class="card col-5"><%=cook.length+=1%></div>
+            <% break; case 4: case 5: case 6: case 7: case 8: case 9: case 10:
+            answer = 4 %> <% for (var i=0 ; i<4 ; i++ ) { %>
+            <div id="recent_cook_card" class="card col-5" style="padding: 0px">
+              <img
+                src="<%=cook[i]['recipe.recipe_img']%>"
+                class="card-img"
+                style="width: 100%; height: 100%"
+                alt="..."
+              />
+              <a
+                href="<%=cook[i]['recipe.recipe_url']%>"
+                id="cook_name"
+                class="card-link card-img-overlay"
+                target="_blank"
+                ><%=cook[i]['recipe.recipe_title']%></a
+              >
+            </div>
+            <% } %> <% break; default : break; } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
 <%-include('../main/footer.ejs') %>

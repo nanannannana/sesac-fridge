@@ -1,271 +1,271 @@
-#card_size  {
-    display: inline-block;
-    width:410px;
-    height: 450px;
-    padding:0;
-    border: 1px solid rgb(156, 156, 156);
+#card_size {
+  display: inline-block;
+  width: 410px;
+  height: 450px;
+  padding: 0;
+  border: 1px solid rgb(156, 156, 156);
 }
 
 #card_size > img {
-    width:100%;
-    height:100%;
-    object-fit:cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 #wishlist_box > nav {
-    margin-top: 40px;
+  margin-top: 40px;
 }
 #card_text_box {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 #wishlist_box {
-    padding-bottom: 50px;
+  padding-bottom: 50px;
 }
 
 /* 찜리스트 hover 시 */
 #card_text {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: none;
-    text-align: right;
-    text-shadow: 0 0 3px #000;
-    font-weight: bolder;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: none;
+  text-align: right;
+  text-shadow: 0 0 3px #000;
+  font-weight: bolder;
 }
 #card_text_box {
-    margin-top:80%;
+  margin-top: 80%;
 }
 #card_hover:hover {
-    background-color: rgba(0, 0, 0, 0.3);
-    transition: all ease 0.7s;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: all ease 0.7s;
 }
 #card_hover:hover #card_text {
-    display: block;
-    color: white;
-    transition: all ease 0.7s;
+  display: block;
+  color: white;
+  transition: all ease 0.7s;
 }
 
 #heart_icon {
-    font-size: 30px;
-    color: red;
+  font-size: 30px;
+  color: red;
 }
 /* 찜리스트 비었을 때 보여줄 이미지 */
 #none_box {
-    display: flex;
-    justify-content:center;
-    align-items: center;
-    height:500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
 }
 #none_box > img {
-    display: inline-block;
-    width: 250px;
-    height: 250px;
+  display: inline-block;
+  width: 250px;
+  height: 250px;
 }
 @media (max-width: 1399px) {
-    #card_size {
-        width:350px;
-        height: 400px;
-    }
+  #card_size {
+    width: 350px;
+    height: 400px;
+  }
 }
-@media (max-width:1200px) {
-    #card_size {
-        width:293px;
-        height: 343px;
-    }
+@media (max-width: 1200px) {
+  #card_size {
+    width: 293px;
+    height: 343px;
+  }
 }
 @media (max-width: 992px) {
-    #card_size {
-        width:210px;
-        height: 260px;
-    }
-    #card_text:nth-child(1) {
-        font-size: 18px;
-    }
-    #card_text:nth-child(2) {
-        font-size: 14px;
-    }
+  #card_size {
+    width: 210px;
+    height: 260px;
+  }
+  #card_text:nth-child(1) {
+    font-size: 18px;
+  }
+  #card_text:nth-child(2) {
+    font-size: 14px;
+  }
 }
 @media (max-width: 768px) {
-    #box_title {
-        text-align: center;
-    }
-    #heart_icon {
-        font-size: 25px;
-    }
-    #card_size {
-        width:155px;
-        height: 205px;
-        margin: 0 0 10px 10px !important;
-    }
-    #card_text:nth-child(1) {
-        font-size: 14px;
-    }
-    #card_text:nth-child(2) {
-        font-size: 10px;
-    }
-    #none_box > img {
-        display: inline-block;
-        width: 200px;
-        height: 200px;
-    }
+  #box_title {
+    text-align: center;
+  }
+  #heart_icon {
+    font-size: 25px;
+  }
+  #card_size {
+    width: 155px;
+    height: 205px;
+    margin: 0 0 10px 10px !important;
+  }
+  #card_text:nth-child(1) {
+    font-size: 14px;
+  }
+  #card_text:nth-child(2) {
+    font-size: 10px;
+  }
+  #none_box > img {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+  }
 }
 @media (max-width: 577px) {
-    #wishlist_box {
-        max-width: none !important;
-        width:auto;
-    }
-    #box_title {
-        margin-left: -3%;
-    }
+  #wishlist_box {
+    max-width: none !important;
+    width: auto;
+  }
+  #box_title {
+    margin-left: -3%;
+  }
 }
 @media (max-width: 542px) {
-    #card_hover {
-        padding-left: 10px !important;
-        padding-top: 10px !important;
-    }
-    #box_title {
-        font-size: 25px;
-    }
-    #heart_icon {
-        font-size: 23px;
-    }
-    #card_size {
-        width: 155px;
-        height: 205px;
-        margin: 0 0 12px 12px !important;
-    }
-    #none_box > img {
-        display: inline-block;
-        width: 150px;
-        height: 150px;
-    }
+  #card_hover {
+    padding-left: 10px !important;
+    padding-top: 10px !important;
+  }
+  #box_title {
+    font-size: 25px;
+  }
+  #heart_icon {
+    font-size: 23px;
+  }
+  #card_size {
+    width: 155px;
+    height: 205px;
+    margin: 0 0 12px 12px !important;
+  }
+  #none_box > img {
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+  }
 }
 @media (max-width: 532px) {
-    #card_size {
-        width: 145px;
-        height: 195px;
-        margin: 0 3px 20px 9px !important;
-    }
+  #card_size {
+    width: 145px;
+    height: 195px;
+    margin: 0 3px 20px 9px !important;
+  }
 }
 @media (max-width: 502px) {
-    #card_size {
-        width: 142px;
-        height: 190px;
-        margin: 0 3px 20px 7px !important;
-    }
+  #card_size {
+    width: 142px;
+    height: 190px;
+    margin: 0 3px 20px 7px !important;
+  }
 }
 @media (max-width: 488px) {
-    #card_text_box {
-        margin-top:90%;
-    }
-    #heart_icon {
-        font-size: 20px;
-    }
-    #card_size {
-        width: 138px;
-        height: 188px;
-        margin: 0 3px 20px 7px !important;
-    }
+  #card_text_box {
+    margin-top: 90%;
+  }
+  #heart_icon {
+    font-size: 20px;
+  }
+  #card_size {
+    width: 138px;
+    height: 188px;
+    margin: 0 3px 20px 7px !important;
+  }
 }
 @media (max-width: 476px) {
-    #card_size {
-        width: 135px;
-        height: 185px;
-        margin: 0 3px 20px 7px !important;
-    }
+  #card_size {
+    width: 135px;
+    height: 185px;
+    margin: 0 3px 20px 7px !important;
+  }
 }
 @media (max-width: 466px) {
-    #card_size {
-        width: 130px;
-        height: 185px;
-        margin: 0 3px 20px 7px !important;
-    }
+  #card_size {
+    width: 130px;
+    height: 185px;
+    margin: 0 3px 20px 7px !important;
+  }
 }
 @media (max-width: 452px) {
-    #card_size {
-        width: 125px;
-        height: 180px;
-        margin: 0 3px 20px 7px !important;
-    }
+  #card_size {
+    width: 125px;
+    height: 180px;
+    margin: 0 3px 20px 7px !important;
+  }
 }
 @media (max-width: 436px) {
-    #card_size {
-        width: 120px;
-        height: 175px;
-        margin: 0 3px 20px 7px !important;
-    }
+  #card_size {
+    width: 120px;
+    height: 175px;
+    margin: 0 3px 20px 7px !important;
+  }
 }
 @media (max-width: 422px) {
-    #card_size {
-        width: 115px;
-        height: 170px;
-        margin: 0 3px 20px 7px !important;
-    }
+  #card_size {
+    width: 115px;
+    height: 170px;
+    margin: 0 3px 20px 7px !important;
+  }
 }
 @media (max-width: 407px) {
-    #box_title {
-        font-size: 20px;
-    }
-    #card_size {
-        width: 110px;
-        height: 165px;
-        margin: 0 3px 20px 7px !important;
-    }
+  #box_title {
+    font-size: 20px;
+  }
+  #card_size {
+    width: 110px;
+    height: 165px;
+    margin: 0 3px 20px 7px !important;
+  }
 }
 @media (max-width: 392px) {
-    #card_size {
-        width: 105px;
-        height: 160px;
-        margin: 0 3px 20px 7px !important;
-    }
+  #card_size {
+    width: 105px;
+    height: 160px;
+    margin: 0 3px 20px 7px !important;
+  }
 }
 @media (max-width: 377px) {
-    #card_hover {
-        padding-left: 7px !important;
-        padding-top: 7px !important;
-    }
-    #heart_icon {
-        font-size: 18px;
-    }
-    #card_size {
-        width: 100px;
-        height: 155px;
-        margin: 0 3px 20px 7px !important;
-    }
+  #card_hover {
+    padding-left: 7px !important;
+    padding-top: 7px !important;
+  }
+  #heart_icon {
+    font-size: 18px;
+  }
+  #card_size {
+    width: 100px;
+    height: 155px;
+    margin: 0 3px 20px 7px !important;
+  }
 }
 @media (max-width: 362px) {
-    #card_size {
-        width: 95px;
-        height: 150px;
-        margin: 0 3px 20px 7px !important;
-    }
+  #card_size {
+    width: 95px;
+    height: 150px;
+    margin: 0 3px 20px 7px !important;
+  }
 }
-@media (max-width:347px) {
-    #card_size {
-        width: 90px;
-        height: 145px;
-        margin: 0 3px 20px 7px !important;
-    }
+@media (max-width: 347px) {
+  #card_size {
+    width: 90px;
+    height: 145px;
+    margin: 0 3px 20px 7px !important;
+  }
 }
-@media (max-width:332px) {
-    #card_size {
-        width: 87px;
-        height: 143px;
-        margin: 0 3px 20px 7px !important;
-    }
+@media (max-width: 332px) {
+  #card_size {
+    width: 87px;
+    height: 143px;
+    margin: 0 3px 20px 7px !important;
+  }
 }
-@media (max-width:323px) {
-    #card_size {
-        width: 85px;
-        height: 140px;
-        margin: 0 3px 20px 7px !important;
-    }
+@media (max-width: 323px) {
+  #card_size {
+    width: 85px;
+    height: 140px;
+    margin: 0 3px 20px 7px !important;
+  }
 }
 @media (max-width: 317px) {
-    #card_text_box {
-        margin-top: 0%;
-    }
-    #card_size {
-        width: 100%;
-    }
+  #card_text_box {
+    margin-top: 0%;
+  }
+  #card_size {
+    width: 100%;
+  }
 }

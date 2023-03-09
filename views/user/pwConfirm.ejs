@@ -1,28 +1,59 @@
 <%-include('../main/head.ejs')%>
-<link rel="stylesheet" type="text/css" href="/static/css/user/myPageBasic.css">
-<link rel="stylesheet" type="text/css" href="/static/css/user/pwConfirm.css">
-<script type="text/javascript" src="/static/script/user/myPagebasic.js"></script>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="/static/css/user/myPageBasic.css"
+/>
+<link rel="stylesheet" type="text/css" href="/static/css/user/pwConfirm.css" />
+<script
+  type="text/javascript"
+  src="/static/script/user/myPagebasic.js"
+></script>
 <script type="text/javascript" src="/static/script/user/pwConfirm.js"></script>
 <%-include('../main/header.ejs')%>
 <main>
-    <%-include('myPageBasic.ejs')%>
-    <div id="pw_input_box" class="container">
-        <p id="pw_input_box_title"><span style="font-weight:bold;">비밀번호</span>를 입력해주세요!</p>
-        <form id="form_hidden" action="/myPage/profile/myInfo" method="post">
-            <input type="hidden" name="user_id" value="<%=user_id%>">
-        </form>
-        <form id="form_pw_confirm" class="needs-validation" novalidate>
-                <div class="input-group input-group-lg">
-                    <span class="input-group-text" id="inputGroup-sizing-lg">이메일</span>
-                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="user_id" value="<%=user_id%>" readonly>
-                </div>
-                <div class="input-group input-group-lg">
-                    <span class="input-group-text" id="inputGroup-sizing-lg">비밀번호</span>
-                    <input  id="user_pw" type="password" class="form-control rounded-end" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="user_pw" placeholder="비밀번호를 입력해 주세요." onkeyup="enter_push()" oninput="pw_click(this);" autofocus required>
-                    <div class="invalid-feedback">비밀번호를 정확히 입력하세요.</div>
-                </div>
-            <button type="button" id="button" class="btn" onclick="pw_confirm()">확인</button>
-        </form>
-    </div>
+  <%-include('myPageBasic.ejs')%>
+  <div id="pw_input_box" class="container">
+    <p id="pw_input_box_title">
+      <span style="font-weight: bold">비밀번호</span>를 입력해주세요!
+    </p>
+    <form id="form_hidden" action="/myPage/profile/myInfo" method="post">
+      <input type="hidden" name="user_id" value="<%=user_id%>" />
+    </form>
+    <form id="form_pw_confirm" class="needs-validation" novalidate>
+      <div class="input-group input-group-lg">
+        <span class="input-group-text" id="inputGroup-sizing-lg">이메일</span>
+        <input
+          type="text"
+          class="form-control"
+          aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-lg"
+          name="user_id"
+          value="<%=user_id%>"
+          readonly
+        />
+      </div>
+      <div class="input-group input-group-lg">
+        <span class="input-group-text" id="inputGroup-sizing-lg">비밀번호</span>
+        <input
+          id="user_pw"
+          type="password"
+          class="form-control rounded-end"
+          aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-lg"
+          name="user_pw"
+          placeholder="비밀번호를 입력해 주세요."
+          onkeyup="enter_push()"
+          oninput="pw_click(this);"
+          autofocus
+          required
+        />
+        <div class="invalid-feedback">비밀번호를 정확히 입력하세요.</div>
+      </div>
+      <button type="button" id="button" class="btn" onclick="pw_confirm()">
+        확인
+      </button>
+    </form>
+  </div>
 </main>
 <%-include('../main/footer.ejs')%>
