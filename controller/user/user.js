@@ -1,10 +1,10 @@
-const { user } = require('../../model/');
-const CryptoJS = require('crypto-js');
-const request = require('request');
-const axios = require('axios');
-const qs = require('qs');
-const { fresh } = require('../../model');
-const { Op } = require('sequelize');
+const { user } = require("../../model/");
+const CryptoJS = require("crypto-js");
+const request = require("request");
+const axios = require("axios");
+const qs = require("qs");
+const { fresh } = require("../../model");
+const { Op } = require("sequelize");
 const env = process.env;
 
 //global variables
@@ -19,12 +19,40 @@ let exp_list_arr = new Array(); // 유통기한 지난 식재료 > getMain - exp
 // 로그인 페이지 렌더
 exports.getSignin = function (req, res) {
   // localhost용
-  // const kakao_auth_url = `https://kauth.kakao.com/oauth/authorize?client_id=${env.REST_API_KEY}&redirect_uri=${env.REDIRECT_URI}&response_type=code&scope=profile_nickname,account_email,talk_message`
+  const kakao_auth_url = `https://kauth.kakao.com/oauth/authorize?client_id=${env.REST_API_KEY}&redirect_uri=${env.REDIRECT_URI}&response_type=code&scope=profile_nickname,account_email,talk_message`;
   // server용
-  const kakao_auth_url = `https://kauth.kakao.com/oauth/authorize?client_id=${env.REST_API_KEY}&redirect_uri=${env.REDIRECT_URI_SERVER}&response_type=code&scope=profile_nickname,account_email,talk_message`;
-  res.render('user/signIn', {
-    kakao_auth_url: kakao_auth_url,
-  });
+  // const kakao_auth_url = `https://kauth.kakao.com/oauth/authorize?client_id=${env.REST_API_KEY}&redirect_uri=${env.REDIRECT_URI_SERVER}&response_type=code&scope=profile_nickname,account_email,talk_message`;
+  res.render("user/signIn", { kakao_auth_url: kakao_auth_url });
+};
+
+exports.getKakao = (req, res) => {
+  res.render("user/kakaoLogin");
+};
+exports.kakaoAccess = async (req, res) => {
+  // console.log(req.body.code);
+  var access_token;
+  await axios
+    .post(
+      "https://kauth.kakao.com/oauth/token",
+      `grant_type=authorization_code&client_id=${process.env.REST_API_KEY}&redirect_uri=${process.env.REDIRECT_URI}&code=${req.body.code}`,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+        },
+      }
+    )
+    .then((res) => {
+      access_token = res.data.access_token;
+    });
+  await axios
+    .get("https://kapi.kakao.com/v2/user/me", {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+    })
+    .then((res) => console.log(res.data));
+  res.send(access_token);
 };
 
 // 간편로그인
@@ -32,32 +60,32 @@ exports.kakao_token = async function (req, res) {
   //access토큰을 받기 위한 코드
   let token = await axios({
     //token
-    method: 'POST',
-    url: 'https://kauth.kakao.com/oauth/token',
+    method: "POST",
+    url: "https://kauth.kakao.com/oauth/token",
     headers: {
-      'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+      "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
     },
     data: qs.stringify({
       // 주소 -> 문자열
-      grant_type: 'authorization_code', // 고정값
+      grant_type: "authorization_code", // 고정값
       client_id: env.REST_API_KEY,
       client_secret: env.CLINET_SECRET_KEY,
       redirect_uri: env.REDIRECT_URI_SERVER,
       code: req.query.code,
     }), //객체를 string 으로 변환
   });
-  console.log('token: ', token.data);
+  console.log("token: ", token.data);
   // 사용자 정보 가져오기
-  if ('access_token' in token.data) {
+  if ("access_token" in token.data) {
     const kakao_user = await axios({
-      method: 'post',
-      url: 'https://kapi.kakao.com/v2/user/me',
+      method: "post",
+      url: "https://kapi.kakao.com/v2/user/me",
       headers: {
         Authorization: `Bearer ${token.data.access_token}`,
       },
     });
     // kakao 회원 정보 확인
-    console.log('user: ', kakao_user.data);
+    console.log("user: ", kakao_user.data);
     // kakao로 가입한 회원 이메일, 이름(닉네임) session에 넣기
     req.session.kakao_name = kakao_user.data.kakao_account.profile.nickname;
     req.session.user = kakao_user.data.kakao_account.email;
@@ -99,9 +127,9 @@ exports.kakao_token = async function (req, res) {
       req.session.isLogin = true;
       req.session.fresh_count = fresh_count.count;
       req.session.exp_count = exp_list.count;
-      res.redirect('/');
+      res.redirect("/");
     } else {
-      res.redirect('/kakao/info'); //없으면 추가info창으로
+      res.redirect("/kakao/info"); //없으면 추가info창으로
     }
     // // 회원가입 완료 -> prompt창(alert-input)에 user_phone 나중에 회원정보 페이지에서 바꿔주세요 -> main화면으로
     // //main 페이지에 필요한 데이터 정리
@@ -110,7 +138,7 @@ exports.kakao_token = async function (req, res) {
   }
 };
 exports.getKakaoInfo = function (req, res) {
-  res.render('user/kakaoInfo');
+  res.render("user/kakaoInfo");
 };
 
 // 임의 비밀번호 문자 발송
@@ -121,9 +149,9 @@ let random_pw_send = function (result) {
   const uri = env.NCP_SENS_ID; //서비스 ID
   const secretKey = env.NCP_SENS_SECRET; // Secret Key
   const accessKey = env.NCP_SENS_ACCESS; //Access Key
-  const method = 'POST';
-  const space = ' ';
-  const newLine = '\n';
+  const method = "POST";
+  const space = " ";
+  const newLine = "\n";
   const url = `https://sens.apigw.ntruss.com/sms/v2/services/${uri}/messages`;
   const url2 = `/sms/v2/services/${uri}/messages`;
   const hmac = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, secretKey);
@@ -142,15 +170,15 @@ let random_pw_send = function (result) {
       json: true,
       uri: url,
       headers: {
-        'Contenc-type': 'application/json; charset=utf-8',
-        'x-ncp-iam-access-key': accessKey,
-        'x-ncp-apigw-timestamp': date,
-        'x-ncp-apigw-signature-v2': signature,
+        "Contenc-type": "application/json; charset=utf-8",
+        "x-ncp-iam-access-key": accessKey,
+        "x-ncp-apigw-timestamp": date,
+        "x-ncp-apigw-signature-v2": signature,
       },
       body: {
-        type: 'SMS',
-        countryCode: '82',
-        from: '01023085214', //발신번호기입(NCP에 등록한 번호(지향님 번호))
+        type: "SMS",
+        countryCode: "82",
+        from: "01023085214", //발신번호기입(NCP에 등록한 번호(지향님 번호))
         content: `${result.user_name}님의 임시 비밀번호는 ${result.user_pw}입니다.`, //문자내용 기입
         messages: [{ to: `${user_phone_number}` }],
       },
@@ -186,7 +214,7 @@ exports.postSigninFlag = async function (req, res) {
   let result = await user.findAll({
     where: { user_id: req.body.user_id, user_pw: req.body.user_pw },
   });
-  console.log('signin: ', result.length);
+  console.log("signin: ", result.length);
   if (result.length > 0) {
     req.session.user = req.body.user_id;
     const option = {
@@ -196,7 +224,7 @@ exports.postSigninFlag = async function (req, res) {
     if (req.body.remember_me_check == 1) {
       //로그인O, 자동로그인O
       // console.log("cookies: ",req.session.user);
-      res.cookie('user_id', req.body.user_id, option); //서버에서 쿠키 생성 => 클라이언트로 보내기
+      res.cookie("user_id", req.body.user_id, option); //서버에서 쿠키 생성 => 클라이언트로 보내기
       res.send({ result: true, username: result[0].user_name });
     } else {
       //로그인O, 자동로그인X
@@ -218,7 +246,7 @@ exports.postIdFind = async function (req, res) {
     },
   });
   if (result[0] === undefined) {
-    res.send('undefined');
+    res.send("undefined");
   } else {
     res.send(result[0]);
   }
@@ -232,9 +260,9 @@ let send_message = function (result) {
   const uri = env.NCP_SENS_ID; //서비스 ID
   const secretKey = env.NCP_SENS_SECRET; // Secret Key
   const accessKey = env.NCP_SENS_ACCESS; //Access Key
-  const method = 'POST';
-  const space = ' ';
-  const newLine = '\n';
+  const method = "POST";
+  const space = " ";
+  const newLine = "\n";
   const url = `https://sens.apigw.ntruss.com/sms/v2/services/${uri}/messages`;
   const url2 = `/sms/v2/services/${uri}/messages`;
   const hmac = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, secretKey);
@@ -253,15 +281,15 @@ let send_message = function (result) {
       json: true,
       uri: url,
       headers: {
-        'Contenc-type': 'application/json; charset=utf-8',
-        'x-ncp-iam-access-key': accessKey,
-        'x-ncp-apigw-timestamp': date,
-        'x-ncp-apigw-signature-v2': signature,
+        "Contenc-type": "application/json; charset=utf-8",
+        "x-ncp-iam-access-key": accessKey,
+        "x-ncp-apigw-timestamp": date,
+        "x-ncp-apigw-signature-v2": signature,
       },
       body: {
-        type: 'SMS',
-        countryCode: '82',
-        from: '01023085214', //발신번호기입(NCP에 등록한 번호(지향님 번호))
+        type: "SMS",
+        countryCode: "82",
+        from: "01023085214", //발신번호기입(NCP에 등록한 번호(지향님 번호))
         content: `${result.user_name}님의 비밀번호는 ${result.user_pw}입니다.`, //문자내용 기입
         messages: [{ to: `${user_phone_number}` }],
       },
@@ -286,7 +314,7 @@ exports.postPwFind = async function (req, res) {
     },
   });
   if (result === null) {
-    res.send('null');
+    res.send("null");
   } else {
     //비밀번호 찾기 함수 필요한 부분에 넣기
     //유저가 입력한 아이디와 핸드폰 번호가 mysql에 있을 경우, 유저 핸드폰 번호로 비밀번호 메세지 보냄
@@ -297,12 +325,12 @@ exports.postPwFind = async function (req, res) {
 
 // 회원가입 페이지 렌더
 exports.getSignup = function (req, res) {
-  res.render('user/signUp');
+  res.render("user/signUp");
 };
 
 // 아이디 중복 확인
 exports.postIdCheck = async function (req, res) {
-  console.log('아이디 중복확인', req.body);
+  console.log("아이디 중복확인", req.body);
   // let data = {user_id: req.body.user_id};
   let result = await user.findAll({ where: { user_id: req.body.user_id } });
   console.log(result);
@@ -333,7 +361,7 @@ exports.postSignOut = async function (req, res) {
     httpOnly: true,
     maxAge: 0,
   };
-  res.cookie('user_id', null, option);
+  res.cookie("user_id", null, option);
   // 세션 삭제
   req.session.destroy(function (err) {
     if (err) throw err;
