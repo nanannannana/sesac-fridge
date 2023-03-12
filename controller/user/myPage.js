@@ -1,21 +1,21 @@
-const { user } = require('../../model/');
-const { fresh } = require('../../model/');
-const { frozen } = require('../../model/');
-const { recipe_like } = require('../../model/');
-const { recipe } = require('../../model/');
-const { log } = require('../../model/');
-const { cooklog } = require('../../model/');
+const { user } = require("../../model/");
+const { fresh } = require("../../model/");
+const { frozen } = require("../../model/");
+const { recipe_like } = require("../../model/");
+const { recipe } = require("../../model/");
+const { log } = require("../../model/");
+const { cooklog } = require("../../model/");
 const env = process.env;
-var sequelize = require('sequelize');
+var sequelize = require("sequelize");
+const axios = require("axios");
 
 // 마이 페이지 렌더 - 예지
 exports.postMyPage = async function (req, res) {
   // 자동로그인 했을 떄
   if (req.cookies.user_id || req.session.user) {
-    const final_user_id =
-      req.cookies.user_id === undefined
-        ? req.session.user
-        : req.cookies.user_id;
+    const final_user_id = !req.cookies.user_id
+      ? req.session.user
+      : req.cookies.user_id;
     // user 이름 확인
     let user_result = await user.findOne({
       raw: true,
@@ -39,24 +39,24 @@ exports.postMyPage = async function (req, res) {
           model: recipe,
           required: true,
           attributes: [
-            'recipe_tag',
-            'recipe_title',
-            'recipe_url',
-            'recipe_img',
+            "recipe_tag",
+            "recipe_title",
+            "recipe_url",
+            "recipe_img",
           ],
         },
       ],
       where: { user_user_id: final_user_id },
-      order: [['cooklog_id', 'DESC']],
+      order: [["cooklog_id", "DESC"]],
       limit: 10,
     });
     // 최근에 한 요리 차트 관련 배열
     var cook_tag_list = [];
     for (var j = 0; j < cook_result.length; j++) {
-      if (cook_result[j]['recipe.recipe_tag'] == null) {
-        cook_tag_list.push('기타');
+      if (cook_result[j]["recipe.recipe_tag"] == null) {
+        cook_tag_list.push("기타");
       } else {
-        cook_tag_list.push(cook_result[j]['recipe.recipe_tag']);
+        cook_tag_list.push(cook_result[j]["recipe.recipe_tag"]);
       }
     }
     // 최근에 본 레시피 최신순 10개 가져오기
@@ -66,38 +66,39 @@ exports.postMyPage = async function (req, res) {
         {
           model: recipe,
           required: true,
-          attributes: ['recipe_title', 'recipe_url', 'recipe_img'],
+          attributes: ["recipe_title", "recipe_url", "recipe_img"],
         },
       ],
       where: { user_user_id: final_user_id },
-      order: [['log_id', 'DESC']],
+      order: [["log_id", "DESC"]],
       limit: 4,
     });
-    res.render('user/myPage', {
+    res.render("user/myPage", {
       isLogin: true,
+      user_id: final_user_id,
       user_name: user_result.user_name,
+      user_pw: user_result.user_pw,
       fresh_category: fresh_category_list,
       cook_tag: cook_tag_list,
       cook: cook_result,
       recipe: recipe_result,
     });
   } else {
-    res.render('main/404');
+    res.render("main/404");
   }
 };
 exports.postMyPageChart = function (req, res) {
-  const fresh_category_list = req.body.fresh_category.split(',');
-  const cook_tag_list = req.body.cook_tag.split(',');
+  const fresh_category_list = req.body.fresh_category.split(",");
+  const cook_tag_list = req.body.cook_tag.split(",");
   res.send([fresh_category_list, cook_tag_list]);
 };
 
 // 찜리스트 렌더
 exports.postWishList = async function (req, res) {
   if (req.cookies.user_id || req.session.user) {
-    const final_user_id =
-      req.cookies.user_id === undefined
-        ? req.session.user
-        : req.cookies.user_id;
+    const final_user_id = !req.cookies.user_id
+      ? req.session.user
+      : req.cookies.user_id;
     // user 이름 확인
     let user_result = await user.findOne({
       raw: true,
@@ -110,46 +111,48 @@ exports.postWishList = async function (req, res) {
         {
           model: recipe,
           required: true,
-          attributes: ['recipe_id', 'recipe_url', 'recipe_img', 'recipe_title'],
+          attributes: ["recipe_id", "recipe_url", "recipe_img", "recipe_title"],
         },
       ],
       where: { user_user_id: final_user_id },
     });
 
-    res.render('user/wishList', {
+    res.render("user/wishList", {
       isLogin: true,
       user_name: user_result.user_name,
+      user_id: final_user_id,
+      user_pw: user_result.user_pw,
       rec_like: rec_like,
     });
   } else {
-    res.render('main/404');
+    res.render("main/404");
   }
 };
 // 찜리스트 정보 삭제
 exports.deleteWishListDel = async function (req, res) {
   const final_user_id =
     req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
-  console.log('del:', req.body.num);
+  console.log("del:", req.body.num);
 
   // recipe_pick 수 조회
   let recipe_result = await recipe.findOne({
     where: { recipe_id: req.body.recipe_id },
   });
-  console.log('recipe pick 조회: ', recipe_result.recipe_pick);
+  console.log("recipe pick 조회: ", recipe_result.recipe_pick);
 
   // recipe_pick이 = 1이면 0, > 1 이면 recipe_pick-1
   switch (Number(recipe_result.recipe_pick)) {
     case 1:
-      console.log('case1 입니다.');
+      console.log("case1 입니다.");
       await recipe.update(
         { recipe_pick: 0 },
         { where: { recipe_id: req.body.recipe_id } }
       );
       break;
     default:
-      console.log('default 입니다.');
+      console.log("default 입니다.");
       await recipe.update(
-        { recipe_pick: sequelize.literal('recipe.recipe_pick-1') },
+        { recipe_pick: sequelize.literal("recipe.recipe_pick-1") },
         { where: { recipe_id: req.body.recipe_id } }
       );
       break;
@@ -159,7 +162,7 @@ exports.deleteWishListDel = async function (req, res) {
   let like_id_result = await recipe_like.findOne({
     where: { recipe_recipe_id: req.body.recipe_id },
   });
-  console.log('찜리스트 ID 조회: ', like_id_result.like_id);
+  console.log("찜리스트 ID 조회: ", like_id_result.like_id);
   await recipe_like.destroy({ where: { like_id: like_id_result.like_id } });
 
   // recipe와 recipe_like table join 후, 필요한 데이터 조회
@@ -168,7 +171,7 @@ exports.deleteWishListDel = async function (req, res) {
       {
         model: recipe,
         required: true,
-        attributes: ['recipe_id', 'recipe_url', 'recipe_img', 'recipe_title'],
+        attributes: ["recipe_id", "recipe_url", "recipe_img", "recipe_title"],
       },
     ],
     where: { user_user_id: final_user_id },
@@ -177,19 +180,23 @@ exports.deleteWishListDel = async function (req, res) {
 };
 
 // 회원정보 수정 전 비밀번호 확인
-exports.postPwInput = function (req, res) {
+exports.postPwInput = async function (req, res) {
   if (req.cookies.user_id || req.session.user) {
-    const final_user_id =
-      req.cookies.user_id === undefined
-        ? req.session.user
-        : req.cookies.user_id;
-    res.render('user/pwConfirm', {
+    const final_user_id = !req.cookies.user_id
+      ? req.session.user
+      : req.cookies.user_id;
+    const user_result = await user.findOne({
+      where: { user_id: final_user_id },
+    });
+    res.render("user/pwConfirm", {
       isLogin: true,
+      user_pw: user_result.user_pw,
       user_id: final_user_id,
+      user_name: req.session.user,
     });
     console.log(final_user_id);
   } else {
-    res.render('main/404');
+    res.render("main/404");
   }
 };
 exports.postPwConfirm = async function (req, res) {
@@ -199,11 +206,12 @@ exports.postPwConfirm = async function (req, res) {
   if (result.length > 0) res.send(true);
   else res.send(false);
 };
+
 // 회원정보 수정 페이지 렌더
 exports.postMyInfo = async function (req, res) {
   if (req.cookies.user_id || req.session.user) {
     let result = await user.findOne({ where: { user_id: req.body.user_id } });
-    res.render('user/myInfo', {
+    res.render("user/myInfo", {
       isLogin: true,
       user_id: result.user_id,
       user_pw: result.user_pw,
@@ -211,7 +219,7 @@ exports.postMyInfo = async function (req, res) {
       user_phone: result.user_phone,
     });
   } else {
-    res.render('main/404');
+    res.render("main/404");
   }
 };
 
@@ -234,10 +242,9 @@ exports.patchMyInfoUpdate = async function (req, res) {
 // 회원탈퇴 렌더
 exports.postMyInfoDel = async function (req, res) {
   if (req.cookies.user_id || req.session.user) {
-    const final_user_id =
-      req.cookies.user_id === undefined
-        ? req.session.user
-        : req.cookies.user_id;
+    const final_user_id = !req.cookies.user_id
+      ? req.session.user
+      : req.cookies.user_id;
     let fresh_count = await fresh.findAndCountAll({
       where: { user_user_id: final_user_id },
     });
@@ -247,24 +254,34 @@ exports.postMyInfoDel = async function (req, res) {
     let user_result = await user.findOne({
       where: { user_id: final_user_id },
     });
-    res.render('user/myInfoDel', {
+    res.render("user/myInfoDel", {
       isLogin: true,
       user_name: user_result.user_name,
       user_id: req.body.user_id,
       ingd_count: fresh_count.count + frozen_count.count,
     });
   } else {
-    res.render('main/404');
+    res.render("main/404");
   }
 };
 // 회원탈퇴 완료
 exports.deleteMyInfoDel = async function (req, res) {
+  if (req.cookies.access_token) {
+    await axios
+      .post("https://kapi.kakao.com/v1/user/unlink", null, {
+        headers: {
+          Authorization: `Bearer ${req.cookies.access_token}`,
+        },
+      })
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+  }
   //쿠키 삭제
   const option = {
     httpOnly: true,
     maxAge: 0,
   };
-  res.cookie('user_id', null, option);
+  res.cookie("user_id", null, option);
   // 세션 삭제
   req.session.destroy(function (err) {
     if (err) throw err;

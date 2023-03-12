@@ -10,3 +10,17 @@
 <form id="mypage_go" action="/myPage" method="post"></form>
 <form id="wishlist_go" action="/myPage/wishList" method="post"></form>
 <form id="infoUpdate_go" action="/myPage/profile" method="post"></form>
+<form id="kakao_infoUpdate" action="/myPage/profile/myInfo" method="post">
+  <input type="hidden" name="user_id" value="<%=user_id%>" />
+</form>
+<script>
+  function infoUpdate_go() {
+    if ("<%=user_pw%>" === "kakao") {
+      var kakao_infoUpdate = document.getElementById("kakao_infoUpdate");
+      kakao_infoUpdate.submit();
+    } else {
+      var infoUpdate_go = document.getElementById("infoUpdate_go");
+      infoUpdate_go.submit();
+    }
+  }
+</script>
