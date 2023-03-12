@@ -1,8 +1,8 @@
-const { recipe, log, cooklog, recipe_like } = require('../../model');
-const { fresh } = require('../../model');
-const { frozen } = require('../../model');
+const { recipe, log, cooklog, recipe_like } = require("../../model");
+const { fresh } = require("../../model");
+const { frozen } = require("../../model");
 
-const { Op } = require('sequelize'); // where 안에 조건절을 위해
+const { Op } = require("sequelize"); // where 안에 조건절을 위해
 
 // 영은, 냉장고에서 선택한 식재료 list(join한 문자열 상태) 전역변수로 받음 ------
 //  getRecipe [2]-1-2에서 사용
@@ -18,39 +18,34 @@ exports.getRecipe = async (req, res) => {
   let likeUser = await recipe_like.findAll({
     raw: true,
     attributes: [
-      ['user_user_id', 'userId'],
-      ['recipe_recipe_id', 'recipeId'],
-      ['like_id', 'likeId'],
+      ["user_user_id", "userId"],
+      ["recipe_recipe_id", "recipeId"],
+      ["like_id", "likeId"],
     ],
   });
 
   // [1] 로그인 했을 때
   if (req.session.user || req.cookies.user_id) {
-    const final_user_id =
-      req.cookies.user_id === undefined
-        ? req.session.user
-        : req.cookies.user_id;
-    const user_name =
-      req.session.kakao_name == true
-        ? req.session.kakao_name
-        : req.session.sql_name;
+    const final_user_id = !req.cookies.user_id
+      ? req.session.user
+      : req.cookies.user_id;
 
-    console.log('유저 : ', final_user_id);
+    console.log("유저 : ", final_user_id);
 
     // [1]-1 fresh 테이블과 frozen 테이블의 모든 재료를 findAll로 가져온다.
     let freRes = await fresh.findAll({
       raw: true,
       attributes: [
-        ['fresh_name', 'name'],
-        ['fresh_range', 'range'],
+        ["fresh_name", "name"],
+        ["fresh_range", "range"],
       ],
       where: { user_user_id: final_user_id },
     });
     let froRes = await frozen.findAll({
       raw: true,
       attributes: [
-        ['frozen_name', 'name'],
-        ['frozen_range', 'range'],
+        ["frozen_name", "name"],
+        ["frozen_range", "range"],
       ],
       where: { user_user_id: final_user_id },
     });
@@ -70,17 +65,17 @@ exports.getRecipe = async (req, res) => {
 
     // [1]-3 식재료 이름, 수량을 각각 ingdName과 ingdRange에 집어넣기
     for (var i = 0; i < ingdRes.length; i++) {
-      ingdName.push(ingdRes[i].name + '');
+      ingdName.push(ingdRes[i].name + "");
       ingdRange.push(ingdRes[i].range);
     }
-    console.log('ingdName : ', ingdName);
-    console.log('ingdRange : ', ingdRange);
+    console.log("ingdName : ", ingdName);
+    console.log("ingdRange : ", ingdRange);
 
     // [1]-4 정확하게 일치하는 재료를 찾기 위해서 ingName을 문자열로
-    let ingdNameStr = ',' + ingdName.join(',|,') + ',';
+    let ingdNameStr = "," + ingdName.join(",|,") + ",";
 
     // [1]-5 더 광범위한 재료 포함 할 때 ex 파 검색 => 쪽파, 대파, 양파 같이
-    let bigIngdNameStr = ingdNameStr.replace(/,/g, '');
+    let bigIngdNameStr = ingdNameStr.replace(/,/g, "");
 
     // 식재료가 있을 때 일치하는 식재료가 있으면 보여준다.
     let where = {}; // 레시피에서 검색할 때 사용할 where 절
@@ -90,48 +85,48 @@ exports.getRecipe = async (req, res) => {
       let recipes;
       // [1]-6-1 검색어로 렌더
       if (req.query.keyword) {
-        console.log('키워드렌더입니다.');
-        console.log('키워드', req.query.keyword);
+        console.log("키워드렌더입니다.");
+        console.log("키워드", req.query.keyword);
         recipes = await recipe.findAll({
           raw: true,
-          where: { ['recipe_ingd']: { [Op.regexp]: req.query.keyword } },
+          where: { ["recipe_ingd"]: { [Op.regexp]: req.query.keyword } },
         });
       }
       // [1]-6-2 나의 냉장고에서 선택한 식재료로 렌더, 영은
       if (req.query.fridge) {
-        console.log('냉장고렌더입니다');
-        console.log('냉장고', fridgeList);
+        console.log("냉장고렌더입니다");
+        console.log("냉장고", fridgeList);
 
         recipes = await recipe.findAll({
           raw: true,
-          where: { ['recipe_ingd']: { [Op.regexp]: ',' + fridgeList + ',' } },
+          where: { ["recipe_ingd"]: { [Op.regexp]: "," + fridgeList + "," } },
         });
       }
       // [1]-6-3 빠른한끼 태그로 렌더
-      if (req.query.tag == '빠른한끼') {
-        console.log('빠른한끼렌더입니다.');
+      if (req.query.tag == "빠른한끼") {
+        console.log("빠른한끼렌더입니다.");
         recipes = await recipe.findAll({
           raw: true,
-          where: { ['recipe_ingd']: { [Op.regexp]: ingdNameStr } },
-          order: [['recipe_time', 'ASC']],
+          where: { ["recipe_ingd"]: { [Op.regexp]: ingdNameStr } },
+          order: [["recipe_time", "ASC"]],
           limit: 45,
         });
       }
       // [1]-6-4 식재료일치 태그로 렌더
-      if (req.query.tag === '식재료일치') {
-        console.log('식재료 일치렌더입니다.');
+      if (req.query.tag === "식재료일치") {
+        console.log("식재료 일치렌더입니다.");
         recipes = await recipe.findAll({
           raw: true,
-          where: { ['recipe_ingd']: { [Op.regexp]: ingdNameStr } },
+          where: { ["recipe_ingd"]: { [Op.regexp]: ingdNameStr } },
         });
       }
       // [1]-6-5 페이지네이션 있을 때 (리팩토링 중)
       if (req.query.page) {
         let pageNum = req.query.page; // 요청 페이지 넘버
         let offset = 0;
-        where['recipe_ingd'] = { [Op.regexp]: bigIngdNameStr };
+        where["recipe_ingd"] = { [Op.regexp]: bigIngdNameStr };
         if (req.query.tag) {
-          where['recipe_tag'] = req.query.tag;
+          where["recipe_tag"] = req.query.tag;
         }
         if (pageNum > 1) {
           offset = 20 * (pageNum - 1);
@@ -141,20 +136,20 @@ exports.getRecipe = async (req, res) => {
           offset: offset,
           limit: 20,
         });
-        console.log('페이지 렌더 결과', result);
+        console.log("페이지 렌더 결과", result);
       }
       // [1]-6-6 기본 렌더
       if (
-        req.query.tag != '빠른한끼' &&
-        req.query.tag != '식재료일치' &&
+        req.query.tag != "빠른한끼" &&
+        req.query.tag != "식재료일치" &&
         !req.query.keyword &&
         !req.query.fridge
       ) {
-        console.log('기본렌더입니다.');
+        console.log("기본렌더입니다.");
         // 식재료랑 비슷하게 일치하는 레시피가 있을 때,
-        where['recipe_ingd'] = { [Op.regexp]: bigIngdNameStr };
+        where["recipe_ingd"] = { [Op.regexp]: bigIngdNameStr };
         if (req.query.tag) {
-          where['recipe_tag'] = req.query.tag;
+          where["recipe_tag"] = req.query.tag;
         }
         recipes = await recipe.findAll({
           raw: true, // dataValues만 가져오기
@@ -170,33 +165,34 @@ exports.getRecipe = async (req, res) => {
       }
 
       // [1]-8 result 안에 ejs에서 사용할 변수들
-      result['ingdName'] = ingdName;
-      result['ingdRange'] = ingdRange;
-      result['ingdResult'] = ingdResult;
-      result['isLogin'] = true;
-      result['user_id'] = final_user_id;
+      result["ingdName"] = ingdName;
+      result["ingdRange"] = ingdRange;
+      result["ingdResult"] = ingdResult;
+      result["isLogin"] = true;
+      result["user_id"] = final_user_id;
+      result["user_name"] = req.session.user_name;
 
       // [1]-9 기본 결과는 유사 재료 레시피
       if (req.query.tag) {
-        result['tag'] = req.query.tag;
+        result["tag"] = req.query.tag;
       } else {
-        result['tag'] = '유사 재료 레시피';
+        result["tag"] = "유사 재료 레시피";
       }
-      console.log('식재료 냉장고 결과', result.ingdName);
+      console.log("식재료 냉장고 결과", result.ingdName);
 
-      res.render('recipe/recipe', result);
+      res.render("recipe/recipe", result);
     } else {
       // [1]-10 로그인 했는데 식재료가 없을 때(냉장고 빈 것 포함)
       let result;
       let recipes;
       // [1]-10-1 로그인 시 식재료 없을 때 기본 렌더
-      if (req.query.tag != '빠른한끼' && !req.query.keyword) {
-        console.log('로그인, 식재료 없는 기본 렌더');
+      if (req.query.tag != "빠른한끼" && !req.query.keyword) {
+        console.log("로그인, 식재료 없는 기본 렌더");
         let where = {};
         if (req.query.tag) {
-          where['recipe_tag'] = req.query.tag;
+          where["recipe_tag"] = req.query.tag;
         } else {
-          where['recipe_tag'] = null;
+          where["recipe_tag"] = null;
         }
         recipes = await recipe.findAll({
           raw: true, // dataValues만 가져오기
@@ -204,32 +200,33 @@ exports.getRecipe = async (req, res) => {
         });
       }
       // [1]-10-2 로그인 시 식재료 없을 때 빠른 한끼 렌더
-      if (req.query.tag == '빠른한끼') {
-        console.log('로그인, 식재료 없는 빠른 한끼 태그');
+      if (req.query.tag == "빠른한끼") {
+        console.log("로그인, 식재료 없는 빠른 한끼 태그");
         recipes = await recipe.findAll({
           raw: true,
-          order: [['recipe_time', 'ASC']],
+          order: [["recipe_time", "ASC"]],
           limit: 45,
         });
       }
       // [1]-10-3 로그인 시 식재료 없을 때 검색어로 렌더
       if (req.query.keyword) {
-        console.log('로그인, 식재료 없는 검색어 렌더');
+        console.log("로그인, 식재료 없는 검색어 렌더");
         recipes = await recipe.findAll({
           raw: true,
-          where: { ['recipe_ingd']: { [Op.regexp]: req.query.keyword } },
+          where: { ["recipe_ingd"]: { [Op.regexp]: req.query.keyword } },
         });
       }
       result = { data: recipes, dataLike: likeUser };
-      result['isLogin'] = true;
-      result['user_id'] = final_user_id;
+      result["isLogin"] = true;
+      result["user_id"] = final_user_id;
+      result["user_name"] = req.session.user_name;
 
       if (req.query.tag) {
-        result['tag'] = req.query.tag;
+        result["tag"] = req.query.tag;
       } else {
-        result['tag'] = '추천레시피';
+        result["tag"] = "추천레시피";
       }
-      res.render('recipe/recipe_non', result);
+      res.render("recipe/recipe_non", result);
     }
   } else {
     // [2] 비로그인 시
@@ -237,17 +234,17 @@ exports.getRecipe = async (req, res) => {
     let result;
     let recipes;
     if (
-      req.query.tag != '빠른한끼' &&
+      req.query.tag != "빠른한끼" &&
       !req.query.keyword &&
-      req.query.tag != '겨울간식'
+      req.query.tag != "겨울간식"
     ) {
-      console.log('비로그인시 기본 렌더');
+      console.log("비로그인시 기본 렌더");
       let where = {};
 
       if (req.query.tag) {
-        where['recipe_tag'] = req.query.tag;
+        where["recipe_tag"] = req.query.tag;
       } else {
-        where['recipe_tag'] = null;
+        where["recipe_tag"] = null;
       }
 
       recipes = await recipe.findAll({
@@ -257,17 +254,17 @@ exports.getRecipe = async (req, res) => {
     }
 
     // [2]-2 비로그인 시 빠른 한끼 렌더
-    if (req.query.tag == '빠른한끼') {
-      console.log('비로그인시 빠른 한끼 태그');
+    if (req.query.tag == "빠른한끼") {
+      console.log("비로그인시 빠른 한끼 태그");
       recipes = await recipe.findAll({
         raw: true,
-        order: [['recipe_time', 'ASC']],
+        order: [["recipe_time", "ASC"]],
         limit: 45,
       });
     }
     // [2]-3 비로그인 시 겨울간식 렌더
-    if (req.query.tag == '겨울간식') {
-      console.log('비로그인시 겨울간식 태그');
+    if (req.query.tag == "겨울간식") {
+      console.log("비로그인시 겨울간식 태그");
       recipes = await recipe.findAll({
         raw: true,
         where: { recipe_tag: req.query.tag },
@@ -275,21 +272,22 @@ exports.getRecipe = async (req, res) => {
     }
     // [2]-4 비로그인 시 검색어로 렌더
     if (req.query.keyword) {
-      console.log('비로그인시 검색어 렌더');
+      console.log("비로그인시 검색어 렌더");
       recipes = await recipe.findAll({
         raw: true,
-        where: { ['recipe_ingd']: { [Op.regexp]: req.query.keyword } },
+        where: { ["recipe_ingd"]: { [Op.regexp]: req.query.keyword } },
       });
     }
     result = { data: recipes, dataLike: likeUser };
-    result['isLogin'] = false;
+    result["isLogin"] = false;
+    result["user_name"] = false;
 
     if (req.query.tag) {
-      result['tag'] = req.query.tag;
+      result["tag"] = req.query.tag;
     } else {
-      result['tag'] = '추천레시피';
+      result["tag"] = "추천레시피";
     }
-    res.render('recipe/recipe_non', result);
+    res.render("recipe/recipe_non", result);
   }
 };
 
@@ -298,7 +296,7 @@ exports.patchToFridge = async (req, res) => {
   // 삭제할 배열이 있을 때 삭제를 먼저 하고 나서 업데이트
   // delArr : 삭제할 배열
   let delArr = req.body.filter((item) => {
-    return item.delMust === '1';
+    return item.delMust === "1";
   });
 
   // final_user_id를 사용하기 위해서(로그인 했을 때)
@@ -325,7 +323,7 @@ exports.patchToFridge = async (req, res) => {
       // freRes : fresh table에서 삭제해야 할 것
       let freRes = await fresh.findAll({
         raw: true,
-        attributes: [['fresh_name', 'name']],
+        attributes: [["fresh_name", "name"]],
         where: { user_user_id: final_user_id, fresh_name: delName },
       });
 
@@ -345,7 +343,7 @@ exports.patchToFridge = async (req, res) => {
       if (freRes.length != delArr.length) {
         let froRes = await frozen.findAll({
           raw: true,
-          attributes: [['frozen_name', 'name']],
+          attributes: [["frozen_name", "name"]],
           where: { user_user_id: final_user_id, frozen_name: delName },
         });
         for (var i = 0; i < froRes.length; i++) {
@@ -377,8 +375,8 @@ exports.patchToFridge = async (req, res) => {
       let freRes = await fresh.findAll({
         raw: true,
         attributes: [
-          ['fresh_name', 'name'],
-          ['fresh_range', 'range'],
+          ["fresh_name", "name"],
+          ["fresh_range", "range"],
         ],
         where: { user_user_id: final_user_id, fresh_name: ingdName },
       });
@@ -411,8 +409,8 @@ exports.patchToFridge = async (req, res) => {
         let froRes = await frozen.findAll({
           raw: true,
           attributes: [
-            ['frozen_name', 'name'],
-            ['frozen_range', 'range'],
+            ["frozen_name", "name"],
+            ["frozen_range", "range"],
           ],
           where: { user_user_id: final_user_id, frozen_name: ingdName },
         });
@@ -472,15 +470,15 @@ exports.postInsertToCookLog = async (req, res) => {
       user_user_id: final_user_id,
     },
   });
-  console.log('최근에 한 요리 create: ', create);
-  console.log('최근에 한 요리 find: ', find);
+  console.log("최근에 한 요리 create: ", create);
+  console.log("최근에 한 요리 find: ", find);
 
   // find해서 create 하지 못해도 true 넘기고, create해도 true
   if (create || find) res.send(true);
 };
 
 // 좋아요 추가
-let likeUser = '';
+let likeUser = "";
 exports.postInsertToLike = async (req, res) => {
   const final_user_id =
     req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
@@ -518,6 +516,6 @@ exports.deleteFromLike = async (req, res) => {
     },
   });
 
-  console.log('좋아요 삭제 결과: ', result);
+  console.log("좋아요 삭제 결과: ", result);
   res.send(String(result));
 };

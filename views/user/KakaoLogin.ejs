@@ -10,7 +10,7 @@
       const kakaoLogin = async () => {
         const code = location.search.replace("?code=", "");
         await axios.post("/signin/kakao_access", { code: code }).then((res) => {
-          localStorage.setItem("access_tk", res.data);
+          sessionStorage.setItem("user_id", res.data.user_id);
           location.href = "/";
         });
       };

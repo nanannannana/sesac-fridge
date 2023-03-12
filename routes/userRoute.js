@@ -7,13 +7,10 @@ const router = express.Router();
 router.get("/signIn", user.getSignin);
 // 로그인 확인
 router.post("/signinFlag", user.postSigninFlag);
-//간편로그인
-// router.get('/kakao/oauth', user.kakao_token);
+// 소셜로그인
 router.get("/signin/kakao_login", user.getKakao);
 router.post("/signin/kakao_access", user.kakaoAccess);
 
-router.get("/kakao/info", user.getKakaoInfo);
-router.post("/kakao/info", user.postKakaoInfo);
 // 회원가입 렌더
 router.get("/signUp", user.getSignup);
 

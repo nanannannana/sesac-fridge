@@ -10,7 +10,6 @@
                     <span id="header_nav" type="button" onclick="mypage_go()"> 내정보 </span><span id="stick"> | </span>
                     <span id="sign_in" type="button" onclick="location.href='/signIn'"> 로그인</span>
                     <span id="sign_out" type="button" onclick="signout_go();"> 로그아웃</span>
-                    <span onclick="logout()">카카오 로그아웃</span>
                     <form id="mypage_go" action="/myPage" method="post"></form> 
                 </div>
             </div>
@@ -49,10 +48,8 @@
     </div>
 
     <script>
-        console.log( localStorage.getItem("username"));
-        if ( localStorage.getItem("username") != null || localStorage.getItem("username") != undefined ) {
-            $("#user_name").text(`${localStorage.getItem("username")}님 |`);
-        }
+        // console.log( localStorage.getItem("username"));
+        if ("<%=user_name%>" !== 'false') $("#user_name").text("<%=user_name%>"+"님 |");
     </script>
     <script>
         if("<%=isLogin%>"=="true") {

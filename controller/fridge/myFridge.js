@@ -1,6 +1,6 @@
-const { fresh } = require('../../model');
-const { frozen } = require('../../model');
-const { recipe } = require('../../model');
+const { fresh } = require("../../model");
+const { frozen } = require("../../model");
+const { recipe } = require("../../model");
 
 // 나의 냉장고 페이지 렌더 - 영은
 exports.getMyFridge = async (req, res) => {
@@ -10,41 +10,37 @@ exports.getMyFridge = async (req, res) => {
       req.cookies.user_id === undefined
         ? req.session.user
         : req.cookies.user_id;
-    const user_name =
-      req.session.kakao_name == true
-        ? req.session.kakao_name
-        : req.session.sql_name;
     let fresh_result = await fresh.findAndCountAll({
       where: { user_user_id: final_user_id },
-      order: [['fresh_expire', 'ASC']],
+      order: [["fresh_expire", "ASC"]],
     });
 
     let frozen_result = await frozen.findAndCountAll({
       where: { user_user_id: final_user_id },
-      order: [['frozen_date', 'ASC']],
+      order: [["frozen_date", "ASC"]],
     });
     // console.log("list :", fresh_result.count, frozen_result.count );
     if (req.cookies.EMPTY_ALERT == 1) {
       //로그인 O & 오늘안봄클릭 O
-      res.render('fridge/myFridge', {
+      res.render("fridge/myFridge", {
         isLogin: true,
-        user_name: user_name,
+        user_name: req.session.user_name,
         fresh_list: fresh_result.rows,
         frozen_list: frozen_result.rows,
         empty_alert: true,
       });
     } else {
-      res.render('fridge/myFridge', {
+      res.render("fridge/myFridge", {
         //로그인 O & 오늘안봄클릭 X
         isLogin: true,
-        user_name: user_name,
+        user_name: req.session.user_name,
         fresh_list: fresh_result.rows,
         frozen_list: frozen_result.rows,
         empty_alert: false,
       });
     }
   } else {
-    res.render('fridge/myFridge404', { isLogin: false });
+    res.render("fridge/myFridge404", { isLogin: false, user_name: false });
   }
 };
 
@@ -54,7 +50,7 @@ exports.postEmptyAlertCookie = async (req, res) => {
   exp_date.setHours(23, 59, 59);
 
   if (req.session.user) {
-    res.cookie('EMPTY_ALERT', '1', {
+    res.cookie("EMPTY_ALERT", "1", {
       httpOnly: true,
       expires: exp_date,
     });
@@ -67,14 +63,14 @@ exports.postCheckFresh = async (req, res) => {
   const final_user_id =
     req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
 
-  console.log('postCheckFresh req.body:', req.body);
+  console.log("postCheckFresh req.body:", req.body);
   let result = await fresh.findOne({
     where: {
       user_user_id: final_user_id,
       fresh_name: req.body.name,
     },
   });
-  console.log('checkFresh result : ', result);
+  console.log("checkFresh result : ", result);
   res.send(result ? false : true);
 };
 
@@ -82,14 +78,14 @@ exports.postCheckFresh = async (req, res) => {
 exports.postCheckFrozen = async (req, res) => {
   const final_user_id =
     req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
-  console.log('postCheckFrozen req.body:', req.body);
+  console.log("postCheckFrozen req.body:", req.body);
   let result = await frozen.findOne({
     where: {
       user_user_id: final_user_id,
       frozen_name: req.body.name,
     },
   });
-  console.log('checkFrozen result : ', result);
+  console.log("checkFrozen result : ", result);
   res.send(result ? false : true);
 };
 
@@ -98,7 +94,7 @@ exports.postAddToFresh = async (req, res) => {
   const final_user_id =
     req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
 
-  console.log('postAddToFresh req.body : ', req.body);
+  console.log("postAddToFresh req.body : ", req.body);
   let data = {
     fresh_name: req.body.name,
     fresh_range: req.body.range,
@@ -107,7 +103,7 @@ exports.postAddToFresh = async (req, res) => {
     user_user_id: final_user_id,
   };
   let result = await fresh.create(data);
-  console.log('postAddToFresh result : ', result);
+  console.log("postAddToFresh result : ", result);
   res.send(result);
 };
 
@@ -116,7 +112,7 @@ exports.postAddToFrozen = async (req, res) => {
   const final_user_id =
     req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
 
-  console.log('postAddToFrozen req.body : ', req.body);
+  console.log("postAddToFrozen req.body : ", req.body);
   let data = {
     frozen_name: req.body.name,
     frozen_date: req.body.date,
@@ -124,7 +120,7 @@ exports.postAddToFrozen = async (req, res) => {
     user_user_id: final_user_id,
   };
   let result = await frozen.create(data);
-  console.log('postAddToFrozen result : ', result);
+  console.log("postAddToFrozen result : ", result);
   res.send(result);
 };
 
@@ -133,8 +129,8 @@ exports.patchUpdateFresh = async (req, res) => {
   const final_user_id =
     req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
 
-  console.log('patchUpdateFresh req.body : ', req.body);
-  console.log('req.name', req.body.name);
+  console.log("patchUpdateFresh req.body : ", req.body);
+  console.log("req.name", req.body.name);
   let data = {
     fresh_range: req.body.range,
     fresh_expire: req.body.expire,
@@ -147,7 +143,7 @@ exports.patchUpdateFresh = async (req, res) => {
     },
   });
 
-  console.log('update result : ', result);
+  console.log("update result : ", result);
   res.send(result);
 };
 // 냉동실 식재료 수정
@@ -155,7 +151,7 @@ exports.patchUpdateFrozen = async (req, res) => {
   const final_user_id =
     req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
 
-  console.log('patchUpdateFrozen req.body : ', req.body);
+  console.log("patchUpdateFrozen req.body : ", req.body);
   let data = {
     frozen_date: req.body.date,
     frozen_range: req.body.range,
@@ -166,7 +162,7 @@ exports.patchUpdateFrozen = async (req, res) => {
       frozen_name: req.body.name,
     },
   });
-  console.log('update result : ', result);
+  console.log("update result : ", result);
   res.send(result);
 };
 
@@ -175,16 +171,16 @@ exports.deleteDeleteIngd = async (req, res) => {
   const final_user_id =
     req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
 
-  console.log('postDeleteIngd req.body : ', req.body);
+  console.log("postDeleteIngd req.body : ", req.body);
 
-  if (req.body.fridgeName == 'fresh') {
+  if (req.body.fridgeName == "fresh") {
     let result = await fresh.destroy({
       where: {
         user_user_id: final_user_id,
         fresh_name: req.body.name,
       },
     });
-    console.log('delete result : ', result);
+    console.log("delete result : ", result);
     res.send(req.body);
   } else {
     let result = await frozen.destroy({
@@ -193,7 +189,7 @@ exports.deleteDeleteIngd = async (req, res) => {
         frozen_name: req.body.name,
       },
     });
-    console.log('delete result : ', result);
+    console.log("delete result : ", result);
     res.send(req.body);
   }
 };
