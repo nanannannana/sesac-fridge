@@ -235,7 +235,7 @@
     // 3. 다음날 첫 로그인 시 - 유통기한 지난 식재료 존재하면 DB에서 삭제 & 알림 ... 1~2 반복
     // 4. 만약 당일 첫 로그인인데 유통기한 지난 식재료 없으면(exp_count<1) DB에서 삭제X 알림X
     //로그인 O
-    if (sessionStorage.getItem("user_id")) {
+    if ("<%=isLogin%>" == "true") {
       // fridgeList();
       $("#welcome_user").removeClass("d_none"); //user 환영 인사말 display
       // $("#welcome_user div").html("<span>"+`${localStorage.getItem("username")}`+"님🌱</span><br>유통기한이 임박한 식재료 <b><%=fresh_count%>개</b>가 기다리고 있어요 !");

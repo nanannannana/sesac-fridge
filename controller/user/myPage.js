@@ -192,9 +192,8 @@ exports.postPwInput = async function (req, res) {
       isLogin: true,
       user_pw: user_result.user_pw,
       user_id: final_user_id,
-      user_name: req.session.user,
+      user_name: user_result.user_name,
     });
-    console.log(final_user_id);
   } else {
     res.render("main/404");
   }
@@ -225,18 +224,14 @@ exports.postMyInfo = async function (req, res) {
 
 // 회원정보 수정
 exports.patchMyInfoUpdate = async function (req, res) {
-  if (req.body.false) {
-    res.send(false);
-  } else {
-    let data = {
-      user_id: req.body.user_id,
-      user_pw: req.body.user_pw,
-      user_name: req.body.user_name,
-      user_phone: req.body.user_phone,
-    };
-    await user.update(data, { where: { user_id: req.body.user_id } });
-    res.send(true);
-  }
+  let data = {
+    user_id: req.body.user_id,
+    user_pw: req.body.user_pw,
+    user_name: req.body.user_name,
+    user_phone: req.body.user_phone,
+  };
+  await user.update(data, { where: { user_id: req.body.user_id } });
+  res.send(true);
 };
 
 // 회원탈퇴 렌더

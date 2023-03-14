@@ -15,10 +15,8 @@ function signout_go() {
   }).then(function (res) {
     if (res.data.REST_API_KEY) {
       location.href = `https://kauth.kakao.com/oauth/logout?client_id=${res.data.REST_API_KEY}&logout_redirect_uri=${res.data.LOGOUT_REDIRECT_URI}`;
-      sessionStorage.clear();
       localStorage.clear();
     } else {
-      sessionStorage.clear();
       localStorage.clear();
       location.href = "/";
     }
