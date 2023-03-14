@@ -6,7 +6,6 @@ const qs = require("qs");
 const { fresh } = require("../../model");
 const { Op } = require("sequelize");
 const env = process.env;
-const location = require("location-href");
 
 //global variables
 //로그인 시각 기준으로 시간 set
