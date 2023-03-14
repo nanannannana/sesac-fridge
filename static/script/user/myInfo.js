@@ -31,14 +31,11 @@ function info_update() {
   var phone_check = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
   // 비밀번호를 수정 안 하고 update를 하는 경우,
   if (form.user_pw_new.value == "") {
-    if (
-      form.user_name.value == "" ||
-      name_check.test(form.user_name.value) == false
-    ) {
+    if (!form.user_name.value || !name_check.test(form.user_name.value)) {
       $("#user_name_ck").addClass("is-invalid");
     } else if (
-      form.user_phone.value == "" ||
-      phone_check.test(form.user_phone.value) == false
+      !form.user_phone.value ||
+      !phone_check.test(form.user_phone.value)
     ) {
       $("#phone_num").addClass("is-invalid");
     } else {
@@ -63,64 +60,50 @@ function info_update() {
     }
   } else if (form.user_pw_now.value == form.user_pw_new.value) {
     // 새 비밀번호와 현재 비밀번호가 일치하는 경우,
-    if (
-      form.user_pw_new.value == "" ||
-      pw_check.test(form.user_pw_new.value) == false
-    ) {
+    if (!form.user_pw_new.value || !pw_check.test(form.user_pw_new.value)) {
       $("#user_pw").addClass("is-invalid");
     } else if (
-      form.user_pw_check.value == "" ||
+      !form.user_pw_check.value ||
       form.user_pw_new.value !== form.user_pw_check.value
     ) {
       $("#user_pw_ck").addClass("is-invalid");
     } else if (
-      form.user_name.value == "" ||
-      name_check.test(form.user_name.value) == false
+      !form.user_name.value ||
+      !name_check.test(form.user_name.value)
     ) {
       $("#user_name_ck").addClass("is-invalid");
     } else if (
-      form.user_phone.value == "" ||
-      phone_check.test(form.user_phone.value) == false
+      !form.user_phone.value ||
+      !phone_check.test(form.user_phone.value)
     ) {
       $("#phone_num").addClass("is-invalid");
     } else {
-      axios({
-        method: "patch",
-        url: "/myPage/profile/myInfo",
-        data: {
-          false: "false",
-        },
-      }).then(function () {
-        Swal.fire({
-          icon: "warning",
-          title: "새 비밀번호를 수정해주세요!",
-          text: "현재 비밀번호와 새 비밀번호가 일치합니다.",
-          showConfirmButtom: true,
-          confirmButtonText: "확인",
-          confirmButtonColor: "#ED6C67",
-        });
+      Swal.fire({
+        icon: "warning",
+        title: "새 비밀번호를 수정해주세요!",
+        text: "현재 비밀번호와 새 비밀번호가 일치합니다.",
+        showConfirmButtom: true,
+        confirmButtonText: "확인",
+        confirmButtonColor: "#ED6C67",
       });
     }
   } else {
     // 새 비밀번호로 수정하는 경우,
-    if (
-      form.user_pw_new.value == "" ||
-      pw_check.test(form.user_pw_new.value) == false
-    ) {
+    if (!form.user_pw_new.value || !pw_check.test(form.user_pw_new.value)) {
       $("#user_pw").addClass("is-invalid");
     } else if (
-      form.user_pw_check.value == "" ||
+      !form.user_pw_check.value ||
       form.user_pw_new.value !== form.user_pw_check.value
     ) {
       $("#user_pw_ck").addClass("is-invalid");
     } else if (
-      form.user_name.value == "" ||
-      name_check.test(form.user_name.value) == false
+      !form.user_name.value ||
+      !name_check.test(form.user_name.value)
     ) {
       $("#user_name_ck").addClass("is-invalid");
     } else if (
-      form.user_phone.value == "" ||
-      phone_check.test(form.user_phone.value) == false
+      !form.user_phone.value ||
+      !phone_check.test(form.user_phone.value)
     ) {
       $("#phone_num").addClass("is-invalid");
     } else {

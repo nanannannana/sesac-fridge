@@ -31,8 +31,7 @@ window.onload = function () {
 function phone_num_hyphen(target) {
   target.value = target.value
     .replace(/[^0-9]/g, "")
-    .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
-    .replace(/(\-{1,2})$/g, "");
+    .replace(/^(\d{3})(\d{3,4})(\d{4})$/g, "$1-$2-$3");
 }
 // input창 클릭 시 validate문구 없어지게 하는 함수
 function id_click(target) {
@@ -84,7 +83,6 @@ function signin() {
       form.reset();
       if (res.data) {
         localStorage.setItem("username", res.data.username);
-        sessionStorage.setItem("user_id", res.data.user_id);
         Swal.fire({
           icon: "success",
           title: "로그인에 성공하였습니다!",
@@ -122,7 +120,7 @@ function id_find() {
     },
   }).then(function (res) {
     form.reset();
-    if (res.data == "undefined") {
+    if (!res.data) {
       $("#modal_body_text").remove();
       $("#modal_body_box").remove();
       $("#modal_body").append(`
@@ -157,7 +155,7 @@ function pw_find() {
     },
   }).then(function (res) {
     form.reset();
-    if (res.data == null) {
+    if (!res.data) {
       $("#modal_body_text_2").remove();
       $("#modal_body_box_2").remove();
       $("#modal_body_2").append(`
