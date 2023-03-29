@@ -24,6 +24,7 @@ function warnAlert(isLogin) {
     });
   }
 }
+
 // 최근 본 레시피 클릭 시 log 테이블에 추가
 function insertLog(id, url, login) {
   if (login === "false") {
@@ -184,8 +185,6 @@ async function cooking(data, range, id) {
             resultData.push(resultObj);
             checkboxArr.splice(0, 2);
           }
-          console.log("checkboxArr.length", checkboxArr.length);
-          console.log("첫 번째 단계에서 백에 보내는 데이터: ", resultData);
         }
       } else if (steps[currentStep] == 2) {
         // 두 번째 단계
@@ -195,15 +194,14 @@ async function cooking(data, range, id) {
           inputcnt++;
           cnt++;
           radio += `${[resultData[i].name]} 이/가
-                            <input type='radio' name="${
-                              resultData[i].name
-                            }" value="${resultData[i].range}"
-                            id="radio1" title="${cnt}" onclick="checkRadio(this, ${cnt})"/>&nbsp;남아요
-
-                            <input type='radio'  name="${
-                              resultData[i].name
-                            }" value="${resultData[i].range}"
-                            id="radio2" title="${cnt}" onclick="checkRadio(this, ${cnt})"/>&nbsp;안남아요<br><br>`;
+          <input type='radio' name="${resultData[i].name}" value="${
+            resultData[i].range
+          }"
+          id="radio1" title="${cnt}" onclick="checkRadio(this, ${cnt})"/>&nbsp;남아요
+          <input type='radio'  name="${resultData[i].name}" value="${
+            resultData[i].range
+          }"
+          id="radio2" title="${cnt}" onclick="checkRadio(this, ${cnt})"/>&nbsp;안남아요<br><br>`;
         }
 
         var result = await swalQueueStep.fire({
