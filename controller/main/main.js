@@ -112,20 +112,22 @@ exports.deleteDeleteAlert = async (req, res) => {
 const { QueryTypes } = require("sequelize");
 const { sequelize } = require("../../model");
 
+// DB 데이터 전부 가져오기
 exports.getDbRegex = async (req, res) => {
-  // user 테이블에 존재하는 사용자들 가져와 index.ejs 로 전달하기
   let recipes = await recipe.findAll();
   await res.render("main/dbRegex", { result: recipes });
 };
 
+// DB 특정 데이터 업데이트
 exports.patchDbRegex = async (req, res) => {
-  var sql = `UPDATE recipe SET recipe_ingd=REPLACE(recipe_ingd,',${req.body.b_ingd},' ,',${req.body.a_ingd},');`;
+  let sql = `UPDATE recipe SET recipe_ingd=REPLACE(recipe_ingd,',${req.body.b_ingd},' ,',${req.body.a_ingd},');`;
   const result = await sequelize.query(sql, { type: QueryTypes.UPDATE });
   res.send({ return: true, data: result });
 };
 
+// DB 특정 데이터 삭제
 exports.deletedb = async (req, res) => {
-  var sql = `DELETE FROM recipe WHERE recipe_id=${req.body.id};`;
+  let sql = `DELETE FROM recipe WHERE recipe_id=${req.body.id};`;
   const delResult = await sequelize.query(sql, { type: QueryTypes.DELETE });
   res.send(true);
 };
