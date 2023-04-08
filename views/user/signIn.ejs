@@ -25,7 +25,7 @@
           <input type="checkbox" value="1" id="remember_me_check" name="remember_me_check"><label for="remember_me_check" id="remember_me_check_test">자동로그인</label>
           <button type="button" id="button" class="btn mb-3" onclick="signin()">로그인</button>
         </form>
-        <a href="<%=kakao_auth_url%>"><img id="kakao_img" src="/static/img/kakao_logo.png"/></a>
+        <div onclick="kakao('<%=kakao_auth_url%>')"><img id="kakao_img" src="/static/img/kakao_logo.png"/></div>
         <a href="#ModalToggle" id="a_href_id" data-bs-toggle="modal" role="button" style="margin-top:5px;">아이디 찾기</a>
 
         <!-- 아이디 비밀번호 찾기 관련 modal -->

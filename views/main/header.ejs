@@ -48,10 +48,8 @@
     </div>
 
     <script>
-        console.log( localStorage.getItem("username"));
-        if ( localStorage.getItem("username") != null || localStorage.getItem("username") != undefined ) {
-            $("#user_name").text(`${localStorage.getItem("username")}님 |`);
-        }
+        // console.log( localStorage.getItem("username"));
+        if ("<%=user_name%>" !== 'false') $("#user_name").text("<%=user_name%>"+"님 |");
     </script>
     <script>
         if("<%=isLogin%>"=="true") {
