@@ -28,7 +28,7 @@
 
 ## Communication
 ![Github](https://img.shields.io/badge/-Github-%23181717)
-![Pigma](https://img.shields.io/badge/-Pigma-%23F24E1E)
+![Figma](https://img.shields.io/badge/-Figma-%23F24E1E)
 ![Notion](https://img.shields.io/badge/-Notion-%23000000)
 ![Whale](https://img.shields.io/badge/-Whale-%2300A1E0)
 
