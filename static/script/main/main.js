@@ -23,7 +23,7 @@ function deleteAlert(user_name, exp_count) {
 // 유통기한 임박(d-2이내)한 식재료 개수 알림, 영은
 function welcomeToast(user_name, count) {
   if (Number(count) > 0) {
-    let html = `<p id="p1">${user_name}님🌱</p><p id="p2" style="display: inline-block; margin:0 0 5px 0;">유통기한이 임박한 식재료</p><b> ${count}개</b><p style="display: inline-block; margin:0;">가 기다리고 있어요 !</p>`;
+    let html = `<p id="p1">${user_name}님🌱</p><p id="p2" style="display: inline-block; margin:0 0 5px 0;">유통기한이 임박한 식재료</p><b> ${count}개</b><p style="display: inline-block; margin:0 0 5px 0;">가</p><p style="display: inline-block; margin:0;">기다리고 있어요 !</p>`;
     Swal.fire({
       html: html,
       target: '#custom-target',
