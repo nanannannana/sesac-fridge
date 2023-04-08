@@ -240,7 +240,7 @@
       $('#welcome_user').removeClass('d_none'); //user 환영 인사말 display
       // $("#welcome_user div").html("<span>"+`${localStorage.getItem("username")}`+"님🌱</span><br>유통기한이 임박한 식재료 <b><%=fresh_count%>개</b>가 기다리고 있어요 !");
 
-      console.log('<%=user_name%>', '<%=exp_count%>');
+      console.log('<%=user_name%>', '<%=exp_count%>', '<%=fresh_count%>');
       welcomeToast('<%=user_name%>', '<%=fresh_count%>');
       if ('<%=exp_count%>' > 0) {
         // 삭제할 식재료 존재 & 로그인 O
