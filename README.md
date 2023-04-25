@@ -1,4 +1,5 @@
-# 🌱<a href="http://43.201.83.209:8080/">새싹 냉장고</a>
+# 🌱<a href="http://15.164.224.195:8080/">새싹 냉장고</a>
+
 > 냉장고에 있는 식품 관리 및 식재료 기반 레시피 추천 서비스
 
 ## 이 서비스의 장점
@@ -7,17 +8,18 @@
 2. 유통기한, 구매 일자를 관리해 유통기한 임박 식재료와 경과 식재료의 알림을 띄워 버려지는 식재료를 줄입니다.
 3. 레시피에 관련해 사용할 식재료 양을 확인할 수 있어 버리는 음식을 줄일 수 있습니다.
 
+## 🛠️ Stacks
 
-## 🛠️ Stacks 
 ## Backend, DB, Server
+
 ![Node.js](https://img.shields.io/badge/-Node.js-%23339933)
 ![Express.js](https://img.shields.io/badge/-Expess.js-%23000000)
 ![Sequelize](https://img.shields.io/badge/-Sequelize-%2352B0E7)
 ![MySql](https://img.shields.io/badge/-Mysql-%234479A1)
-![AWS(EC2)](https://img.shields.io/badge/-AWS(EC2)-%23232F3E)
-
+![AWS(EC2)](<https://img.shields.io/badge/-AWS(EC2)-%23232F3E>)
 
 ## Frontend
+
 ![JavaScript](https://img.shields.io/badge/-JavaScript-%23F7DF1E)
 ![Bootstrap](https://img.shields.io/badge/-Bootstrap-%237952B3)
 ![SweetAlert](https://img.shields.io/badge/-SweetAlert-%23F48FB1)
@@ -25,32 +27,38 @@
 ![Axios](https://img.shields.io/badge/-Axios-%235A29E4)
 ![Ajax](https://img.shields.io/badge/-Ajax-%2364B5F6)
 
-
 ## Communication
+
 ![Github](https://img.shields.io/badge/-Github-%23181717)
 ![Figma](https://img.shields.io/badge/-Figma-%23F24E1E)
 ![Notion](https://img.shields.io/badge/-Notion-%23000000)
 ![Whale](https://img.shields.io/badge/-Whale-%2300A1E0)
 
 ---
-## 👍 주요 기능 
+
+## 👍 주요 기능
 
 ### ⭐️ 냉장고에 식재료 추가, 수정 삭제
+
 - 유통기한 경과 식재료 알림 및 자동 삭제
 - 유통기한 임박 식재료 알림
 
 ### ⭐️ 레시피 추천
+
 - 나의 냉장고에 있는 식재료 기반 레시피 추천
 - 레시피로 요리한 후 냉장고 식재료 자동 변경
 
 ### ⭐️ 회원 관련
+
 - 로그인(카카오로그인), 정보 수정, 탈퇴
-- 찜하기, 최근 한 요리 보기, 냉장실 카테고리 현황보기 
+- 찜하기, 최근 한 요리 보기, 냉장실 카테고리 현황보기
 
 ---
+
 ## 📌 아키텍쳐
 
 ### 디렉토리 구조
+
 ```bash
 ├── README.md
 ├── package-lock.json
@@ -115,7 +123,7 @@
 │   ├── main
 │   ├── recipe
 │   ├── user
-└── config 
+└── config
    ├── config.js
 
 
