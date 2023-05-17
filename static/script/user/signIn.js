@@ -35,12 +35,12 @@ function phone_num_hyphen(target) {
 }
 // input창 클릭 시 validate문구 없어지게 하는 함수
 function id_click(target) {
-  if (target !== "") {
+  if (target) {
     $("#user_id").removeClass("is-invalid");
   }
 }
 function pw_click(target) {
-  if (target !== "") {
+  if (target) {
     $("#user_pw").removeClass("is-invalid");
   }
 }
@@ -70,14 +70,14 @@ function signin() {
       remember_me_check: "0",
     };
   }
-  if (form.user_id.value == "") {
+  if (!form.user_id.value) {
     $("#user_id").addClass("is-invalid");
-  } else if (form.user_pw.value == "") {
+  } else if (!form.user_pw.value) {
     $("#user_pw").addClass("is-invalid");
   } else {
     axios({
       method: "post",
-      url: "/signinFlag",
+      url: "/user/check",
       data: data,
     }).then(async function (res) {
       form.reset();
@@ -94,7 +94,6 @@ function signin() {
             location.href = "/";
           },
         });
-        // location.href="/";
       } else {
         Swal.fire({
           icon: "error",
@@ -113,7 +112,7 @@ function id_find() {
   var form = document.getElementById("form_id_find");
   axios({
     method: "post",
-    url: "/idFind",
+    url: "/user/find-account",
     data: {
       user_name: form.user_name.value,
       user_phone: form.user_phone.value.replace(/-/g, ""),
@@ -126,7 +125,7 @@ function id_find() {
       $("#modal_body").append(`
             <div id="modal_body_text">
                 <p style="font-size: 20px; font-weight: bold;">이메일을 찾지 못했습니다.</p>
-                <button id="button2" type="button" class="btn" onclick="location.href='/signUp'" style="margin-right: 7px;">회원가입 하기</button>
+                <button id="button2" type="button" class="btn" onclick="location.href='/join'" style="margin-right: 7px;">회원가입 하기</button>
                 <button id="button3" type="button" class="btn" data-bs-dismiss="modal">닫기</button>
             </div>
             `);
@@ -148,7 +147,7 @@ function pw_find() {
   var form = document.getElementById("form_pw_find");
   axios({
     method: "post",
-    url: "/pwFind",
+    url: "/user/find-account",
     data: {
       user_id: form.user_id.value,
       user_phone: form.user_phone.value.replace(/-/g, ""),
@@ -161,7 +160,7 @@ function pw_find() {
       $("#modal_body_2").append(`
             <div id="modal_body_text_2">
                 <p style="font-size: 20px; font-weight: bold;">비밀번호를 찾지 못했습니다.</p>
-                <button id="button2" type="button" class="btn" onclick="location.href='/signUp'">회원가입 하기</button>
+                <button id="button2" type="button" class="btn" onclick="location.href='/join'">회원가입 하기</button>
             </div>
             `);
     } else {
@@ -169,7 +168,7 @@ function pw_find() {
       $("#modal_body_box_2").remove();
       $("#modal_body_2").append(`
             <div id="modal_body_box_2">
-                <p id="modal_body_box_text">비밀번호가 입력하신 번호로 문자 발송됐습니다!</p>
+                <p id="modal_body_box_text">임시 비밀번호가 입력하신 번호로 문자 발송됐습니다!</p>
                 <p id="modal_body_box_text">문자를 확인해주시기 바랍니다.</p>
             </div>
             `);
@@ -177,8 +176,6 @@ function pw_find() {
   });
 }
 
-Kakao.init("5616297e86dc2afd5a71b0d8d5006554"); //javascript_key
-console.log(Kakao.isInitialized()); // sdk초기화여부판단
 const kakao = (url) => {
   location.href = url;
 };

@@ -2,7 +2,7 @@ function info_del() {
   var form = document.getElementById("form_hidden");
   axios({
     method: "delete",
-    url: "/myPage/profile/myInfoDel",
+    url: "/user",
     data: {
       user_id: form.user_id.value,
     },

@@ -13,35 +13,32 @@ function pw_click(target) {
     $("#user_pw").removeClass("is-invalid");
   }
 }
-function pw_ck_click(target) {
+function check_pw_click(target) {
   if (target !== "") {
-    $("#user_pw_ck").removeClass("is-invalid");
+    $("#check_user_pw").removeClass("is-invalid");
   }
 }
 function name_click(target) {
   if (target !== "") {
-    $("#user_name_ck").removeClass("is-invalid");
+    $("#check_user_name").removeClass("is-invalid");
   }
 }
 
 function info_update() {
   var form = document.getElementById("form_info");
-  var pw_check = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
-  var name_check = /^[a-zA-Z가-힣]{2,10}$/;
-  var phone_check = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
-  // 비밀번호를 수정 안 하고 update를 하는 경우,
-  if (form.user_pw_new.value == "") {
-    if (!form.user_name.value || !name_check.test(form.user_name.value)) {
-      $("#user_name_ck").addClass("is-invalid");
-    } else if (
-      !form.user_phone.value ||
-      !phone_check.test(form.user_phone.value)
-    ) {
+  var regPw = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+  var regName = /^[a-zA-Z가-힣]{2,10}$/;
+  var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+  // 비밀번호 수정 X, 회원정보 Update O,
+  if (form.user_new_pw.value == "") {
+    if (!regName.test(form.user_name.value)) {
+      $("#check_user_name").addClass("is-invalid");
+    } else if (!regPhone.test(form.user_phone.value)) {
       $("#phone_num").addClass("is-invalid");
     } else {
       axios({
         method: "patch",
-        url: "/myPage/profile/myInfo",
+        url: "/mypage/profile",
         data: {
           user_id: form.user_id.value,
           user_pw: form.user_pw_now.value,
@@ -58,61 +55,26 @@ function info_update() {
         });
       });
     }
-  } else if (form.user_pw_now.value == form.user_pw_new.value) {
-    // 새 비밀번호와 현재 비밀번호가 일치하는 경우,
-    if (!form.user_pw_new.value || !pw_check.test(form.user_pw_new.value)) {
-      $("#user_pw").addClass("is-invalid");
-    } else if (
-      !form.user_pw_check.value ||
-      form.user_pw_new.value !== form.user_pw_check.value
-    ) {
-      $("#user_pw_ck").addClass("is-invalid");
-    } else if (
-      !form.user_name.value ||
-      !name_check.test(form.user_name.value)
-    ) {
-      $("#user_name_ck").addClass("is-invalid");
-    } else if (
-      !form.user_phone.value ||
-      !phone_check.test(form.user_phone.value)
-    ) {
-      $("#phone_num").addClass("is-invalid");
-    } else {
-      Swal.fire({
-        icon: "warning",
-        title: "새 비밀번호를 수정해주세요!",
-        text: "현재 비밀번호와 새 비밀번호가 일치합니다.",
-        showConfirmButtom: true,
-        confirmButtonText: "확인",
-        confirmButtonColor: "#ED6C67",
-      });
-    }
   } else {
-    // 새 비밀번호로 수정하는 경우,
-    if (!form.user_pw_new.value || !pw_check.test(form.user_pw_new.value)) {
+    // 회원정보 수정(비밀번호 포함) O
+    if (!form.user_new_pw.value || !regPw.test(form.user_new_pw.value)) {
       $("#user_pw").addClass("is-invalid");
     } else if (
-      !form.user_pw_check.value ||
-      form.user_pw_new.value !== form.user_pw_check.value
+      !form.check_user_pw.value ||
+      form.user_new_pw.value !== form.check_user_pw.value
     ) {
-      $("#user_pw_ck").addClass("is-invalid");
-    } else if (
-      !form.user_name.value ||
-      !name_check.test(form.user_name.value)
-    ) {
-      $("#user_name_ck").addClass("is-invalid");
-    } else if (
-      !form.user_phone.value ||
-      !phone_check.test(form.user_phone.value)
-    ) {
+      $("#check_user_pw").addClass("is-invalid");
+    } else if (!regName.test(form.user_name.value)) {
+      $("#check_user_name").addClass("is-invalid");
+    } else if (!regPhone.test(form.user_phone.value)) {
       $("#phone_num").addClass("is-invalid");
     } else {
       axios({
         method: "patch",
-        url: "/myPage/profile/myInfo",
+        url: "/mypage/profile",
         data: {
           user_id: form.user_id.value,
-          user_pw: form.user_pw_new.value,
+          user_pw: form.user_new_pw.value,
           user_name: form.user_name.value,
           user_phone: form.user_phone.value.replace(/-/g, ""),
         },
@@ -132,7 +94,7 @@ function info_update() {
 function info_del() {
   axios({
     method: "post",
-    url: "/myPage/profile/myInfoDel",
+    url: "/mypage/profile/withdrawal",
   }).then(function () {
     var form_info = document.getElementById("form_hidden");
     form_info.submit();

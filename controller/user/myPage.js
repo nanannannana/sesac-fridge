@@ -8,8 +8,9 @@ const { cooklog } = require("../../model/");
 const env = process.env;
 var sequelize = require("sequelize");
 const axios = require("axios");
+const bcrypt = require("bcryptjs");
 
-// 마이 페이지 렌더 - 예지
+// 마이 페이지 렌더
 exports.postMyPage = async function (req, res) {
   // 자동로그인 했을 떄
   if (req.cookies.user_id || req.session.user) {
@@ -17,7 +18,7 @@ exports.postMyPage = async function (req, res) {
       ? req.session.user
       : req.cookies.user_id;
     // user 이름 확인
-    let user_result = await user.findOne({
+    const user_result = await user.findOne({
       raw: true,
       where: { user_id: final_user_id },
     });
@@ -77,7 +78,7 @@ exports.postMyPage = async function (req, res) {
       isLogin: true,
       user_id: final_user_id,
       user_name: user_result.user_name,
-      user_pw: user_result.user_pw,
+      user_pw: user_result.user_pw == "kakao" ? user_result.user_pw : "",
       fresh_category: fresh_category_list,
       cook_tag: cook_tag_list,
       cook: cook_result,
@@ -100,7 +101,7 @@ exports.postWishList = async function (req, res) {
       ? req.session.user
       : req.cookies.user_id;
     // user 이름 확인
-    let user_result = await user.findOne({
+    const user_result = await user.findOne({
       raw: true,
       where: { user_id: final_user_id },
     });
@@ -121,7 +122,7 @@ exports.postWishList = async function (req, res) {
       isLogin: true,
       user_name: user_result.user_name,
       user_id: final_user_id,
-      user_pw: user_result.user_pw,
+      user_pw: user_result.user_pw == "kakao" ? user_result.user_pw : "",
       rec_like: rec_like,
     });
   } else {
@@ -129,28 +130,24 @@ exports.postWishList = async function (req, res) {
   }
 };
 // 찜리스트 정보 삭제
-exports.deleteWishListDel = async function (req, res) {
+exports.deleteWishList = async function (req, res) {
   const final_user_id =
     req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
-  console.log("del:", req.body.num);
 
   // recipe_pick 수 조회
   let recipe_result = await recipe.findOne({
     where: { recipe_id: req.body.recipe_id },
   });
-  console.log("recipe pick 조회: ", recipe_result.recipe_pick);
 
   // recipe_pick이 = 1이면 0, > 1 이면 recipe_pick-1
   switch (Number(recipe_result.recipe_pick)) {
     case 1:
-      console.log("case1 입니다.");
       await recipe.update(
         { recipe_pick: 0 },
         { where: { recipe_id: req.body.recipe_id } }
       );
       break;
     default:
-      console.log("default 입니다.");
       await recipe.update(
         { recipe_pick: sequelize.literal("recipe.recipe_pick-1") },
         { where: { recipe_id: req.body.recipe_id } }
@@ -162,7 +159,6 @@ exports.deleteWishListDel = async function (req, res) {
   let like_id_result = await recipe_like.findOne({
     where: { recipe_recipe_id: req.body.recipe_id },
   });
-  console.log("찜리스트 ID 조회: ", like_id_result.like_id);
   await recipe_like.destroy({ where: { like_id: like_id_result.like_id } });
 
   // recipe와 recipe_like table join 후, 필요한 데이터 조회
@@ -180,7 +176,7 @@ exports.deleteWishListDel = async function (req, res) {
 };
 
 // 회원정보 수정 전 비밀번호 확인
-exports.postPwInput = async function (req, res) {
+exports.postShowCheckPassword = async function (req, res) {
   if (req.cookies.user_id || req.session.user) {
     const final_user_id = !req.cookies.user_id
       ? req.session.user
@@ -190,30 +186,34 @@ exports.postPwInput = async function (req, res) {
     });
     res.render("user/pwConfirm", {
       isLogin: true,
-      user_pw: user_result.user_pw,
       user_id: final_user_id,
+      user_pw: user_result.user_pw == "kakao" ? user_result.user_pw : "",
       user_name: user_result.user_name,
     });
   } else {
     res.render("main/404");
   }
 };
-exports.postPwConfirm = async function (req, res) {
-  let result = await user.findAll({
-    where: { user_id: req.body.user_id, user_pw: req.body.user_pw },
+exports.postCheckPassword = async function (req, res) {
+  const resultUser = await user.findOne({
+    where: { user_id: req.body.user_id },
   });
-  if (result.length > 0) res.send(true);
-  else res.send(false);
+
+  if (resultUser && bcrypt.compareSync(req.body.user_pw, resultUser.user_pw)) {
+    res.send(true);
+  } else {
+    res.send(false);
+  }
 };
 
 // 회원정보 수정 페이지 렌더
-exports.postMyInfo = async function (req, res) {
+exports.postShowProfile = async function (req, res) {
   if (req.cookies.user_id || req.session.user) {
-    let result = await user.findOne({ where: { user_id: req.body.user_id } });
+    const result = await user.findOne({ where: { user_id: req.body.user_id } });
     res.render("user/myInfo", {
       isLogin: true,
       user_id: result.user_id,
-      user_pw: result.user_pw,
+      user_pw: result.user_pw == "kakao" ? result.user_pw : "",
       user_name: result.user_name,
       user_phone: result.user_phone,
     });
@@ -223,19 +223,26 @@ exports.postMyInfo = async function (req, res) {
 };
 
 // 회원정보 수정
-exports.patchMyInfoUpdate = async function (req, res) {
-  let data = {
+exports.patchUpdateProfile = async function (req, res) {
+  const userResult = await user.findOne({
+    where: { user_id: req.body.user_id },
+  });
+
+  const salt = bcrypt.genSaltSync();
+  const hash = bcrypt.hashSync(req.body.user_pw, salt);
+  const data = {
     user_id: req.body.user_id,
-    user_pw: req.body.user_pw,
+    user_pw: hash,
     user_name: req.body.user_name,
     user_phone: req.body.user_phone,
   };
+
   await user.update(data, { where: { user_id: req.body.user_id } });
   res.send(true);
 };
 
 // 회원탈퇴 렌더
-exports.postMyInfoDel = async function (req, res) {
+exports.postShowUserWithdrawal = async function (req, res) {
   if (req.cookies.user_id || req.session.user) {
     const final_user_id = !req.cookies.user_id
       ? req.session.user
@@ -258,29 +265,4 @@ exports.postMyInfoDel = async function (req, res) {
   } else {
     res.render("main/404");
   }
-};
-// 회원탈퇴 완료
-exports.deleteMyInfoDel = async function (req, res) {
-  if (req.cookies.access_token) {
-    await axios
-      .post("https://kapi.kakao.com/v1/user/unlink", null, {
-        headers: {
-          Authorization: `Bearer ${req.cookies.access_token}`,
-        },
-      })
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
-  }
-  //쿠키 삭제
-  const option = {
-    httpOnly: true,
-    maxAge: 0,
-  };
-  res.cookie("user_id", null, option);
-  // 세션 삭제
-  req.session.destroy(function (err) {
-    if (err) throw err;
-  });
-  await user.destroy({ where: { user_id: req.body.user_id } });
-  res.send(true);
 };
