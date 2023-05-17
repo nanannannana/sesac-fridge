@@ -222,25 +222,6 @@ exports.postShowProfile = async function (req, res) {
   }
 };
 
-// 회원정보 수정
-exports.patchUpdateProfile = async function (req, res) {
-  const userResult = await user.findOne({
-    where: { user_id: req.body.user_id },
-  });
-
-  const salt = bcrypt.genSaltSync();
-  const hash = bcrypt.hashSync(req.body.user_pw, salt);
-  const data = {
-    user_id: req.body.user_id,
-    user_pw: hash,
-    user_name: req.body.user_name,
-    user_phone: req.body.user_phone,
-  };
-
-  await user.update(data, { where: { user_id: req.body.user_id } });
-  res.send(true);
-};
-
 // 회원탈퇴 렌더
 exports.postShowUserWithdrawal = async function (req, res) {
   if (req.cookies.user_id || req.session.user) {
