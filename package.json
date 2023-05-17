@@ -18,6 +18,7 @@
   "homepage": "https://github.com/jihyang1106/SeSAC_Fridge#readme",
   "dependencies": {
     "axios": "^1.2.1",
+    "bcryptjs": "^2.4.3",
     "bootstrap-icons": "^1.10.2",
     "cookie-parser": "^1.4.6",
     "crypto-js": "^4.1.1",

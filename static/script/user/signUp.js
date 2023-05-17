@@ -1,5 +1,5 @@
 function phone_num_hyphen(target) {
-  if (target !== "") {
+  if (target) {
     $("#phone_num").removeClass("is-invalid");
   }
   target.value = target.value
@@ -8,22 +8,22 @@ function phone_num_hyphen(target) {
   // .replace(/(\-{1,2})$/g, "");
 }
 function id_click(target) {
-  if (target !== "") {
+  if (target) {
     $("#user_id").removeClass("is-invalid");
   }
 }
 function pw_click(target) {
-  if (target !== "") {
+  if (target) {
     $("#user_pw").removeClass("is-invalid");
   }
 }
 function pw_check_click(target) {
-  if (target !== "") {
+  if (target) {
     $("#user_pw_check").removeClass("is-invalid");
   }
 }
 function name_click(target) {
-  if (target !== "") {
+  if (target) {
     $("#user_name").removeClass("is-invalid");
   }
 }
@@ -44,12 +44,12 @@ function signup_push() {
 function id_check() {
   var user_id = document.getElementById("form_signup").user_id.value;
   var id_check = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-  if (user_id == "" || id_check.test(user_id) == false) {
+  if (!id_check.test(user_id)) {
     $("#user_id").addClass("is-invalid");
-  } else if (id_check.test(user_id)) {
+  } else {
     axios({
       method: "post",
-      url: "/idCheck",
+      url: "/user/id",
       data: { user_id: user_id },
     }).then(function (res) {
       if (res.data) {
@@ -81,32 +81,23 @@ function signup() {
   var pw_check = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
   var name_check = /^[a-zA-Z가-힣]{2,10}$/;
   var phone_check = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
-  if (form.user_id.value == "" || id_check.test(form.user_id.value) == false) {
+  if (!id_check.test(form.user_id.value)) {
     $("#user_id").addClass("is-invalid");
-  } else if (
-    form.user_pw.value == "" ||
-    pw_check.test(form.user_pw.value) == false
-  ) {
+  } else if (!pw_check.test(form.user_pw.value)) {
     $("#user_pw").addClass("is-invalid");
   } else if (
-    form.user_pw_check.value == "" ||
+    !form.user_pw_check.value ||
     form.user_pw.value !== form.user_pw_check.value
   ) {
     $("#user_pw_check").addClass("is-invalid");
-  } else if (
-    form.user_name.value == "" ||
-    name_check.test(form.user_name.value) == false
-  ) {
+  } else if (!name_check.test(form.user_name.value)) {
     $("#user_name").addClass("is-invalid");
-  } else if (
-    form.user_phone.value == "" ||
-    phone_check.test(form.user_phone.value) == false
-  ) {
+  } else if (!phone_check.test(form.user_phone.value)) {
     $("#phone_num").addClass("is-invalid");
   } else {
     axios({
       method: "post",
-      url: "/signupUpdate",
+      url: "/user",
       data: {
         user_id: form.user_id.value,
         user_pw: form.user_pw.value,
@@ -123,11 +114,10 @@ function signup() {
           confirmButtonText: "확인",
           confirmButtonColor: "#7E998F",
           preConfirm: () => {
-            location.href = "/signIn";
+            location.href = "/login";
           },
         });
         form.reset();
-        // location.href="/signIn";
       } else {
         Swal.fire({
           icon: "warning",

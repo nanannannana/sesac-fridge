@@ -15,7 +15,7 @@
   <%-include('myPageBasic.ejs')%>
   <div id="inform_box" class="container">
     <p><span><%=user_name%>님</span>의 회원정보</p>
-    <form id="form_hidden" action="/myPage/profile/myInfoDel" method="post">
+    <form id="form_hidden" action="/mypage/profile/withdrawal" method="post">
       <input type="hidden" name="user_id" value="<%=user_id%>" />
     </form>
     <form id="form_info">
@@ -32,18 +32,6 @@
         />
       </div>
       <div id="pw_box">
-        <p>현재 비밀번호:</p>
-        <div class="input-group input-group-lg">
-          <input
-            type="text"
-            class="form-control"
-            aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-lg"
-            name="user_pw_now"
-            value="<%=user_pw%>"
-            readonly
-          />
-        </div>
         <p>새 비밀번호:</p>
         <div class="input-group input-group-lg">
           <input
@@ -52,7 +40,7 @@
             class="form-control rounded"
             aria-label="Sizing example input"
             aria-describedby="inputGroup-sizing-lg"
-            name="user_pw_new"
+            name="user_new_pw"
             oninput="pw_click(this);"
             required
           />
@@ -61,13 +49,13 @@
         <p>비밀번호 확인:</p>
         <div class="input-group input-group-lg">
           <input
-            id="user_pw_ck"
+            id="check_user_pw"
             type="password"
             class="form-control rounded"
             aria-label="Sizing example input"
             aria-describedby="inputGroup-sizing-lg"
-            name="user_pw_check"
-            oninput="pw_ck_click(this);"
+            name="check_user_pw"
+            oninput="check_pw_click(this);"
             required
           />
           <div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
@@ -76,7 +64,7 @@
       <p>이름:</p>
       <div class="input-group input-group-lg">
         <input
-          id="user_name_ck"
+          id="check_user_name"
           type="text"
           class="form-control rounded"
           aria-label="Sizing example input"

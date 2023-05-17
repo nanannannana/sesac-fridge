@@ -9,8 +9,7 @@
     <script>
       const kakaoLogin = async () => {
         const code = location.search.replace("?code=", "");
-        await axios.post("/signin/kakao_access", { code: code }).then((res) => {
-          // sessionStorage.setItem("user_id", res.data.user_id);
+        await axios.post("/oauth/kakao", { code: code }).then((res) => {
           location.href = "/";
         });
       };
@@ -19,4 +18,3 @@
   </head>
   <body></body>
 </html>
-u
