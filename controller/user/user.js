@@ -240,6 +240,33 @@ exports.postCreateUser = async function (req, res) {
   }
 };
 
+// 회원정보 수정
+exports.patchUpdateUser = async function (req, res) {
+  if (req.body.user_pw) {
+    const salt = bcrypt.genSaltSync();
+    const hash = bcrypt.hashSync(req.body.user_pw, salt);
+
+    const data = {
+      user_id: req.body.user_id,
+      user_pw: hash,
+      user_name: req.body.user_name,
+      user_phone: req.body.user_phone,
+    };
+
+    await user.update(data, { where: { user_id: req.body.user_id } });
+  } else {
+    const data = {
+      user_id: req.body.user_id,
+      user_name: req.body.user_name,
+      user_phone: req.body.user_phone,
+    };
+
+    await user.update(data, { where: { user_id: req.body.user_id } });
+  }
+
+  res.send(true);
+};
+
 //로그아웃
 exports.postSignOut = async function (req, res) {
   //쿠키 삭제

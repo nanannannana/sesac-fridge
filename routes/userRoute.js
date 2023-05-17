@@ -21,8 +21,11 @@ router.post("/user", user.postCreateUser);
 // 아이디/비밀번호 찾기
 router.post("/user/find-account", user.postFindAccount);
 
+// 회원정보 수정
+router.patch("/user", user.patchUpdateUser);
+
 //로그아웃
 router.post("/logout", user.postSignOut);
+// 회원탈퇴
 router.delete("/user", user.deleteUser);
-
 module.exports = router;

@@ -16,8 +16,7 @@ router.post("/password/check", myPage.postCheckPassword);
 
 // 회원정보 렌더
 router.post("/profile", myPage.postShowProfile);
-// 회원정보 수정
-router.patch("/profile", myPage.patchUpdateProfile);
+
 // 회원탈퇴 렌더
 router.post("/profile/withdrawal", myPage.postShowUserWithdrawal);
 
