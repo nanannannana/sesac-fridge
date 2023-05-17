@@ -2,27 +2,27 @@ const express = require("express");
 const user = require("../controller/user/user");
 const router = express.Router();
 
-// 로그인 렌더 - 예지
-// localhost:8080/signin
-router.get("/signIn", user.getSignin);
-// 로그인 확인
-router.post("/signinFlag", user.postSigninFlag);
+// 로그인 렌더
+router.get("/login", user.getSignin);
+// 로그인
+router.post("/user/check", user.postFindUser);
+
 // 소셜로그인
-router.get("/signin/kakao_login", user.getKakao);
-router.post("/signin/kakao_access", user.kakaoAccess);
+router.get("/oauth/kakao", user.getKakao);
+router.post("/oauth/kakao", user.kakaoAccess);
 
 // 회원가입 렌더
-router.get("/signUp", user.getSignup);
+router.get("/join", user.getSignup);
+// 아이디 중복 확인
+router.post("/user/id", user.postCheckId);
+// 회원가입
+router.post("/user", user.postCreateUser);
 
-// 회원가입 중복아이디 확인
-router.post("/idCheck", user.postIdCheck);
-
-// 회원가입 성공
-router.post("/signupUpdate", user.postSignupUpdate);
 // 아이디/비밀번호 찾기
-router.post("/idFind", user.postIdFind);
-router.post("/pwFind", user.postPwFind);
+router.post("/user/find-account", user.postFindAccount);
+
 //로그아웃
-router.post("/signOut", user.postSignOut);
+router.post("/logout", user.postSignOut);
+router.delete("/user", user.deleteUser);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const user = (Sequelize, DataTypes) => {
   return Sequelize.define(
-    'user',
+    "user",
     {
       user_id: {
         type: DataTypes.STRING(40),
@@ -8,7 +8,7 @@ const user = (Sequelize, DataTypes) => {
         primaryKey: true,
       },
       user_pw: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING(100),
         allowNull: false,
       },
       user_name: {
@@ -21,10 +21,10 @@ const user = (Sequelize, DataTypes) => {
       },
     },
     {
-      charset: 'utf8mb4',
-      collate: 'utf8mb4_unicode_ci',
+      charset: "utf8mb4",
+      collate: "utf8mb4_unicode_ci",
       underscored: true, // 카멜표기법-> 스네이크로
-      tableName: 'user',
+      tableName: "user",
       freezeTableName: true,
       timestamps: false,
       paranoid: false, // true : deletedAt이라는 컬럼이 생기고 지운 시각이 기록

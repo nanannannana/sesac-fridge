@@ -15,10 +15,10 @@
 
 // 찜리스트 좋아요 삭제
 function wishlist_del(recipe_id, target) {
-  var post_num = $('#wishlist_card_box_child').children().length;
+  var post_num = $("#wishlist_card_box_child").children().length;
   axios({
-    method: 'delete',
-    url: '/myPage/wishListDel',
+    method: "delete",
+    url: "/mypage/wishlist",
     data: {
       recipe_id: recipe_id,
       num: post_num - 1,
@@ -27,17 +27,17 @@ function wishlist_del(recipe_id, target) {
     // $(target).removeClass("bi-heart-fill");
     // $(target).addClass("bi-heart");
     console.log(res.data);
-    $('#wishlist_card_box_child').remove();
-    $('#wishlist_card_box').append(`<div id="wishlist_card_box_child"></div>`);
+    $("#wishlist_card_box_child").remove();
+    $("#wishlist_card_box").append(`<div id="wishlist_card_box_child"></div>`);
     if (res.data.length == 0) {
-      $('#wishlist_card_box_child').append(`
+      $("#wishlist_card_box_child").append(`
             <div id="none_box">
                 <img src="/static/img/wishlist_none.png">
             </div>
             `);
     } else {
       for (var i = 0; i < res.data.length; i++) {
-        $('#wishlist_card_box_child').append(`
+        $("#wishlist_card_box_child").append(`
                 <div id="card_size" class="card mb-4 me-3">
                     <img src="${res.data[i].recipe.recipe_img}" class="card-img" alt="...">
                     <div id="card_hover" class="card-img-overlay">

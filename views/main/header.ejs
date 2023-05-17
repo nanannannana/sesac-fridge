@@ -8,7 +8,7 @@
                 <div id="delete_box">
                     <span id="user_name"></span>
                     <span id="header_nav" type="button" onclick="mypage_go()"> 내정보 </span><span id="stick"> | </span>
-                    <span id="sign_in" type="button" onclick="location.href='/signIn'"> 로그인</span>
+                    <span id="sign_in" type="button" onclick="location.href='/login'"> 로그인</span>
                     <span id="sign_out" type="button" onclick="signout_go();"> 로그아웃</span>
                     <form id="mypage_go" action="/myPage" method="post"></form> 
                 </div>
@@ -35,7 +35,7 @@
                         <li class="nav-item" id="nav_wishlist">
                             <a href="#" id="nw_1" onclick="wishlist_go();"><img src="../../static/img/navWishlist.png"></a>
                             <a class="nav-link active hidden" id="nw_2" aria-current="page" href="#"  onclick="wishlist_go();">찜 리스트</a>
-                            <form id="wishlist_go" action="/myPage/wishList" method="post"></form>
+                            <form id="wishlist_go" action="/mypage/wishlist" method="post"></form>
                         </li>
                         <li class="nav-item" id="nav_fridge">
                             <a href="/myFridge" id="nf_1"><img src="../../static/img/navFridge.png"></a>

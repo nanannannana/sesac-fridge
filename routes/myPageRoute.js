@@ -1,23 +1,24 @@
-const express = require('express');
-const myPage = require('../controller/user/myPage');
+const express = require("express");
+const myPage = require("../controller/user/myPage");
 const router = express.Router();
 
-// 마이페이지 렌더 - 예지
-router.post('/', myPage.postMyPage);
-router.post('/chart', myPage.postMyPageChart);
+// 마이페이지 렌더
+router.post("/", myPage.postMyPage);
+router.post("/chart", myPage.postMyPageChart);
+
 // 찜리스트 렌더
-router.post('/wishList', myPage.postWishList);
-router.delete('/wishListDel', myPage.deleteWishListDel);
+router.post("/wishlist", myPage.postWishList);
+router.delete("/wishlist", myPage.deleteWishList);
+
 // 회원정보 수정 전 비밀번호 확인
-router.post('/profile', myPage.postPwInput);
-router.post('/profilePwConfirm', myPage.postPwConfirm);
+router.post("/password", myPage.postShowCheckPassword);
+router.post("/password/check", myPage.postCheckPassword);
+
 // 회원정보 렌더
-router.post('/profile/myInfo', myPage.postMyInfo);
+router.post("/profile", myPage.postShowProfile);
 // 회원정보 수정
-router.patch('/profile/myInfo', myPage.patchMyInfoUpdate);
+router.patch("/profile", myPage.patchUpdateProfile);
 // 회원탈퇴 렌더
-router.post('/profile/myInfoDel', myPage.postMyInfoDel);
-// 회원탈퇴 완료
-router.delete('/profile/myInfoDel', myPage.deleteMyInfoDel);
+router.post("/profile/withdrawal", myPage.postShowUserWithdrawal);
 
 module.exports = router;
