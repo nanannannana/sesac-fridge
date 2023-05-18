@@ -53,6 +53,7 @@
 ## ⭐️ 담당 기능
 * Sequelize ORM을 이용해 CRUD 구현
 * Cookie & Session을 사용한 자동로그인 구현
+* bcrypt를 이용한 비밀번호 암호화 저장
 * NCP(Naver Cloud Platform)의 SMS API를 사용한 사용자 비밀번호 발송
 * REST API를 사용하여 소셜 로그인(kakao) 구현
 * AWS EC2를 사용하여 배포
@@ -63,70 +64,5 @@
 <br>
 <br>
 
-## ⭐️ 디렉토리 구조
-```bash
-├── README.md
-├── package-lock.json
-├── package.json
-├── node_modules
-├── .env
-├── app.js (node 실행 최상위 js)
-├── views : ejs 뷰단
-│   ├── fridge : 냉장고 페이지
-│   │   ├── myFridge.ejs
-│   │   ├── myFridge404.ejs
-│   ├── main : 메인 페이지
-│   │   └── main.ejs
-│   │   ├── 404.ejs
-│   │   ├── footer.ejs
-│   │   └── head.ejs
-│   │   └── header.ejs
-│   │   ├── dbRegex.ejs : DB 정규화 페이지
-│   ├── recipe : 레시피 페이지
-│   │   └── recipe.ejs
-│   │   └── recipe_non.ejs
-│   ├── user : 회원관련 페이지
-│   │   └── kakaoLogin.ejs
-│   │   └── myProfile.ejs
-│   │   └── deleteAccount.ejs
-│   │   └── myPage.ejs
-│   │   └── myPageSideBar.ejs
-│   │   └── pwConfirm.ejs
-│   │   └── signIn.ejs
-│   │   └── signUp.ejs
-│   │   └── wishList.ejs
-└── static : css, img, script
-│   ├── css
-│   │   └── fridge : 냉장고 페이지 관련 css
-│   │   └── main : 메인 페이지 관련 css
-│   │   └── recipe : 레시피 페이지 관련 css
-│   │   └── user : 유저 관련 css
-│   │   └── basic.css : 공통 관련 css
-│   ├── img
-│   ├── script
-│   │   └── fridge : 냉장고 페이지 관련 js
-│   │   └── main : 메인 페이지 관련 js
-│   │   └── recipe : 레시피 페이지 관련 js
-│   │   └── user : 유저 관련 js
-└── routes : 라우터
-│   ├── fridgeRoute.js
-│   ├── mainRoute.js
-│   ├── myPageRoute.js
-│   ├── recipeRoute.js
-│   ├── userRoute.js
-└── model : sequelize 모델
-│   ├── cooklog.js
-│   ├── fresh.js
-│   ├── frozen.js
-│   ├── index.js
-│   ├── recipe_like.js
-│   ├── recipe.js
-│   ├── user.js
-└── controller : controller
-│   ├── fridge
-│   ├── main
-│   ├── recipe
-│   ├── user
-└── config 
-   ├── config.js
-```
+## ⭐️ API 명세서
+![API 명세서](https://github.com/nanannannana/nanannannana/assets/114964102/fe16bc76-407b-4c98-87d0-0ac39773dde5)
