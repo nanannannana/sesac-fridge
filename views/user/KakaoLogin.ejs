@@ -9,7 +9,7 @@
     <script>
       const kakaoLogin = async () => {
         const code = location.search.replace("?code=", "");
-        await axios.post("/oauth/kakao", { code: code }).then((res) => {
+        await axios.post("/oauth/kakao", { code: code }).then(() => {
           location.href = "/";
         });
       };

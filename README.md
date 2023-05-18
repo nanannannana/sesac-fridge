@@ -81,12 +81,11 @@
 │   │   └── recipe.ejs
 │   │   └── recipe_non.ejs
 │   ├── user : 회원관련 페이지
-│   │   └── kakaoInfo.ejs
 │   │   └── kakaoLogin.ejs
-│   │   └── myInfo.ejs
-│   │   └── myInfoDel.ejs
+│   │   └── myProfile.ejs
+│   │   └── deleteAccount.ejs
 │   │   └── myPage.ejs
-│   │   └── myPageBasic.ejs
+│   │   └── myPageSideBar.ejs
 │   │   └── pwConfirm.ejs
 │   │   └── signIn.ejs
 │   │   └── signUp.ejs

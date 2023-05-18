@@ -9,17 +9,17 @@ function phone_num_hyphen(target) {
 }
 // input창 클릭 시 validate문구 없어지게 하는 함수
 function pw_click(target) {
-  if (target !== "") {
+  if (target) {
     $("#user_pw").removeClass("is-invalid");
   }
 }
 function check_pw_click(target) {
-  if (target !== "") {
+  if (target) {
     $("#check_user_pw").removeClass("is-invalid");
   }
 }
 function name_click(target) {
-  if (target !== "") {
+  if (target) {
     $("#check_user_name").removeClass("is-invalid");
   }
 }
@@ -40,7 +40,6 @@ function info_update() {
         method: "patch",
         url: "/user",
         data: {
-          user_id: form.user_id.value,
           user_name: form.user_name.value,
           user_phone: form.user_phone.value.replace(/-/g, ""),
         },
@@ -72,7 +71,6 @@ function info_update() {
         method: "patch",
         url: "/user",
         data: {
-          user_id: form.user_id.value,
           user_pw: form.user_new_pw.value,
           user_name: form.user_name.value,
           user_phone: form.user_phone.value.replace(/-/g, ""),
@@ -88,14 +86,4 @@ function info_update() {
       });
     }
   }
-}
-
-function info_del() {
-  axios({
-    method: "post",
-    url: "/mypage/profile/withdrawal",
-  }).then(function () {
-    var form_info = document.getElementById("form_hidden");
-    form_info.submit();
-  });
 }
