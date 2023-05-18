@@ -1,11 +1,7 @@
 function info_del() {
-  var form = document.getElementById("form_hidden");
   axios({
     method: "delete",
     url: "/user",
-    data: {
-      user_id: form.user_id.value,
-    },
   }).then(function () {
     localStorage.clear();
     Swal.fire({

@@ -70,7 +70,7 @@ exports.kakaoAccess = async (req, res) => {
   res.cookie("access_token", access_token, {
     httpOnly: true,
   });
-  res.send({ user_id: userId });
+  res.send(true);
 };
 
 // 로그인 확인
@@ -80,7 +80,6 @@ exports.postFindUser = async function (req, res) {
     where: { user_id: req.body.user_id },
   });
   if (resultUser && bcrypt.compareSync(req.body.user_pw, resultUser.user_pw)) {
-    console.log("로그인 성공");
     req.session.user = req.body.user_id;
     const option = {
       httpOnly: true,
@@ -116,7 +115,10 @@ exports.postFindAccount = async function (req, res) {
       },
     });
     if (result) {
-      res.send(result);
+      res.send({
+        user_id: result.user_id,
+        user_name: result.user_name,
+      });
     } else {
       res.send(false);
     }
@@ -253,7 +255,9 @@ exports.patchUpdateUser = async function (req, res) {
       user_phone: req.body.user_phone,
     };
 
-    await user.update(data, { where: { user_id: req.body.user_id } });
+    await user.update(data, {
+      where: { user_id: req.cookies.user_id || req.session.user },
+    });
   } else {
     const data = {
       user_id: req.body.user_id,
@@ -261,7 +265,9 @@ exports.patchUpdateUser = async function (req, res) {
       user_phone: req.body.user_phone,
     };
 
-    await user.update(data, { where: { user_id: req.body.user_id } });
+    await user.update(data, {
+      where: { user_id: req.cookies.user_id || req.session.user },
+    });
   }
 
   res.send(true);
@@ -302,6 +308,9 @@ exports.deleteUser = async (req, res) => {
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err));
   }
+  await user.destroy({
+    where: { user_id: req.cookies.user_id || req.session.user },
+  });
   //쿠키 삭제
   const option = {
     httpOnly: true,
@@ -312,6 +321,5 @@ exports.deleteUser = async (req, res) => {
   req.session.destroy(function (err) {
     if (err) throw err;
   });
-  await user.destroy({ where: { user_id: req.body.user_id } });
   res.send(true);
 };

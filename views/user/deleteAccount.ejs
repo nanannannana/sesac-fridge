@@ -2,10 +2,17 @@
 <link
   rel="stylesheet"
   type="text/css"
-  href="/static/css/user/myPageBasic.css"
+  href="/static/css/user/myPageSideBar.css"
 />
-<link rel="stylesheet" type="text/css" href="/static/css/user/myInfoDel.css" />
-<script type="text/javascript" src="/static/script/user/myInfoDel.js"></script>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="/static/css/user/deleteAccount.css"
+/>
+<script
+  type="text/javascript"
+  src="/static/script/user/deleteAccount.js"
+></script>
 <%-include('../main/header.ejs') %>
 <main id="back_color">
   <div class="container-fluid">
@@ -19,21 +26,18 @@
       <p id="text_none">마이페이지의 모든 기록은 삭제 되며,</p>
       <p id="text_none">삭제된 데이터는 복구 되지 않습니다.</p>
       <p class="mt-5">그래도 탈퇴하시겠습니까?</p>
-      <form id="form_hidden">
-        <input type="hidden" name="user_id" value="<%=user_id%>" />
-        <div class="row">
-          <div class="col text-center">
-            <button
-              type="button"
-              id="button"
-              class="btn mt-3 text-center"
-              onclick="info_del()"
-            >
-              냉장고 코드 뽑기
-            </button>
-          </div>
+      <div class="row">
+        <div class="col text-center">
+          <button
+            type="button"
+            id="button"
+            class="btn mt-3 text-center"
+            onclick="info_del()"
+          >
+            냉장고 코드 뽑기
+          </button>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </main>
