@@ -1,6 +1,6 @@
 // input창 클릭 시 validate문구 없어지게 하는 함수
 function pw_click(target) {
-  if (target !== "") {
+  if (target) {
     $("#user_pw").removeClass("is-invalid");
   }
 }
@@ -14,20 +14,18 @@ function enter_push() {
 
 function pw_confirm() {
   form = document.getElementById("form_pw_confirm");
-  if (form.user_pw.value == "") {
+  if (!form.user_pw.value) {
     $("#user_pw").addClass("is-invalid");
   } else {
     axios({
       method: "post",
       url: "/mypage/password/check",
       data: {
-        user_id: form.user_id.value,
         user_pw: form.user_pw.value,
       },
     }).then(async function (res) {
       if (res.data) {
-        var form_info = document.getElementById("form_hidden");
-        form_info.submit();
+        location.href = "/mypage/profile";
       } else {
         $("#user_pw").addClass("is-invalid");
       }

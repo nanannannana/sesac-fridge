@@ -9,17 +9,17 @@ function phone_num_hyphen(target) {
 }
 // input창 클릭 시 validate문구 없어지게 하는 함수
 function pw_click(target) {
-  if (target !== "") {
+  if (target) {
     $("#user_pw").removeClass("is-invalid");
   }
 }
 function check_pw_click(target) {
-  if (target !== "") {
+  if (target) {
     $("#check_user_pw").removeClass("is-invalid");
   }
 }
 function name_click(target) {
-  if (target !== "") {
+  if (target) {
     $("#check_user_name").removeClass("is-invalid");
   }
 }
@@ -30,7 +30,7 @@ function info_update() {
   var regName = /^[a-zA-Z가-힣]{2,10}$/;
   var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
   // 비밀번호 수정 X, 회원정보 Update O,
-  if (form.user_new_pw.value == "") {
+  if (!form.user_new_pw.value) {
     if (!regName.test(form.user_name.value)) {
       $("#check_user_name").addClass("is-invalid");
     } else if (!regPhone.test(form.user_phone.value)) {
@@ -38,10 +38,8 @@ function info_update() {
     } else {
       axios({
         method: "patch",
-        url: "/mypage/profile",
+        url: "/user",
         data: {
-          user_id: form.user_id.value,
-          user_pw: form.user_pw_now.value,
           user_name: form.user_name.value,
           user_phone: form.user_phone.value.replace(/-/g, ""),
         },
@@ -71,9 +69,8 @@ function info_update() {
     } else {
       axios({
         method: "patch",
-        url: "/mypage/profile",
+        url: "/user",
         data: {
-          user_id: form.user_id.value,
           user_pw: form.user_new_pw.value,
           user_name: form.user_name.value,
           user_phone: form.user_phone.value.replace(/-/g, ""),
@@ -89,14 +86,4 @@ function info_update() {
       });
     }
   }
-}
-
-function info_del() {
-  axios({
-    method: "post",
-    url: "/mypage/profile/withdrawal",
-  }).then(function () {
-    var form_info = document.getElementById("form_hidden");
-    form_info.submit();
-  });
 }

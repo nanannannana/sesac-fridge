@@ -2,22 +2,15 @@
 <link
   rel="stylesheet"
   type="text/css"
-  href="/static/css/user/myPageBasic.css"
+  href="/static/css/user/myPageSideBar.css"
 />
-<link rel="stylesheet" type="text/css" href="/static/css/user/myInfo.css" />
-<script
-  type="text/javascript"
-  src="/static/script/user/myPagebasic.js"
-></script>
-<script type="text/javascript" src="/static/script/user/myInfo.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/user/myProfile.css" />
+<script type="text/javascript" src="/static/script/user/myProfile.js"></script>
 <%-include('../main/header.ejs') %>
 <main>
-  <%-include('myPageBasic.ejs')%>
+  <%-include('myPageSideBar.ejs')%>
   <div id="inform_box" class="container">
     <p><span><%=user_name%>님</span>의 회원정보</p>
-    <form id="form_hidden" action="/mypage/profile/withdrawal" method="post">
-      <input type="hidden" name="user_id" value="<%=user_id%>" />
-    </form>
     <form id="form_info">
       <p>이메일:</p>
       <div class="input-group input-group-lg">
@@ -90,7 +83,12 @@
         />
         <div class="invalid-feedback">휴대폰 번호를 정확히 입력하세요.</div>
       </div>
-      <button type="button" id="button_del" class="btn" onclick="info_del()">
+      <button
+        type="button"
+        id="button_del"
+        class="btn"
+        onclick="location.href='/mypage/profile/withdrawal';"
+      >
         회원탈퇴
       </button>
       <button

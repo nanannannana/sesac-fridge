@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
   var form = document.getElementById("form_hidden");
   axios({
-    method: "post",
+    method: "get",
     url: "/mypage/chart",
-    data: {
+    params: {
       fresh_category: form.fresh_category.value,
       cook_tag: form.cook_tag.value,
     },

@@ -1,13 +1,3 @@
-// function myrecipe_go() {
-//     var myrecipe_go = document.getElementById("myrecipe_go");
-//     myrecipe_go.submit();
-// }
-
-function mypage_go() {
-  var mypage_go = document.getElementById("mypage_go");
-  mypage_go.submit();
-}
-
 function signout_go() {
   axios({
     method: "post",
@@ -21,11 +11,6 @@ function signout_go() {
       location.href = "/";
     }
   });
-}
-
-function wishlist_go() {
-  var wishlist_go = document.getElementById("wishlist_go");
-  wishlist_go.submit();
 }
 
 //navbar mouseover, 영은

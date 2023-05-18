@@ -2,7 +2,7 @@
 <link
   rel="stylesheet"
   type="text/css"
-  href="/static/css/user/myPageBasic.css"
+  href="/static/css/user/myPageSideBar.css"
 />
 <link rel="stylesheet" type="text/css" href="/static/css/user/myPage.css" />
 <link
@@ -10,18 +10,15 @@
   type="text/css"
   href="path/to/chartjs/dist/Chart.min.css"
 />
-<script
-  type="text/javascript"
-  src="/static/script/user/myPagebasic.js"
-></script>
 <script type="text/javascript" src="/static/script/user/myPage.js"></script>
 <%-include('../main/header.ejs') %>
 <main>
-  <%-include('myPageBasic.ejs')%>
+  <%-include('myPageSideBar.ejs')%>
   <form id="form_hidden">
     <input type="hidden" name="fresh_category" value="<%=fresh_category%>" />
     <input type="hidden" name="cook_tag" value="<%=cook_tag%>" />
   </form>
+
   <div class="container">
     <div id="chart_box">
       <p id="box_title"><span><%=user_name%>님</span>의 통계차트</p>

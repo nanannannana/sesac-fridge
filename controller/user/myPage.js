@@ -11,27 +11,27 @@ const axios = require("axios");
 const bcrypt = require("bcryptjs");
 
 // 마이 페이지 렌더
-exports.postMyPage = async function (req, res) {
+exports.getMyPage = async function (req, res) {
   // 자동로그인 했을 떄
   if (req.cookies.user_id || req.session.user) {
-    const final_user_id = !req.cookies.user_id
-      ? req.session.user
-      : req.cookies.user_id;
     // user 이름 확인
     const user_result = await user.findOne({
       raw: true,
-      where: { user_id: final_user_id },
+      where: { user_id: req.cookies.user_id || req.session.user },
     });
+
     // 냉장고 재료 카테고리 가져오기
-    var fresh_result = await fresh.findAll({
+    let fresh_result = await fresh.findAll({
       raw: true,
-      where: { user_user_id: final_user_id },
+      where: { user_user_id: req.cookies.user_id || req.session.user },
     });
+
     // 냉장고 카테고리 배열
-    var fresh_category_list = [];
+    let fresh_category_list = [];
     for (var i = 0; i < fresh_result.length; i++) {
       fresh_category_list.push(fresh_result[i].fresh_category);
     }
+
     // 최근에 한 요리 최신순 4개 가쟈오기
     let cook_result = await cooklog.findAll({
       raw: true,
@@ -47,12 +47,13 @@ exports.postMyPage = async function (req, res) {
           ],
         },
       ],
-      where: { user_user_id: final_user_id },
+      where: { user_user_id: req.cookies.user_id || req.session.user },
       order: [["cooklog_id", "DESC"]],
       limit: 10,
     });
+
     // 최근에 한 요리 차트 관련 배열
-    var cook_tag_list = [];
+    let cook_tag_list = [];
     for (var j = 0; j < cook_result.length; j++) {
       if (cook_result[j]["recipe.recipe_tag"] == null) {
         cook_tag_list.push("기타");
@@ -60,6 +61,7 @@ exports.postMyPage = async function (req, res) {
         cook_tag_list.push(cook_result[j]["recipe.recipe_tag"]);
       }
     }
+
     // 최근에 본 레시피 최신순 10개 가져오기
     let recipe_result = await log.findAll({
       raw: true,
@@ -70,13 +72,12 @@ exports.postMyPage = async function (req, res) {
           attributes: ["recipe_title", "recipe_url", "recipe_img"],
         },
       ],
-      where: { user_user_id: final_user_id },
+      where: { user_user_id: req.cookies.user_id || req.session.user },
       order: [["log_id", "DESC"]],
       limit: 4,
     });
     res.render("user/myPage", {
       isLogin: true,
-      user_id: final_user_id,
       user_name: user_result.user_name,
       user_pw: user_result.user_pw == "kakao" ? user_result.user_pw : "",
       fresh_category: fresh_category_list,
@@ -85,29 +86,28 @@ exports.postMyPage = async function (req, res) {
       recipe: recipe_result,
     });
   } else {
-    res.render("main/404");
+    res.render("main/alert404");
   }
 };
-exports.postMyPageChart = function (req, res) {
-  const fresh_category_list = req.body.fresh_category.split(",");
-  const cook_tag_list = req.body.cook_tag.split(",");
+exports.getMyPageChart = function (req, res) {
+  const fresh_category_list = req.query.fresh_category.split(",");
+  const cook_tag_list = req.query.cook_tag.split(",");
   res.send([fresh_category_list, cook_tag_list]);
 };
 
 // 찜리스트 렌더
-exports.postWishList = async function (req, res) {
+exports.getWishList = async function (req, res) {
   if (req.cookies.user_id || req.session.user) {
-    const final_user_id = !req.cookies.user_id
-      ? req.session.user
-      : req.cookies.user_id;
     // user 이름 확인
     const user_result = await user.findOne({
       raw: true,
-      where: { user_id: final_user_id },
+      where: { user_id: req.cookies.user_id || req.session.user },
     });
 
     // 좋아요 게시글 조회
-    let rec_like = await recipe_like.findAll({
+    const wishlist = await recipe_like.findAll({
+      raw: true,
+      attributes: { exclude: ["like_id", "user_user_id", "recipe_recipe_id"] },
       include: [
         {
           model: recipe,
@@ -115,27 +115,23 @@ exports.postWishList = async function (req, res) {
           attributes: ["recipe_id", "recipe_url", "recipe_img", "recipe_title"],
         },
       ],
-      where: { user_user_id: final_user_id },
+      where: { user_user_id: req.cookies.user_id || req.session.user },
     });
 
     res.render("user/wishList", {
       isLogin: true,
       user_name: user_result.user_name,
-      user_id: final_user_id,
       user_pw: user_result.user_pw == "kakao" ? user_result.user_pw : "",
-      rec_like: rec_like,
+      wishlist: wishlist,
     });
   } else {
-    res.render("main/404");
+    res.render("main/alert404");
   }
 };
 // 찜리스트 정보 삭제
 exports.deleteWishList = async function (req, res) {
-  const final_user_id =
-    req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
-
   // recipe_pick 수 조회
-  let recipe_result = await recipe.findOne({
+  const recipe_result = await recipe.findOne({
     where: { recipe_id: req.body.recipe_id },
   });
 
@@ -156,13 +152,15 @@ exports.deleteWishList = async function (req, res) {
   }
 
   // DB에서 삭제할 좋아요 레시피 id 조회 및 삭제
-  let like_id_result = await recipe_like.findOne({
+  const like_id_result = await recipe_like.findOne({
     where: { recipe_recipe_id: req.body.recipe_id },
   });
   await recipe_like.destroy({ where: { like_id: like_id_result.like_id } });
 
   // recipe와 recipe_like table join 후, 필요한 데이터 조회
-  let rec_like = await recipe_like.findAll({
+  const wishlist = await recipe_like.findAll({
+    raw: true,
+    attributes: { exclude: ["like_id", "user_user_id", "recipe_recipe_id"] },
     include: [
       {
         model: recipe,
@@ -170,33 +168,30 @@ exports.deleteWishList = async function (req, res) {
         attributes: ["recipe_id", "recipe_url", "recipe_img", "recipe_title"],
       },
     ],
-    where: { user_user_id: final_user_id },
+    where: { user_user_id: req.cookies.user_id || req.session.user },
   });
-  res.send(rec_like);
+  res.send(wishlist);
 };
 
 // 회원정보 수정 전 비밀번호 확인
-exports.postShowCheckPassword = async function (req, res) {
+exports.getShowCheckPassword = async function (req, res) {
   if (req.cookies.user_id || req.session.user) {
-    const final_user_id = !req.cookies.user_id
-      ? req.session.user
-      : req.cookies.user_id;
     const user_result = await user.findOne({
-      where: { user_id: final_user_id },
+      where: { user_id: req.cookies.user_id || req.session.user },
     });
     res.render("user/pwConfirm", {
       isLogin: true,
-      user_id: final_user_id,
+      user_id: req.cookies.user_id || req.session.user,
       user_pw: user_result.user_pw == "kakao" ? user_result.user_pw : "",
       user_name: user_result.user_name,
     });
   } else {
-    res.render("main/404");
+    res.render("main/alert404");
   }
 };
 exports.postCheckPassword = async function (req, res) {
   const resultUser = await user.findOne({
-    where: { user_id: req.body.user_id },
+    where: { user_id: req.cookies.user_id || req.session.user },
   });
 
   if (resultUser && bcrypt.compareSync(req.body.user_pw, resultUser.user_pw)) {
@@ -207,10 +202,12 @@ exports.postCheckPassword = async function (req, res) {
 };
 
 // 회원정보 수정 페이지 렌더
-exports.postShowProfile = async function (req, res) {
+exports.getShowProfile = async function (req, res) {
   if (req.cookies.user_id || req.session.user) {
-    const result = await user.findOne({ where: { user_id: req.body.user_id } });
-    res.render("user/myInfo", {
+    const result = await user.findOne({
+      where: { user_id: req.cookies.user_id || req.session.user },
+    });
+    res.render("user/myProfile", {
       isLogin: true,
       user_id: result.user_id,
       user_pw: result.user_pw == "kakao" ? result.user_pw : "",
@@ -218,51 +215,28 @@ exports.postShowProfile = async function (req, res) {
       user_phone: result.user_phone,
     });
   } else {
-    res.render("main/404");
+    res.render("main/alert404");
   }
 };
 
-// 회원정보 수정
-exports.patchUpdateProfile = async function (req, res) {
-  const userResult = await user.findOne({
-    where: { user_id: req.body.user_id },
-  });
-
-  const salt = bcrypt.genSaltSync();
-  const hash = bcrypt.hashSync(req.body.user_pw, salt);
-  const data = {
-    user_id: req.body.user_id,
-    user_pw: hash,
-    user_name: req.body.user_name,
-    user_phone: req.body.user_phone,
-  };
-
-  await user.update(data, { where: { user_id: req.body.user_id } });
-  res.send(true);
-};
-
 // 회원탈퇴 렌더
-exports.postShowUserWithdrawal = async function (req, res) {
+exports.getShowUserWithdrawal = async function (req, res) {
   if (req.cookies.user_id || req.session.user) {
-    const final_user_id = !req.cookies.user_id
-      ? req.session.user
-      : req.cookies.user_id;
     let fresh_count = await fresh.findAndCountAll({
-      where: { user_user_id: final_user_id },
+      where: { user_user_id: req.cookies.user_id || req.session.user },
     });
     let frozen_count = await frozen.findAndCountAll({
-      where: { user_user_id: final_user_id },
+      where: { user_user_id: req.cookies.user_id || req.session.user },
     });
     let user_result = await user.findOne({
-      where: { user_id: final_user_id },
+      where: { user_id: req.cookies.user_id || req.session.user },
     });
-    res.render("user/myInfoDel", {
+    res.render("user/deleteAccount", {
       isLogin: true,
       user_name: user_result.user_name,
-      user_id: req.body.user_id,
       ingd_count: fresh_count.count + frozen_count.count,
     });
   } else {
-    res.render("main/404");
+    res.render("main/alert404");
   }
 };
