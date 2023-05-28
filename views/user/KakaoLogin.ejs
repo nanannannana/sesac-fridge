@@ -9,9 +9,45 @@
     <script>
       const kakaoLogin = async () => {
         const code = location.search.replace("?code=", "");
-        await axios.post("/oauth/kakao", { code: code }).then(() => {
-          location.href = "/";
-        });
+        await axios
+          .post(
+            `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=<%=process.env.REST_API_KEY%>&redirect_uri=<%=process.env.REDIRECT_URI%>&code=${code}`,
+            {
+              headers: {
+                "Content-type":
+                  "application/x-www-form-urlencoded;charset=utf-8",
+              },
+            }
+          )
+          .then(async (res) => {
+            if (res.status == 200) {
+              const decoded_token = atob(res.data.id_token.split(".")[1]);
+              const decoded_payload = decodeURIComponent(escape(decoded_token));
+              const payload = JSON.parse(decoded_payload);
+              console.log(payload);
+              console.log(payload.email, payload.nickname);
+
+              await axios
+                .post(
+                  "/user/check",
+                  {
+                    access_token: res.data.access_token,
+                    user_id: payload.email,
+                    nickname: payload.nickname,
+                  },
+                  {
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                  }
+                )
+                .then(() => (location.href = "/"))
+                .catch(() => {
+                  alert("회원가입/로그인을 다시 시도해주세요.");
+                  location.href = "/login";
+                });
+            }
+          });
       };
       kakaoLogin();
     </script>

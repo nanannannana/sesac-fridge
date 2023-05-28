@@ -16,11 +16,11 @@
   font-weight: bold;
 }
 /* 마이페이지 공통 title 관련 */
-#box_title {
+.container_title {
   font-size: 30px;
 }
-#box_title > span {
-  font-family: 'NanumSquareAceb';
+.container_title > span {
+  font-family: "NanumSquareAceb";
 }
 
 /* button */
