@@ -5,20 +5,14 @@
     <span type="button" onclick="location.href='/mypage/wishlist'">
       찜리스트 </span
     ><span> | </span>
-    <span type="button" onclick="location.href='/mypage/password'">
-      회원정보수정</span
-    >
+    <span type="button" onclick="go_to_profile()"> 회원정보수정</span>
   </div>
 </div>
 
 <script>
-  function infoUpdate_go() {
-    if ("<%=user_pw%>" === "kakao") {
-      var kakao_infoUpdate = document.getElementById("kakao_infoUpdate");
-      kakao_infoUpdate.submit();
-    } else {
-      var infoUpdate_go = document.getElementById("infoUpdate_go");
-      infoUpdate_go.submit();
-    }
+  function go_to_profile() {
+    "<%=kakao_login%>" == "true"
+      ? (location.href = "/mypage/profile")
+      : (location.href = "/mypage/password");
   }
 </script>

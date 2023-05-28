@@ -16,9 +16,13 @@ app.use(cookieParser());
 
 app.use(
   session({
-    secret: "111",
+    secret: process.env.SESSION_SECRET,
+    name: "sesac_fridge_id",
     resave: false,
     saveUninitialized: true,
+    cookie: {
+      maxAge: 1 * 24 * 60 * 60 * 1000,
+    },
   })
 );
 

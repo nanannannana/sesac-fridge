@@ -9,7 +9,16 @@
                     <span id="user_name"></span>
                     <span id="header_nav" type="button" onclick="location.href='/mypage';"> 내정보 </span><span id="stick"> | </span>
                     <span id="sign_in" type="button" onclick="location.href='/login';"> 로그인</span>
-                    <span id="sign_out" type="button" onclick="signout_go();"> 로그아웃</span>
+                    <span id="sign_out" type="button" onclick="logout()"> 로그아웃</span>
+                    <script>
+                        function logout() {
+                            if ('<%=kakao_login%>' == 'true') {
+                                location.href = 'https://kauth.kakao.com/oauth/logout?client_id=<%=process.env.REST_API_KEY%>&logout_redirect_uri=<%=process.env.LOGOUT_REDIRECT_URI%>';
+                            } else {
+                                location.href = '/logout';
+                            }
+                        }
+                    </script>
                 </div>
             </div>
         </div> 
@@ -46,7 +55,6 @@
     </div>
 
     <script>
-        // console.log( localStorage.getItem("username"));
         if ("<%=user_name%>" !== 'false') $("#user_name").text("<%=user_name%>"+"님 |");
     </script>
     <script>
