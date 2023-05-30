@@ -86,7 +86,7 @@
   }
 }
 @media (max-width: 768px) {
-  #box_title {
+  .container_title {
     text-align: center;
   }
   #heart_icon {
@@ -114,7 +114,7 @@
     max-width: none !important;
     width: auto;
   }
-  #box_title {
+  .container_title {
     margin-left: -3%;
   }
 }
@@ -123,7 +123,7 @@
     padding-left: 10px !important;
     padding-top: 10px !important;
   }
-  #box_title {
+  .container_title {
     font-size: 25px;
   }
   #heart_icon {
@@ -203,7 +203,7 @@
   }
 }
 @media (max-width: 407px) {
-  #box_title {
+  .container_title {
     font-size: 20px;
   }
   #card_size {

@@ -25,11 +25,7 @@ exports.getRecipe = async (req, res) => {
   });
 
   // [1] 로그인 했을 때
-  if (req.session.user || req.cookies.user_id) {
-    const final_user_id = !req.cookies.user_id
-      ? req.session.user
-      : req.cookies.user_id;
-
+  if (req.session.user) {
     // [1]-1 fresh 테이블과 frozen 테이블의 모든 재료를 findAll로 가져온다.
     let freRes = await fresh.findAll({
       raw: true,
@@ -37,7 +33,7 @@ exports.getRecipe = async (req, res) => {
         ["fresh_name", "name"],
         ["fresh_range", "range"],
       ],
-      where: { user_user_id: final_user_id },
+      where: { user_user_id: req.session.user },
     });
     let froRes = await frozen.findAll({
       raw: true,
@@ -45,7 +41,7 @@ exports.getRecipe = async (req, res) => {
         ["frozen_name", "name"],
         ["frozen_range", "range"],
       ],
-      where: { user_user_id: final_user_id },
+      where: { user_user_id: req.session.user },
     });
 
     // [1]-2 fresh, frozen 테이블에서 검색한 결과를 합쳐서 ingdRes에 넣는다.
@@ -138,7 +134,8 @@ exports.getRecipe = async (req, res) => {
       result["ingdRange"] = ingdRange;
       result["ingdResult"] = ingdResult;
       result["isLogin"] = true;
-      result["user_id"] = final_user_id;
+      result["kakao_login"] = req.session.kakao_login;
+      result["user_id"] = req.session.user;
       result["user_name"] = req.session.user_name;
 
       // [1]-8 기본 결과는 유사 재료 레시피
@@ -185,7 +182,8 @@ exports.getRecipe = async (req, res) => {
       }
       result = { data: recipes, dataLike: likeUser };
       result["isLogin"] = true;
-      result["user_id"] = final_user_id;
+      result["kakao_login"] = req.session.kakao_login;
+      result["user_id"] = req.session.user;
       result["user_name"] = req.session.user_name;
 
       if (req.query.tag) {
@@ -243,6 +241,7 @@ exports.getRecipe = async (req, res) => {
     }
     result = { data: recipes, dataLike: likeUser };
     result["isLogin"] = false;
+    result["kakao_login"] = false;
     result["user_name"] = false;
 
     if (req.query.tag) {
@@ -262,13 +261,8 @@ exports.patchToFridge = async (req, res) => {
     return item.delMust === "1";
   });
 
-  // final_user_id를 사용하기 위해서(로그인 했을 때)
-  if (req.session.user || req.cookies.user_id) {
-    const final_user_id =
-      req.cookies.user_id === undefined
-        ? req.session.user
-        : req.cookies.user_id;
-
+  // 로그인 했을 때
+  if (req.session.user) {
     let delValFromFresh; // fresh 테이블에서 삭제한 결과 값
     let delValFromFrozen; // frozen 테이블에서 삭제한 결과 값
     let updateValFromFresh; // fresh 테이블에서 수정한 결과 값
@@ -287,7 +281,7 @@ exports.patchToFridge = async (req, res) => {
       let freRes = await fresh.findAll({
         raw: true,
         attributes: [["fresh_name", "name"]],
-        where: { user_user_id: final_user_id, fresh_name: delName },
+        where: { user_user_id: req.session.user, fresh_name: delName },
       });
 
       // fresh테이블에서 나온 결과만 있을 때 fresh테이블에서 삭제
@@ -295,7 +289,7 @@ exports.patchToFridge = async (req, res) => {
         for (var i = 0; i < freRes.length; i++) {
           delValFromFresh = await fresh.destroy({
             where: {
-              user_user_id: final_user_id,
+              user_user_id: req.session.user,
               fresh_name: delName,
             },
           });
@@ -307,12 +301,12 @@ exports.patchToFridge = async (req, res) => {
         let froRes = await frozen.findAll({
           raw: true,
           attributes: [["frozen_name", "name"]],
-          where: { user_user_id: final_user_id, frozen_name: delName },
+          where: { user_user_id: req.session.user, frozen_name: delName },
         });
         for (var i = 0; i < froRes.length; i++) {
           delValFromFrozen = await frozen.destroy({
             where: {
-              user_user_id: final_user_id,
+              user_user_id: req.session.user,
               frozen_name: froRes[i].name,
             },
           });
@@ -341,7 +335,7 @@ exports.patchToFridge = async (req, res) => {
           ["fresh_name", "name"],
           ["fresh_range", "range"],
         ],
-        where: { user_user_id: final_user_id, fresh_name: ingdName },
+        where: { user_user_id: req.session.user, fresh_name: ingdName },
       });
 
       // freRes에 있는 ingdName과 같은 것 == fresh tb에서 수정할 때 필요한 이름
@@ -361,7 +355,7 @@ exports.patchToFridge = async (req, res) => {
           let data = { fresh_range: 50 };
           updateValFromFresh = await fresh.update(data, {
             where: {
-              user_user_id: final_user_id,
+              user_user_id: req.session.user,
               fresh_name: freIngdName[i],
             },
           });
@@ -375,7 +369,7 @@ exports.patchToFridge = async (req, res) => {
             ["frozen_name", "name"],
             ["frozen_range", "range"],
           ],
-          where: { user_user_id: final_user_id, frozen_name: ingdName },
+          where: { user_user_id: req.session.user, frozen_name: ingdName },
         });
 
         // frozen table에서 수정
@@ -383,7 +377,7 @@ exports.patchToFridge = async (req, res) => {
           let data = { frozen_range: 50 };
           updateValFromFrozen = await frozen.update(data, {
             where: {
-              user_user_id: final_user_id,
+              user_user_id: req.session.user,
               frozen_name: froIngdName[i],
             },
           });
@@ -407,14 +401,12 @@ exports.patchToFridge = async (req, res) => {
 
 // 최근에 본 레시피
 exports.postInsertToLog = async (req, res) => {
-  const final_user_id =
-    req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
   // 같은 레시피 id가 존재하면 log DB에 create 하지 않음
   let [find, create] = await log.findOrCreate({
     where: { recipe_recipe_id: req.body.id },
     defaults: {
       recipe_recipe_id: req.body.id,
-      user_user_id: final_user_id,
+      user_user_id: req.session.user,
     },
   });
   // find해서 create 하지 못해도 true넘기고, create해도 true
@@ -423,14 +415,12 @@ exports.postInsertToLog = async (req, res) => {
 
 // 최근에 한 요리
 exports.postInsertToCookLog = async (req, res) => {
-  const final_user_id =
-    req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
   // 같은 레시피 id가 존재하면 log DB에 create 하지 않음
   let [find, create] = await cooklog.findOrCreate({
     where: { recipe_recipe_id: req.body.id },
     defaults: {
       recipe_recipe_id: req.body.id,
-      user_user_id: final_user_id,
+      user_user_id: req.session.user,
     },
   });
   console.log("최근에 한 요리 create: ", create);
@@ -443,8 +433,6 @@ exports.postInsertToCookLog = async (req, res) => {
 // 좋아요 추가
 let likeUser = "";
 exports.postInsertToLike = async (req, res) => {
-  const final_user_id =
-    req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
   // recipe tb에 컬럼 수정
   let result = await recipe.update(
     { recipe_pick: 1 },
@@ -453,10 +441,10 @@ exports.postInsertToLike = async (req, res) => {
 
   // 같은 레시피 id와 유저가 존재하면 recipe_like DB에 create 하지 않음
   let [find, create] = await recipe_like.findOrCreate({
-    where: { recipe_recipe_id: req.body.id, user_user_id: final_user_id },
+    where: { recipe_recipe_id: req.body.id, user_user_id: req.session.user },
     defaults: {
       recipe_recipe_id: req.body.id,
-      user_user_id: final_user_id,
+      user_user_id: req.session.user,
     },
   });
   if (create) {
@@ -469,13 +457,10 @@ exports.postInsertToLike = async (req, res) => {
 
 // 좋아요 삭제
 exports.deleteFromLike = async (req, res) => {
-  const final_user_id =
-    req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
-
   let result = await recipe_like.destroy({
     where: {
       recipe_recipe_id: req.body.id,
-      user_user_id: final_user_id,
+      user_user_id: req.session.user,
     },
   });
 

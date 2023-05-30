@@ -6,10 +6,8 @@ const router = express.Router();
 router.get("/login", user.getSignin);
 // 로그인
 router.post("/user/check", user.postFindUser);
-
 // 소셜로그인
 router.get("/oauth/kakao", user.getKakao);
-router.post("/oauth/kakao", user.kakaoAccess);
 
 // 회원가입 렌더
 router.get("/join", user.getSignup);
@@ -25,7 +23,7 @@ router.post("/user/find-account", user.postFindAccount);
 router.patch("/user", user.patchUpdateUser);
 
 //로그아웃
-router.post("/logout", user.postSignOut);
+router.get("/logout", user.getSignOut);
 // 회원탈퇴
 router.delete("/user", user.deleteUser);
 module.exports = router;

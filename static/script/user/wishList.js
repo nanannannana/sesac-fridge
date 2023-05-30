@@ -15,13 +15,11 @@
 
 // 찜리스트 좋아요 삭제
 function wishlist_del(recipe_id, target) {
-  var post_num = $("#wishlist_card_box_child").children().length;
   axios({
     method: "delete",
     url: "/mypage/wishlist",
     data: {
       recipe_id: recipe_id,
-      num: post_num - 1,
     },
   }).then(function (res) {
     $("#wishlist_card_box_child").remove();

@@ -6,7 +6,7 @@
 <main>
     <%-include('myPageSideBar.ejs')%>
     <div id="wishlist_box" class="container">
-        <p id="box_title"><span><%=user_name%>님</span>의 찜리스트</p>
+        <p class="container_title"><span><%=user_name%>님</span>의 찜리스트</p>
         <div id="wishlist_card_box">
             <div id="wishlist_card_box_child">
                 <% if (wishlist.length == 0 ) { %>
@@ -29,23 +29,6 @@
                 <% } %>
             </div>
         </div>
-        <nav aria-label="Page navigation">
-            <ul id="js-pagination" class="pagination">
-                <!-- <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li> -->
-            </ul>
-        </nav>
     </div>
 </main>
 <%-include('../main/footer.ejs') %>

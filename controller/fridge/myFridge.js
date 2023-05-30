@@ -4,19 +4,15 @@ const { recipe } = require("../../model");
 
 // 나의 냉장고 페이지 렌더 - 영은
 exports.getMyFridge = async (req, res) => {
-  if (req.session.user || req.cookies.user_id) {
+  if (req.session.user) {
     //로그인 후
-    const final_user_id =
-      req.cookies.user_id === undefined
-        ? req.session.user
-        : req.cookies.user_id;
     let fresh_result = await fresh.findAndCountAll({
-      where: { user_user_id: final_user_id },
+      where: { user_user_id: req.session.user },
       order: [["fresh_expire", "ASC"]],
     });
 
     let frozen_result = await frozen.findAndCountAll({
-      where: { user_user_id: final_user_id },
+      where: { user_user_id: req.session.user },
       order: [["frozen_date", "ASC"]],
     });
     // console.log("list :", fresh_result.count, frozen_result.count );
@@ -24,6 +20,7 @@ exports.getMyFridge = async (req, res) => {
       //로그인 O & 오늘안봄클릭 O
       res.render("fridge/myFridge", {
         isLogin: true,
+        kakao_login: req.session.kakao_login,
         user_name: req.session.user_name,
         fresh_list: fresh_result.rows,
         frozen_list: frozen_result.rows,
@@ -33,6 +30,7 @@ exports.getMyFridge = async (req, res) => {
       res.render("fridge/myFridge", {
         //로그인 O & 오늘안봄클릭 X
         isLogin: true,
+        kakao_login: req.session.kakao_login,
         user_name: req.session.user_name,
         fresh_list: fresh_result.rows,
         frozen_list: frozen_result.rows,
@@ -40,7 +38,11 @@ exports.getMyFridge = async (req, res) => {
       });
     }
   } else {
-    res.render("fridge/myFridge404", { isLogin: false, user_name: false });
+    res.render("fridge/myFridge404", {
+      isLogin: false,
+      kakao_login: false,
+      user_name: false,
+    });
   }
 };
 
@@ -60,13 +62,10 @@ exports.postEmptyAlertCookie = async (req, res) => {
 
 // 냉장실 입력한 식재료 중복여부 확인
 exports.postCheckFresh = async (req, res) => {
-  const final_user_id =
-    req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
-
   console.log("postCheckFresh req.body:", req.body);
   let result = await fresh.findOne({
     where: {
-      user_user_id: final_user_id,
+      user_user_id: req.session.user,
       fresh_name: req.body.name,
     },
   });
@@ -76,12 +75,10 @@ exports.postCheckFresh = async (req, res) => {
 
 // 냉동실 입력한 식재료 중복여부 확인
 exports.postCheckFrozen = async (req, res) => {
-  const final_user_id =
-    req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
   console.log("postCheckFrozen req.body:", req.body);
   let result = await frozen.findOne({
     where: {
-      user_user_id: final_user_id,
+      user_user_id: req.session.user,
       frozen_name: req.body.name,
     },
   });
@@ -91,16 +88,13 @@ exports.postCheckFrozen = async (req, res) => {
 
 // 냉장실에 새로운 식재료 추가
 exports.postAddToFresh = async (req, res) => {
-  const final_user_id =
-    req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
-
   console.log("postAddToFresh req.body : ", req.body);
   let data = {
     fresh_name: req.body.name,
     fresh_range: req.body.range,
     fresh_expire: req.body.expire,
     fresh_category: req.body.category,
-    user_user_id: final_user_id,
+    user_user_id: req.session.user,
   };
   let result = await fresh.create(data);
   console.log("postAddToFresh result : ", result);
@@ -109,15 +103,12 @@ exports.postAddToFresh = async (req, res) => {
 
 // 냉동실에 새로운 식재료 추가
 exports.postAddToFrozen = async (req, res) => {
-  const final_user_id =
-    req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
-
   console.log("postAddToFrozen req.body : ", req.body);
   let data = {
     frozen_name: req.body.name,
     frozen_date: req.body.date,
     frozen_range: req.body.range,
-    user_user_id: final_user_id,
+    user_user_id: req.session.user,
   };
   let result = await frozen.create(data);
   console.log("postAddToFrozen result : ", result);
@@ -126,9 +117,6 @@ exports.postAddToFrozen = async (req, res) => {
 
 // 냉장실 식재료 수정
 exports.patchUpdateFresh = async (req, res) => {
-  const final_user_id =
-    req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
-
   console.log("patchUpdateFresh req.body : ", req.body);
   console.log("req.name", req.body.name);
   let data = {
@@ -138,7 +126,7 @@ exports.patchUpdateFresh = async (req, res) => {
 
   let result = await fresh.update(data, {
     where: {
-      user_user_id: final_user_id,
+      user_user_id: req.session.user,
       fresh_name: req.body.name,
     },
   });
@@ -148,9 +136,6 @@ exports.patchUpdateFresh = async (req, res) => {
 };
 // 냉동실 식재료 수정
 exports.patchUpdateFrozen = async (req, res) => {
-  const final_user_id =
-    req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
-
   console.log("patchUpdateFrozen req.body : ", req.body);
   let data = {
     frozen_date: req.body.date,
@@ -158,7 +143,7 @@ exports.patchUpdateFrozen = async (req, res) => {
   };
   let result = await frozen.update(data, {
     where: {
-      user_user_id: final_user_id,
+      user_user_id: req.session.user,
       frozen_name: req.body.name,
     },
   });
@@ -168,15 +153,12 @@ exports.patchUpdateFrozen = async (req, res) => {
 
 // 식재료 삭제
 exports.deleteDeleteIngd = async (req, res) => {
-  const final_user_id =
-    req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
-
   console.log("postDeleteIngd req.body : ", req.body);
 
   if (req.body.fridgeName == "fresh") {
     let result = await fresh.destroy({
       where: {
-        user_user_id: final_user_id,
+        user_user_id: req.session.user,
         fresh_name: req.body.name,
       },
     });
@@ -185,7 +167,7 @@ exports.deleteDeleteIngd = async (req, res) => {
   } else {
     let result = await frozen.destroy({
       where: {
-        user_user_id: final_user_id,
+        user_user_id: req.session.user,
         frozen_name: req.body.name,
       },
     });

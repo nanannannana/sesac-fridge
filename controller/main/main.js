@@ -16,27 +16,16 @@ let exp_list_arr = new Array(); // 유통기한 지난 식재료 > getMain - exp
 // 메인 페이지 렌더 - 영은
 exports.getMain = async (req, res) => {
   // render시 필요한 key-value's
-  // [1] 자동 로그인 여부 T/F - req.cookies.user_id
-  // [2] 로그인 여부 T/F - isLogin
-  // [3] 유통기한 임박(2일 이내) 식재료 수 - fresh_count
-  // [4] 유통기한 지난 식재료 수 - exp_count (식재료 목록도 필요)
-  const final_user_id = !req.cookies.user_id
-    ? req.session.user
-    : req.cookies.user_id;
-  console.log("final_user_id: ", final_user_id);
-  // 자동로그인 여부 확인
-  // 자동로그인 설정X(쿠키 값 undefined): final_user_id는 req.session.user(세션에 넣어둔 user_id값이 아이디가 됨)
-  // 자동로그인 설정O(쿠키 값 有): final_user_id는 req.cookies.user_id(쿠키에 넣어둔 user_id값이 아이디가 됨)
-
-  // 로그인 여부로 if문을 나눔
-  // 1) 로그인(+ 자동로그인)을 한 경우,
-  let recipe_result = await recipe.findAll({
+  // [1] 로그인 여부 T/F - isLogin
+  // [2] 유통기한 임박(2일 이내) 식재료 수 - fresh_count
+  // [3] 유통기한 지난 식재료 수 - exp_count (식재료 목록도 필요)
+  const popular_recipes = await recipe.findAll({
     raw: true,
     order: [["recipe_pick", "desc"]],
     limit: 4,
   });
-  // console.log(recipe_result);
-  if (req.cookies.user_id || req.session.user) {
+
+  if (req.session.user) {
     // 임박 식재료 개수
     let fresh_count = await fresh.findAndCountAll({
       where: {
@@ -44,7 +33,7 @@ exports.getMain = async (req, res) => {
           [Op.gte]: today,
           [Op.lte]: date,
         },
-        user_user_id: final_user_id,
+        user_user_id: req.session.user,
       },
     });
     // 유통기한 지난 식재료 개수 & list
@@ -53,34 +42,36 @@ exports.getMain = async (req, res) => {
         fresh_expire: {
           [Op.lt]: today,
         },
-        user_user_id: final_user_id,
+        user_user_id: req.session.user,
       },
     });
     exp_list_arr = exp_list.rows; //global 배열에 유통기한 지난 식재료 목록 담음
-    let user_result = await user.findOne({
+
+    const user_info = await user.findOne({
       attributes: ["user_name"],
-      where: { user_id: final_user_id },
+      where: { user_id: req.session.user },
     });
-    req.session.isLogin = true;
-    req.session.user_name = user_result.user_name;
+
+    req.session.user_name = user_info.user_name;
     req.session.fresh_count = fresh_count.count;
     req.session.exp_count = exp_list.count;
 
     res.render("main/main", {
-      isLogin: req.session.isLogin,
+      isLogin: true,
+      kakao_login: req.session.kakao_login,
       user_name: req.session.user_name,
       fresh_count: req.session.fresh_count,
       exp_count: req.session.exp_count,
-      recipe: recipe_result,
+      popular_recipes: popular_recipes,
     });
   } else {
-    // 1) 로그인(+ 자동로그인)을 하지 않은 경우,
     res.render("main/main", {
       isLogin: false,
+      kakao_login: false,
       user_name: false,
       fresh_count: false,
       exp_count: false,
-      recipe: recipe_result,
+      popular_recipes: popular_recipes,
     });
   }
 };
@@ -88,8 +79,6 @@ exports.getMain = async (req, res) => {
 // getMain에서 담은 유통기한 지난 식재료 global 배열 exp_list_arr
 // 의 요소들 DB에서 차례로 삭제
 exports.deleteDeleteAlert = async (req, res) => {
-  const final_user_id =
-    req.cookies.user_id === undefined ? req.session.user : req.cookies.user_id;
   let list = [];
 
   // for (i = 0; i < exp_list_arr.length; i++) {
@@ -98,7 +87,7 @@ exports.deleteDeleteAlert = async (req, res) => {
 
     let result = await fresh.destroy({
       where: {
-        user_user_id: final_user_id,
+        user_user_id: req.session.user,
         fresh_name: el.fresh_name,
       },
     });
