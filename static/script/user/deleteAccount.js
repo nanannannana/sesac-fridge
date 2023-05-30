@@ -1,9 +1,8 @@
-function info_del() {
+function delete_account() {
   axios({
     method: "delete",
     url: "/user",
-  }).then(function () {
-    localStorage.clear();
+  }).then(() => {
     Swal.fire({
       icon: "success",
       title: "회원 탈퇴가 완료되었습니다!",
