@@ -63,7 +63,7 @@ exports.postFindUser = async function (req, res) {
       res.status(200).send(false);
     }
   } else {
-    res.status(400).send({ message: "bad request" });
+    res.status(400).send({ message: "Access token or ID doesn't exist" });
   }
 };
 
@@ -274,7 +274,7 @@ exports.deleteUser = async (req, res) => {
       if (err) throw err;
     });
     return res.status(200).send(true);
+  } else {
+    res.status(500).send({ message: "Internal Server Error" });
   }
-
-  return res.status(400).send(false);
 };
