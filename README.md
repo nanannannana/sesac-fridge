@@ -23,18 +23,6 @@
 <br>
 <br>
 
-## ⭐️ 주요 기능 
-* 냉장고에 식재료 추가, 수정 및 삭제
-* 유통기한 경과, 임박 식재료 알림 및 경과 식재료 자동 삭제
-* 냉장고 식재료 기반 맞춤형 레시피 추천 제공
-* 레시피에 사용된 냉장고 식재료 자동 변경
-* 회원관리 CRUD 및 소셜 로그인(카카오) 제공
-* 냉장고 식재료 현황 및 레시피 좋아요 기능 제공
-
-<br>
-<br>
-<br>
-
 ## ⭐️ ERD
 <img width="1233" alt="fridgeDB" src="https://github.com/nanannannana/nanannannana/assets/114964102/534e3cf0-8846-49f1-b157-f750e0c20cce">
 
@@ -50,13 +38,25 @@
 <br>
 <br>
 
+## ⭐️ 주요 기능 
+* 냉장고에 식재료 추가, 수정 및 삭제
+* 유통기한 경과, 임박 식재료 알림 및 경과 식재료 자동 삭제
+* 냉장고 식재료 기반 맞춤형 레시피 추천 제공
+* 레시피에 사용된 냉장고 식재료 자동 변경
+* 회원관리 CRUD 및 소셜 로그인(카카오) 제공
+* 냉장고 식재료 현황 및 레시피 좋아요 기능 제공
+
+<br>
+<br>
+<br>
+
 ## ⭐️ 담당 기능
-* Sequelize ORM을 이용해 CRUD 구현
-* Cookie & Session을 사용한 자동로그인 구현
-* bcrypt를 이용한 비밀번호 암호화 저장
-* NCP(Naver Cloud Platform)의 SMS API를 사용한 사용자 비밀번호 발송
-* REST API를 사용하여 소셜 로그인(kakao) 구현
-* AWS EC2를 사용하여 배포
+* **Sequelize ORM**을 이용해 CRUD 구현
+* **Cookie & Session**을 사용한 자동로그인 구현
+* **bcrypt**를 이용한 비밀번호 암호화 저장
+* **NCP**(Naver Cloud Platform)의 **SMS API**를 사용한 사용자 비밀번호 발송
+* REST API를 사용하여 **소셜 로그인(kakao)** 구현
+* **AWS EC2**를 사용하여 배포
 * 정규표현식을 사용한 아이디 중복 및 유효성 검사 기능 구현(form-validation)
 * BootStrap을 이용한 반응형 웹 구현
 
@@ -65,4 +65,4 @@
 <br>
 
 ## ⭐️ API 명세서
-![API 명세서](https://github.com/nanannannana/nanannannana/assets/114964102/fe16bc76-407b-4c98-87d0-0ac39773dde5)
+![API 명세서](https://github.com/nanannannana/nanannannana/assets/114964102/670a6658-d0c1-489b-a374-2cb7433a917a)
