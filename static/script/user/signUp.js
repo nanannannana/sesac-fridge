@@ -42,17 +42,15 @@ function signup_push() {
 
 // 아이디 이메일 유효성 검사
 function id_check() {
-  var user_id = document.getElementById("form_signup").user_id.value;
-  var id_check = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+  const user_id = document.getElementById("form_signup").user_id.value;
+  const id_check =
+    /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
   if (!id_check.test(user_id)) {
     $("#user_id").addClass("is-invalid");
   } else {
-    axios({
-      method: "post",
-      url: "/user/id",
-      data: { user_id: user_id },
-    }).then(function (res) {
-      if (res.data) {
+    axios
+      .get(`/api/v1/verify/${user_id}`)
+      .then(() => {
         Swal.fire({
           icon: "success",
           title: "사용 가능한 이메일 입니다.",
@@ -60,27 +58,32 @@ function id_check() {
           confirmButtonText: "확인",
           confirmButtonColor: "#7E998F",
         });
-      } else {
-        Swal.fire({
-          icon: "warning",
-          title: "중복된 이메일 입니다!",
-          text: "다른 이메일을 사용해 주세요.",
-          showConfirmButtom: true,
-          confirmButtonText: "확인",
-          confirmButtonColor: "#ED6C67",
-        });
-      }
-    });
+      })
+      .catch((error) => {
+        if (error.response.status == 403) {
+          Swal.fire({
+            icon: "warning",
+            title: "중복된 이메일 입니다!",
+            text: "다른 이메일을 사용해 주세요.",
+            showConfirmButtom: true,
+            confirmButtonText: "확인",
+            confirmButtonColor: "#ED6C67",
+          });
+        } else {
+          alert("[Error] 서버 오류가 발생했습니다. 다시 시도해주세요.");
+        }
+      });
   }
 }
 
 // 회원가입
 function signup() {
-  var form = document.getElementById("form_signup");
-  var id_check = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-  var pw_check = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
-  var name_check = /^[a-zA-Z가-힣]{2,10}$/;
-  var phone_check = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+  const form = document.getElementById("form_signup");
+  const id_check =
+    /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+  const pw_check = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+  const name_check = /^[a-zA-Z가-힣]{2,10}$/;
+  const phone_check = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
   if (!id_check.test(form.user_id.value)) {
     $("#user_id").addClass("is-invalid");
   } else if (!pw_check.test(form.user_pw.value)) {
@@ -95,17 +98,14 @@ function signup() {
   } else if (!phone_check.test(form.user_phone.value)) {
     $("#phone_num").addClass("is-invalid");
   } else {
-    axios({
-      method: "post",
-      url: "/user",
-      data: {
+    axios
+      .post("/api/v1/user", {
         user_id: form.user_id.value,
         user_pw: form.user_pw.value,
         user_name: form.user_name.value,
         user_phone: form.user_phone.value.replace(/-/g, ""),
-      },
-    }).then(async function (res) {
-      if (res.data) {
+      })
+      .then(() => {
         Swal.fire({
           icon: "success",
           title: "회원가입을 완료했습니다!",
@@ -117,17 +117,21 @@ function signup() {
             location.href = "/login";
           },
         });
+      })
+      .catch((error) => {
         form.reset();
-      } else {
-        Swal.fire({
-          icon: "warning",
-          title: "중복된 이메일 입니다!",
-          text: "다른 이메일을 사용해 주세요.",
-          showConfirmButtom: true,
-          confirmButtonText: "확인",
-          confirmButtonColor: "#ED6C67",
-        });
-      }
-    });
+        if (error.response.status == 403) {
+          Swal.fire({
+            icon: "warning",
+            title: "중복된 이메일 입니다!",
+            text: "다른 이메일을 사용해 주세요.",
+            showConfirmButtom: true,
+            confirmButtonText: "확인",
+            confirmButtonColor: "#ED6C67",
+          });
+        } else {
+          alert("[Error] 서버 오류가 발생했습니다. 다시 시도해주세요.");
+        }
+      });
   }
 }

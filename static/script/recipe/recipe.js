@@ -35,7 +35,7 @@ function insertLog(id, url, login) {
     let recipe_id = id;
     axios({
       method: "post",
-      url: "/recipe/insertToLog",
+      url: "/api/v1/recipe/insertToLog",
       data: { id: recipe_id },
     }).then((res) => {
       window.open("about:blank").location.href = url;
@@ -48,7 +48,7 @@ function insertLike(element, id) {
   let recipe_id = id;
   axios({
     method: "post",
-    url: "/recipe/insertToLike",
+    url: "/api/v1/recipe/insertToLike",
     data: { id: recipe_id },
   }).then((res) => {
     // 찜리스트에 담겼다고 alert창띄우기
@@ -89,7 +89,7 @@ function deleteLike(element, id) {
   let recipe_id = id;
   axios({
     method: "delete",
-    url: "/recipe/deleteFromLike",
+    url: "/api/v1/recipe/deleteFromLike",
     data: { id: recipe_id },
   }).then((res) => {
     if (res.data === 1) {
@@ -280,7 +280,7 @@ function checkIngd(htmlTag) {
   if (htmlTag.checked == true) {
     checkboxArr.push(htmlTag.value);
     checkboxArr.push(htmlTag.title);
-    console.log(checkboxArr);
+    // console.log(checkboxArr);
   } else {
     //
     var idx = checkboxArr.indexOf(htmlTag.value); // 해당 클릭한 이름의 idx를 배열에서 찾고,
@@ -290,7 +290,7 @@ function checkIngd(htmlTag) {
       // idx=0부터 배열에서 해당 idx의 name,range 삭제
       checkboxArr.splice(idx, 2);
       idx = checkboxArr.indexOf(htmlTag.value);
-      console.log(checkboxArr);
+      // console.log(checkboxArr);
     }
   }
 }
@@ -355,7 +355,7 @@ function updateToFridge(result, id) {
 
   axios({
     method: "patch",
-    url: "/recipe/toFridge",
+    url: "/api/v1/recipe/toFridge",
     data: resultArr,
   }).then((res) => {
     if (res.data || res.data == 0 || res.data == 1) {
@@ -382,9 +382,9 @@ function insertCookLog(id) {
   let recipe_id = id;
   axios({
     method: "post",
-    url: "/recipe/insertToCookLog",
+    url: "/api/v1/recipe/insertToCookLog",
     data: { id: recipe_id },
   }).then((res) => {
-    console.log("res.data", res.data);
+    // console.log("res.data", res.data);
   });
 }

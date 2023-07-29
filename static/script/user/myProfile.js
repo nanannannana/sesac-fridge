@@ -38,20 +38,24 @@ function info_update() {
     } else {
       axios({
         method: "patch",
-        url: "/user",
+        url: "/api/v1/user",
         data: {
           user_name: form.user_name.value,
           user_phone: form.user_phone.value.replace(/-/g, ""),
         },
-      }).then(function () {
-        Swal.fire({
-          icon: "success",
-          title: "회원정보 수정이 완료됐습니다!",
-          showConfirmButtom: true,
-          confirmButtonText: "확인",
-          confirmButtonColor: "#7E998F",
+      })
+        .then(() => {
+          Swal.fire({
+            icon: "success",
+            title: "회원정보 수정이 완료됐습니다!",
+            showConfirmButtom: true,
+            confirmButtonText: "확인",
+            confirmButtonColor: "#7E998F",
+          });
+        })
+        .catch(() => {
+          alert("[Error] 서버 오류가 발생했습니다. 다시 시도해주세요.");
         });
-      });
     }
   } else {
     // 회원정보 수정(비밀번호 포함) O
@@ -69,21 +73,25 @@ function info_update() {
     } else {
       axios({
         method: "patch",
-        url: "/user",
+        url: "/api/v1/user",
         data: {
           user_pw: form.user_new_pw.value,
           user_name: form.user_name.value,
           user_phone: form.user_phone.value.replace(/-/g, ""),
         },
-      }).then(function () {
-        Swal.fire({
-          icon: "success",
-          title: "회원정보 수정이 완료됐습니다!",
-          showConfirmButtom: true,
-          confirmButtonText: "확인",
-          confirmButtonColor: "#7E998F",
-        });
-      });
+      })
+        .then(() => {
+          Swal.fire({
+            icon: "success",
+            title: "회원정보 수정이 완료됐습니다!",
+            showConfirmButtom: true,
+            confirmButtonText: "확인",
+            confirmButtonColor: "#7E998F",
+          });
+        })
+        .catch(() =>
+          alert("[Error] 서버 오류가 발생했습니다. 다시 시도해주세요.")
+        );
     }
   }
 }

@@ -11,8 +11,8 @@
 
 <script>
   function go_to_profile() {
-    "<%=kakao_login%>" == "true"
+    "<%=social_login%>" == "true"
       ? (location.href = "/mypage/profile")
-      : (location.href = "/mypage/password");
+      : (location.href = "/mypage/check-password");
   }
 </script>

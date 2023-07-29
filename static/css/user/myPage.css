@@ -3,8 +3,8 @@
   justify-content: space-between;
   margin-top: 2%;
 }
-.fresh_ingredients_category_chart,
-.cooked_dishes_category_chart {
+.fresh_ingredients_categories_chart,
+.cooked_dishes_categories_chart {
   text-align: center;
   font-size: 30px;
   font-weight: bolder;
@@ -150,8 +150,8 @@
   .chart_container {
     justify-content: space-evenly;
   }
-  #fresh_ingredients_category,
-  #cooked_dishes_category {
+  #fresh_ingredients_categories,
+  #cooked_dishes_categories {
     width: 450px !important;
     height: 450px !important;
   }
@@ -160,12 +160,12 @@
   .chart_container {
     display: block;
   }
-  .fresh_ingredients_category_chart,
-  .cooked_dishes_category_chart {
+  .fresh_ingredients_categories_chart,
+  .cooked_dishes_categories_chart {
     text-align: center;
   }
-  #fresh_ingredients_category,
-  #cooked_dishes_category {
+  #fresh_ingredients_categories,
+  #cooked_dishes_categories {
     display: inline-block !important;
   }
   .go_to_button {
@@ -200,7 +200,7 @@
   }
 }
 @media (max-width: 768px) {
-  #cooked_dishes_category {
+  #cooked_dishes_categories {
     width: 550px !important;
     height: 500px !important;
   }
@@ -232,11 +232,11 @@
   }
 }
 @media (max-width: 600px) {
-  #fresh_ingredients_category {
+  #fresh_ingredients_categories {
     width: 310px !important;
     height: 310px !important;
   }
-  #cooked_dishes_category {
+  #cooked_dishes_categories {
     width: 350px !important;
     height: 300px !important;
   }
@@ -294,11 +294,11 @@
   }
 }
 @media (max-width: 350px) {
-  #fresh_ingredients_category {
+  #fresh_ingredients_categories {
     width: 300px !important;
     height: 300px !important;
   }
-  #cooked_dishes_category {
+  #cooked_dishes_categories {
     width: 310px !important;
     height: 260px !important;
   }

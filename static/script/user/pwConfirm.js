@@ -19,16 +19,18 @@ function pw_confirm() {
   } else {
     axios({
       method: "post",
-      url: "/mypage/password/check",
+      url: "/api/v1/mypage/check-password",
       data: {
         user_pw: form.user_pw.value,
       },
-    }).then(async function (res) {
-      if (res.data) {
-        location.href = "/mypage/profile";
-      } else {
-        $("#user_pw").addClass("is-invalid");
-      }
-    });
+    })
+      .then(() => (location.href = "/mypage/profile"))
+      .catch((error) => {
+        if (error.response.status == 400) {
+          $("#user_pw").addClass("is-invalid");
+        } else {
+          alert("[Error] 서버 오류가 발생했습니다. 다시 시도해주세요.");
+        }
+      });
   }
 }

@@ -241,17 +241,12 @@
 
       let date = new Date(); // 오늘+2일 후
       date.setDate(date.getDate() + 2);
-      console.log("<%=user_name%>", "<%=exp_count%>", "<%=fresh_count%>");
+      // console.log("<%=user_name%>", "<%=exp_count%>", "<%=fresh_count%>");
       welcomeToast("<%=user_name%>", "<%=fresh_count%>");
       if ("<%=exp_count%>" > 0) {
         // 삭제할 식재료 존재 & 로그인 O
         deleteAlert("<%=user_name%>", "<%=exp_count%>"); // 식재료 삭제 & 알림
       }
-      //   console.log(`${localStorage.getItem("username")}`,"<%=exp_count%>");
-      //   welcomeToast(`${localStorage.getItem("username")}`,"<%=fresh_count%>");
-      //   if( "<%=exp_count%>" > 0 ){ // 삭제할 식재료 존재 & 로그인 O
-      //     deleteAlert(`${localStorage.getItem("username")}`,"<%=exp_count%>"); // 식재료 삭제 & 알림
-      //   }
     }
   </script>
 </main>

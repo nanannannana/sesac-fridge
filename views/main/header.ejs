@@ -12,10 +12,10 @@
                     <span id="sign_out" type="button" onclick="logout()"> 로그아웃</span>
                     <script>
                         function logout() {
-                            if ('<%=kakao_login%>' == 'true') {
+                            if ('<%=social_login%>' == 'true') {
                                 location.href = 'https://kauth.kakao.com/oauth/logout?client_id=<%=process.env.REST_API_KEY%>&logout_redirect_uri=<%=process.env.LOGOUT_REDIRECT_URI%>';
                             } else {
-                                location.href = '/logout';
+                                location.href = '/api/v1/auth/logout';
                             }
                         }
                     </script>
@@ -45,8 +45,8 @@
                             <a class="nav-link active hidden" id="nw_2" aria-current="page" href="/mypage/wishlist">찜 리스트</a>
                         </li>
                         <li class="nav-item" id="nav_fridge">
-                            <a href="/myFridge" id="nf_1"><img src="../../static/img/navFridge.png"></a>
-                            <a class="nav-link active hidden" id="nf_2" aria-current="page" href="/myFridge">나의 냉장고</a>
+                            <a href="/myfridge" id="nf_1"><img src="../../static/img/navFridge.png"></a>
+                            <a class="nav-link active hidden" id="nf_2" aria-current="page" href="/myfridge">나의 냉장고</a>
                         </li>
                     </ul>
                 </div>

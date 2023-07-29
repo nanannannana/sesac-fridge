@@ -1,10 +1,10 @@
 // 유통기한 지난 식재료 DB에서 삭제 & 알림, 영은
 function deleteAlert(user_name, exp_count) {
   axios({
-    method: 'delete',
-    url: '/deleteAlert',
+    method: "delete",
+    url: "/api/v1/fridge/deleteAlert",
   }).then((res) => {
-    console.log('list :', res.data.list);
+    // console.log("list :", res.data.list);
     //알림창 생성
     Swal.fire({
       html: `
@@ -13,9 +13,9 @@ function deleteAlert(user_name, exp_count) {
       <div class="mb-2">유통기한이 지나 삭제되었습니다</div>
       <small>냉장고를 확인해주세요</small>
       `,
-      icon: 'warning',
-      confirmButtonText: '확인',
-      confirmButtonColor: '#7E998F',
+      icon: "warning",
+      confirmButtonText: "확인",
+      confirmButtonColor: "#7E998F",
     });
   });
 }
@@ -27,12 +27,12 @@ function welcomeToast(user_name, count) {
     <p style="display: inline-block; margin:0;">기다리고 있어요 !</p>`;
     Swal.fire({
       html: html,
-      target: '#custom-target',
+      target: "#custom-target",
       customClass: {
-        container: 'position-absolute',
+        container: "position-absolute",
       },
       toast: true,
-      position: 'top-right',
+      position: "top-right",
       showConfirmButton: false,
     });
   }

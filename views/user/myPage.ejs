@@ -17,13 +17,13 @@
   <form id="form">
     <input
       type="hidden"
-      name="fresh_ingredients_category"
-      value="<%=fresh_ingredients_category%>"
+      name="fresh_ingredients_categories"
+      value="<%=fresh_ingredients_categories%>"
     />
     <input
       type="hidden"
-      name="cooked_dishes_category"
-      value="<%=cooked_dishes_category%>"
+      name="cooked_dishes_categories"
+      value="<%=cooked_dishes_categories%>"
     />
   </form>
 
@@ -31,21 +31,21 @@
     <div style="margin-bottom: 100px">
       <p class="container_title"><span><%=user_name%>님</span>의 통계차트</p>
       <div class="chart_container">
-        <div class="fresh_ingredients_category_chart">
+        <div class="fresh_ingredients_categories_chart">
           <p class="chart_title">냉장실 재료 카테고리별 차트</p>
           <canvas
-            id="fresh_ingredients_category"
+            id="fresh_ingredients_categories"
             width="550px;"
             height="600px;"
           ></canvas>
-          <button class="btn go_to_button" onclick="location.href='/myFridge'">
+          <button class="btn go_to_button" onclick="location.href='/myfridge'">
             나의 냉장고 바로가기
           </button>
         </div>
-        <div class="cooked_dishes_category_chart">
+        <div class="cooked_dishes_categories_chart">
           <p id="chart_title">최근에 한 요리 카테고리별 차트(10개)</p>
           <canvas
-            id="cooked_dishes_category"
+            id="cooked_dishes_categories"
             width="650px;"
             height="599.99px;"
           ></canvas>

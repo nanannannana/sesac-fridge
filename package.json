@@ -1,42 +1,38 @@
 {
   "name": "sesac_fridge",
   "version": "1.0.0",
-  "description": "냉장고 집사 프로젝트 입니다.",
+  "description": "냉장고 집사 프로젝트",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prod": "cross-env NODE_ENV=production pm2 start --watch 'bin/*' --watch 'src/*' bin/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon --watch 'bin/*' --watch 'src/*' bin/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jihyang1106/SeSAC_Fridge.git"
+    "url": "git+https://github.com/nanannannana/SeSAC_Fridge.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jihyang1106/SeSAC_Fridge/issues"
+    "url": "https://github.com/nanannannana/SeSAC_Fridge/issues"
   },
-  "homepage": "https://github.com/jihyang1106/SeSAC_Fridge#readme",
+  "homepage": "https://github.com/nanannannana/SeSAC_Fridge#readme",
   "dependencies": {
     "axios": "^1.2.1",
     "bcryptjs": "^2.4.3",
-    "bootstrap-icons": "^1.10.2",
     "cookie-parser": "^1.4.6",
+    "cross-env": "^7.0.3",
     "crypto-js": "^4.1.1",
     "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
-    "init": "^0.1.2",
-    "module": "^1.2.5",
-    "modules": "^0.4.0",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
-    "node-fetch": "^2.6.7",
     "nodemon": "^2.0.20",
-    "request": "^2.88.2",
     "sequelize": "^6.26.0",
-    "sequelize-cli": "^6.5.2",
-    "sql": "^0.78.0"
+    "sequelize-cli": "^6.5.2"
   },
   "keywords": [],
   "devDependencies": {

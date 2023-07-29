@@ -52,24 +52,25 @@ function enter_push() {
   }
 }
 
-// 로그인 버튼 클릭 시 동작하는 함수
 function signin() {
-  var form = document.getElementById("form_signin");
+  const form = document.getElementById("form_signin");
+  let data;
   // 자동로그인 선택
   if ($('input:checkbox[id="remember_me_check"]').is(":checked")) {
-    var data = {
+    data = {
       user_id: form.user_id.value,
       user_pw: form.user_pw.value,
       remember_me_check: form.remember_me_check.value,
     };
   } else {
     // 자동로그인 미선택
-    var data = {
+    data = {
       user_id: form.user_id.value,
       user_pw: form.user_pw.value,
       remember_me_check: "0",
     };
   }
+
   if (!form.user_id.value) {
     $("#user_id").addClass("is-invalid");
   } else if (!form.user_pw.value) {
@@ -77,24 +78,23 @@ function signin() {
   } else {
     axios({
       method: "post",
-      url: "/user/check",
+      url: "/api/v1/auth/login",
       data: data,
     })
-      .then(async function (res) {
+      .then(() => {
         form.reset();
-        if (res.data) {
-          Swal.fire({
-            icon: "success",
-            title: "로그인에 성공하였습니다!",
-            text: "확인을 누르면 메인페이지로 이동합니다.",
-            showConfirmButtom: true,
-            confirmButtonText: "확인",
-            confirmButtonColor: "#7E998F",
-            preConfirm: () => {
-              location.href = "/";
-            },
-          });
-        } else {
+        Swal.fire({
+          icon: "success",
+          title: "로그인에 성공하였습니다!",
+          text: "확인을 누르면 메인페이지로 이동합니다.",
+          showConfirmButtom: true,
+          confirmButtonText: "확인",
+          confirmButtonColor: "#7E998F",
+          preConfirm: () => (location.href = "/"),
+        });
+      })
+      .catch((error) => {
+        if (error.response.status == 400) {
           Swal.fire({
             icon: "error",
             title: "로그인에 실패하였습니다!",
@@ -103,78 +103,98 @@ function signin() {
             confirmButtonText: "확인",
             confirmButtonColor: "#ED6C67",
           });
+        } else {
+          alert("[Error] 서버 오류가 발생하였습니다. 다시 시도해주세요.");
         }
-      })
-      .catch(() => alert("[error] 로그인을 다시 시도해주세요."));
+      });
   }
 }
-// 아이디 찾기 클릭 시 동작하는 함수
+
 function id_find() {
-  var form = document.getElementById("form_id_find");
-  axios({
-    method: "post",
-    url: "/user/find-account",
-    data: {
+  const form = document.getElementById("form_id_find");
+  axios
+    .post("/api/v1/user/find-account", {
       user_name: form.user_name.value,
       user_phone: form.user_phone.value.replace(/-/g, ""),
-    },
-  }).then(function (res) {
-    form.reset();
-    if (!res.data) {
-      $("#modal_body_text").remove();
-      $("#modal_body_box").remove();
-      $("#modal_body").append(`
-            <div id="modal_body_text">
-                <p style="font-size: 20px; font-weight: bold;">이메일을 찾지 못했습니다.</p>
-                <button id="button2" type="button" class="btn" onclick="location.href='/join'" style="margin-right: 7px;">회원가입 하기</button>
-                <button id="button3" type="button" class="btn" data-bs-dismiss="modal">닫기</button>
-            </div>
-            `);
-    } else {
+    })
+    .then((res) => {
+      form.reset();
+      const { data } = res.data;
       $("#modal_body_text").remove();
       $("#modal_body_box").remove();
       $("#modal_body").append(`
             <div id="modal_body_box">
-                  <p id="modal_2page_text"><span id="res_data_user_name">${res.data.user_name}</span>님의 이메일은</p>
-                  <p id="modal_2page_text"><span id="res_data_user_id">${res.data.user_id}</span> 입니다.</span></p>
+                  <p id="modal_2page_text"><span id="res_data_user_name">${data.user_name}</span>님의 이메일은</p>
+                  <p id="modal_2page_text"><span id="res_data_user_id">${data.user_id}</span> 입니다.</span></p>
                   <button id="button2" type="button" class="btn pw_find_btn" data-bs-target="#ModalToggle3" data-bs-toggle="modal">비밀번호 찾기</button>
             </div>
             `);
-    }
-  });
+    })
+    .catch((error) => {
+      form.reset();
+      if (error.response.status == 400) {
+        $("#modal_body_text").remove();
+        $("#modal_body_box").remove();
+        $("#modal_body").append(`
+            <div id="modal_body_text">
+                <p style="font-size: 20px; font-weight: bold;">이메일을 찾지 못했습니다.</p>
+                <button id="button2" type="button" class="btn" onclick="location.href='/sign-up'" style="margin-right: 7px;">회원가입 하기</button>
+                <button id="button3" type="button" class="btn" data-bs-dismiss="modal">닫기</button>
+            </div>
+            `);
+      } else {
+        $("#modal_body_text").remove();
+        $("#modal_body_box").remove();
+        $("#modal_body").append(`
+          <div id="modal_body_text">
+              <p style="font-size: 20px; font-weight: bold;">[Error] 서버 오류가 발생했습니다. 다시 시도해주세요.</p>
+              <button id="button3" type="button" class="btn" data-bs-dismiss="modal">닫기</button>
+          </div>
+        `);
+      }
+    });
 }
-// 비밀번호 찾기 클릭 시 동작하는 함수
+
 function pw_find() {
-  var form = document.getElementById("form_pw_find");
-  axios({
-    method: "post",
-    url: "/user/find-account",
-    data: {
+  const form = document.getElementById("form_pw_find");
+  axios
+    .post("/api/v1/user/find-account", {
       user_id: form.user_id.value,
       user_phone: form.user_phone.value.replace(/-/g, ""),
-    },
-  }).then(function (res) {
-    form.reset();
-    if (!res.data) {
+    })
+    .then(() => {
+      form.reset();
       $("#modal_body_text_2").remove();
       $("#modal_body_box_2").remove();
       $("#modal_body_2").append(`
+          <div id="modal_body_box_2">
+              <p id="modal_body_box_text">임시 비밀번호가 입력하신 번호로 문자 발송됐습니다!</p>
+              <p id="modal_body_box_text">문자를 확인해주시기 바랍니다.</p>
+          </div>
+          `);
+    })
+    .catch((error) => {
+      form.reset();
+      if (error.response.status == 400) {
+        $("#modal_body_text_2").remove();
+        $("#modal_body_box_2").remove();
+        $("#modal_body_2").append(`
             <div id="modal_body_text_2">
                 <p style="font-size: 20px; font-weight: bold;">비밀번호를 찾지 못했습니다.</p>
-                <button id="button2" type="button" class="btn" onclick="location.href='/join'">회원가입 하기</button>
+                <button id="button2" type="button" class="btn" onclick="location.href='/sign-up'">회원가입 하기</button>
             </div>
             `);
-    } else {
-      $("#modal_body_text_2").remove();
-      $("#modal_body_box_2").remove();
-      $("#modal_body_2").append(`
-            <div id="modal_body_box_2">
-                <p id="modal_body_box_text">임시 비밀번호가 입력하신 번호로 문자 발송됐습니다!</p>
-                <p id="modal_body_box_text">문자를 확인해주시기 바랍니다.</p>
+      } else {
+        $("#modal_body_text_2").remove();
+        $("#modal_body_box_2").remove();
+        $("#modal_body_2").append(`
+            <div id="modal_body_text_2">
+                <p style="font-size: 20px; font-weight: bold;">[Error] 서버 오류가 발생했습니다. 다시 시도해주세요.</p>
+                <button id="button3" type="button" class="btn" data-bs-dismiss="modal">닫기</button>
             </div>
             `);
-    }
-  });
+      }
+    });
 }
 
 const kakao = (url) => {

@@ -87,7 +87,7 @@
         type="button"
         id="button_del"
         class="btn"
-        onclick="location.href='/mypage/profile/withdrawal';"
+        onclick="location.href='/mypage/withdrawal';"
       >
         회원탈퇴
       </button>
@@ -104,6 +104,6 @@
   </div>
 </main>
 <script>
-  if ("<%=kakao_login%>" === "true") $("#pw_box").addClass("d_none");
+  if ("<%=social_login%>" === "true") $("#pw_box").addClass("d_none");
 </script>
 <%-include('../main/footer.ejs') %>
