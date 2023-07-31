@@ -65,4 +65,4 @@
 <br>
 
 ## ⭐️ API 명세서
-![API 명세서](https://github.com/nanannannana/nanannannana/assets/114964102/670a6658-d0c1-489b-a374-2cb7433a917a)
+![API 명세서](https://github.com/nanannannana/nanannannana/assets/114964102/cb07e55c-6655-4bac-91a4-6b935f0b90e7)
