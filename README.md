@@ -26,7 +26,7 @@
 ## ⭐️ ERD
 <img width="1233" alt="sesac-fridge-db" src="https://github.com/nanannannana/nanannannana/assets/114964102/1d862566-77d8-46f9-89ef-2ca9cf09ec8b">
 
-#### ❖ 총 7개 테이블
+#### ❖ 총 8개 테이블
 
 |user|oauth|fresh|frozen|recipe|recipe_like|log|cooklog|
 |---|---|---|---|---|---|---|---|
