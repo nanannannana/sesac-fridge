@@ -24,15 +24,15 @@
 <br>
 
 ## ⭐️ ERD
-<img width="1233" alt="fridgeDB" src="https://github.com/nanannannana/nanannannana/assets/114964102/534e3cf0-8846-49f1-b157-f750e0c20cce">
+<img width="1233" alt="sesac-fridge-db" src="https://github.com/nanannannana/nanannannana/assets/114964102/1d862566-77d8-46f9-89ef-2ca9cf09ec8b">
 
 #### ❖ 총 7개 테이블
 
-|user|fresh|frozen|recipe|recipe_like|log|cooklog|
-|---|---|---|---|---|---|---|
-|사용자TB|냉장실TB|냉동실TB|크롤링 한 레시피TB|좋아요 한 레시피TB|최근에 본 레시피TB|최근에 한 요리TB|
-* user 테이블은 5개 테이블(fresh, frozen, recipe_like, log, cooklog)의 FK이며 1:N관계
-* recipe 테이블은 3개의 테이블(recipe_like, log, cooklog)의 FK이며 1:N관계
+|user|oauth|fresh|frozen|recipe|recipe_like|log|cooklog|
+|---|---|---|---|---|---|---|---|
+|사용자TB|소셜 로그인TB|냉장실TB|냉동실TB|크롤링 한 레시피TB|좋아요 한 레시피TB|최근에 본 레시피TB|최근에 한 요리TB|
+* user 테이블의 PK는 6개 테이블(oauth, fresh, frozen, recipe_like, log, cooklog)의 FK이며 1:N관계
+* recipe 테이블의 PK는 3개 테이블(recipe_like, log, cooklog)의 FK이며 1:N관계
 
 <br>
 <br>
